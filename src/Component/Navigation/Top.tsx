@@ -32,6 +32,6 @@ const Top = () => {
             </div>
         </nav>
     );
-}
+};
 
 export default Top;

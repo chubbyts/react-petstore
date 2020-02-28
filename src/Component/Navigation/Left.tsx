@@ -9,7 +9,7 @@ const Left = () => {
             </div>
         </nav>
     );
-}
+};
 
 export default Left;
 

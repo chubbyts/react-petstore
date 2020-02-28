@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form as FinalForm, Field as FinalFormField } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
-import { FieldArray as FinalFormFieldArray } from 'react-final-form-arrays'
+import { FieldArray as FinalFormFieldArray } from 'react-final-form-arrays';
 import TextInput from './TextInput';
 import Pet from '../../Type/Pet/Pet';
 import UnprocessableEntity from '../../Type/Error/UnprocessableEntity';
@@ -12,7 +12,7 @@ import InvalidParameterByNameDenormalizer from '../../Denormalizer/InvalidParame
 import { Button, Form } from 'semantic-ui-react';
 import NotFound from '../../Type/Error/NotFound';
 
-const PetForm = ({ apiCall, pet }: { apiCall: { (pet: Pet): Promise<Pet | NotFound | UnprocessableEntity> }; pet?: Pet; }) => {
+const PetForm = ({ apiCall, pet }: { apiCall: { (pet: Pet): Promise<Pet | NotFound | UnprocessableEntity>; }; pet?: Pet; }) => {
 
     const history = useHistory();
 
@@ -89,6 +89,6 @@ const PetForm = ({ apiCall, pet }: { apiCall: { (pet: Pet): Promise<Pet | NotFou
                 )}
         />
     );
-}
+};
 
 export default PetForm;

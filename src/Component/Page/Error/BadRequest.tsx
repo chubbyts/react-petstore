@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { List } from 'semantic-ui-react';
 import InvalidParameter from '../../../Type/Error/InvalidParameter';
 
-const BadRequest = ({ invalidParameters }: { invalidParameters: Array<InvalidParameter> }) => {
+const BadRequest = ({ invalidParameters }: { invalidParameters: Array<InvalidParameter>; }) => {
 
     useEffect(() => {
         document.title = 'Bad Request';

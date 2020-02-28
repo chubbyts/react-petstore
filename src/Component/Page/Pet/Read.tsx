@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import Pet from '../../../Type/Pet/Pet';
 import { format } from 'date-fns';
-import { de } from 'date-fns/locale'
+import { de } from 'date-fns/locale';
 import { Button, List } from 'semantic-ui-react';
 import { ReadPet } from '../../../ApiClient/Pet';
-import {default as PageNotFound } from '../Error/NotFound';
+import { default as PageNotFound } from '../Error/NotFound';
 import NotFound from '../../../Type/Error/NotFound';
 
-const Read = ({ match }: RouteComponentProps<{ id: string }>) => {
+const Read = ({ match }: RouteComponentProps<{ id: string; }>) => {
 
     const id = match.params.id;
 
@@ -70,6 +70,6 @@ const Read = ({ match }: RouteComponentProps<{ id: string }>) => {
             </div>
         </main>
     );
-}
+};
 
 export default Read;

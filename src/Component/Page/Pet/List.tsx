@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { format } from 'date-fns';
-import { de } from 'date-fns/locale'
+import { de } from 'date-fns/locale';
 import qs from 'qs';
 import PetList from '../../../Type/Pet/PetList';
 import Pet from '../../../Type/Pet/Pet';
@@ -96,15 +96,15 @@ const List = () => {
                                 <td>{pet.updatedAt && format(Date.parse(pet.updatedAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}</td>
                                 <td>{pet.name}</td>
                                 <td>
-                                {pet._links.read ? (
-                                    <Button as={Link} to={`/pet/${pet.id}`}>Read</Button>
-                                ) : ''}
-                                {pet._links.update ? (
-                                    <Button as={Link} to={`/pet/${pet.id}/update`}>Update</Button>
-                                ) : ''}
-                                {pet._links.delete ? (
-                                    <Button onClick={() => { deletePet(pet) }} className='red'>Delete</Button>
-                                ) : ''}
+                                    {pet._links.read ? (
+                                        <Button as={Link} to={`/pet/${pet.id}`}>Read</Button>
+                                    ) : ''}
+                                    {pet._links.update ? (
+                                        <Button as={Link} to={`/pet/${pet.id}/update`}>Update</Button>
+                                    ) : ''}
+                                    {pet._links.delete ? (
+                                        <Button onClick={() => { deletePet(pet); }} className='red'>Delete</Button>
+                                    ) : ''}
                                 </td>
                             </tr>
                         ))}
@@ -114,6 +114,6 @@ const List = () => {
             </div>
         </main>
     );
-}
+};
 
 export default List;

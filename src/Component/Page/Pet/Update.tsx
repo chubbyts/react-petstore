@@ -7,7 +7,7 @@ import { ReadPet, UpdatePet } from '../../../ApiClient/Pet';
 import { Button } from 'semantic-ui-react';
 import PageNotFound from '../Error/NotFound';
 
-const Update = ({ match }: RouteComponentProps<{ id: string }>) => {
+const Update = ({ match }: RouteComponentProps<{ id: string; }>) => {
 
     const id = match.params.id;
 
@@ -50,7 +50,7 @@ const Update = ({ match }: RouteComponentProps<{ id: string }>) => {
             </div>
         </main>
     );
-}
+};
 
 export default Update;
 

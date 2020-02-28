@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-const NotFound = ({ message } : { message?: string}) => {
+const NotFound = ({ message }: { message?: string; }) => {
 
     useEffect(() => {
         document.title = 'Not Found';
