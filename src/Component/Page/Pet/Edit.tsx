@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import Pet from '../../../Type/Pet/Pet';
 import PetForm from '../../Form/PetForm';
 import NotFound from '../../../Type/Error/NotFound';
 import { ReadPet, UpdatePet } from '../../../ApiClient/Pet';
+import { Button } from 'semantic-ui-react';
 import PageNotFound from '../Error/NotFound';
 
 const Edit = ({ match }: RouteComponentProps<{ id: string }>) => {
@@ -43,6 +44,9 @@ const Edit = ({ match }: RouteComponentProps<{ id: string }>) => {
                 <div className='ui top attached segment'>
                     <PetForm apiCall={UpdatePet} pet={pet} />
                 </div>
+            </div>
+            <div className='row'>
+                <Button as={Link} to='/pet'>List</Button>
             </div>
         </main>
     );

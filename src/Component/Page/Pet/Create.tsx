@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import PetForm from '../../Form/PetForm';
+import { Button } from 'semantic-ui-react';
 import { CreatePet } from '../../../ApiClient/Pet';
 
 const Create = () => {
@@ -17,6 +19,9 @@ const Create = () => {
                 <div className='ui top attached segment'>
                     <PetForm apiCall={CreatePet} />
                 </div>
+            </div>
+            <div className='row'>
+                <Button as={Link} to='/pet'>List</Button>
             </div>
         </main>
     );
