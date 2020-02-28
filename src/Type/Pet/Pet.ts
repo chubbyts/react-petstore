@@ -1,4 +1,5 @@
 import Vaccination from './Vaccination';
+import Links from './Links';
 
 export interface Pet {
     id: string;
@@ -7,6 +8,7 @@ export interface Pet {
     name: string;
     tag?: string;
     vaccinations: Array<Vaccination>;
+    _links: Links;
 };
 
 export default Pet;

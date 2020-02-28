@@ -65,9 +65,11 @@ const List = () => {
             <div className='row'>
                 <h1 className='ui huge dividing header'>List Pets</h1>
             </div>
-            <div className='row'>
-                <Button as={Link} to='/pet/create' className='green'>Create</Button>
-            </div>
+            {petList._links.create ? (
+                <div className='row'>
+                    <Button as={Link} to='/pet/create' className='green'>Create</Button>
+                </div>
+            ) : ''}
             <div className='row'>
                 <Pagination defaultActivePage={page} totalPages={pages} onPageChange={changePage} />
                 <table className='ui single line striped selectable table'>
@@ -94,9 +96,15 @@ const List = () => {
                                 <td>{pet.updatedAt && format(Date.parse(pet.updatedAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}</td>
                                 <td>{pet.name}</td>
                                 <td>
+                                {pet._links.read ? (
                                     <Button as={Link} to={`/pet/${pet.id}`}>Read</Button>
+                                ) : ''}
+                                {pet._links.update ? (
                                     <Button as={Link} to={`/pet/${pet.id}/edit`}>Edit</Button>
+                                ) : ''}
+                                {pet._links.delete ? (
                                     <Button onClick={() => { deletePet(pet) }} className='red'>Delete</Button>
+                                ) : ''}
                                 </td>
                             </tr>
                         ))}
