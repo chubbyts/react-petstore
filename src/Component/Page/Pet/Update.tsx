@@ -7,7 +7,7 @@ import { ReadPet, UpdatePet } from '../../../ApiClient/Pet';
 import { Button } from 'semantic-ui-react';
 import PageNotFound from '../Error/NotFound';
 
-const Edit = ({ match }: RouteComponentProps<{ id: string }>) => {
+const Update = ({ match }: RouteComponentProps<{ id: string }>) => {
 
     const id = match.params.id;
 
@@ -20,7 +20,7 @@ const Edit = ({ match }: RouteComponentProps<{ id: string }>) => {
 
         fetchPet();
 
-        document.title = 'Edit Pet';
+        document.title = 'Update Pet';
     }, [id]);
 
     if (!pet) {
@@ -38,7 +38,7 @@ const Edit = ({ match }: RouteComponentProps<{ id: string }>) => {
     return (
         <main className='ui padded grid'>
             <div className='row'>
-                <h1 className='ui huge dividing header'>Edit Pet</h1>
+                <h1 className='ui huge dividing header'>Update Pet</h1>
             </div>
             <div className='row'>
                 <div className='ui top attached segment'>
@@ -52,5 +52,5 @@ const Edit = ({ match }: RouteComponentProps<{ id: string }>) => {
     );
 }
 
-export default Edit;
+export default Update;
 

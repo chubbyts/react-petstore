@@ -100,7 +100,7 @@ const List = () => {
                                     <Button as={Link} to={`/pet/${pet.id}`}>Read</Button>
                                 ) : ''}
                                 {pet._links.update ? (
-                                    <Button as={Link} to={`/pet/${pet.id}/edit`}>Edit</Button>
+                                    <Button as={Link} to={`/pet/${pet.id}/update`}>Update</Button>
                                 ) : ''}
                                 {pet._links.delete ? (
                                     <Button onClick={() => { deletePet(pet) }} className='red'>Delete</Button>

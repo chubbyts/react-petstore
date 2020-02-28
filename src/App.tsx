@@ -5,7 +5,7 @@ import Home from './Component/Page/Home';
 import PetList from './Component/Page/Pet/List';
 import PetCreate from './Component/Page/Pet/Create';
 import PetRead from './Component/Page/Pet/Read';
-import PetEdit from './Component/Page/Pet/Edit';
+import PetUpdate from './Component/Page/Pet/Update';
 import NotFound from './Component/Page/Error/NotFound';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -24,7 +24,7 @@ const App = () => {
                         <Route path='/pet' exact component={PetList} />
                         <Route path='/pet/create' exact component={PetCreate} />
                         <Route path='/pet/:id' exact component={PetRead} />
-                        <Route path='/pet/:id/edit' exact component={PetEdit} />
+                        <Route path='/pet/:id/update' exact component={PetUpdate} />
                         <Route component={NotFound} />
                     </Switch>
                 </div>
