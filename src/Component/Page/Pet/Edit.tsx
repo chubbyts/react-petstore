@@ -4,7 +4,7 @@ import Pet from '../../../Type/Pet/Pet';
 import PetForm from '../../Form/PetForm';
 import NotFound from '../../../Type/Error/NotFound';
 import { ReadPet, UpdatePet } from '../../../ApiClient/Pet';
-import { default as PageNotFound } from '../Error/NotFound';
+import PageNotFound from '../Error/NotFound';
 
 const Edit = ({ match }: RouteComponentProps<{ id: string }>) => {
 

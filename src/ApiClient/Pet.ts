@@ -2,10 +2,11 @@ import Pet from '../Type/Pet/Pet';
 import NotFound from '../Type/Error/NotFound';
 import BadRequest from '../Type/Error/BadRequest';
 import UnprocessableEntity from '../Type/Error/UnprocessableEntity';
+import PetList from '../Type/Pet/PetList';
 
 const url = 'https://localhost:10443/api/pets';
 
-export const ListPets = async (queryString: string) => {
+export const ListPets = async (queryString: string): Promise<PetList | BadRequest> => {
     const response = await fetch(`${url}?${queryString}`, {
         method: 'GET',
         headers: {
@@ -26,7 +27,7 @@ export const ListPets = async (queryString: string) => {
     throw new Error('Invalid response');
 };
 
-export const ReadPet = async (id: string) => {
+export const ReadPet = async (id: string): Promise<Pet | NotFound> => {
     const response = await fetch(`${url}/${id}`, {
         method: 'GET',
         headers: {
@@ -47,7 +48,7 @@ export const ReadPet = async (id: string) => {
     throw new Error('Invalid response');
 };
 
-export const CreatePet = async (pet: Pet) => {
+export const CreatePet = async (pet: Pet): Promise<Pet | UnprocessableEntity> => {
     const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -70,7 +71,7 @@ export const CreatePet = async (pet: Pet) => {
     throw new Error('Invalid response');
 };
 
-export const UpdatePet = async (pet: Pet) => {
+export const UpdatePet = async (pet: Pet): Promise<Pet | NotFound | UnprocessableEntity> => {
     const response = await fetch(`${url}/${pet.id}`, {
         method: 'PUT',
         headers: {
@@ -97,7 +98,7 @@ export const UpdatePet = async (pet: Pet) => {
     throw new Error('Invalid response');
 };
 
-export const DeletePet = async (pet: Pet) => {
+export const DeletePet = async (pet: Pet): Promise<any> => {
     await fetch(`${url}/${pet.id}`, {
         method: 'DELETE',
         headers: {

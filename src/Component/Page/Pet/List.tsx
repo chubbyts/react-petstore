@@ -8,7 +8,7 @@ import Pet from '../../../Type/Pet/Pet';
 import BadRequest from '../../../Type/Error/BadRequest';
 import { Button, Pagination, PaginationProps } from 'semantic-ui-react';
 import { ListPets, DeletePet } from '../../../ApiClient/Pet';
-import { default as PageBadRequest } from '../Error/BadRequest';
+import PageBadRequest from '../Error/BadRequest';
 
 const List = () => {
 
@@ -53,13 +53,12 @@ const List = () => {
     }
 
     if (petList instanceof BadRequest) {
-        console.log(petList);
         return (
             <PageBadRequest invalidParameters={petList.invalidParameters} />
         );
     }
 
-    const pages = Math.ceil(petList ? petList.count / petList.limit : 1);
+    const pages = Math.ceil(petList.count / petList.limit);
 
     return (
         <main className='ui padded grid'>

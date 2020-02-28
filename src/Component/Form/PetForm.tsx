@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Form as FinalForm, Field as FinalFormField } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { FieldArray as FinalFormFieldArray } from 'react-final-form-arrays'
@@ -10,8 +10,9 @@ import InvalidParameter from '../../Type/Error/InvalidParameter';
 import FieldArrayRenderProps from '../../Type/Form/FieldArrayRenderProps';
 import InvalidParameterByNameDenormalizer from '../../Denormalizer/InvalidParameterByNameDenormalizer';
 import { Button, Form } from 'semantic-ui-react';
+import NotFound from '../../Type/Error/NotFound';
 
-const PetForm = ({ apiCall, pet }: { apiCall: CallableFunction; pet?: Pet; }) => {
+const PetForm = ({ apiCall, pet }: { apiCall: { (pet: Pet): Promise<Pet | NotFound | UnprocessableEntity> }; pet?: Pet; }) => {
 
     const history = useHistory();
 
@@ -84,7 +85,6 @@ const PetForm = ({ apiCall, pet }: { apiCall: CallableFunction; pet?: Pet; }) =>
                             <button type='button' className='ui button green' onClick={() => push('vaccinations', undefined)}>Add</button>
                         </Form.Field>
                         <Button onClick={form.submit} className='blue'>Submit</Button>
-                        <Button as={Link} to='/pet'>List</Button>
                     </Form>
                 )}
         />
