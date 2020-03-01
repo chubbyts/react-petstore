@@ -1,7 +1,7 @@
 import Vaccination from './Vaccination';
 import Links from './Links';
 
-export interface Pet {
+interface Pet {
     id: string;
     createdAt: string,
     updatedAt?: string,

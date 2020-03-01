@@ -1,7 +1,7 @@
 import Embedded from './Embedded';
 import Links from './Links';
 
-export interface PetList {
+interface PetList {
     offset: number;
     limit: number;
     count: number;

@@ -1,12 +1,13 @@
-import Pet from '../Type/Pet/Pet';
-import NotFound from '../Type/Error/NotFound';
 import BadRequest from '../Type/Error/BadRequest';
-import UnprocessableEntity from '../Type/Error/UnprocessableEntity';
+import InternalServerError from '../Type/Error/InternalServerError';
+import NotFound from '../Type/Error/NotFound';
+import Pet from '../Type/Pet/Pet';
 import PetList from '../Type/Pet/PetList';
+import UnprocessableEntity from '../Type/Error/UnprocessableEntity';
 
 const url = 'https://localhost:10443/api/pets';
 
-export const ListPets = async (queryString: string): Promise<PetList | BadRequest> => {
+export const ListPets = async (queryString: string): Promise<BadRequest | InternalServerError | PetList> => {
     const response = await fetch(`${url}?${queryString}`, {
         method: 'GET',
         headers: {
@@ -24,10 +25,14 @@ export const ListPets = async (queryString: string): Promise<PetList | BadReques
         return new BadRequest({ ...json });
     }
 
+    if (500 === response.status) {
+        return new InternalServerError({ ...json });
+    }
+
     throw new Error('Invalid response');
 };
 
-export const ReadPet = async (id: string): Promise<Pet | NotFound> => {
+export const ReadPet = async (id: string): Promise< | InternalServerError | NotFound | Pet> => {
     const response = await fetch(`${url}/${id}`, {
         method: 'GET',
         headers: {
@@ -45,10 +50,14 @@ export const ReadPet = async (id: string): Promise<Pet | NotFound> => {
         return new NotFound({ ...json });
     }
 
+    if (500 === response.status) {
+        return new InternalServerError({ ...json });
+    }
+
     throw new Error('Invalid response');
 };
 
-export const CreatePet = async (pet: Pet): Promise<Pet | UnprocessableEntity> => {
+export const CreatePet = async (pet: Pet): Promise<InternalServerError | Pet | UnprocessableEntity> => {
     const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -68,10 +77,14 @@ export const CreatePet = async (pet: Pet): Promise<Pet | UnprocessableEntity> =>
         return new UnprocessableEntity({ ...json });
     }
 
+    if (500 === response.status) {
+        return new InternalServerError({ ...json });
+    }
+
     throw new Error('Invalid response');
 };
 
-export const UpdatePet = async (pet: Pet): Promise<Pet | NotFound | UnprocessableEntity> => {
+export const UpdatePet = async (pet: Pet): Promise<InternalServerError | NotFound | Pet | UnprocessableEntity> => {
     const response = await fetch(`${url}/${pet.id}`, {
         method: 'PUT',
         headers: {
@@ -95,14 +108,32 @@ export const UpdatePet = async (pet: Pet): Promise<Pet | NotFound | Unprocessabl
         return new UnprocessableEntity({ ...json });
     }
 
+    if (500 === response.status) {
+        return new InternalServerError({ ...json });
+    }
+
     throw new Error('Invalid response');
 };
 
-export const DeletePet = async (pet: Pet): Promise<any> => {
-    await fetch(`${url}/${pet.id}`, {
+export const DeletePet = async (pet: Pet): Promise<InternalServerError | NotFound | undefined> => {
+    const response = await fetch(`${url}/${pet.id}`, {
         method: 'DELETE',
         headers: {
             'Accept': 'application/json',
         }
     });
+
+    if (204 === response.status) {
+        return;
+    }
+
+    const json = await response.json();
+
+    if (404 === response.status) {
+        return new NotFound({ ...json });
+    }
+
+    if (500 === response.status) {
+        return new InternalServerError({ ...json });
+    }
 };

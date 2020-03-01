@@ -1,14 +1,10 @@
+import HttpError from './HttpError';
 import InvalidParameter from './InvalidParameter';
 
-export class BadRequest {
-    title: string;
-    detail?: string;
-    instance?: string;
+class BadRequest extends HttpError {
     invalidParameters: Array<InvalidParameter>;
     constructor({ title, detail, instance, invalidParameters }: { title: string, detail?: string, instance?: string, invalidParameters?: Array<InvalidParameter>; }) {
-        this.title = title;
-        this.detail = detail;
-        this.instance = instance;
+        super({ title, detail, instance });
         this.invalidParameters = invalidParameters ?? [];
     }
 };

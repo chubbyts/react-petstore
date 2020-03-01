@@ -1,4 +1,4 @@
-export interface Vaccination {
+interface Vaccination {
     name: string;
 };
 

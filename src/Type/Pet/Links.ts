@@ -1,6 +1,6 @@
 import Link from './Link';
 
-export interface Links {
+interface Links {
     [id: string]: Link;
 };
 

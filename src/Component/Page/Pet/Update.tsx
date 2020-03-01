@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button } from 'semantic-ui-react';
+import { Link, RouteComponentProps, useHistory } from 'react-router-dom';
+import { ReadPet, UpdatePet } from '../../../ApiClient/Pet';
+import Empty from '../Empty';
+import InternalServerError from '../../../Type/Error/InternalServerError';
+import NotFound from '../../../Type/Error/NotFound';
+import PageInternalServerError from '../Error/InternalServerError';
+import PageNotFound from '../Error/NotFound';
 import Pet from '../../../Type/Pet/Pet';
 import PetForm from '../../Form/PetForm';
-import NotFound from '../../../Type/Error/NotFound';
-import { ReadPet, UpdatePet } from '../../../ApiClient/Pet';
-import { Button } from 'semantic-ui-react';
-import PageNotFound from '../Error/NotFound';
+import UnprocessableEntity from '../../../Type/Error/UnprocessableEntity';
+import HttpError from '../../../Type/Error/HttpError';
 
 const Update = ({ match }: RouteComponentProps<{ id: string; }>) => {
 
     const id = match.params.id;
 
-    const [pet, setPet] = useState<Pet | NotFound>();
+    const history = useHistory();
+
+    const [pet, setPet] = useState<Pet | InternalServerError | NotFound | UnprocessableEntity>();
 
     useEffect(() => {
         const fetchPet = async () => {
@@ -23,16 +30,26 @@ const Update = ({ match }: RouteComponentProps<{ id: string; }>) => {
         document.title = 'Update Pet';
     }, [id]);
 
+    const submitPet = async (pet: Pet) => {
+        const responsePet = await UpdatePet(pet);
+
+        setPet(responsePet);
+
+        if (!(responsePet instanceof HttpError)) {
+            history.push('/pet');
+        }
+    };
+
     if (!pet) {
-        return (
-            <main className='ui padded grid'></main>
-        );
+        return (<Empty />);
+    }
+
+    if (pet instanceof InternalServerError) {
+        return (<PageInternalServerError />);
     }
 
     if (pet instanceof NotFound) {
-        return (
-            <PageNotFound message={`Missing pet: ${id}`} />
-        );
+        return (<PageNotFound message={`Missing pet: ${id}`} />);
     }
 
     return (
@@ -42,7 +59,7 @@ const Update = ({ match }: RouteComponentProps<{ id: string; }>) => {
             </div>
             <div className='row'>
                 <div className='ui top attached segment'>
-                    <PetForm apiCall={UpdatePet} pet={pet} />
+                    <PetForm submitPet={submitPet} pet={pet} />
                 </div>
             </div>
             <div className='row'>

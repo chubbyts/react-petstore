@@ -1,6 +1,6 @@
 import Pet from './Pet';
 
-export interface Embedded {
+interface Embedded {
     items: Array<Pet>;
 };
 

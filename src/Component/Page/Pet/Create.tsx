@@ -1,14 +1,36 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import PetForm from '../../Form/PetForm';
+import React, { useState } from 'react';
 import { Button } from 'semantic-ui-react';
 import { CreatePet } from '../../../ApiClient/Pet';
+import { Link, useHistory } from 'react-router-dom';
+import HttpError from '../../../Type/Error/HttpError';
+import InternalServerError from '../../../Type/Error/InternalServerError';
+import PageInternalServerError from '../Error/InternalServerError';
+import Pet from '../../../Type/Pet/Pet';
+import PetForm from '../../Form/PetForm';
 
 const Create = () => {
 
-    useEffect(() => {
-        document.title = 'Create Pet';
-    }, []);
+    const history = useHistory();
+
+    const [pet, setPet] = useState<Pet | InternalServerError>();
+
+    document.title = 'Create Pet';
+
+    const submitPet = async (pet: Pet) => {
+        const responsePet = await CreatePet(pet);
+
+        setPet(responsePet);
+
+        if (!(responsePet instanceof HttpError)) {
+            history.push('/pet');
+        }
+    };
+
+    if (pet instanceof InternalServerError) {
+        return (
+            <PageInternalServerError />
+        );
+    }
 
     return (
         <main className='ui padded grid'>
@@ -17,7 +39,7 @@ const Create = () => {
             </div>
             <div className='row'>
                 <div className='ui top attached segment'>
-                    <PetForm apiCall={CreatePet} />
+                    <PetForm submitPet={submitPet} pet={pet} />
                 </div>
             </div>
             <div className='row'>

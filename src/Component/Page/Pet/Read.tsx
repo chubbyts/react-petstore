@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import Pet from '../../../Type/Pet/Pet';
-import { format } from 'date-fns';
-import { de } from 'date-fns/locale';
 import { Button, List } from 'semantic-ui-react';
-import { ReadPet } from '../../../ApiClient/Pet';
+import { de } from 'date-fns/locale';
 import { default as PageNotFound } from '../Error/NotFound';
+import { format } from 'date-fns';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { ReadPet } from '../../../ApiClient/Pet';
+import Empty from '../Empty';
+import InternalServerError from '../../../Type/Error/InternalServerError';
 import NotFound from '../../../Type/Error/NotFound';
+import PageInternalServerError from '../Error/InternalServerError';
+import Pet from '../../../Type/Pet/Pet';
 
 const Read = ({ match }: RouteComponentProps<{ id: string; }>) => {
 
     const id = match.params.id;
 
-    const [pet, setPet] = useState<Pet | NotFound>();
+    const [pet, setPet] = useState<Pet | NotFound | InternalServerError>();
 
     useEffect(() => {
         const fetchPet = async () => {
@@ -25,15 +28,15 @@ const Read = ({ match }: RouteComponentProps<{ id: string; }>) => {
     }, [id]);
 
     if (!pet) {
-        return (
-            <main className='ui padded grid'></main>
-        );
+        return (<Empty />);
+    }
+
+    if (pet instanceof InternalServerError) {
+        return (<PageInternalServerError />);
     }
 
     if (pet instanceof NotFound) {
-        return (
-            <PageNotFound message={`Missing pet: ${id}`} />
-        );
+        return (<PageNotFound message={`Missing pet: ${id}`} />);
     }
 
     return (

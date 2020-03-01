@@ -1,43 +1,22 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
+import { Button, Form } from 'semantic-ui-react';
+import { FieldArray as FinalFormFieldArray } from 'react-final-form-arrays';
 import { Form as FinalForm, Field as FinalFormField } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
-import { FieldArray as FinalFormFieldArray } from 'react-final-form-arrays';
-import TextInput from './TextInput';
-import Pet from '../../Type/Pet/Pet';
-import UnprocessableEntity from '../../Type/Error/UnprocessableEntity';
-import InvalidParameter from '../../Type/Error/InvalidParameter';
 import FieldArrayRenderProps from '../../Type/Form/FieldArrayRenderProps';
+import InvalidParameter from '../../Type/Error/InvalidParameter';
 import InvalidParameterByNameDenormalizer from '../../Denormalizer/InvalidParameterByNameDenormalizer';
-import { Button, Form } from 'semantic-ui-react';
-import NotFound from '../../Type/Error/NotFound';
+import Pet from '../../Type/Pet/Pet';
+import TextInput from './TextInput';
+import UnprocessableEntity from '../../Type/Error/UnprocessableEntity';
 
-const PetForm = ({ apiCall, pet }: { apiCall: { (pet: Pet): Promise<Pet | NotFound | UnprocessableEntity>; }; pet?: Pet; }) => {
-
-    const history = useHistory();
-
-    const [unprocessableEntity, setUnprocessableEntity] = useState<UnprocessableEntity>();
-
-    const submitPet = async (pet: Pet) => {
-        const unprocessableEntity = await apiCall(pet);
-
-        if (!(unprocessableEntity instanceof UnprocessableEntity)) {
-            setUnprocessableEntity(undefined);
-
-            history.push('/pet');
-
-            return;
-        }
-
-        setUnprocessableEntity(unprocessableEntity);
-    };
-
-    const invalidParameterByNameDenormalized = InvalidParameterByNameDenormalizer(unprocessableEntity?.invalidParameters);
+const PetForm = ({ submitPet, pet }: { submitPet: { (pet: Pet): any; }; pet?: Pet | UnprocessableEntity; }) => {
+    const invalidParameterByNameDenormalized = InvalidParameterByNameDenormalizer(pet instanceof UnprocessableEntity ? pet.invalidParameters : []);
 
     return (
         <FinalForm
-            onSubmit={submitPet}
-            initialValues={pet}
+            onSubmit={async (pet: Pet) => await submitPet(pet)}
+            initialValues={pet instanceof UnprocessableEntity ? undefined : pet}
             mutators={{
                 ...arrayMutators
             }}

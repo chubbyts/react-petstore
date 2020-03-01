@@ -1,4 +1,4 @@
-export interface FieldArrayRenderProps {
+interface FieldArrayRenderProps {
   fields: {
     forEach: (iterator: (name: string, index: number) => void) => void;
     insert: (index: number, value: any) => void;

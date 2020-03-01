@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom';
-import { format } from 'date-fns';
-import { de } from 'date-fns/locale';
-import qs from 'qs';
-import PetList from '../../../Type/Pet/PetList';
-import Pet from '../../../Type/Pet/Pet';
-import BadRequest from '../../../Type/Error/BadRequest';
 import { Button, Pagination, PaginationProps } from 'semantic-ui-react';
+import { de } from 'date-fns/locale';
+import { format } from 'date-fns';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { ListPets, DeletePet } from '../../../ApiClient/Pet';
+import BadRequest from '../../../Type/Error/BadRequest';
+import Empty from '../Empty';
+import InternalServerError from '../../../Type/Error/InternalServerError';
 import PageBadRequest from '../Error/BadRequest';
+import PageInternalServerError from '../Error/InternalServerError';
+import Pet from '../../../Type/Pet/Pet';
+import PetList from '../../../Type/Pet/PetList';
+import qs from 'qs';
 
 const List = () => {
 
@@ -24,7 +27,7 @@ const List = () => {
 
     const queryString = qs.stringify({ limit: 10, offset: offset, filters: filters, sort: sort });
 
-    const [petList, setPetList] = useState<PetList | BadRequest>();
+    const [petList, setPetList] = useState<PetList | BadRequest | InternalServerError>();
 
     useEffect(() => {
         const fetchPetList = async () => {
@@ -47,15 +50,15 @@ const List = () => {
     };
 
     if (!petList) {
-        return (
-            <main role='main' className='col-md-9 ml-sm-auto col-lg-10 px-4'></main>
-        );
+        return (<Empty />);
     }
 
     if (petList instanceof BadRequest) {
-        return (
-            <PageBadRequest invalidParameters={petList.invalidParameters} />
-        );
+        return (<PageBadRequest invalidParameters={petList.invalidParameters} />);
+    }
+
+    if (petList instanceof InternalServerError) {
+        return (<PageInternalServerError />);
     }
 
     const pages = Math.ceil(petList.count / petList.limit);
