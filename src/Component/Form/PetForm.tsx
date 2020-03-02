@@ -10,13 +10,13 @@ import Pet from '../../Type/Pet/Pet';
 import TextInput from './TextInput';
 import UnprocessableEntity from '../../Type/Error/UnprocessableEntity';
 
-const PetForm = ({ submitPet, pet }: { submitPet: { (pet: Pet): any; }; pet?: Pet | UnprocessableEntity; }) => {
-    const invalidParameterByNameDenormalized = InvalidParameterByNameDenormalizer(pet instanceof UnprocessableEntity ? pet.invalidParameters : []);
+const PetForm = ({ submitPet, pet, error }: { submitPet: { (pet: Pet): any; }; pet?: Pet; error?: UnprocessableEntity }) => {
+    const invalidParameterByNameDenormalized = InvalidParameterByNameDenormalizer(error ? error.invalidParameters : []);
 
     return (
         <FinalForm
             onSubmit={async (pet: Pet) => await submitPet(pet)}
-            initialValues={pet instanceof UnprocessableEntity ? undefined : pet}
+            initialValues={pet}
             mutators={{
                 ...arrayMutators
             }}

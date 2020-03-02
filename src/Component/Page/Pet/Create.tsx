@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Button } from 'semantic-ui-react';
 import { CreatePet } from '../../../ApiClient/Pet';
 import { Link, useHistory } from 'react-router-dom';
+import { Message } from 'semantic-ui-react';
 import HttpError from '../../../Type/Error/HttpError';
 import InternalServerError from '../../../Type/Error/InternalServerError';
 import Pet from '../../../Type/Pet/Pet';
-import { Message } from 'semantic-ui-react';
 import PetForm from '../../Form/PetForm';
 import UnprocessableEntity from '../../../Type/Error/UnprocessableEntity';
 
@@ -13,33 +13,29 @@ const Create = () => {
 
     const history = useHistory();
 
-    const [pet, setPet] = useState<Pet | UnprocessableEntity>();
-    const [internalServerError, setInternalServerError] = useState<InternalServerError>();
+    const [error, setError] = useState<InternalServerError | UnprocessableEntity>();
 
     document.title = 'Create Pet';
 
     const submitPet = async (pet: Pet) => {
-        const responsePet = await CreatePet(pet);
+        const response = await CreatePet(pet);
 
-        if (responsePet instanceof InternalServerError) {
-            setInternalServerError(responsePet);
+        if (response instanceof HttpError) {
+            setError(response);
         } else {
-            setInternalServerError(undefined);
-            setPet(responsePet);
-        }
+            setError(undefined);
 
-        if (!(responsePet instanceof HttpError)) {
             history.push('/pet');
         }
     };
 
     return (
         <main className='ui padded grid'>
-            {internalServerError ? (
+            {error instanceof InternalServerError ? (
                 <div className='row'>
                     <Message negative className='attached segment'>
-                        <Message.Header>{internalServerError.title}</Message.Header>
-                        <p>{internalServerError.detail}</p>
+                        <Message.Header>{error.title}</Message.Header>
+                        <p>{error.detail}</p>
                     </Message>
                 </div>
             ) : ''}
@@ -48,7 +44,7 @@ const Create = () => {
             </div>
             <div className='row'>
                 <div className='ui top attached segment'>
-                    <PetForm submitPet={submitPet} pet={pet} />
+                    <PetForm submitPet={submitPet} error={error instanceof UnprocessableEntity ? error : undefined} />
                 </div>
             </div>
             <div className='row'>

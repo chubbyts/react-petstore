@@ -6,6 +6,7 @@ import Empty from '../Empty';
 import InternalServerError from '../../../Type/Error/InternalServerError';
 import NotFound from '../../../Type/Error/NotFound';
 import PageNotFound from '../Error/NotFound';
+import PageInternalServerError from '../Error/InternalServerError';
 import Pet from '../../../Type/Pet/Pet';
 import PetForm from '../../Form/PetForm';
 import UnprocessableEntity from '../../../Type/Error/UnprocessableEntity';
@@ -17,12 +18,19 @@ const Update = ({ match }: RouteComponentProps<{ id: string; }>) => {
 
     const history = useHistory();
 
-    const [pet, setPet] = useState<Pet | NotFound | UnprocessableEntity>();
-    const [internalServerError, setInternalServerError] = useState<InternalServerError>();
+    const [pet, setPet] = useState<Pet>();
+    const [error, setError] = useState<InternalServerError | NotFound | UnprocessableEntity>();
 
     useEffect(() => {
         const fetchPet = async () => {
-            setPet(await ReadPet(id));
+            const response = await ReadPet(id);
+
+            if (response instanceof HttpError) {
+                setError(response);
+            } else {
+                setError(undefined);
+                setPet(response);
+            }
         };
 
         fetchPet();
@@ -31,35 +39,37 @@ const Update = ({ match }: RouteComponentProps<{ id: string; }>) => {
     }, [id]);
 
     const submitPet = async (pet: Pet) => {
-        const responsePet = await UpdatePet(pet);
+        const response = await UpdatePet(pet);
 
-        if (responsePet instanceof InternalServerError) {
-            setInternalServerError(responsePet);
+        if (response instanceof HttpError) {
+            setError(response);
         } else {
-            setInternalServerError(undefined);
-            setPet(responsePet);
-        }
+            setError(undefined);
+            setPet(response);
 
-        if (!(responsePet instanceof HttpError)) {
             history.push('/pet');
         }
     };
 
-    if (!pet) {
-        return (<Empty />);
+    if (error instanceof NotFound) {
+        return (<PageNotFound message={`Missing pet: ${id}`} />);
     }
 
-    if (pet instanceof NotFound) {
-        return (<PageNotFound message={`Missing pet: ${id}`} />);
+    if (!pet) {
+        if (error instanceof InternalServerError) {
+            return (<PageInternalServerError />);
+        }
+
+        return (<Empty />);
     }
 
     return (
         <main className='ui padded grid'>
-            {internalServerError ? (
+            {error instanceof InternalServerError ? (
                 <div className='row'>
                     <Message negative className='attached segment'>
-                        <Message.Header>{internalServerError.title}</Message.Header>
-                        <p>{internalServerError.detail}</p>
+                        <Message.Header>{error.title}</Message.Header>
+                        <p>{error.detail}</p>
                     </Message>
                 </div>
             ) : ''}
@@ -68,7 +78,7 @@ const Update = ({ match }: RouteComponentProps<{ id: string; }>) => {
             </div>
             <div className='row'>
                 <div className='ui top attached segment'>
-                    <PetForm submitPet={submitPet} pet={pet} />
+                    <PetForm submitPet={submitPet} pet={pet} error={error instanceof UnprocessableEntity ? error : undefined} />
                 </div>
             </div>
             <div className='row'>
