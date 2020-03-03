@@ -31,22 +31,21 @@ const List = () => {
     const [httpError, setHttpError] = useState<BadRequest | InternalServerError>();
 
     useEffect(() => {
-        const fetchPetList = async () => {
-            const response = await ListPets(queryString);
-
-            if (response instanceof HttpError) {
-                setHttpError(response);
-            } else {
-                setHttpError(undefined);
-                setPetList(response);
-            }
-        };
-
-        fetchPetList();
+        fetchPetList(queryString);
 
         document.title = 'List Pets';
     }, [queryString]);
 
+    const fetchPetList = async (queryString: string) => {
+        const response = await ListPets(queryString);
+
+        if (response instanceof HttpError) {
+            setHttpError(response);
+        } else {
+            setHttpError(undefined);
+            setPetList(response);
+        }
+    };
 
     const deletePet = async (pet: Pet) => {
         const deleteResponse = await DeletePet(pet);
@@ -59,14 +58,7 @@ const List = () => {
 
         setHttpError(undefined);
 
-        const listResponse = await ListPets(queryString);
-
-        if (listResponse instanceof HttpError) {
-            setHttpError(listResponse);
-        } else {
-            setHttpError(undefined);
-            setPetList(listResponse);
-        }
+        fetchPetList(queryString);
     };
 
     const changePage = (e: any, data: PaginationProps) => {

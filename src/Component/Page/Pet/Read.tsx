@@ -19,21 +19,21 @@ const Read = ({ match }: RouteComponentProps<{ id: string; }>) => {
     const [httpError, setHttpError] = useState<NotFound | InternalServerError>();
 
     useEffect(() => {
-        const fetchPet = async () => {
-            const response = await ReadPet(id);
-
-            if (response instanceof HttpError) {
-                setHttpError(response);
-            } else {
-                setHttpError(undefined);
-                setPet(response);
-            }
-        };
-
-        fetchPet();
+        fetchPet(id);
 
         document.title = 'Read Pet';
     }, [id]);
+
+    const fetchPet = async (id: string) => {
+        const response = await ReadPet(id);
+
+        if (response instanceof HttpError) {
+            setHttpError(response);
+        } else {
+            setHttpError(undefined);
+            setPet(response);
+        }
+    };
 
     if (!pet && !httpError) {
         return (<Empty />);

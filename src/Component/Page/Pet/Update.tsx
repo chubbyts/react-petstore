@@ -21,21 +21,21 @@ const Update = ({ match }: RouteComponentProps<{ id: string; }>) => {
     const [httpError, setHttpError] = useState<InternalServerError | NotFound | UnprocessableEntity>();
 
     useEffect(() => {
-        const fetchPet = async () => {
-            const response = await ReadPet(id);
-
-            if (response instanceof HttpError) {
-                setHttpError(response);
-            } else {
-                setHttpError(undefined);
-                setPet(response);
-            }
-        };
-
-        fetchPet();
+        fetchPet(id);
 
         document.title = 'Update Pet';
     }, [id]);
+
+    const fetchPet = async (id: string) => {
+        const response = await ReadPet(id);
+
+        if (response instanceof HttpError) {
+            setHttpError(response);
+        } else {
+            setHttpError(undefined);
+            setPet(response);
+        }
+    };
 
     const submitPet = async (pet: Pet) => {
         const response = await UpdatePet(pet);
