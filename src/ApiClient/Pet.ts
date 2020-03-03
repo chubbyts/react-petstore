@@ -5,7 +5,7 @@ import Pet from '../Type/Pet/Pet';
 import PetList from '../Type/Pet/PetList';
 import UnprocessableEntity from '../Type/Error/UnprocessableEntity';
 
-const url = 'https://localhost:10443/api/pets';
+const url = `${process.env.REACT_APP_PETSTORE_URL}/api/pets`;
 
 export const ListPets = async (queryString: string): Promise<BadRequest | InternalServerError | PetList> => {
     try {
