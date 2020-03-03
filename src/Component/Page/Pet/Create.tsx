@@ -31,7 +31,7 @@ const Create = () => {
 
     return (
         <main className='ui padded grid'>
-            {error instanceof InternalServerError ? (
+            {error instanceof HttpError ? (
                 <div className='row'>
                     <Message negative className='attached segment'>
                         <Message.Header>{error.title}</Message.Header>
