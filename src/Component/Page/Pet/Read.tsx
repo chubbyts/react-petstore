@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Button, List, Message } from 'semantic-ui-react';
+import { Button, List } from 'semantic-ui-react';
 import { de } from 'date-fns/locale';
 import { format } from 'date-fns';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { ReadPet } from '../../../ApiClient/Pet';
 import Empty from '../Empty';
 import HttpError from '../../../Type/Error/HttpError';
+import HttpErrorPartial from '../../Partial/HttpError';
 import InternalServerError from '../../../Type/Error/InternalServerError';
 import NotFound from '../../../Type/Error/NotFound';
 import Pet from '../../../Type/Pet/Pet';
@@ -15,16 +16,16 @@ const Read = ({ match }: RouteComponentProps<{ id: string; }>) => {
     const id = match.params.id;
 
     const [pet, setPet] = useState<Pet>();
-    const [error, setError] = useState<NotFound | InternalServerError>();
+    const [httpError, setHttpError] = useState<NotFound | InternalServerError>();
 
     useEffect(() => {
         const fetchPet = async () => {
             const response = await ReadPet(id);
 
             if (response instanceof HttpError) {
-                setError(response);
+                setHttpError(response);
             } else {
-                setError(undefined);
+                setHttpError(undefined);
                 setPet(response);
             }
         };
@@ -34,19 +35,14 @@ const Read = ({ match }: RouteComponentProps<{ id: string; }>) => {
         document.title = 'Read Pet';
     }, [id]);
 
-    if (!pet && !error) {
+    if (!pet && !httpError) {
         return (<Empty />);
     }
 
     return (
         <main className='ui padded grid'>
-            {error instanceof HttpError ? (
-                <div className='row'>
-                    <Message negative className='attached segment'>
-                        <Message.Header>{error.title}</Message.Header>
-                        <p>{error.detail}</p>
-                    </Message>
-                </div>
+            {httpError instanceof HttpError ? (
+                <HttpErrorPartial httpError={httpError} />
             ) : ''}
             <div className='row'>
                 <h1 className='ui huge dividing header'>Read Pet</h1>

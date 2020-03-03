@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-const NotFound = ({ message }: { message?: string; }) => {
+const NotFound = () => {
 
     useEffect(() => {
         document.title = 'Not Found';
@@ -10,7 +10,6 @@ const NotFound = ({ message }: { message?: string; }) => {
         <main className='ui padded grid'>
             <div className='row'>
                 <h1 className='ui huge dividing header'>Not Found</h1>
-                <p>{message}</p>
             </div>
         </main>
     );

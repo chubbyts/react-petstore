@@ -6,7 +6,7 @@ import PetList from './Component/Page/Pet/List';
 import PetCreate from './Component/Page/Pet/Create';
 import PetRead from './Component/Page/Pet/Read';
 import PetUpdate from './Component/Page/Pet/Update';
-import NotFound from './Component/Page/Error/NotFound';
+import NotFound from './Component/Page/NotFound';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 const App = () => {

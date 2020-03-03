@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Button } from 'semantic-ui-react';
 import { CreatePet } from '../../../ApiClient/Pet';
 import { Link, useHistory } from 'react-router-dom';
-import { Message } from 'semantic-ui-react';
 import HttpError from '../../../Type/Error/HttpError';
+import HttpErrorPartial from '../../Partial/HttpError';
 import InternalServerError from '../../../Type/Error/InternalServerError';
 import Pet from '../../../Type/Pet/Pet';
 import PetForm from '../../Form/PetForm';
@@ -13,7 +13,7 @@ const Create = () => {
 
     const history = useHistory();
 
-    const [error, setError] = useState<InternalServerError | UnprocessableEntity>();
+    const [httpError, setHttpError] = useState<InternalServerError | UnprocessableEntity>();
 
     document.title = 'Create Pet';
 
@@ -21,9 +21,9 @@ const Create = () => {
         const response = await CreatePet(pet);
 
         if (response instanceof HttpError) {
-            setError(response);
+            setHttpError(response);
         } else {
-            setError(undefined);
+            setHttpError(undefined);
 
             history.push('/pet');
         }
@@ -31,20 +31,15 @@ const Create = () => {
 
     return (
         <main className='ui padded grid'>
-            {error instanceof HttpError ? (
-                <div className='row'>
-                    <Message negative className='attached segment'>
-                        <Message.Header>{error.title}</Message.Header>
-                        <p>{error.detail}</p>
-                    </Message>
-                </div>
+            {httpError instanceof HttpError ? (
+                <HttpErrorPartial httpError={httpError} />
             ) : ''}
             <div className='row'>
                 <h1 className='ui huge dividing header'>Create Pet</h1>
             </div>
             <div className='row'>
                 <div className='ui top attached segment'>
-                    <PetForm submitPet={submitPet} error={error instanceof UnprocessableEntity ? error : undefined} />
+                    <PetForm submitPet={submitPet} error={httpError instanceof UnprocessableEntity ? httpError : undefined} />
                 </div>
             </div>
             <div className='row'>

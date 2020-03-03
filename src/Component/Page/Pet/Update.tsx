@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Message } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import { Link, RouteComponentProps, useHistory } from 'react-router-dom';
 import { ReadPet, UpdatePet } from '../../../ApiClient/Pet';
 import Empty from '../Empty';
 import HttpError from '../../../Type/Error/HttpError';
+import HttpErrorPartial from '../../Partial/HttpError';
 import InternalServerError from '../../../Type/Error/InternalServerError';
 import NotFound from '../../../Type/Error/NotFound';
 import Pet from '../../../Type/Pet/Pet';
@@ -17,16 +18,16 @@ const Update = ({ match }: RouteComponentProps<{ id: string; }>) => {
     const history = useHistory();
 
     const [pet, setPet] = useState<Pet>();
-    const [error, setError] = useState<InternalServerError | NotFound | UnprocessableEntity>();
+    const [httpError, setHttpError] = useState<InternalServerError | NotFound | UnprocessableEntity>();
 
     useEffect(() => {
         const fetchPet = async () => {
             const response = await ReadPet(id);
 
             if (response instanceof HttpError) {
-                setError(response);
+                setHttpError(response);
             } else {
-                setError(undefined);
+                setHttpError(undefined);
                 setPet(response);
             }
         };
@@ -40,28 +41,23 @@ const Update = ({ match }: RouteComponentProps<{ id: string; }>) => {
         const response = await UpdatePet(pet);
 
         if (response instanceof HttpError) {
-            setError(response);
+            setHttpError(response);
         } else {
-            setError(undefined);
+            setHttpError(undefined);
             setPet(response);
 
             history.push('/pet');
         }
     };
 
-    if (!pet && !error) {
+    if (!pet && !httpError) {
         return (<Empty />);
     }
 
     return (
         <main className='ui padded grid'>
-            {error instanceof HttpError ? (
-                <div className='row'>
-                    <Message negative className='attached segment'>
-                        <Message.Header>{error.title}</Message.Header>
-                        <p>{error.detail}</p>
-                    </Message>
-                </div>
+            {httpError instanceof HttpError ? (
+                <HttpErrorPartial httpError={httpError} />
             ) : ''}
             <div className='row'>
                 <h1 className='ui huge dividing header'>Update Pet</h1>
@@ -69,7 +65,7 @@ const Update = ({ match }: RouteComponentProps<{ id: string; }>) => {
             {pet ? (
                 <div className='row'>
                     <div className='ui top attached segment'>
-                        <PetForm submitPet={submitPet} pet={pet} error={error instanceof UnprocessableEntity ? error : undefined} />
+                        <PetForm submitPet={submitPet} pet={pet} error={httpError instanceof UnprocessableEntity ? httpError : undefined} />
                     </div>
                 </div>
             ) : ''}
