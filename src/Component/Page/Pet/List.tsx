@@ -12,6 +12,7 @@ import InternalServerError from '../../../Type/Error/InternalServerError';
 import Pet from '../../../Type/Pet/Pet';
 import PetList from '../../../Type/Pet/PetList';
 import qs from 'qs';
+import PetFilterForm from '../../Form/PetFilterForm';
 
 const List = () => {
 
@@ -65,6 +66,10 @@ const List = () => {
         history.push(`/pet?${qs.stringify({ ...query, page: data.activePage })}`);
     };
 
+    const submitPetFilter = (filters: any) => {
+        history.push(`/pet?${qs.stringify({ ...query, filters: filters, ...sort })}`);
+    };
+
     if (!petList && !httpError) {
         return (<Empty />);
     }
@@ -78,12 +83,19 @@ const List = () => {
                 <h1 className='ui huge dividing header'>List Pets</h1>
             </div>
             {petList && petList._links.create ? (
-              <div className='row'>
+                <div className='row'>
                     <Button as={Link} to='/pet/create' className='green'>Create</Button>
                 </div>
-            ) : '' }
+            ) : ''}
             {petList ? (
                 <div className='row'>
+                    <div className='ui attached segment'>
+                        <PetFilterForm submitPetFilter={submitPetFilter} filters={filters} error={httpError instanceof BadRequest ? httpError : undefined} />
+                    </div></div>
+            ) : ''}
+            {petList ? (
+                <div className='row'>
+
                     <Pagination defaultActivePage={page} totalPages={Math.ceil(petList.count / petList.limit)} onPageChange={changePage} />
                     <table className='ui single line striped selectable table'>
                         <thead>
