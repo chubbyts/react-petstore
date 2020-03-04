@@ -38,7 +38,7 @@ const Create = () => {
                 <h1 className='ui huge dividing header'>Create Pet</h1>
             </div>
             <div className='row'>
-                <div className='ui top attached segment'>
+                <div className='ui attached segment'>
                     <PetForm submitPet={submitPet} error={httpError instanceof UnprocessableEntity ? httpError : undefined} />
                 </div>
             </div>

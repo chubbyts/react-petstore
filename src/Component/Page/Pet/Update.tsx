@@ -64,7 +64,7 @@ const Update = ({ match }: RouteComponentProps<{ id: string; }>) => {
             </div>
             {pet ? (
                 <div className='row'>
-                    <div className='ui top attached segment'>
+                    <div className='ui attached segment'>
                         <PetForm submitPet={submitPet} pet={pet} error={httpError instanceof UnprocessableEntity ? httpError : undefined} />
                     </div>
                 </div>
