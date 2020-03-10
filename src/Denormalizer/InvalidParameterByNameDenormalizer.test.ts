@@ -2,9 +2,9 @@ import InvalidParameterByNameDenormalizer from './InvalidParameterByNameDenormal
 
 test('denormalize', () => {
     const invalidParameters = [
-        {name: 'name', reason: 'wrong type', details: {key: 'value1'}},
-        {name: 'name', reason: 'not empty', details: {key: 'value2'}},
-        {name: 'description', reason: 'to long', details: {key: 'value3'}}
+        { name: 'name', reason: 'wrong type', details: { key: 'value1' } },
+        { name: 'name', reason: 'not empty', details: { key: 'value2' } },
+        { name: 'description', reason: 'to long', details: { key: 'value3' } }
     ];
 
     const invalidParameterByName = InvalidParameterByNameDenormalizer(invalidParameters);
