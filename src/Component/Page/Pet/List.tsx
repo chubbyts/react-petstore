@@ -8,7 +8,6 @@ import BadRequest from '../../../Type/Error/BadRequest';
 import Empty from '../Empty';
 import HttpError from '../../../Type/Error/HttpError';
 import HttpErrorPartial from '../../Partial/HttpError';
-import InternalServerError from '../../../Type/Error/InternalServerError';
 import Pet from '../../../Type/Pet/Pet';
 import PetList from '../../../Type/Pet/PetList';
 import qs from 'qs';
@@ -29,7 +28,7 @@ const List = () => {
     const queryString = qs.stringify({ limit: 10, offset: offset, filters: filters, sort: sort });
 
     const [petList, setPetList] = useState<PetList>();
-    const [httpError, setHttpError] = useState<BadRequest | InternalServerError>();
+    const [httpError, setHttpError] = useState<HttpError>();
 
     useEffect(() => {
         fetchPetList(queryString);

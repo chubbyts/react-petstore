@@ -1,5 +1,7 @@
 import BadRequest from '../Type/Error/BadRequest';
+import HttpError from '../Type/Error/HttpError';
 import InternalServerError from '../Type/Error/InternalServerError';
+import NetworkError from '../Type/Error/NetworkError';
 import NotFound from '../Type/Error/NotFound';
 import Pet from '../Type/Pet/Pet';
 import PetList from '../Type/Pet/PetList';
@@ -7,7 +9,7 @@ import UnprocessableEntity from '../Type/Error/UnprocessableEntity';
 
 const url = `${process.env.REACT_APP_PETSTORE_URL}/api/pets`;
 
-export const ListPets = async (queryString: string): Promise<BadRequest | InternalServerError | PetList> => {
+export const ListPets = async (queryString: string): Promise<HttpError | PetList> => {
     try {
         const response = await fetch(`${url}?${queryString}`, {
             method: 'GET',
@@ -30,13 +32,13 @@ export const ListPets = async (queryString: string): Promise<BadRequest | Intern
             return new InternalServerError({ ...json });
         }
     } catch (error) {
-        return new InternalServerError({ title: "Internal Server Error" });
+        return new NetworkError({ title: error.message });
     }
 
     throw new Error('Invalid response');
 };
 
-export const ReadPet = async (id: string): Promise< | InternalServerError | NotFound | Pet> => {
+export const ReadPet = async (id: string): Promise<HttpError | Pet> => {
     try {
         const response = await fetch(`${url}/${id}`, {
             method: 'GET',
@@ -59,13 +61,13 @@ export const ReadPet = async (id: string): Promise< | InternalServerError | NotF
             return new InternalServerError({ ...json });
         }
     } catch (error) {
-        return new InternalServerError({ title: "Internal Server Error" });
+        return new NetworkError({ title: error.message });
     }
 
     throw new Error('Invalid response');
 };
 
-export const CreatePet = async (pet: Pet): Promise<InternalServerError | Pet | UnprocessableEntity> => {
+export const CreatePet = async (pet: Pet): Promise<HttpError | Pet> => {
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -90,13 +92,13 @@ export const CreatePet = async (pet: Pet): Promise<InternalServerError | Pet | U
             return new InternalServerError({ ...json });
         }
     } catch (error) {
-        return new InternalServerError({ title: "Internal Server Error" });
+        return new NetworkError({ title: error.message });
     }
 
     throw new Error('Invalid response');
 };
 
-export const UpdatePet = async (pet: Pet): Promise<InternalServerError | NotFound | Pet | UnprocessableEntity> => {
+export const UpdatePet = async (pet: Pet): Promise<HttpError | Pet> => {
     try {
         const response = await fetch(`${url}/${pet.id}`, {
             method: 'PUT',
@@ -125,13 +127,13 @@ export const UpdatePet = async (pet: Pet): Promise<InternalServerError | NotFoun
             return new InternalServerError({ ...json });
         }
     } catch (error) {
-        return new InternalServerError({ title: "Internal Server Error" });
+        return new NetworkError({ title: error.message });
     }
 
     throw new Error('Invalid response');
 };
 
-export const DeletePet = async (pet: Pet): Promise<InternalServerError | NotFound | undefined> => {
+export const DeletePet = async (pet: Pet): Promise<HttpError | Pet | undefined> => {
     try {
         const response = await fetch(`${url}/${pet.id}`, {
             method: 'DELETE',
@@ -154,7 +156,7 @@ export const DeletePet = async (pet: Pet): Promise<InternalServerError | NotFoun
             return new InternalServerError({ ...json });
         }
     } catch (error) {
-        return new InternalServerError({ title: "Internal Server Error" });
+        return new NetworkError({ title: error.message });
     }
 
     throw new Error('Invalid response');

@@ -7,8 +7,6 @@ import { ReadPet } from '../../../ApiClient/Pet';
 import Empty from '../Empty';
 import HttpError from '../../../Type/Error/HttpError';
 import HttpErrorPartial from '../../Partial/HttpError';
-import InternalServerError from '../../../Type/Error/InternalServerError';
-import NotFound from '../../../Type/Error/NotFound';
 import Pet from '../../../Type/Pet/Pet';
 
 const Read = ({ match }: RouteComponentProps<{ id: string; }>) => {
@@ -16,7 +14,7 @@ const Read = ({ match }: RouteComponentProps<{ id: string; }>) => {
     const id = match.params.id;
 
     const [pet, setPet] = useState<Pet>();
-    const [httpError, setHttpError] = useState<NotFound | InternalServerError>();
+    const [httpError, setHttpError] = useState<HttpError>();
 
     useEffect(() => {
         fetchPet(id);

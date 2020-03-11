@@ -4,7 +4,6 @@ import { CreatePet } from '../../../ApiClient/Pet';
 import { Link, useHistory } from 'react-router-dom';
 import HttpError from '../../../Type/Error/HttpError';
 import HttpErrorPartial from '../../Partial/HttpError';
-import InternalServerError from '../../../Type/Error/InternalServerError';
 import Pet from '../../../Type/Pet/Pet';
 import PetForm from '../../Form/PetForm';
 import UnprocessableEntity from '../../../Type/Error/UnprocessableEntity';
@@ -13,7 +12,7 @@ const Create = () => {
 
     const history = useHistory();
 
-    const [httpError, setHttpError] = useState<InternalServerError | UnprocessableEntity>();
+    const [httpError, setHttpError] = useState<HttpError>();
 
     document.title = 'Create Pet';
 
