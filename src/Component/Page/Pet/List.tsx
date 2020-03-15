@@ -5,7 +5,6 @@ import { format } from 'date-fns';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { ListPets, DeletePet } from '../../../ApiClient/Pet';
 import BadRequest from '../../../Type/Error/BadRequest';
-import Empty from '../../Partial/Empty';
 import HttpError from '../../../Type/Error/HttpError';
 import HttpErrorPartial from '../../Partial/HttpError';
 import Pet from '../../../Type/Pet/Pet';
@@ -70,7 +69,7 @@ const List = () => {
     };
 
     if (!petList && !httpError) {
-        return (<Empty />);
+        return (<main className='ui padded grid'></main>);
     }
 
     return (

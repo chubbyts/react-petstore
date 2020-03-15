@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Button } from 'semantic-ui-react';
 import { Link, RouteComponentProps, useHistory } from 'react-router-dom';
 import { ReadPet, UpdatePet } from '../../../ApiClient/Pet';
-import Empty from '../../Partial/Empty';
 import HttpError from '../../../Type/Error/HttpError';
 import HttpErrorPartial from '../../Partial/HttpError';
 import Pet from '../../../Type/Pet/Pet';
@@ -51,7 +50,7 @@ const Update = ({ match }: props) => {
     };
 
     if (!pet && !httpError) {
-        return (<Empty />);
+        return (<main className='ui padded grid'></main>);
     }
 
     return (
