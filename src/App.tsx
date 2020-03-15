@@ -7,11 +7,11 @@ import PetCreate from './Component/Page/Pet/Create';
 import PetRead from './Component/Page/Pet/Read';
 import PetUpdate from './Component/Page/Pet/Update';
 import NotFound from './Component/Page/NotFound';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 const App = () => {
     return (
-        <Router>
+        <BrowserRouter>
             <Top />
             <div className='ui padded grid'>
                 <Left />
@@ -29,7 +29,7 @@ const App = () => {
                     </Switch>
                 </div>
             </div>
-        </Router>
+        </BrowserRouter>
     );
 };
 
