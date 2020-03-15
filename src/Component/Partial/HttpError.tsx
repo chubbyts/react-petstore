@@ -10,10 +10,11 @@ type props = {
 
 const HttpError = ({ httpError }: props) => {
     return (
-        <div className='row'>
+        <div data-testid='partial-http-error' className='row'>
             <Message negative className='attached segment'>
                 <Message.Header>{httpError.title}</Message.Header>
-                <p>{httpError.detail}</p>
+                {httpError.detail ? (<p>{httpError.detail}</p>): ''}
+                {httpError.instance ? (<p>{httpError.instance}</p>): ''}
                 {httpError instanceof HttpErrorWithInvalidArguments ? (
                     <ul>
                         {httpError.invalidParameters.map((invalidParameter: InvalidParameter, i) => (
