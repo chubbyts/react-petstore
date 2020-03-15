@@ -7,7 +7,7 @@ const Home = () => {
     }, []);
 
     return (
-        <main className='ui padded grid'>
+        <main data-testid='page-home' className='ui padded grid'>
             <div className='row'>
                 <h1 className='ui huge dividing header'>Home</h1>
             </div>

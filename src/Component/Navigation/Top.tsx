@@ -9,7 +9,7 @@ const Top = () => {
     };
 
     return (
-        <nav>
+        <nav data-testid='navigation-top'>
             <div className='ui tablet computer only padded grid'>
                 <div className='ui inverted borderless top fixed fluid menu'>
                     <NavLink to='/' className='header item'>Petstore</NavLink>

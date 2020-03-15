@@ -29,7 +29,7 @@ const Create = () => {
     };
 
     return (
-        <main className='ui padded grid'>
+        <main data-testid='page-pet-create' className='ui padded grid'>
             {httpError instanceof HttpError ? (
                 <HttpErrorPartial httpError={httpError} />
             ) : ''}

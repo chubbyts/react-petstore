@@ -7,7 +7,7 @@ const NotFound = () => {
     }, []);
 
     return (
-        <main className='ui padded grid'>
+        <main data-testid='page-not-found' className='ui padded grid'>
             <div className='row'>
                 <h1 className='ui huge dividing header'>Not Found</h1>
             </div>

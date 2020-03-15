@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from 'semantic-ui-react';
 import { Link, RouteComponentProps, useHistory } from 'react-router-dom';
 import { ReadPet, UpdatePet } from '../../../ApiClient/Pet';
-import Empty from '../Empty';
+import Empty from '../../Partial/Empty';
 import HttpError from '../../../Type/Error/HttpError';
 import HttpErrorPartial from '../../Partial/HttpError';
 import Pet from '../../../Type/Pet/Pet';
@@ -55,7 +55,7 @@ const Update = ({ match }: props) => {
     }
 
     return (
-        <main className='ui padded grid'>
+        <main data-testid='page-pet-update' className='ui padded grid'>
             {httpError instanceof HttpError ? (
                 <HttpErrorPartial httpError={httpError} />
             ) : ''}

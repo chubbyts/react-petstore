@@ -4,7 +4,7 @@ import { de } from 'date-fns/locale';
 import { format } from 'date-fns';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { ReadPet } from '../../../ApiClient/Pet';
-import Empty from '../Empty';
+import Empty from '../../Partial/Empty';
 import HttpError from '../../../Type/Error/HttpError';
 import HttpErrorPartial from '../../Partial/HttpError';
 import Pet from '../../../Type/Pet/Pet';
@@ -40,7 +40,7 @@ const Read = ({ match }: props) => {
     }
 
     return (
-        <main className='ui padded grid'>
+        <main data-testid='page-pet-read' className='ui padded grid'>
             {httpError instanceof HttpError ? (
                 <HttpErrorPartial httpError={httpError} />
             ) : ''}
