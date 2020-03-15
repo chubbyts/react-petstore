@@ -1,7 +1,6 @@
 import React from 'react';
+import ReactRouterDom from 'react-router-dom';
 
-const reactRouterDom = require('react-router-dom');
+ReactRouterDom.BrowserRouter = ({children}) => <div>{children}</div>
 
-reactRouterDom.BrowserRouter = ({children}) => <div>{children}</div>
-
-module.exports = reactRouterDom;
+module.exports = ReactRouterDom;
