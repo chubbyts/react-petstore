@@ -6,7 +6,13 @@ import InvalidParameter from '../../Type/Error/InvalidParameter';
 import InvalidParameterByNameDenormalizer from '../../Denormalizer/InvalidParameterByNameDenormalizer';
 import TextInput from './TextInput';
 
-const PetFilterForm = ({ submitPetFilter, filters, error }: { submitPetFilter: { (filters: any): any; }; filters?: any; error?: BadRequest }) => {
+type props = {
+    submitPetFilter: { (filters: any): any; },
+    filters?: any,
+    error?: BadRequest
+};
+
+const PetFilterForm = ({ submitPetFilter, filters, error }: props) => {
     const invalidParameterByNameDenormalized = InvalidParameterByNameDenormalizer(error ? error.invalidParameters : []);
 
     return (

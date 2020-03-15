@@ -4,7 +4,11 @@ import HttpErrorType from '../../Type/Error/HttpError';
 import HttpErrorWithInvalidArguments from '../../Type/Error/HttpErrorWithInvalidArguments';
 import InvalidParameter from '../../Type/Error/InvalidParameter';
 
-const HttpError = ({ httpError }: { httpError: HttpErrorType; }) => {
+type props = {
+    httpError: HttpErrorType
+};
+
+const HttpError = ({ httpError }: props) => {
     return (
         <div className='row'>
             <Message negative className='attached segment'>

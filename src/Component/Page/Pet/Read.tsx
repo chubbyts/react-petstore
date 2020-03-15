@@ -9,7 +9,9 @@ import HttpError from '../../../Type/Error/HttpError';
 import HttpErrorPartial from '../../Partial/HttpError';
 import Pet from '../../../Type/Pet/Pet';
 
-const Read = ({ match }: RouteComponentProps<{ id: string; }>) => {
+type props = RouteComponentProps<{ id: string; }>;
+
+const Read = ({ match }: props) => {
 
     const id = match.params.id;
 

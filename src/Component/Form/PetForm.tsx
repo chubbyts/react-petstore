@@ -1,16 +1,22 @@
 import React from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import { FieldArray as FinalFormFieldArray } from 'react-final-form-arrays';
-import { Form as FinalForm, Field as FinalFormField } from 'react-final-form';
+import { Form as FinalForm } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import FieldArrayRenderProps from '../../Type/Form/FieldArrayRenderProps';
-import InvalidParameter from '../../Type/Error/InvalidParameter';
 import InvalidParameterByNameDenormalizer from '../../Denormalizer/InvalidParameterByNameDenormalizer';
 import Pet from '../../Type/Pet/Pet';
 import TextInput from './TextInput';
 import UnprocessableEntity from '../../Type/Error/UnprocessableEntity';
+import FormField from './FormField';
 
-const PetForm = ({ submitPet, pet, error }: { submitPet: { (pet: Pet): any; }; pet?: Pet; error?: UnprocessableEntity }) => {
+type props = {
+    submitPet: { (pet: Pet): any; },
+    pet?: Pet,
+    error?: UnprocessableEntity
+};
+
+const PetForm = ({ submitPet, pet, error }: props) => {
     const invalidParameterByNameDenormalized = InvalidParameterByNameDenormalizer(error ? error.invalidParameters : []);
 
     return (
@@ -28,32 +34,14 @@ const PetForm = ({ submitPet, pet, error }: { submitPet: { (pet: Pet): any; }; p
                 form
             }) => (
                     <Form onSubmit={handleSubmit}>
-                        <Form.Field className={invalidParameterByNameDenormalized.name && ' error'}>
-                            <label>Name</label>
-                            <FinalFormField<string>
-                                name='name'
-                                component={TextInput}
-                            />
-                            {invalidParameterByNameDenormalized.name && invalidParameterByNameDenormalized.name.map((invalidParameter: InvalidParameter, i) => (
-                                <div key={i} className='ui pointing red basic label'>{invalidParameter.reason}</div>
-                            ))}
-                        </Form.Field>
+                        <FormField name='name' label='Name' component={TextInput} invalidParameters={invalidParameterByNameDenormalized.name ?? []} />
                         <Form.Field>
                             <label>Vaccination</label>
                             <FinalFormFieldArray name='vaccinations'>
                                 {({ fields }: FieldArrayRenderProps) =>
                                     fields.map((name: string, i: number) => (
                                         <div key={i} className='ui bottom attached segment'>
-                                            <Form.Field className={invalidParameterByNameDenormalized[`${name}.name`] && ' error'}>
-                                                <label>Name</label>
-                                                <FinalFormField
-                                                    name={`${name}.name`}
-                                                    component={TextInput}
-                                                />
-                                                {invalidParameterByNameDenormalized[`${name}.name`] && invalidParameterByNameDenormalized[`${name}.name`].map((invalidParameter: InvalidParameter, i) => (
-                                                    <div key={i} className='ui pointing red basic label'>{invalidParameter.reason}</div>
-                                                ))}
-                                            </Form.Field>
+                                            <FormField name={`${name}.name`} label='Name' component={TextInput} invalidParameters={invalidParameterByNameDenormalized[`${name}.name`] ?? []} />
                                             <Form.Field>
                                                 <button type='button' className='ui button red' onClick={() => fields.remove(i)}>Remove</button>
                                             </Form.Field>
