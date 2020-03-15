@@ -4,6 +4,8 @@ import { render, waitForElement } from '@testing-library/react';
 import * as ApiClientPet from './ApiClient/Pet';
 import App from './App';
 
+jest.mock('./ApiClient/Pet');
+
 test('navigations', async () => {
     const { getByTestId, queryByTestId } = render(
         <MemoryRouter>
@@ -56,11 +58,9 @@ test('not found', async () => {
 });
 
 test('pet list', async () => {
-    ApiClientPet.ListPets = () => {
-        return new Promise((resolve) => {
-            resolve({ offset: 0, limit: 20, count: 0, _embedded: { items: [] }, _links: { create: {} } });
-        });
-    };
+    ApiClientPet.ListPets.mockResolvedValueOnce(new Promise((resolve) => {
+        resolve({ offset: 0, limit: 20, count: 0, _embedded: { items: [] }, _links: { create: {} } });
+    }));
 
     const { getByTestId, queryByTestId } = render(
         <MemoryRouter initialEntries={['/pet']}>
@@ -102,15 +102,13 @@ test('pet create', async () => {
 });
 
 test('pet read', async () => {
-    ApiClientPet.ReadPet = () => {
-        return new Promise((resolve) => {
-            resolve({
-                name: 'Black Beauty',
-                createdAt: new Date(),
-                vaccinations: []
-            });
+    ApiClientPet.ReadPet.mockResolvedValueOnce(new Promise((resolve) => {
+        resolve({
+            name: 'Black Beauty',
+            createdAt: new Date(),
+            vaccinations: []
         });
-    };
+    }));
 
     const { getByTestId, queryByTestId } = render(
         <MemoryRouter initialEntries={['/pet/4d783b77-eb09-4603-b99b-f590b605eaa9']}>
@@ -132,15 +130,13 @@ test('pet read', async () => {
 });
 
 test('pet update', async () => {
-    ApiClientPet.ReadPet = () => {
-        return new Promise((resolve) => {
-            resolve({
-                name: 'Black Beauty',
-                createdAt: new Date(),
-                vaccinations: []
-            });
+    ApiClientPet.ReadPet.mockResolvedValueOnce(new Promise((resolve) => {
+        resolve({
+            name: 'Black Beauty',
+            createdAt: new Date(),
+            vaccinations: []
         });
-    };
+    }));
 
     const { getByTestId, queryByTestId } = render(
         <MemoryRouter initialEntries={['/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update']}>
