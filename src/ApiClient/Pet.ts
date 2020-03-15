@@ -35,36 +35,7 @@ export const ListPets = async (queryString: string): Promise<HttpError | PetList
         return new NetworkError({ title: error.message });
     }
 
-    throw new Error('Invalid response');
-};
-
-export const ReadPet = async (id: string): Promise<HttpError | Pet> => {
-    try {
-        const response = await fetch(`${url}/${id}`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
-
-        const json = await response.json();
-
-        if (200 === response.status) {
-            return json;
-        }
-
-        if (404 === response.status) {
-            return new NotFound({ ...json });
-        }
-
-        if (500 === response.status) {
-            return new InternalServerError({ ...json });
-        }
-    } catch (error) {
-        return new NetworkError({ title: error.message });
-    }
-
-    throw new Error('Invalid response');
+    throw new Error('Unknown response');
 };
 
 export const CreatePet = async (pet: Pet): Promise<HttpError | Pet> => {
@@ -95,7 +66,36 @@ export const CreatePet = async (pet: Pet): Promise<HttpError | Pet> => {
         return new NetworkError({ title: error.message });
     }
 
-    throw new Error('Invalid response');
+    throw new Error('Unknown response');
+};
+
+export const ReadPet = async (id: string): Promise<HttpError | Pet> => {
+    try {
+        const response = await fetch(`${url}/${id}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+        const json = await response.json();
+
+        if (200 === response.status) {
+            return json;
+        }
+
+        if (404 === response.status) {
+            return new NotFound({ ...json });
+        }
+
+        if (500 === response.status) {
+            return new InternalServerError({ ...json });
+        }
+    } catch (error) {
+        return new NetworkError({ title: error.message });
+    }
+
+    throw new Error('Unknown response');
 };
 
 export const UpdatePet = async (pet: Pet): Promise<HttpError | Pet> => {
@@ -130,7 +130,7 @@ export const UpdatePet = async (pet: Pet): Promise<HttpError | Pet> => {
         return new NetworkError({ title: error.message });
     }
 
-    throw new Error('Invalid response');
+    throw new Error('Unknown response');
 };
 
 export const DeletePet = async (pet: Pet): Promise<HttpError | Pet | undefined> => {
@@ -159,5 +159,5 @@ export const DeletePet = async (pet: Pet): Promise<HttpError | Pet | undefined> 
         return new NetworkError({ title: error.message });
     }
 
-    throw new Error('Invalid response');
+    throw new Error('Unknown response');
 };
