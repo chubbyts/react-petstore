@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, waitForElement } from '@testing-library/react';
-import HttpErrorWithInvalidArguments from '../../Type/Error/HttpErrorWithInvalidArguments';
-import HttpError from './HttpError';
+import HttpErrorWithInvalidArguments from '../../../Type/Error/HttpErrorWithInvalidArguments';
+import HttpError from '../../../Component/Partial/HttpError';
 
 test('http error', async () => {
     const httpError = new HttpErrorWithInvalidArguments({

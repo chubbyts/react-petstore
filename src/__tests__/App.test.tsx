@@ -1,10 +1,10 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { render, waitForElement } from '@testing-library/react';
-import * as ApiClientPet from './ApiClient/Pet';
-import App from './App';
+import * as ApiClientPet from '../ApiClient/Pet';
+import App from '../App';
 
-jest.mock('./ApiClient/Pet');
+jest.mock('../ApiClient/Pet');
 
 test('navigations', async () => {
     const { getByTestId, queryByTestId } = render(

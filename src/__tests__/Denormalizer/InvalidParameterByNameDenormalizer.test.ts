@@ -1,4 +1,4 @@
-import InvalidParameterByNameDenormalizer from './InvalidParameterByNameDenormalizer';
+import InvalidParameterByNameDenormalizer from '../../Denormalizer/InvalidParameterByNameDenormalizer';
 
 test('denormalize', () => {
     const invalidParameters = [
