@@ -19,8 +19,6 @@ test('http error', async () => {
         getByTestId('partial-http-error')
     );
 
-    expect(partialHttpError).toBeInTheDocument();
-
     expect(partialHttpError.innerHTML).toBe(`
         <div class="ui negative message attached segment">
             <div class="header">This is the title</div>
