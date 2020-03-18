@@ -3,7 +3,7 @@ import { render, waitForElement } from '@testing-library/react';
 import HttpErrorWithInvalidArguments from '../../../Type/Error/HttpErrorWithInvalidArguments';
 import HttpError from '../../../Component/Partial/HttpError';
 
-test('http error', async () => {
+test('default', async () => {
     const httpError = new HttpErrorWithInvalidArguments({
         title: 'This is the title',
         detail: 'This is the detail',
@@ -19,14 +19,16 @@ test('http error', async () => {
         getByTestId('partial-http-error')
     );
 
-    expect(partialHttpError.innerHTML).toBe(`
-        <div class="ui negative message attached segment">
-            <div class="header">This is the title</div>
-            <p>This is the detail</p>
-            <p>This is the instance</p>
-            <ul>
-                <li><strong>Invalid Parameter Name</strong>: Invalid Parameter Reason</li>
-            </ul>
+    expect(partialHttpError.outerHTML).toBe(`
+        <div data-testid="partial-http-error" class="row">
+            <div class="ui negative message attached segment">
+                <div class="header">This is the title</div>
+                <p>This is the detail</p>
+                <p>This is the instance</p>
+                <ul>
+                    <li><strong>Invalid Parameter Name</strong>: Invalid Parameter Reason</li>
+                </ul>
+            </div>
         </div>
     `.replace(/\n {2,}/g, ''));
 });

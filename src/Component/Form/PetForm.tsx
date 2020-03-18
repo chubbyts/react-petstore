@@ -4,19 +4,13 @@ import { FieldArray as FinalFormFieldArray } from 'react-final-form-arrays';
 import { Form as FinalForm } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import FieldArrayRenderProps from '../../Type/Form/FieldArrayRenderProps';
+import FormField from './FormField';
 import InvalidParameterByNameDenormalizer from '../../Denormalizer/InvalidParameterByNameDenormalizer';
 import Pet from '../../Type/Pet/Pet';
+import PetFormProps from '../../Type/Props/PetFormProps';
 import TextInput from './TextInput';
-import UnprocessableEntity from '../../Type/Error/UnprocessableEntity';
-import FormField from './FormField';
 
-type props = {
-    submitPet: { (pet: Pet): any; },
-    pet?: Pet,
-    error?: UnprocessableEntity
-};
-
-const PetForm = ({ submitPet, pet, error }: props) => {
+const PetForm = ({ submitPet, pet, error }: PetFormProps) => {
     const invalidParameterByNameDenormalized = InvalidParameterByNameDenormalizer(error ? error.invalidParameters : []);
 
     return (

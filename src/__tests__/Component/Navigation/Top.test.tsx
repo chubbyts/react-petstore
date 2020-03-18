@@ -3,8 +3,7 @@ import { fireEvent, render, waitForElement, act } from '@testing-library/react';
 import Top from '../../../Component/Navigation/Top';
 import { MemoryRouter } from 'react-router-dom';
 
-test('home', async () => {
-
+test('default', async () => {
     const { getByTestId } = render(
         <MemoryRouter>
             <Top />
@@ -39,8 +38,7 @@ test('home', async () => {
     `.replace(/\n {2,}/g, ''));
 });
 
-test('home open', async () => {
-
+test('toggle', async () => {
     const { getByTestId } = render(
         <MemoryRouter>
             <Top />
@@ -78,7 +76,6 @@ test('home open', async () => {
 });
 
 test('pet', async () => {
-
     const { getByTestId } = render(
         <MemoryRouter initialEntries={['/pet']}>
             <Top />

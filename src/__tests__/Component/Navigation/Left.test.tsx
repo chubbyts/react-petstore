@@ -3,8 +3,7 @@ import { render, waitForElement } from '@testing-library/react';
 import Left from '../../../Component/Navigation/Left';
 import { MemoryRouter } from 'react-router-dom';
 
-test('home', async () => {
-
+test('default', async () => {
     const { getByTestId } = render(
         <MemoryRouter>
             <Left />
@@ -25,7 +24,6 @@ test('home', async () => {
 });
 
 test('pet', async () => {
-
     const { getByTestId } = render(
         <MemoryRouter initialEntries={['/pet']}>
             <Left />
