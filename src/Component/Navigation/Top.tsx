@@ -20,12 +20,12 @@ const Top = () => {
                     <NavLink to='/' className='header item'>Petstore</NavLink>
                     <div className='right menu'>
                         <div className='item'>
-                            <button className='ui icon toggle basic inverted button' onClick={toggleMenu}>
+                            <button data-testid='navigation-top-toggle' className='ui icon toggle basic inverted button' onClick={toggleMenu}>
                                 <i className='content icon'></i>
                             </button>
                         </div>
                     </div>
-                    <div className={`ui vertical borderless inverted fluid menu ${displayMenu && ' visible'}`}>
+                    <div className={`ui vertical borderless inverted fluid menu${displayMenu ? ' visible' : ''}`}>
                         <NavLink to='/pet' onClick={toggleMenu} className='item'>Pet</NavLink>
                     </div>
                 </div>
