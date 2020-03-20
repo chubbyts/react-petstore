@@ -1,10 +1,56 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { render, waitForElement } from '@testing-library/react';
-import * as ApiClientPet from '../ApiClient/Pet';
 import App from '../App';
 
-jest.mock('../ApiClient/Pet');
+jest.mock('../Component/Navigation/Left', () => {
+    return () => {
+        return (<div data-testid="navigation-left-mock"></div>);
+    };
+});
+
+jest.mock('../Component/Navigation/Top', () => {
+    return () => {
+        return (<div data-testid="navigation-top-mock"></div>);
+    };
+});
+
+jest.mock('../Component/Page/Home', () => {
+    return () => {
+        return (<div data-testid="page-home-mock"></div>);
+    };
+});
+
+jest.mock('../Component/Page/Pet/List', () => {
+    return () => {
+        return (<div data-testid="page-pet-list-mock"></div>);
+    };
+});
+
+
+jest.mock('../Component/Page/Pet/Create', () => {
+    return () => {
+        return (<div data-testid="page-pet-create-mock"></div>);
+    };
+});
+
+jest.mock('../Component/Page/Pet/Read', () => {
+    return () => {
+        return (<div data-testid="page-pet-read-mock"></div>);
+    };
+});
+
+jest.mock('../Component/Page/Pet/Update', () => {
+    return () => {
+        return (<div data-testid="page-pet-update-mock"></div>);
+    };
+});
+
+jest.mock('../Component/Page/NotFound', () => {
+    return () => {
+        return (<div data-testid="page-not-found-mock"></div>);
+    };
+});
 
 test('navigations', async () => {
     const { getByTestId, queryByTestId } = render(
@@ -13,8 +59,8 @@ test('navigations', async () => {
         </MemoryRouter>
     );
 
-    expect(getByTestId('navigation-top')).toBeInTheDocument();
-    expect(getByTestId('navigation-left')).toBeInTheDocument();
+    expect(getByTestId('navigation-top-mock')).toBeInTheDocument();
+    expect(getByTestId('navigation-left-mock')).toBeInTheDocument();
 });
 
 test('home page', async () => {
@@ -25,16 +71,16 @@ test('home page', async () => {
     );
 
     const pageHome = await waitForElement(() =>
-        getByTestId('page-home')
+        getByTestId('page-home-mock')
     );
 
     expect(pageHome).toBeInTheDocument();
 
-    expect(queryByTestId('page-pet-list')).toBeNull();
-    expect(queryByTestId('page-pet-create')).toBeNull();
-    expect(queryByTestId('page-pet-read')).toBeNull();
-    expect(queryByTestId('page-pet-update')).toBeNull();
-    expect(queryByTestId('page-not-found')).toBeNull();
+    expect(queryByTestId('page-pet-list-mock')).toBeNull();
+    expect(queryByTestId('page-pet-create-mock')).toBeNull();
+    expect(queryByTestId('page-pet-read-mock')).toBeNull();
+    expect(queryByTestId('page-pet-update-mock')).toBeNull();
+    expect(queryByTestId('page-not-found-mock')).toBeNull();
 });
 
 test('not found', async () => {
@@ -45,23 +91,19 @@ test('not found', async () => {
     );
 
     const pageNotFound = await waitForElement(() =>
-        getByTestId('page-not-found')
+        getByTestId('page-not-found-mock')
     );
 
     expect(pageNotFound).toBeInTheDocument();
 
-    expect(queryByTestId('page-home')).toBeNull();
-    expect(queryByTestId('page-pet-list')).toBeNull();
-    expect(queryByTestId('page-pet-create')).toBeNull();
-    expect(queryByTestId('page-pet-read')).toBeNull();
-    expect(queryByTestId('page-pet-update')).toBeNull();
+    expect(queryByTestId('page-home-mock')).toBeNull();
+    expect(queryByTestId('page-pet-list-mock')).toBeNull();
+    expect(queryByTestId('page-pet-create-mock')).toBeNull();
+    expect(queryByTestId('page-pet-read-mock')).toBeNull();
+    expect(queryByTestId('page-pet-update-mock')).toBeNull();
 });
 
 test('pet list', async () => {
-    ApiClientPet.ListPets.mockResolvedValueOnce(new Promise((resolve) => {
-        resolve({ offset: 0, limit: 20, count: 0, _embedded: { items: [] }, _links: { create: {} } });
-    }));
-
     const { getByTestId, queryByTestId } = render(
         <MemoryRouter initialEntries={['/pet']}>
             <App />
@@ -69,16 +111,16 @@ test('pet list', async () => {
     );
 
     const pagePetList = await waitForElement(() =>
-        getByTestId('page-pet-list')
+        getByTestId('page-pet-list-mock')
     );
 
     expect(pagePetList).toBeInTheDocument();
 
-    expect(queryByTestId('page-home')).toBeNull();
-    expect(queryByTestId('page-pet-create')).toBeNull();
-    expect(queryByTestId('page-pet-read')).toBeNull();
-    expect(queryByTestId('page-pet-update')).toBeNull();
-    expect(queryByTestId('page-not-found')).toBeNull();
+    expect(queryByTestId('page-home-mock')).toBeNull();
+    expect(queryByTestId('page-pet-create-mock')).toBeNull();
+    expect(queryByTestId('page-pet-read-mock')).toBeNull();
+    expect(queryByTestId('page-pet-update-mock')).toBeNull();
+    expect(queryByTestId('page-not-found-mock')).toBeNull();
 });
 
 test('pet create', async () => {
@@ -89,27 +131,19 @@ test('pet create', async () => {
     );
 
     const pagePetList = await waitForElement(() =>
-        getByTestId('page-pet-create')
+        getByTestId('page-pet-create-mock')
     );
 
     expect(pagePetList).toBeInTheDocument();
 
-    expect(queryByTestId('page-home')).toBeNull();
-    expect(queryByTestId('page-pet-list')).toBeNull();
-    expect(queryByTestId('page-pet-read')).toBeNull();
-    expect(queryByTestId('page-pet-update')).toBeNull();
-    expect(queryByTestId('page-not-found')).toBeNull();
+    expect(queryByTestId('page-home-mock')).toBeNull();
+    expect(queryByTestId('page-pet-list-mock')).toBeNull();
+    expect(queryByTestId('page-pet-read-mock')).toBeNull();
+    expect(queryByTestId('page-pet-update-mock')).toBeNull();
+    expect(queryByTestId('page-not-found-mock')).toBeNull();
 });
 
 test('pet read', async () => {
-    ApiClientPet.ReadPet.mockResolvedValueOnce(new Promise((resolve) => {
-        resolve({
-            name: 'Black Beauty',
-            createdAt: new Date(),
-            vaccinations: []
-        });
-    }));
-
     const { getByTestId, queryByTestId } = render(
         <MemoryRouter initialEntries={['/pet/4d783b77-eb09-4603-b99b-f590b605eaa9']}>
             <App />
@@ -117,27 +151,19 @@ test('pet read', async () => {
     );
 
     const pagePetList = await waitForElement(() =>
-        getByTestId('page-pet-read')
+        getByTestId('page-pet-read-mock')
     );
 
     expect(pagePetList).toBeInTheDocument();
 
-    expect(queryByTestId('page-home')).toBeNull();
-    expect(queryByTestId('page-pet-list')).toBeNull();
-    expect(queryByTestId('page-pet-create')).toBeNull();
-    expect(queryByTestId('page-pet-update')).toBeNull();
-    expect(queryByTestId('page-not-found')).toBeNull();
+    expect(queryByTestId('page-home-mock')).toBeNull();
+    expect(queryByTestId('page-pet-list-mock')).toBeNull();
+    expect(queryByTestId('page-pet-create-mock')).toBeNull();
+    expect(queryByTestId('page-pet-update-mock')).toBeNull();
+    expect(queryByTestId('page-not-found-mock')).toBeNull();
 });
 
 test('pet update', async () => {
-    ApiClientPet.ReadPet.mockResolvedValueOnce(new Promise((resolve) => {
-        resolve({
-            name: 'Black Beauty',
-            createdAt: new Date(),
-            vaccinations: []
-        });
-    }));
-
     const { getByTestId, queryByTestId } = render(
         <MemoryRouter initialEntries={['/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update']}>
             <App />
@@ -145,14 +171,14 @@ test('pet update', async () => {
     );
 
     const pagePetList = await waitForElement(() =>
-        getByTestId('page-pet-update')
+        getByTestId('page-pet-update-mock')
     );
 
     expect(pagePetList).toBeInTheDocument();
 
-    expect(queryByTestId('page-home')).toBeNull();
-    expect(queryByTestId('page-pet-list')).toBeNull();
-    expect(queryByTestId('page-pet-create')).toBeNull();
-    expect(queryByTestId('page-pet-read')).toBeNull();
-    expect(queryByTestId('page-not-found')).toBeNull();
+    expect(queryByTestId('page-home-mock')).toBeNull();
+    expect(queryByTestId('page-pet-list-mock')).toBeNull();
+    expect(queryByTestId('page-pet-create-mock')).toBeNull();
+    expect(queryByTestId('page-pet-read-mock')).toBeNull();
+    expect(queryByTestId('page-not-found-mock')).toBeNull();
 });
