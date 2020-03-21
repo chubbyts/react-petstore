@@ -9,7 +9,7 @@ import PetUpdate from './Component/Page/Pet/Update';
 import NotFound from './Component/Page/NotFound';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-const App = () => {
+const App: React.FC = () => {
     return (
         <BrowserRouter>
             <Top />

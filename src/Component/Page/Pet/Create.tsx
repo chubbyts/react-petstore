@@ -8,7 +8,7 @@ import Pet from '../../../Type/Pet/Pet';
 import PetForm from '../../Form/PetForm';
 import UnprocessableEntity from '../../../Type/Error/UnprocessableEntity';
 
-const Create = () => {
+const Create: React.FC = () => {
 
     const history = useHistory();
 
@@ -29,7 +29,7 @@ const Create = () => {
     };
 
     return (
-        <main data-testid='page-pet-create' className='ui padded grid'>
+        <main className='ui padded grid'>
             {httpError instanceof HttpError ? (
                 <HttpErrorPartial httpError={httpError} />
             ) : ''}

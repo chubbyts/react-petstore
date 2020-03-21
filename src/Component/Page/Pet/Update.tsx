@@ -8,9 +8,9 @@ import Pet from '../../../Type/Pet/Pet';
 import PetForm from '../../Form/PetForm';
 import UnprocessableEntity from '../../../Type/Error/UnprocessableEntity';
 
-type props = RouteComponentProps<{ id: string; }>;
+type Props = RouteComponentProps<{ id: string; }>;
 
-const Update = ({ match }: props) => {
+const Update: React.FC<Props> = ({ match }: Props) => {
 
     const id = match.params.id;
 

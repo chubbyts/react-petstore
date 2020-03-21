@@ -7,10 +7,10 @@ import FieldArrayRenderProps from '../../Type/Form/FieldArrayRenderProps';
 import FormField from './FormField';
 import InvalidParameterByNameDenormalizer from '../../Denormalizer/InvalidParameterByNameDenormalizer';
 import Pet from '../../Type/Pet/Pet';
-import PetFormProps from '../../Type/Props/PetFormProps';
+import PetFormProps from '../../Type/Form/PetFormProps';
 import TextInput from './TextInput';
 
-const PetForm = ({ submitPet, pet, error }: PetFormProps) => {
+const PetForm: React.FC<PetFormProps> = ({ submitPet, pet, error }: PetFormProps) => {
     const invalidParameterByNameDenormalized = InvalidParameterByNameDenormalizer(error ? error.invalidParameters : []);
 
     return (
@@ -37,15 +37,15 @@ const PetForm = ({ submitPet, pet, error }: PetFormProps) => {
                                         <div key={i} className='ui bottom attached segment'>
                                             <FormField name={`${name}.name`} label='Name' component={TextInput} invalidParameters={invalidParameterByNameDenormalized[`${name}.name`] ?? []} />
                                             <Form.Field>
-                                                <button type='button' className='ui button red' onClick={() => fields.remove(i)}>Remove</button>
+                                                <button data-testid={`remove-vaccination-${i}`} type='button' className='ui button red' onClick={() => fields.remove(i)}>Remove</button>
                                             </Form.Field>
                                         </div>
                                     ))
                                 }
                             </FinalFormFieldArray>
-                            <button type='button' className='ui button green' onClick={() => push('vaccinations', undefined)}>Add</button>
+                            <button data-testid='add-vaccination' type='button' className='ui button green' onClick={() => push('vaccinations', undefined)}>Add</button>
                         </Form.Field>
-                        <Button onClick={form.submit} className='blue'>Submit</Button>
+                        <Button data-testid="submit-pet" onClick={form.submit} className='blue'>Submit</Button>
                     </Form>
                 )}
         />

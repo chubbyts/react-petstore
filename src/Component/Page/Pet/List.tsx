@@ -12,7 +12,7 @@ import PetList from '../../../Type/Pet/PetList';
 import qs from 'qs';
 import PetFilterForm from '../../Form/PetFilterForm';
 
-const List = () => {
+const List: React.FC = () => {
 
     const history = useHistory();
     const location = useLocation();

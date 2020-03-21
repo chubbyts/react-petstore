@@ -6,7 +6,7 @@ import * as ApiClientPet from '../../../../ApiClient/Pet';
 import Create from '../../../../Component/Page/Pet/Create';
 import HttpError from '../../../../Type/Error/HttpError';
 import Pet from '../../../../Type/Pet/Pet';
-import PetFormProps from '../../../../Type/Props/PetFormProps';
+import PetFormProps from '../../../../Type/Form/PetFormProps';
 import UnprocessableEntity from '../../../../Type/Error/UnprocessableEntity';
 
 jest.mock('../../../../ApiClient/Pet');
@@ -27,25 +27,23 @@ jest.mock('../../../../Component/Partial/HttpError', () => {
     };
 });
 
-test('default', async () => {
+test('default', () => {
     const history = createMemoryHistory();
 
-    const { getByTestId } = render(
+    const { container } = render(
         <Router history={history}>
             <Create />
         </Router>
     );
 
-    const navigationLeft = await waitForElement(() =>
-        getByTestId('page-pet-create')
-    );
-
-    expect(navigationLeft.outerHTML).toBe(`
-        <main data-testid="page-pet-create" class="ui padded grid">
-            <div class="row"><h1 class="ui huge dividing header">Create Pet</h1></div>
-            <div class="row"><div class="ui attached segment"><button data-testid="test-button"></button></div></div>
-            <div class="row"><a class="ui button" role="button" href="/pet">List</a></div>
-        </main>
+    expect(container.outerHTML).toBe(`
+        <div>
+            <main class="ui padded grid">
+                <div class="row"><h1 class="ui huge dividing header">Create Pet</h1></div>
+                <div class="row"><div class="ui attached segment"><button data-testid="test-button"></button></div></div>
+                <div class="row"><a class="ui button" role="button" href="/pet">List</a></div>
+            </main>
+        </div>
     `.replace(/\n {2,}/g, ''));
 });
 
@@ -56,29 +54,27 @@ test('unprocessable entity', async () => {
 
     const history = createMemoryHistory();
 
-    const { getByTestId } = render(
+    const { container, getByTestId } = render(
         <Router history={history}>
             <Create />
         </Router>
     );
 
-    const testButton = await waitForElement(() =>
+    fireEvent.click(getByTestId('test-button'));
+
+    await waitForElement(() =>
         getByTestId('test-button')
     );
 
-    fireEvent.click(testButton);
-
-    const navigationLeft = await waitForElement(() =>
-        getByTestId('page-pet-create')
-    );
-
-    expect(navigationLeft.outerHTML).toBe(`
-        <main data-testid="page-pet-create" class="ui padded grid">
-            <div class="row">httpError: title</div>
-            <div class="row"><h1 class="ui huge dividing header">Create Pet</h1></div>
-            <div class="row"><div class="ui attached segment"><button data-testid="test-button"></button></div></div>
-            <div class="row"><a class="ui button" role="button" href="/pet">List</a></div>
-        </main>
+    expect(container.outerHTML).toBe(`
+        <div>
+            <main class="ui padded grid">
+                <div class="row">httpError: title</div>
+                <div class="row"><h1 class="ui huge dividing header">Create Pet</h1></div>
+                <div class="row"><div class="ui attached segment"><button data-testid="test-button"></button></div></div>
+                <div class="row"><a class="ui button" role="button" href="/pet">List</a></div>
+            </main>
+        </div>
     `.replace(/\n {2,}/g, ''));
 });
 
@@ -89,30 +85,28 @@ test('successful', async () => {
 
     const history = createMemoryHistory();
 
-    const { getByTestId } = render(
+    const { container, getByTestId } = render(
         <Router history={history}>
             <Create />
         </Router>
     );
 
-    const testButton = await waitForElement(() =>
+    expect(history.location.pathname).toBe('/');
+
+    fireEvent.click(getByTestId('test-button'));
+
+    await waitForElement(() =>
         getByTestId('test-button')
     );
 
-    expect(history.location.pathname).toBe('/');
-
-    fireEvent.click(testButton);
-
-    const navigationLeft = await waitForElement(() =>
-        getByTestId('page-pet-create')
-    );
-
-    expect(navigationLeft.outerHTML).toBe(`
-        <main data-testid="page-pet-create" class="ui padded grid">
-            <div class="row"><h1 class="ui huge dividing header">Create Pet</h1></div>
-            <div class="row"><div class="ui attached segment"><button data-testid="test-button"></button></div></div>
-            <div class="row"><a class="ui button" role="button" href="/pet">List</a></div>
-        </main>
+    expect(container.outerHTML).toBe(`
+        <div>
+            <main class="ui padded grid">
+                <div class="row"><h1 class="ui huge dividing header">Create Pet</h1></div>
+                <div class="row"><div class="ui attached segment"><button data-testid="test-button"></button></div></div>
+                <div class="row"><a class="ui button" role="button" href="/pet">List</a></div>
+            </main>
+        </div>
     `.replace(/\n {2,}/g, ''));
 
     expect(history.location.pathname).toBe('/pet');

@@ -1,7 +1,8 @@
 import InvalidParameterByNameDenormalizer from '../../Denormalizer/InvalidParameterByNameDenormalizer';
+import InvalidParameter from '../../Type/Error/InvalidParameter';
 
-test('denormalize', () => {
-    const invalidParameters = [
+test('default', () => {
+    const invalidParameters: Array<InvalidParameter> = [
         { name: 'name', reason: 'wrong type', details: { key: 'value1' } },
         { name: 'name', reason: 'not empty', details: { key: 'value2' } },
         { name: 'description', reason: 'to long', details: { key: 'value3' } }

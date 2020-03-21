@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-const Home = () => {
+const Home: React.FC = () => {
 
     useEffect(() => {
         document.title = 'Home';

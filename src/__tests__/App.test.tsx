@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { render, waitForElement } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import App from '../App';
 
 jest.mock('../Component/Navigation/Left', () => {
@@ -27,7 +27,6 @@ jest.mock('../Component/Page/Pet/List', () => {
     };
 });
 
-
 jest.mock('../Component/Page/Pet/Create', () => {
     return () => {
         return (<div data-testid="page-pet-create-mock"></div>);
@@ -52,133 +51,134 @@ jest.mock('../Component/Page/NotFound', () => {
     };
 });
 
-test('navigations', async () => {
-    const { getByTestId, queryByTestId } = render(
+test('home page', () => {
+    const { container } = render(
         <MemoryRouter>
             <App />
         </MemoryRouter>
     );
 
-    expect(getByTestId('navigation-top-mock')).toBeInTheDocument();
-    expect(getByTestId('navigation-left-mock')).toBeInTheDocument();
+    expect(container.outerHTML).toBe(`
+        <div>
+            <div>
+                <div data-testid="navigation-top-mock"></div>
+                <div class="ui padded grid">
+                    <div data-testid="navigation-left-mock"></div>
+                    <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="content">
+                        <div data-testid="page-home-mock"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `.replace(/\n {2,}/g, ''));
 });
 
-test('home page', async () => {
-    const { getByTestId, queryByTestId } = render(
-        <MemoryRouter>
-            <App />
-        </MemoryRouter>
-    );
-
-    const pageHome = await waitForElement(() =>
-        getByTestId('page-home-mock')
-    );
-
-    expect(pageHome).toBeInTheDocument();
-
-    expect(queryByTestId('page-pet-list-mock')).toBeNull();
-    expect(queryByTestId('page-pet-create-mock')).toBeNull();
-    expect(queryByTestId('page-pet-read-mock')).toBeNull();
-    expect(queryByTestId('page-pet-update-mock')).toBeNull();
-    expect(queryByTestId('page-not-found-mock')).toBeNull();
-});
-
-test('not found', async () => {
-    const { getByTestId, queryByTestId } = render(
+test('not found', () => {
+    const { container } = render(
         <MemoryRouter initialEntries={['/unknown']}>
             <App />
         </MemoryRouter>
     );
 
-    const pageNotFound = await waitForElement(() =>
-        getByTestId('page-not-found-mock')
-    );
-
-    expect(pageNotFound).toBeInTheDocument();
-
-    expect(queryByTestId('page-home-mock')).toBeNull();
-    expect(queryByTestId('page-pet-list-mock')).toBeNull();
-    expect(queryByTestId('page-pet-create-mock')).toBeNull();
-    expect(queryByTestId('page-pet-read-mock')).toBeNull();
-    expect(queryByTestId('page-pet-update-mock')).toBeNull();
+    expect(container.outerHTML).toBe(`
+        <div>
+            <div>
+                <div data-testid="navigation-top-mock"></div>
+                <div class="ui padded grid">
+                    <div data-testid="navigation-left-mock"></div>
+                    <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="content">
+                        <div data-testid="page-not-found-mock"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `.replace(/\n {2,}/g, ''));
 });
 
-test('pet list', async () => {
-    const { getByTestId, queryByTestId } = render(
+test('pet list', () => {
+    const { container } = render(
         <MemoryRouter initialEntries={['/pet']}>
             <App />
         </MemoryRouter>
     );
 
-    const pagePetList = await waitForElement(() =>
-        getByTestId('page-pet-list-mock')
-    );
-
-    expect(pagePetList).toBeInTheDocument();
-
-    expect(queryByTestId('page-home-mock')).toBeNull();
-    expect(queryByTestId('page-pet-create-mock')).toBeNull();
-    expect(queryByTestId('page-pet-read-mock')).toBeNull();
-    expect(queryByTestId('page-pet-update-mock')).toBeNull();
-    expect(queryByTestId('page-not-found-mock')).toBeNull();
+    expect(container.outerHTML).toBe(`
+        <div>
+            <div>
+                <div data-testid="navigation-top-mock"></div>
+                <div class="ui padded grid">
+                    <div data-testid="navigation-left-mock"></div>
+                    <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="content">
+                        <div data-testid="page-pet-list-mock"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `.replace(/\n {2,}/g, ''));
 });
 
-test('pet create', async () => {
-    const { getByTestId, queryByTestId } = render(
+test('pet create', () => {
+    const { container } = render(
         <MemoryRouter initialEntries={['/pet/create']}>
             <App />
         </MemoryRouter>
     );
 
-    const pagePetList = await waitForElement(() =>
-        getByTestId('page-pet-create-mock')
-    );
-
-    expect(pagePetList).toBeInTheDocument();
-
-    expect(queryByTestId('page-home-mock')).toBeNull();
-    expect(queryByTestId('page-pet-list-mock')).toBeNull();
-    expect(queryByTestId('page-pet-read-mock')).toBeNull();
-    expect(queryByTestId('page-pet-update-mock')).toBeNull();
-    expect(queryByTestId('page-not-found-mock')).toBeNull();
+    expect(container.outerHTML).toBe(`
+        <div>
+            <div>
+                <div data-testid="navigation-top-mock"></div>
+                <div class="ui padded grid">
+                    <div data-testid="navigation-left-mock"></div>
+                    <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="content">
+                        <div data-testid="page-pet-create-mock"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `.replace(/\n {2,}/g, ''));
 });
 
-test('pet read', async () => {
-    const { getByTestId, queryByTestId } = render(
+test('pet read', () => {
+    const { container } = render(
         <MemoryRouter initialEntries={['/pet/4d783b77-eb09-4603-b99b-f590b605eaa9']}>
             <App />
         </MemoryRouter>
     );
 
-    const pagePetList = await waitForElement(() =>
-        getByTestId('page-pet-read-mock')
-    );
-
-    expect(pagePetList).toBeInTheDocument();
-
-    expect(queryByTestId('page-home-mock')).toBeNull();
-    expect(queryByTestId('page-pet-list-mock')).toBeNull();
-    expect(queryByTestId('page-pet-create-mock')).toBeNull();
-    expect(queryByTestId('page-pet-update-mock')).toBeNull();
-    expect(queryByTestId('page-not-found-mock')).toBeNull();
+    expect(container.outerHTML).toBe(`
+        <div>
+            <div>
+                <div data-testid="navigation-top-mock"></div>
+                <div class="ui padded grid">
+                    <div data-testid="navigation-left-mock"></div>
+                    <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="content">
+                        <div data-testid="page-pet-read-mock"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `.replace(/\n {2,}/g, ''));
 });
 
-test('pet update', async () => {
-    const { getByTestId, queryByTestId } = render(
+test('pet update', () => {
+    const { container } = render(
         <MemoryRouter initialEntries={['/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update']}>
             <App />
         </MemoryRouter>
     );
 
-    const pagePetList = await waitForElement(() =>
-        getByTestId('page-pet-update-mock')
-    );
-
-    expect(pagePetList).toBeInTheDocument();
-
-    expect(queryByTestId('page-home-mock')).toBeNull();
-    expect(queryByTestId('page-pet-list-mock')).toBeNull();
-    expect(queryByTestId('page-pet-create-mock')).toBeNull();
-    expect(queryByTestId('page-pet-read-mock')).toBeNull();
-    expect(queryByTestId('page-not-found-mock')).toBeNull();
+    expect(container.outerHTML).toBe(`
+        <div>
+            <div>
+                <div data-testid="navigation-top-mock"></div>
+                <div class="ui padded grid">
+                    <div data-testid="navigation-left-mock"></div>
+                    <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="content">
+                        <div data-testid="page-pet-update-mock"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `.replace(/\n {2,}/g, ''));
 });

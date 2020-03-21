@@ -8,9 +8,9 @@ import HttpError from '../../../Type/Error/HttpError';
 import HttpErrorPartial from '../../Partial/HttpError';
 import Pet from '../../../Type/Pet/Pet';
 
-type props = RouteComponentProps<{ id: string; }>;
+type Props = RouteComponentProps<{ id: string; }>;
 
-const Read = ({ match }: props) => {
+const Read: React.FC<Props> = ({ match }: Props) => {
 
     const id = match.params.id;
 
@@ -67,7 +67,9 @@ const Read = ({ match }: props) => {
                         </List.Item>
                         <List.Item>
                             <List.Header>Vaccinations</List.Header>
-                            <ul>{pet.vaccinations.map((vaccination, i) => (<li key={i}>{vaccination.name}</li>))}</ul>
+                            {pet.vaccinations.length > 0 ? (
+                                <ul>{pet.vaccinations.map((vaccination, i) => (<li key={i}>{vaccination.name}</li>))}</ul>
+                            ) : ''}
                         </List.Item>
                     </List>
                 </div>

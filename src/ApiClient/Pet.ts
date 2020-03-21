@@ -7,11 +7,11 @@ import Pet from '../Type/Pet/Pet';
 import PetList from '../Type/Pet/PetList';
 import UnprocessableEntity from '../Type/Error/UnprocessableEntity';
 
-const url = `${process.env.REACT_APP_PETSTORE_URL}/api/pets`;
+const url: string = `${process.env.REACT_APP_PETSTORE_URL}/api/pets`;
 
 export const ListPets = async (queryString: string): Promise<HttpError | PetList> => {
     try {
-        const response = await fetch(`${url}?${queryString}`, {
+        const response: Response = await fetch(`${url}?${queryString}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json'
@@ -40,7 +40,7 @@ export const ListPets = async (queryString: string): Promise<HttpError | PetList
 
 export const CreatePet = async (pet: Pet): Promise<HttpError | Pet> => {
     try {
-        const response = await fetch(url, {
+        const response: Response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -71,7 +71,7 @@ export const CreatePet = async (pet: Pet): Promise<HttpError | Pet> => {
 
 export const ReadPet = async (id: string): Promise<HttpError | Pet> => {
     try {
-        const response = await fetch(`${url}/${id}`, {
+        const response: Response = await fetch(`${url}/${id}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json'
@@ -100,7 +100,7 @@ export const ReadPet = async (id: string): Promise<HttpError | Pet> => {
 
 export const UpdatePet = async (pet: Pet): Promise<HttpError | Pet> => {
     try {
-        const response = await fetch(`${url}/${pet.id}`, {
+        const response: Response = await fetch(`${url}/${pet.id}`, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
@@ -135,7 +135,7 @@ export const UpdatePet = async (pet: Pet): Promise<HttpError | Pet> => {
 
 export const DeletePet = async (pet: Pet): Promise<HttpError | Pet | undefined> => {
     try {
-        const response = await fetch(`${url}/${pet.id}`, {
+        const response: Response = await fetch(`${url}/${pet.id}`, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',

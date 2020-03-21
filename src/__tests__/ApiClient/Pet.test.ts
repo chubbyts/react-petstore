@@ -162,7 +162,7 @@ describe('create pet', () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: { id: '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Black Beauty' }
+                body: { id: '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' }
             },
             {
                 delay: 10,
@@ -170,18 +170,18 @@ describe('create pet', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: { name: 'Black Beauty' }
+                body: { name: 'Brownie' }
             }
         );
 
-        const pet = { name: 'Black Beauty' };
+        const pet = { name: 'Brownie' };
 
         const response = await CreatePet(pet);
 
         expect(response).toHaveProperty('id');
         expect(response.id).toEqual('4d783b77-eb09-4603-b99b-f590b605eaa9');
         expect(response).toHaveProperty('name');
-        expect(response.name).toEqual('Black Beauty');
+        expect(response.name).toEqual('Brownie');
     });
 
     test('unprocessable entity', async () => {
@@ -241,11 +241,11 @@ describe('create pet', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: { name: 'Black Beauty' }
+                body: { name: 'Brownie' }
             }
         );
 
-        const pet = { name: 'Black Beauty' };
+        const pet = { name: 'Brownie' };
 
         const response = await CreatePet(pet);
 
@@ -269,7 +269,7 @@ describe('create pet', () => {
             }
         );
 
-        const pet = { name: 'Black Beauty' };
+        const pet = { name: 'Brownie' };
 
         const response = await CreatePet(pet);
 
@@ -299,7 +299,7 @@ describe('create pet', () => {
         expect.assertions(1);
 
         try {
-            const pet = { name: 'Black Beauty' };
+            const pet = { name: 'Brownie' };
 
             await CreatePet(pet);
         } catch (e) {
@@ -317,7 +317,7 @@ describe('read pet', () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: { id: '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Black Beauty' }
+                body: { id: '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' }
             },
             {
                 delay: 10,
@@ -332,7 +332,7 @@ describe('read pet', () => {
         expect(response).toHaveProperty('id');
         expect(response.id).toEqual('4d783b77-eb09-4603-b99b-f590b605eaa9');
         expect(response).toHaveProperty('name');
-        expect(response.name).toEqual('Black Beauty');
+        expect(response.name).toEqual('Brownie');
     });
 
     test('not found', async () => {
@@ -453,7 +453,7 @@ describe('update pet', () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: { id: '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Black Beauty' }
+                body: { id: '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' }
             },
             {
                 delay: 10,
@@ -461,18 +461,18 @@ describe('update pet', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: { id: '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Black Beauty' }
+                body: { id: '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' }
             }
         );
 
-        const pet = { 'id': '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Black Beauty' };
+        const pet = { 'id': '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' };
 
         const response = await UpdatePet(pet);
 
         expect(response).toHaveProperty('id');
         expect(response.id).toEqual('4d783b77-eb09-4603-b99b-f590b605eaa9');
         expect(response).toHaveProperty('name');
-        expect(response.name).toEqual('Black Beauty');
+        expect(response.name).toEqual('Brownie');
     });
 
     test('not found', async () => {
@@ -495,11 +495,11 @@ describe('update pet', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: { id: '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Black Beauty' }
+                body: { id: '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' }
             }
         );
 
-        const pet = { 'id': '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Black Beauty' };
+        const pet = { 'id': '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' };
 
         const response = await UpdatePet(pet);
 
@@ -568,11 +568,11 @@ describe('update pet', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: { id: '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Black Beauty' }
+                body: { id: '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' }
             }
         );
 
-        const pet = { 'id': '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Black Beauty' };
+        const pet = { 'id': '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' };
 
         const response = await UpdatePet(pet);
 
@@ -596,7 +596,7 @@ describe('update pet', () => {
             }
         );
 
-        const pet = { 'id': '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Black Beauty' };
+        const pet = { 'id': '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' };
 
         const response = await UpdatePet(pet);
 
@@ -626,7 +626,7 @@ describe('update pet', () => {
         expect.assertions(1);
 
         try {
-            const pet = { 'id': '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Black Beauty' };
+            const pet = { 'id': '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' };
 
             await UpdatePet(pet);
         } catch (e) {

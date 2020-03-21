@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
-const Top = () => {
+const Top: React.FC = () => {
     const [displayMenu, setDisplayMenu] = useState<boolean>(false);
 
     const toggleMenu = () => {
@@ -9,7 +9,7 @@ const Top = () => {
     };
 
     return (
-        <nav data-testid='navigation-top'>
+        <nav>
             <div className='ui tablet computer only padded grid'>
                 <div className='ui inverted borderless top fixed fluid menu'>
                     <NavLink to='/' className='header item'>Petstore</NavLink>

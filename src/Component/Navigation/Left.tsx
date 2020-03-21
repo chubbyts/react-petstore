@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const Left = () => {
+const Left: React.FC = () => {
     return (
-        <nav data-testid='navigation-left' id='sidebar' className='three wide tablet only three wide computer only column'>
+        <nav id='sidebar' className='three wide tablet only three wide computer only column'>
             <div className='ui vertical borderless fluid text menu'>
                 <NavLink to='/pet' className='item'>Pet</NavLink>
             </div>

@@ -5,16 +5,16 @@ import InvalidParameter from '../../Type/Error/InvalidParameter';
 
 import { FieldRenderProps } from 'react-final-form';
 
-type props = {
+type Props = {
     name: string,
     label: string,
     component: FunctionComponent<FieldRenderProps<string, HTMLElement>>,
     invalidParameters: Array<InvalidParameter>
 };
 
-const FormField = ({ name, label, component, invalidParameters }: props) => {
+const FormField: React.FC<Props> = ({ name, label, component, invalidParameters }: Props) => {
     return (
-        <Form.Field className={invalidParameters.length > 0 ? ' error' : ''}>
+        <Form.Field className={invalidParameters.length > 0 ? 'error' : ''}>
             <label>{label}</label>
             <FinalFormField<string>
                 name={name}
