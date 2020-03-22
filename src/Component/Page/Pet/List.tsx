@@ -94,8 +94,6 @@ const List: React.FC = () => {
             ) : ''}
             {petList ? (
                 <div className='row'>
-
-                    <Pagination defaultActivePage={page} totalPages={Math.ceil(petList.count / petList.limit)} onPageChange={changePage} />
                     <table className='ui single line striped selectable table'>
                         <thead>
                             <tr>

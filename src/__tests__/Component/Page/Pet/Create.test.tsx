@@ -85,7 +85,7 @@ test('successful', async () => {
 
     const history = createMemoryHistory();
 
-    const { container, getByTestId } = render(
+    const { getByTestId } = render(
         <Router history={history}>
             <Create />
         </Router>
