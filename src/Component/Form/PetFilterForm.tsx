@@ -1,18 +1,12 @@
 import React from 'react';
 import { Form, Button } from 'semantic-ui-react';
 import { Form as FinalForm } from 'react-final-form';
-import BadRequest from '../../Type/Error/BadRequest';
 import InvalidParameterByNameDenormalizer from '../../Denormalizer/InvalidParameterByNameDenormalizer';
 import TextInput from './TextInput';
 import FormField from './FormField';
+import PetFilterFormProps from '../../Type/Form/PetFilterFormProps';
 
-type Props = {
-    submitPetFilter: { (filters: any): any; },
-    filters?: any,
-    error?: BadRequest
-};
-
-const PetFilterForm: React.FC<Props> = ({ submitPetFilter, filters, error }: Props) => {
+const PetFilterForm: React.FC<PetFilterFormProps> = ({ submitPetFilter, filters, error }: PetFilterFormProps) => {
     const invalidParameterByNameDenormalized = InvalidParameterByNameDenormalizer(error ? error.invalidParameters : []);
 
     return (

@@ -220,4 +220,6 @@ test('successful', async () => {
             </main>
         </div>
     `.replace(/\n {2,}/g, ''));
+
+    expect(history.location.pathname).toBe('/pet');
 });

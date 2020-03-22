@@ -89,7 +89,8 @@ const List: React.FC = () => {
                 <div className='row'>
                     <div className='ui attached segment'>
                         <PetFilterForm submitPetFilter={submitPetFilter} filters={filters} error={httpError instanceof BadRequest ? httpError : undefined} />
-                    </div></div>
+                    </div>
+                </div>
             ) : ''}
             {petList ? (
                 <div className='row'>
@@ -112,7 +113,7 @@ const List: React.FC = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {petList._embedded.items.map((pet: Pet) => (
+                            {petList._embedded.items.map((pet: Pet, i) => (
                                 <tr key={pet.id}>
                                     <td>{pet.id}</td>
                                     <td>{format(Date.parse(pet.createdAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}</td>
@@ -126,7 +127,7 @@ const List: React.FC = () => {
                                             <Button as={Link} to={`/pet/${pet.id}/update`}>Update</Button>
                                         ) : ''}
                                         {pet._links.delete ? (
-                                            <Button onClick={() => { deletePet(pet); }} className='red'>Delete</Button>
+                                            <Button data-testid={`remove-pet-${i}`} onClick={() => { deletePet(pet); }} className='red'>Delete</Button>
                                         ) : ''}
                                     </td>
                                 </tr>
