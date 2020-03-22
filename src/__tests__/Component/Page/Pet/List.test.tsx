@@ -256,9 +256,5 @@ test('submit filter', async () => {
         getByTestId('test-button')
     );
 
-    expect(container.outerHTML).toBe(`
-        <div><main class="ui padded grid"></main></div>
-    `.replace(/\n {2,}/g, ''));
-
     expect(history.location.pathname).toBe('/pet');
 });

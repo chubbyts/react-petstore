@@ -201,25 +201,13 @@ test('successful', async () => {
         getByTestId('page-pet-update')
     );
 
+    expect(history.location.pathname).toBe('/');
+
     fireEvent.click(getByTestId('test-button'));
 
     await waitForElement(() =>
         getByTestId('test-button')
     );
-
-    expect(container.outerHTML).toBe(`
-        <div>
-            <main class="ui padded grid" data-testid="page-pet-update">
-                <div class="row"><h1 class="ui huge dividing header">Update Pet</h1></div>
-                <div class="row">
-                    <div class="ui attached segment"><button data-testid="test-button"></button></div>
-                </div>
-                <div class="row">
-                    <a class="ui button" role="button" href="/pet">List</a>
-                </div>
-            </main>
-        </div>
-    `.replace(/\n {2,}/g, ''));
 
     expect(history.location.pathname).toBe('/pet');
 });
