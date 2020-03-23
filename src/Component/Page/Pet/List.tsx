@@ -65,7 +65,7 @@ const List: React.FC = () => {
     };
 
     const submitPetFilter = (filters: any) => {
-        history.push(`/pet?${qs.stringify({ ...query, filters: filters, ...sort })}`);
+        history.push(`/pet?${qs.stringify({ ...query, filters: filters })}`);
     };
 
     if (!petList && !httpError) {
@@ -102,9 +102,9 @@ const List: React.FC = () => {
                                 <th>UpdatedAt</th>
                                 <th>
                                     Name (
-                                    <Link to={`/pet?${qs.stringify({ ...query, ...filters, sort: { ...sort, name: 'asc' } })}`}> A-Z </Link> |
-                                    <Link to={`/pet?${qs.stringify({ ...query, ...filters, sort: { ...sort, name: 'desc' } })}`}> Z-A </Link> |
-                                    <Link to={`/pet?${qs.stringify({ ...query, ...filters, sort: { ...sort, name: undefined } })}`}> --- </Link>
+                                    <Link data-testid='sort-pet-name-asc' to={`/pet?${qs.stringify({ ...query, sort: { ...sort, name: 'asc' } })}`}> A-Z </Link> |
+                                    <Link data-testid='sort-pet-name-desc' to={`/pet?${qs.stringify({ ...query, sort: { ...sort, name: 'desc' } })}`}> Z-A </Link> |
+                                    <Link data-testid='sort-pet-name--' to={`/pet?${qs.stringify({ ...query, sort: { ...sort, name: undefined } })}`}> --- </Link>
                                     )
                                 </th>
                                 <th>Actions</th>
