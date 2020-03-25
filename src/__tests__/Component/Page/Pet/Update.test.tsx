@@ -1,6 +1,6 @@
 import React from 'react';
 import { createMemoryHistory } from 'history';
-import { render, waitForElement, fireEvent } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import * as ApiClientPet from '../../../../ApiClient/Pet';
 import HttpError from '../../../../Type/Error/HttpError';
@@ -42,15 +42,13 @@ test('not found', async () => {
         }
     };
 
-    const { container, getByTestId } = render(
+    const { container, findByTestId } = render(
         <Router history={history}>
             <Update match={match} />
         </Router>
     );
 
-    await waitForElement(() =>
-        getByTestId('page-pet-update')
-    );
+    await findByTestId('page-pet-update');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -84,15 +82,13 @@ test('minimal', async () => {
         }
     };
 
-    const { container, getByTestId } = render(
+    const { container, findByTestId } = render(
         <Router history={history}>
             <Update match={match} />
         </Router>
     );
 
-    await waitForElement(() =>
-        getByTestId('page-pet-update')
-    );
+    await findByTestId('page-pet-update');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -134,21 +130,17 @@ test('unprocessable entity', async () => {
         }
     };
 
-    const { container, getByTestId } = render(
+    const { container, findByTestId } = render(
         <Router history={history}>
             <Update match={match} />
         </Router>
     );
 
-    await waitForElement(() =>
-        getByTestId('page-pet-update')
-    );
+    const testButton = await findByTestId('test-button');
 
-    fireEvent.click(getByTestId('test-button'));
+    fireEvent.click(testButton);
 
-    await waitForElement(() =>
-        getByTestId('test-button')
-    );
+    await findByTestId('test-button');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -191,23 +183,19 @@ test('successful', async () => {
         }
     };
 
-    const { container, getByTestId } = render(
+    const { findByTestId } = render(
         <Router history={history}>
             <Update match={match} />
         </Router>
     );
 
-    await waitForElement(() =>
-        getByTestId('page-pet-update')
-    );
-
     expect(history.location.pathname).toBe('/');
 
-    fireEvent.click(getByTestId('test-button'));
+    const testButton = await findByTestId('test-button');
 
-    await waitForElement(() =>
-        getByTestId('test-button')
-    );
+    fireEvent.click(testButton);
+
+    await findByTestId('test-button');
 
     expect(history.location.pathname).toBe('/pet');
 });

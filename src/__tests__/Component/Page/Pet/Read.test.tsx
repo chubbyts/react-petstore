@@ -1,6 +1,6 @@
 import React from 'react';
 import { createMemoryHistory } from 'history';
-import { render, waitForElement } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import * as ApiClientPet from '../../../../ApiClient/Pet';
 import HttpError from '../../../../Type/Error/HttpError';
@@ -29,15 +29,13 @@ test('not found', async () => {
         }
     };
 
-    const { container, getByTestId } = render(
+    const { container, findByTestId } = render(
         <Router history={history}>
             <Read match={match} />
         </Router>
     );
 
-    await waitForElement(() =>
-        getByTestId('page-pet-read')
-    );
+    await findByTestId('page-pet-read');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -71,15 +69,13 @@ test('minimal', async () => {
         }
     };
 
-    const { container, getByTestId } = render(
+    const { container, findByTestId } = render(
         <Router history={history}>
             <Read match={match} />
         </Router>
     );
 
-    await waitForElement(() =>
-        getByTestId('page-pet-read')
-    );
+    await findByTestId('page-pet-read');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -137,15 +133,13 @@ test('maximal', async () => {
         }
     };
 
-    const { container, getByTestId } = render(
+    const { container, findByTestId } = render(
         <Router history={history}>
             <Read match={match} />
         </Router>
     );
 
-    await waitForElement(() =>
-        getByTestId('page-pet-read')
-    );
+    await findByTestId('page-pet-read');
 
     expect(container.outerHTML).toBe(`
         <div>

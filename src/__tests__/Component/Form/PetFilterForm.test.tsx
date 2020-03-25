@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, waitForElement } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import InvalidParameter from '../../../Type/Error/InvalidParameter';
 import PetFilterForm from '../../../Component/Form/PetFilterForm';
 import BadRequest from '../../../Type/Error/BadRequest';
@@ -73,15 +73,15 @@ test('submit', async () => {
         name: 'aa'
     };
 
-    const { container, getByTestId } = render(
+    const { container, findByTestId } = render(
         <PetFilterForm submitPetFilter={submitPetFilter} filters={filters} />
     );
 
-    fireEvent.click(getByTestId('submit-pet-filter'));
+    const submitButton = await findByTestId('submit-pet-filter');
 
-    await waitForElement(() =>
-        getByTestId('submit-pet-filter')
-    );
+    fireEvent.click(submitButton);
+
+    await findByTestId('submit-pet-filter');
 
     expect(container.outerHTML).toBe(`
         <div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { createMemoryHistory } from 'history';
-import { render, waitForElement, fireEvent } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import * as ApiClientPet from '../../../../ApiClient/Pet';
 import BadRequest from '../../../../Type/Error/BadRequest';
@@ -35,15 +35,13 @@ test('bad request', async () => {
 
     const history = createMemoryHistory();
 
-    const { container, getByTestId } = render(
+    const { container, findByTestId } = render(
         <Router history={history}>
             <List />
         </Router>
     );
 
-    await waitForElement(() =>
-        getByTestId('page-pet-list')
-    );
+    await findByTestId('page-pet-list');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -117,15 +115,13 @@ test('default', async () => {
 
     const history = createMemoryHistory();
 
-    const { container, getByTestId } = render(
+    const { container, findByTestId } = render(
         <Router history={history}>
             <List />
         </Router>
     );
 
-    await waitForElement(() =>
-        getByTestId('page-pet-list')
-    );
+    await findByTestId('page-pet-list');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -209,15 +205,13 @@ test('no actions', async () => {
 
     const history = createMemoryHistory();
 
-    const { container, getByTestId } = render(
+    const { container, findByTestId } = render(
         <Router history={history}>
             <List />
         </Router>
     );
 
-    await waitForElement(() =>
-        getByTestId('page-pet-list')
-    );
+    await findByTestId('page-pet-list');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -326,21 +320,17 @@ test('submit bad request', async () => {
 
     const history = createMemoryHistory();
 
-    const { container, getByTestId } = render(
+    const { container, findByTestId } = render(
         <Router history={history}>
             <List />
         </Router>
     );
 
-    await waitForElement(() =>
-        getByTestId('page-pet-list')
-    );
+    const testButton = await findByTestId('test-button');
 
-    fireEvent.click(getByTestId('test-button'));
+    fireEvent.click(testButton);
 
-    await waitForElement(() =>
-        getByTestId('page-pet-list')
-    );
+    await findByTestId('test-button');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -450,21 +440,17 @@ test('submit filter', async () => {
 
     const history = createMemoryHistory();
 
-    const { getByTestId } = render(
+    const { findByTestId } = render(
         <Router history={history}>
             <List />
         </Router>
     );
 
-    await waitForElement(() =>
-        getByTestId('page-pet-list')
-    );
+    const testButton = await findByTestId('test-button');
 
-    fireEvent.click(getByTestId('test-button'));
+    fireEvent.click(testButton);
 
-    await waitForElement(() =>
-        getByTestId('test-button')
-    );
+    await findByTestId('test-button');
 
     expect(history.location.pathname).toBe('/pet');
     expect(history.location.search).toBe('?filters%5Bname%5D=Bro');
@@ -532,23 +518,19 @@ test('next', async () => {
 
     const history = createMemoryHistory();
 
-    const { queryByText } = render(
+    const { findByText } = render(
         <Router history={history}>
             <List />
         </Router>
     );
 
-    const nextButton = await waitForElement(() =>
-        queryByText('»')
-    );
-
     expect(history.location.pathname).toBe('/');
+
+    const nextButton = await findByText('»');
 
     fireEvent.click(nextButton);
 
-    await waitForElement(() =>
-        queryByText('»')
-    );
+    await findByText('»');
 
     expect(history.location.pathname).toBe('/pet');
     expect(history.location.search).toBe('?page=2');
@@ -616,23 +598,19 @@ test('sort', async () => {
 
     const history = createMemoryHistory();
 
-    const { queryByTestId } = render(
+    const { findByTestId } = render(
         <Router history={history}>
             <List />
         </Router>
     );
 
-    const sortNameDescLink = await waitForElement(() =>
-        queryByTestId('sort-pet-name-desc')
-    );
-
     expect(history.location.pathname).toBe('/');
+
+    const sortNameDescLink = await findByTestId('sort-pet-name-desc');
 
     fireEvent.click(sortNameDescLink);
 
-    await waitForElement(() =>
-        queryByTestId('sort-pet-name-desc')
-    );
+    await findByTestId('sort-pet-name-desc');
 
     expect(history.location.pathname).toBe('/pet');
     expect(history.location.search).toBe('?sort%5Bname%5D=desc');
@@ -704,21 +682,17 @@ test('delete not found', async () => {
 
     const history = createMemoryHistory();
 
-    const { container, getByTestId } = render(
+    const { container, findByTestId } = render(
         <Router history={history}>
             <List />
         </Router>
     );
 
-    const removePetButton = await waitForElement(() =>
-        getByTestId('remove-pet-0')
-    );
+    const removePetButton = await findByTestId('remove-pet-0');
 
     fireEvent.click(removePetButton);
 
-    await waitForElement(() =>
-        getByTestId('page-pet-list')
-    );
+    await findByTestId('remove-pet-0');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -855,21 +829,17 @@ test('delete success', async () => {
 
     const history = createMemoryHistory();
 
-    const { container, getByTestId } = render(
+    const { container, findByTestId } = render(
         <Router history={history}>
             <List />
         </Router>
     );
 
-    const removePetButton = await waitForElement(() =>
-        getByTestId('remove-pet-0')
-    );
+    const removePetButton = await findByTestId('remove-pet-0');
 
     fireEvent.click(removePetButton);
 
-    await waitForElement(() =>
-        getByTestId('page-pet-list')
-    );
+    await findByTestId('remove-pet-0');
 
     expect(container.outerHTML).toBe(`
         <div>

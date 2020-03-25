@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, waitForElement } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import UnprocessableEntity from '../../../Type/Error/UnprocessableEntity';
 import InvalidParameter from '../../../Type/Error/InvalidParameter';
 import Pet from '../../../Type/Pet/Pet';
@@ -103,7 +103,7 @@ test('with error', () => {
     `.replace(/\n {2,}/g, ''));
 });
 
-test('add vaccination', () => {
+test('add vaccination', async () => {
     const submitPet: { (pet: Pet): any; } = (pet: Pet) => { };
 
     const pet: Pet = {
@@ -116,11 +116,15 @@ test('add vaccination', () => {
         _links: {}
     };
 
-    const { container, getByTestId } = render(
+    const { container, findByTestId } = render(
         <PetForm submitPet={submitPet} pet={pet} />
     );
 
-    fireEvent.click(getByTestId('add-vaccination'));
+    const submitButton = await findByTestId('add-vaccination');
+
+    fireEvent.click(submitButton);
+
+    await findByTestId('add-vaccination');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -157,7 +161,7 @@ test('add vaccination', () => {
     `.replace(/\n {2,}/g, ''));
 });
 
-test('remove vaccination', () => {
+test('remove vaccination', async () => {
     const submitPet: { (pet: Pet): any; } = (pet: Pet) => { };
 
     const pet: Pet = {
@@ -170,11 +174,15 @@ test('remove vaccination', () => {
         _links: {}
     };
 
-    const { container, getByTestId } = render(
+    const { container, findByTestId } = render(
         <PetForm submitPet={submitPet} pet={pet} />
     );
 
-    fireEvent.click(getByTestId('remove-vaccination-0'));
+    const submitButton = await findByTestId('remove-vaccination-0');
+
+    fireEvent.click(submitButton);
+
+    await findByTestId('submit-pet');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -193,7 +201,6 @@ test('remove vaccination', () => {
     `.replace(/\n {2,}/g, ''));
 });
 
-
 test('submit', async () => {
     const submitPet: { (pet: Pet): any; } = jest.fn((pet: Pet) => { });
 
@@ -207,15 +214,15 @@ test('submit', async () => {
         _links: {}
     };
 
-    const { container, getByTestId } = render(
+    const { container, findByTestId } = render(
         <PetForm submitPet={submitPet} pet={pet} />
     );
 
-    fireEvent.click(getByTestId('submit-pet'));
+    const submitButton = await findByTestId('submit-pet');
 
-    await waitForElement(() =>
-        getByTestId('submit-pet')
-    );
+    fireEvent.click(submitButton);
+
+    await findByTestId('submit-pet');
 
     expect(container.outerHTML).toBe(`
         <div>

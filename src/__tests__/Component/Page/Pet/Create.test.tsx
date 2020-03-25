@@ -1,6 +1,6 @@
 import React from 'react';
 import { createMemoryHistory } from 'history';
-import { fireEvent, render, waitForElement } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import * as ApiClientPet from '../../../../ApiClient/Pet';
 import Create from '../../../../Component/Page/Pet/Create';
@@ -54,17 +54,17 @@ test('unprocessable entity', async () => {
 
     const history = createMemoryHistory();
 
-    const { container, getByTestId } = render(
+    const { container, findByTestId } = render(
         <Router history={history}>
             <Create />
         </Router>
     );
 
-    fireEvent.click(getByTestId('test-button'));
+    const testButton = await findByTestId('test-button');
 
-    await waitForElement(() =>
-        getByTestId('test-button')
-    );
+    fireEvent.click(testButton);
+
+    await findByTestId('test-button');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -85,7 +85,7 @@ test('successful', async () => {
 
     const history = createMemoryHistory();
 
-    const { getByTestId } = render(
+    const { findByTestId } = render(
         <Router history={history}>
             <Create />
         </Router>
@@ -93,11 +93,11 @@ test('successful', async () => {
 
     expect(history.location.pathname).toBe('/');
 
-    fireEvent.click(getByTestId('test-button'));
+    const testButton = await findByTestId('test-button');
 
-    await waitForElement(() =>
-        getByTestId('test-button')
-    );
+    fireEvent.click(testButton);
+
+    await findByTestId('test-button');
 
     expect(history.location.pathname).toBe('/pet');
 });
