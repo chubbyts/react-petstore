@@ -1,14 +1,15 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import UnprocessableEntity from '../../../Type/Error/UnprocessableEntity';
 import InvalidParameter from '../../../Type/Error/InvalidParameter';
-import Pet from '../../../Type/Pet/Pet';
 import PetForm from '../../../Component/Form/PetForm';
+import PetRequest from '../../../Type/Pet/PetResponse';
+import PetResponse from '../../../Type/Pet/PetResponse';
+import UnprocessableEntity from '../../../Type/Error/UnprocessableEntity';
 
 test('without error', () => {
-    const submitPet: { (pet: Pet): any; } = (pet: Pet) => { };
+    const submitPet: { (pet: PetRequest): any; } = (pet: PetRequest) => { };
 
-    const pet: Pet = {
+    const pet: PetResponse = {
         id: '',
         createdAt: '',
         name: 'Brownie',
@@ -27,14 +28,14 @@ test('without error', () => {
             <form class="ui form">
                 <div class="field">
                     <label>Name</label>
-                    <input type="text" name="name" value="Brownie">
+                    <input type="text" name="name">
                 </div>
                 <div class="field">
                     <label>Vaccination</label>
                     <div class="ui bottom attached segment">
                         <div class="field"><
                             label>Name</label>
-                            <input type="text" name="vaccinations[0].name" value="Rabies">
+                            <input type="text" name="vaccinations[0].name">
                         </div>
                         <div class="field">
                             <button data-testid="remove-vaccination-0" type="button" class="ui button red">Remove</button>
@@ -49,9 +50,9 @@ test('without error', () => {
 });
 
 test('with error', () => {
-    const submitPet: { (pet: Pet): any; } = (pet: Pet) => { };
+    const submitPet: { (pet: PetRequest): any; } = (pet: PetRequest) => { };
 
-    const pet: Pet = {
+    const pet: PetRequest = {
         id: '',
         createdAt: '',
         name: '',
@@ -80,7 +81,7 @@ test('with error', () => {
             <form class="ui form">
                 <div class="field error">
                     <label>Name</label>
-                    <input type="text" name="name" value="">
+                    <input type="text" name="name">
                     <div class="ui pointing red basic label">Should not be empty</div>
                 </div>
                 <div class="field">
@@ -88,7 +89,7 @@ test('with error', () => {
                     <div class="ui bottom attached segment">
                         <div class="field error"><
                             label>Name</label>
-                            <input type="text" name="vaccinations[0].name" value="">
+                            <input type="text" name="vaccinations[0].name">
                             <div class="ui pointing red basic label">Should not be empty</div>
                         </div>
                         <div class="field">
@@ -104,9 +105,9 @@ test('with error', () => {
 });
 
 test('add vaccination', async () => {
-    const submitPet: { (pet: Pet): any; } = (pet: Pet) => { };
+    const submitPet: { (pet: PetRequest): any; } = (pet: PetRequest) => { };
 
-    const pet: Pet = {
+    const pet: PetRequest = {
         id: '',
         createdAt: '',
         name: 'Brownie',
@@ -131,14 +132,14 @@ test('add vaccination', async () => {
             <form class="ui form">
                 <div class="field">
                     <label>Name</label>
-                    <input type="text" name="name" value="Brownie">
+                    <input type="text" name="name">
                 </div>
                 <div class="field">
                     <label>Vaccination</label>
                     <div class="ui bottom attached segment">
                         <div class="field">
                             <label>Name</label>
-                            <input type="text" name="vaccinations[0].name" value="Rabies">
+                            <input type="text" name="vaccinations[0].name">
                         </div>
                         <div class="field">
                             <button data-testid="remove-vaccination-0" type="button" class="ui button red">Remove</button>
@@ -147,7 +148,7 @@ test('add vaccination', async () => {
                     <div class="ui bottom attached segment">
                         <div class="field">
                             <label>Name</label>
-                            <input type="text" name="vaccinations[1].name" value="">
+                            <input type="text" name="vaccinations[1].name">
                         </div>
                         <div class="field">
                             <button data-testid="remove-vaccination-1" type="button" class="ui button red">Remove</button>
@@ -162,9 +163,9 @@ test('add vaccination', async () => {
 });
 
 test('remove vaccination', async () => {
-    const submitPet: { (pet: Pet): any; } = (pet: Pet) => { };
+    const submitPet: { (pet: PetRequest): any; } = (pet: PetRequest) => { };
 
-    const pet: Pet = {
+    const pet: PetRequest = {
         id: '',
         createdAt: '',
         name: 'Brownie',
@@ -189,7 +190,7 @@ test('remove vaccination', async () => {
             <form class="ui form">
                 <div class="field">
                     <label>Name</label>
-                    <input type="text" name="name" value="Brownie">
+                    <input type="text" name="name">
                 </div>
                 <div class="field">
                     <label>Vaccination</label>
@@ -202,9 +203,9 @@ test('remove vaccination', async () => {
 });
 
 test('submit', async () => {
-    const submitPet: { (pet: Pet): any; } = jest.fn((pet: Pet) => { });
+    const submitPet: { (pet: PetRequest): any; } = jest.fn((pet: PetRequest) => { });
 
-    const pet: Pet = {
+    const pet: PetRequest = {
         id: '',
         createdAt: '',
         name: 'Brownie',
@@ -229,14 +230,14 @@ test('submit', async () => {
             <form class="ui form">
                 <div class="field">
                     <label>Name</label>
-                    <input type="text" name="name" value="Brownie">
+                    <input type="text" name="name">
                 </div>
                 <div class="field">
                     <label>Vaccination</label>
                     <div class="ui bottom attached segment">
                         <div class="field"><
                             label>Name</label>
-                            <input type="text" name="vaccinations[0].name" value="Rabies">
+                            <input type="text" name="vaccinations[0].name">
                         </div>
                         <div class="field">
                             <button data-testid="remove-vaccination-0" type="button" class="ui button red">Remove</button>

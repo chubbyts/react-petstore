@@ -1,7 +1,7 @@
-import Pet from './Pet';
+import PetResponse from './PetResponse';
 
 interface Embedded {
-    items: Array<Pet>;
+    items: Array<PetResponse>;
 };
 
 export default Embedded;

@@ -1,54 +1,41 @@
 import React from 'react';
 import { Button, Form } from 'semantic-ui-react';
-import { FieldArray as FinalFormFieldArray } from 'react-final-form-arrays';
-import { Form as FinalForm } from 'react-final-form';
-import arrayMutators from 'final-form-arrays';
-import FieldArrayRenderProps from '../../Type/Form/FieldArrayRenderProps';
+import { useForm, useFieldArray } from 'react-hook-form';
 import FormField from './FormField';
 import InvalidParameterByNameDenormalizer from '../../Denormalizer/InvalidParameterByNameDenormalizer';
-import Pet from '../../Type/Pet/Pet';
 import PetFormProps from '../../Type/Form/PetFormProps';
-import TextInput from './TextInput';
+import PetRequest from '../../Type/Pet/PetRequest';
 
 const PetForm: React.FC<PetFormProps> = ({ submitPet, pet, error }: PetFormProps) => {
     const invalidParameterByNameDenormalized = InvalidParameterByNameDenormalizer(error ? error.invalidParameters : []);
 
+    const { register, control, handleSubmit } = useForm<PetRequest>({ defaultValues: pet });
+
+    const vaccinations = useFieldArray({ control, name: 'vaccinations'});
+
+    const onSubmit = async (pet: PetRequest) => {
+        await submitPet(pet);
+    };
+
     return (
-        <FinalForm
-            onSubmit={async (pet: Pet) => await submitPet(pet)}
-            initialValues={pet}
-            mutators={{
-                ...arrayMutators
-            }}
-            render={({
-                handleSubmit,
-                form: {
-                    mutators: { push }
-                },
-                form
-            }) => (
-                    <Form onSubmit={handleSubmit}>
-                        <FormField name='name' label='Name' component={TextInput} invalidParameters={invalidParameterByNameDenormalized.name ?? []} />
-                        <Form.Field>
-                            <label>Vaccination</label>
-                            <FinalFormFieldArray name='vaccinations'>
-                                {({ fields }: FieldArrayRenderProps) =>
-                                    fields.map((name: string, i: number) => (
-                                        <div key={i} className='ui bottom attached segment'>
-                                            <FormField name={`${name}.name`} label='Name' component={TextInput} invalidParameters={invalidParameterByNameDenormalized[`${name}.name`] ?? []} />
-                                            <Form.Field>
-                                                <button data-testid={`remove-vaccination-${i}`} type='button' className='ui button red' onClick={() => fields.remove(i)}>Remove</button>
-                                            </Form.Field>
-                                        </div>
-                                    ))
-                                }
-                            </FinalFormFieldArray>
-                            <button data-testid='add-vaccination' type='button' className='ui button green' onClick={() => push('vaccinations', undefined)}>Add</button>
-                        </Form.Field>
-                        <Button data-testid="submit-pet" onClick={form.submit} className='blue'>Submit</Button>
-                    </Form>
-                )}
-        />
+        <Form onSubmit={handleSubmit(onSubmit)}>
+            <FormField register={register} name='name' label='Name' invalidParameters={invalidParameterByNameDenormalized.name ?? []} />
+            <Form.Field>
+                <label>Vaccination</label>
+                {vaccinations.fields.map((vaccination, i) => {
+                    return (
+                        <div key={vaccination.id} className='ui bottom attached segment'>
+                            <FormField register={register} name={`vaccinations[${i}].name`} label='Name' invalidParameters={invalidParameterByNameDenormalized[`vaccinations[${i}].name`] ?? []} />
+                            <Form.Field>
+                                <button data-testid={`remove-vaccination-${i}`} type='button' className='ui button red' onClick={() => vaccinations.remove(i)}>Remove</button>
+                            </Form.Field>
+                        </div>
+                    );
+                })}
+                <button data-testid='add-vaccination' type='button' className='ui button green' onClick={() => vaccinations.append({})}>Add</button>
+            </Form.Field>
+            <Button data-testid="submit-pet" className='blue'>Submit</Button>
+        </Form>
     );
 };
 

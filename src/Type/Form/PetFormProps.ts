@@ -1,9 +1,10 @@
-import Pet from "../Pet/Pet";
+import PetRequest from "../Pet/PetRequest";
+import PetResponse from "../Pet/PetResponse";
 import UnprocessableEntity from "../Error/UnprocessableEntity";
 
 type PetFormProps = {
-    submitPet: { (pet: Pet): any; },
-    pet?: Pet,
+    submitPet: { (pet: PetRequest): any; },
+    pet?: PetResponse,
     error?: UnprocessableEntity
 };
 

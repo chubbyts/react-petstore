@@ -4,9 +4,10 @@ import { Link, RouteComponentProps, useHistory } from 'react-router-dom';
 import { ReadPet, UpdatePet } from '../../../ApiClient/Pet';
 import HttpError from '../../../Type/Error/HttpError';
 import HttpErrorPartial from '../../Partial/HttpError';
-import Pet from '../../../Type/Pet/Pet';
+import PetResponse from '../../../Type/Pet/PetResponse';
 import PetForm from '../../Form/PetForm';
 import UnprocessableEntity from '../../../Type/Error/UnprocessableEntity';
+import PetRequest from '../../../Type/Pet/PetRequest';
 
 type Props = RouteComponentProps<{ id: string; }>;
 
@@ -16,7 +17,7 @@ const Update: React.FC<Props> = ({ match }: Props) => {
 
     const history = useHistory();
 
-    const [pet, setPet] = useState<Pet>();
+    const [pet, setPet] = useState<PetResponse>();
     const [httpError, setHttpError] = useState<HttpError>();
 
     useEffect(() => {
@@ -36,8 +37,8 @@ const Update: React.FC<Props> = ({ match }: Props) => {
         }
     };
 
-    const submitPet = async (pet: Pet) => {
-        const response = await UpdatePet(pet);
+    const submitPet = async (pet: PetRequest) => {
+        const response = await UpdatePet(id, pet);
 
         if (response instanceof HttpError) {
             setHttpError(response);

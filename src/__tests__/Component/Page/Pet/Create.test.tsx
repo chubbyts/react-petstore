@@ -5,8 +5,8 @@ import { Router } from 'react-router-dom';
 import * as ApiClientPet from '../../../../ApiClient/Pet';
 import Create from '../../../../Component/Page/Pet/Create';
 import HttpError from '../../../../Type/Error/HttpError';
-import Pet from '../../../../Type/Pet/Pet';
 import PetFormProps from '../../../../Type/Form/PetFormProps';
+import PetResponse from '../../../../Type/Pet/PetResponse';
 import UnprocessableEntity from '../../../../Type/Error/UnprocessableEntity';
 
 jest.mock('../../../../ApiClient/Pet');
@@ -14,7 +14,7 @@ jest.mock('../../../../ApiClient/Pet');
 jest.mock('../../../../Component/Form/PetForm', () => {
     return ({ submitPet }: PetFormProps) => {
         const submit = async () => {
-            await submitPet({ id: '', createdAt: '', name: '', vaccinations: [], _links: {} });
+            await submitPet({ name: '', vaccinations: [] });
         };
 
         return (<button data-testid="test-button" onClick={submit}></button>);
@@ -79,7 +79,7 @@ test('unprocessable entity', async () => {
 });
 
 test('successful', async () => {
-    ApiClientPet.CreatePet.mockImplementationOnce((pet: Pet) => {
+    ApiClientPet.CreatePet.mockImplementationOnce((pet: PetResponse) => {
         return new Promise((resolve) => resolve(pet));
     });
 

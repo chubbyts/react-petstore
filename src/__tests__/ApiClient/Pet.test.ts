@@ -5,6 +5,7 @@ import InternalServerError from '../../Type/Error/InternalServerError';
 import NotFound from '../../Type/Error/NotFound';
 import UnprocessableEntity from '../../Type/Error/UnprocessableEntity';
 import NetworkError from '../../Type/Error/NetworkError';
+import PetRequest from '../../Type/Pet/PetRequest';
 
 beforeEach(() => {
     fetchMock.restore();
@@ -155,6 +156,8 @@ describe('list pets', () => {
 
 describe('create pet', () => {
     test('success', async () => {
+        const pet: PetRequest = { name: 'Brownie', vaccinations: [] };
+
         fetchMock.post(
             'https://petstore.test/api/pets',
             {
@@ -170,11 +173,9 @@ describe('create pet', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: { name: 'Brownie' }
+                body: pet
             }
         );
-
-        const pet = { name: 'Brownie' };
 
         const response = await CreatePet(pet);
 
@@ -185,6 +186,8 @@ describe('create pet', () => {
     });
 
     test('unprocessable entity', async () => {
+        const pet: PetRequest = { name: '', vaccinations: [] };
+
         fetchMock.post(
             'https://petstore.test/api/pets',
             {
@@ -207,11 +210,9 @@ describe('create pet', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: { name: '' }
+                body: pet
             }
         );
-
-        const pet = { name: '' };
 
         const response = await CreatePet(pet);
 
@@ -223,6 +224,8 @@ describe('create pet', () => {
     });
 
     test('internal server error', async () => {
+        const pet: PetRequest = { name: 'Brownie', vaccinations: [] };
+
         fetchMock.post(
             'https://petstore.test/api/pets',
             {
@@ -241,11 +244,9 @@ describe('create pet', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: { name: 'Brownie' }
+                body: pet
             }
         );
-
-        const pet = { name: 'Brownie' };
 
         const response = await CreatePet(pet);
 
@@ -256,6 +257,8 @@ describe('create pet', () => {
     });
 
     test('network error', async () => {
+        const pet: PetRequest = { name: 'Brownie', vaccinations: [] };
+
         fetchMock.post(
             'https://petstore.test/api/pets',
             {
@@ -265,11 +268,10 @@ describe('create pet', () => {
                 delay: 10,
                 headers: {
                     'Accept': 'application/json'
-                }
+                },
+                body: pet
             }
         );
-
-        const pet = { name: 'Brownie' };
 
         const response = await CreatePet(pet);
 
@@ -279,6 +281,8 @@ describe('create pet', () => {
     });
 
     test('unknown response', async () => {
+        const pet: PetRequest = { name: 'Brownie', vaccinations: [] };
+
         fetchMock.post(
             'https://petstore.test/api/pets',
             {
@@ -292,15 +296,14 @@ describe('create pet', () => {
                 delay: 10,
                 headers: {
                     'Accept': 'application/json'
-                }
+                },
+                body: pet
             }
         );
 
         expect.assertions(1);
 
         try {
-            const pet = { name: 'Brownie' };
-
             await CreatePet(pet);
         } catch (e) {
             expect(e).toEqual(new Error('Unknown response'));
@@ -446,6 +449,8 @@ describe('read pet', () => {
 
 describe('update pet', () => {
     test('success', async () => {
+        const pet: PetRequest = { name: 'Brownie', vaccinations: [] };
+
         fetchMock.put(
             'https://petstore.test/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
             {
@@ -461,13 +466,11 @@ describe('update pet', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: { id: '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' }
+                body: pet
             }
         );
 
-        const pet = { 'id': '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' };
-
-        const response = await UpdatePet(pet);
+        const response = await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet);
 
         expect(response).toHaveProperty('id');
         expect(response.id).toEqual('4d783b77-eb09-4603-b99b-f590b605eaa9');
@@ -476,6 +479,8 @@ describe('update pet', () => {
     });
 
     test('not found', async () => {
+        const pet: PetRequest = { name: 'Brownie', vaccinations: [] };
+
         fetchMock.put(
             'https://petstore.test/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
             {
@@ -495,13 +500,11 @@ describe('update pet', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: { id: '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' }
+                body: pet
             }
         );
 
-        const pet = { 'id': '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' };
-
-        const response = await UpdatePet(pet);
+        const response = await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet);
 
         expect(response).toBeInstanceOf(NotFound);
 
@@ -511,6 +514,8 @@ describe('update pet', () => {
     });
 
     test('unprocessable entity', async () => {
+        const pet: PetRequest = { name: '', vaccinations: [] };
+
         fetchMock.put(
             'https://petstore.test/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
             {
@@ -533,13 +538,11 @@ describe('update pet', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: { id: '4d783b77-eb09-4603-b99b-f590b605eaa9', name: '' }
+                body: pet
             }
         );
 
-        const pet = { 'id': '4d783b77-eb09-4603-b99b-f590b605eaa9', name: '' };
-
-        const response = await UpdatePet(pet);
+        const response = await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet);
 
         expect(response).toBeInstanceOf(UnprocessableEntity);
 
@@ -550,6 +553,8 @@ describe('update pet', () => {
 
 
     test('internal server error', async () => {
+        const pet: PetRequest = { name: 'Brownie', vaccinations: [] };
+
         fetchMock.put(
             'https://petstore.test/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
             {
@@ -568,13 +573,11 @@ describe('update pet', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: { id: '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' }
+                body: pet
             }
         );
 
-        const pet = { 'id': '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' };
-
-        const response = await UpdatePet(pet);
+        const response = await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet);
 
         expect(response).toBeInstanceOf(InternalServerError);
 
@@ -583,6 +586,8 @@ describe('update pet', () => {
     });
 
     test('network error', async () => {
+        const pet: PetRequest = { name: 'Brownie', vaccinations: [] };
+
         fetchMock.put(
             'https://petstore.test/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
             {
@@ -592,13 +597,12 @@ describe('update pet', () => {
                 delay: 10,
                 headers: {
                     'Accept': 'application/json'
-                }
+                },
+                body: pet
             }
         );
 
-        const pet = { 'id': '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' };
-
-        const response = await UpdatePet(pet);
+        const response = await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet);
 
         expect(response).toBeInstanceOf(NetworkError);
 
@@ -606,6 +610,8 @@ describe('update pet', () => {
     });
 
     test('unknown response', async () => {
+        const pet: PetRequest = { name: 'Brownie', vaccinations: [] };
+
         fetchMock.put(
             'https://petstore.test/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
             {
@@ -619,16 +625,15 @@ describe('update pet', () => {
                 delay: 10,
                 headers: {
                     'Accept': 'application/json'
-                }
+                },
+                body: pet
             }
         );
 
         expect.assertions(1);
 
         try {
-            const pet = { 'id': '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' };
-
-            await UpdatePet(pet);
+            await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet);
         } catch (e) {
             expect(e).toEqual(new Error('Unknown response'));
         }
@@ -650,9 +655,7 @@ describe('delete pet', () => {
             }
         );
 
-        const pet = { 'id': '4d783b77-eb09-4603-b99b-f590b605eaa9' };
-
-        await DeletePet(pet);
+        await DeletePet('4d783b77-eb09-4603-b99b-f590b605eaa9');
     });
 
     test('not found', async () => {
@@ -677,9 +680,7 @@ describe('delete pet', () => {
             }
         );
 
-        const pet = { 'id': '4d783b77-eb09-4603-b99b-f590b605eaa9' };
-
-        const response = await DeletePet(pet);
+        const response = await DeletePet('4d783b77-eb09-4603-b99b-f590b605eaa9');
 
         expect(response).toBeInstanceOf(NotFound);
 
@@ -709,9 +710,7 @@ describe('delete pet', () => {
             }
         );
 
-        const pet = { 'id': '4d783b77-eb09-4603-b99b-f590b605eaa9' };
-
-        const response = await DeletePet(pet);
+        const response = await DeletePet('4d783b77-eb09-4603-b99b-f590b605eaa9');
 
         expect(response).toBeInstanceOf(InternalServerError);
 
@@ -733,9 +732,7 @@ describe('delete pet', () => {
             }
         );
 
-        const pet = { 'id': '4d783b77-eb09-4603-b99b-f590b605eaa9' };
-
-        const response = await DeletePet(pet);
+        const response = await DeletePet('4d783b77-eb09-4603-b99b-f590b605eaa9');
 
         expect(response).toBeInstanceOf(NetworkError);
 
@@ -763,9 +760,7 @@ describe('delete pet', () => {
         expect.assertions(1);
 
         try {
-            const pet = { 'id': '4d783b77-eb09-4603-b99b-f590b605eaa9' };
-
-            await DeletePet(pet);
+            await DeletePet('4d783b77-eb09-4603-b99b-f590b605eaa9');
         } catch (e) {
             expect(e).toEqual(new Error('Unknown response'));
         }

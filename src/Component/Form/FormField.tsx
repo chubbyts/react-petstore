@@ -1,25 +1,19 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { Form } from 'semantic-ui-react';
-import { Field as FinalFormField } from 'react-final-form';
 import InvalidParameter from '../../Type/Error/InvalidParameter';
 
-import { FieldRenderProps } from 'react-final-form';
-
 type Props = {
+    register: any,
     name: string,
     label: string,
-    component: FunctionComponent<FieldRenderProps<string, HTMLElement>>,
     invalidParameters: Array<InvalidParameter>
 };
 
-const FormField: React.FC<Props> = ({ name, label, component, invalidParameters }: Props) => {
+const FormField: React.FC<Props> = ({ register, name, label, invalidParameters }: Props) => {
     return (
         <Form.Field className={invalidParameters.length > 0 ? 'error' : ''}>
             <label>{label}</label>
-            <FinalFormField<string>
-                name={name}
-                component={component}
-            />
+            <input type='text' name={name} ref={register} />
             {invalidParameters && invalidParameters.map((invalidParameter: InvalidParameter, i) => (
                 <div key={i} className='ui pointing red basic label'>{invalidParameter.reason}</div>
             ))}

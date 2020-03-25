@@ -7,7 +7,7 @@ import { ListPets, DeletePet } from '../../../ApiClient/Pet';
 import BadRequest from '../../../Type/Error/BadRequest';
 import HttpError from '../../../Type/Error/HttpError';
 import HttpErrorPartial from '../../Partial/HttpError';
-import Pet from '../../../Type/Pet/Pet';
+import PetResponse from '../../../Type/Pet/PetResponse';
 import PetList from '../../../Type/Pet/PetList';
 import qs from 'qs';
 import PetFilterForm from '../../Form/PetFilterForm';
@@ -46,8 +46,8 @@ const List: React.FC = () => {
         }
     };
 
-    const deletePet = async (pet: Pet) => {
-        const deleteResponse = await DeletePet(pet);
+    const deletePet = async (id: string) => {
+        const deleteResponse = await DeletePet(id);
 
         if (deleteResponse instanceof HttpError) {
             setHttpError(deleteResponse);
@@ -111,7 +111,7 @@ const List: React.FC = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {petList._embedded.items.map((pet: Pet, i) => (
+                            {petList._embedded.items.map((pet: PetResponse, i) => (
                                 <tr key={pet.id}>
                                     <td>{pet.id}</td>
                                     <td>{format(Date.parse(pet.createdAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}</td>
@@ -125,7 +125,7 @@ const List: React.FC = () => {
                                             <Button as={Link} to={`/pet/${pet.id}/update`}>Update</Button>
                                         ) : ''}
                                         {pet._links.delete ? (
-                                            <Button data-testid={`remove-pet-${i}`} onClick={() => { deletePet(pet); }} className='red'>Delete</Button>
+                                            <Button data-testid={`remove-pet-${i}`} onClick={() => { deletePet(pet.id); }} className='red'>Delete</Button>
                                         ) : ''}
                                     </td>
                                 </tr>

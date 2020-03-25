@@ -5,7 +5,7 @@ import { Router } from 'react-router-dom';
 import * as ApiClientPet from '../../../../ApiClient/Pet';
 import HttpError from '../../../../Type/Error/HttpError';
 import NotFound from '../../../../Type/Error/NotFound';
-import Pet from '../../../../Type/Pet/Pet';
+import PetResponse from '../../../../Type/Pet/PetResponse';
 import Read from '../../../../Component/Page/Pet/Read';
 
 jest.mock('../../../../ApiClient/Pet');
@@ -49,7 +49,7 @@ test('not found', async () => {
 });
 
 test('minimal', async () => {
-    const pet: Pet = {
+    const pet: PetResponse = {
         id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
         createdAt: '2005-08-15T15:52:01+00:00',
         name: 'Brownie',
@@ -110,7 +110,7 @@ test('minimal', async () => {
 });
 
 test('maximal', async () => {
-    const pet: Pet = {
+    const pet: PetResponse = {
         id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
         createdAt: '2005-08-15T15:52:01+00:00',
         updatedAt: '2005-08-15T15:55:01+00:00',

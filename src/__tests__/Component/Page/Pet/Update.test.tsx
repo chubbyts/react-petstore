@@ -5,18 +5,17 @@ import { Router } from 'react-router-dom';
 import * as ApiClientPet from '../../../../ApiClient/Pet';
 import HttpError from '../../../../Type/Error/HttpError';
 import NotFound from '../../../../Type/Error/NotFound';
-import Pet from '../../../../Type/Pet/Pet';
-import Read from '../../../../Component/Page/Pet/Read';
-import Update from '../../../../Component/Page/Pet/Update';
 import PetFormProps from '../../../../Type/Form/PetFormProps';
+import PetResponse from '../../../../Type/Pet/PetResponse';
 import UnprocessableEntity from '../../../../Type/Error/UnprocessableEntity';
+import Update from '../../../../Component/Page/Pet/Update';
 
 jest.mock('../../../../ApiClient/Pet');
 
 jest.mock('../../../../Component/Form/PetForm', () => {
     return ({ submitPet }: PetFormProps) => {
         const submit = async () => {
-            await submitPet({ id: '', createdAt: '', name: '', vaccinations: [], _links: {} });
+            await submitPet({ name: '', vaccinations: [] });
         };
 
         return (<button data-testid="test-button" onClick={submit}></button>);
@@ -62,7 +61,7 @@ test('not found', async () => {
 });
 
 test('minimal', async () => {
-    const pet: Pet = {
+    const pet: PetResponse = {
         id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
         createdAt: '2005-08-15T15:52:01+00:00',
         name: 'Brownie',
@@ -106,7 +105,7 @@ test('minimal', async () => {
 });
 
 test('unprocessable entity', async () => {
-    const pet: Pet = {
+    const pet: PetResponse = {
         id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
         createdAt: '2005-08-15T15:52:01+00:00',
         name: 'Brownie',
@@ -159,7 +158,7 @@ test('unprocessable entity', async () => {
 });
 
 test('successful', async () => {
-    const pet: Pet = {
+    const pet: PetResponse = {
         id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
         createdAt: '2005-08-15T15:52:01+00:00',
         name: 'Brownie',
@@ -171,7 +170,7 @@ test('successful', async () => {
         return new Promise((resolve) => resolve(pet));
     });
 
-    ApiClientPet.UpdatePet.mockImplementationOnce((pet: Pet) => {
+    ApiClientPet.UpdatePet.mockImplementationOnce((pet: PetResponse) => {
         return new Promise((resolve) => resolve(pet));
     });
 
