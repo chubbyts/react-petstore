@@ -6,7 +6,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { ReadPet } from '../../../ApiClient/Pet';
 import HttpError from '../../../Type/Error/HttpError';
 import HttpErrorPartial from '../../Partial/HttpError';
-import Pet from '../../../Type/Pet/Pet';
+import PetResponse from '../../../Type/Pet/PetResponse';
 
 type Props = RouteComponentProps<{ id: string; }>;
 
@@ -14,7 +14,7 @@ const Read: React.FC<Props> = ({ match }: Props) => {
 
     const id = match.params.id;
 
-    const [pet, setPet] = useState<Pet>();
+    const [pet, setPet] = useState<PetResponse>();
     const [httpError, setHttpError] = useState<HttpError>();
 
     useEffect(() => {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
+import BadRequest from '../../../Type/Error/BadRequest';
 import InvalidParameter from '../../../Type/Error/InvalidParameter';
 import PetFilterForm from '../../../Component/Form/PetFilterForm';
-import BadRequest from '../../../Type/Error/BadRequest';
 
 test('without error', () => {
     const submitPetFilter: { (filters: any): any; } = (filters: any) => { };
@@ -21,7 +21,7 @@ test('without error', () => {
                 <div class="inline fields">
                     <div class="field">
                         <label>Name</label>
-                        <input type="text" name="name" value="aa">
+                        <input type="text" name="name">
                     </div>
                     <button data-testid="submit-pet-filter" class="ui button blue">Filter</button>
                 </div>
@@ -56,7 +56,7 @@ test('with error', () => {
                 <div class="inline fields">
                     <div class="field error">
                         <label>Name</label>
-                        <input type="text" name="name" value="">
+                        <input type="text" name="name">
                         <div class="ui pointing red basic label">Should not be empty</div>
                     </div>
                     <button data-testid="submit-pet-filter" class="ui button blue">Filter</button>
@@ -89,7 +89,7 @@ test('submit', async () => {
                 <div class="inline fields">
                     <div class="field">
                         <label>Name</label>
-                        <input type="text" name="name" value="aa">
+                        <input type="text" name="name">
                     </div>
                     <button data-testid="submit-pet-filter" class="ui button blue">Filter</button>
                 </div>
@@ -97,5 +97,39 @@ test('submit', async () => {
         </div>
     `.replace(/\n {2,}/g, ''));
 
-    expect(submitPetFilter.mock.calls.length).toBe(2); // @todo: why???
+    expect(submitPetFilter.mock.calls.length).toBe(1);
+});
+
+test('submit empty', async () => {
+    const submitPetFilter: { (filters: any): any; } = jest.fn((filters: any) => { });
+
+    const filters = {
+        name: ''
+    };
+
+    const { container, findByTestId } = render(
+        <PetFilterForm submitPetFilter={submitPetFilter} filters={filters} />
+    );
+
+    const submitButton = await findByTestId('submit-pet-filter');
+
+    fireEvent.click(submitButton);
+
+    await findByTestId('submit-pet-filter');
+
+    expect(container.outerHTML).toBe(`
+        <div>
+            <form class="ui form">
+                <div class="inline fields">
+                    <div class="field">
+                        <label>Name</label>
+                        <input type="text" name="name">
+                    </div>
+                    <button data-testid="submit-pet-filter" class="ui button blue">Filter</button>
+                </div>
+            </form>
+        </div>
+    `.replace(/\n {2,}/g, ''));
+
+    expect(submitPetFilter.mock.calls.length).toBe(1);
 });

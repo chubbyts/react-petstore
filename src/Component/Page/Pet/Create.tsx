@@ -4,9 +4,9 @@ import { CreatePet } from '../../../ApiClient/Pet';
 import { Link, useHistory } from 'react-router-dom';
 import HttpError from '../../../Type/Error/HttpError';
 import HttpErrorPartial from '../../Partial/HttpError';
-import Pet from '../../../Type/Pet/Pet';
 import PetForm from '../../Form/PetForm';
 import UnprocessableEntity from '../../../Type/Error/UnprocessableEntity';
+import PetRequest from '../../../Type/Pet/PetRequest';
 
 const Create: React.FC = () => {
 
@@ -16,7 +16,7 @@ const Create: React.FC = () => {
 
     document.title = 'Create Pet';
 
-    const submitPet = async (pet: Pet) => {
+    const submitPet = async (pet: PetRequest) => {
         const response = await CreatePet(pet);
 
         if (response instanceof HttpError) {

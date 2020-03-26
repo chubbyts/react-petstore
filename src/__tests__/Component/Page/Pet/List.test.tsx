@@ -6,9 +6,9 @@ import * as ApiClientPet from '../../../../ApiClient/Pet';
 import BadRequest from '../../../../Type/Error/BadRequest';
 import HttpError from '../../../../Type/Error/HttpError';
 import List from '../../../../Component/Page/Pet/List';
+import NotFound from '../../../../Type/Error/NotFound';
 import PetFilterFormProps from '../../../../Type/Form/PetFilterFormProps';
 import PetList from '../../../../Type/Pet/PetList';
-import NotFound from '../../../../Type/Error/NotFound';
 
 jest.mock('../../../../ApiClient/Pet');
 

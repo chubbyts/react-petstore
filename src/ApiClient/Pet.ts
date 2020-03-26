@@ -3,9 +3,10 @@ import HttpError from '../Type/Error/HttpError';
 import InternalServerError from '../Type/Error/InternalServerError';
 import NetworkError from '../Type/Error/NetworkError';
 import NotFound from '../Type/Error/NotFound';
-import Pet from '../Type/Pet/Pet';
+import PetResponse from '../Type/Pet/PetResponse';
 import PetList from '../Type/Pet/PetList';
 import UnprocessableEntity from '../Type/Error/UnprocessableEntity';
+import PetRequest from '../Type/Pet/PetRequest';
 
 const url: string = `${process.env.REACT_APP_PETSTORE_URL}/api/pets`;
 
@@ -38,7 +39,7 @@ export const ListPets = async (queryString: string): Promise<HttpError | PetList
     throw new Error('Unknown response');
 };
 
-export const CreatePet = async (pet: Pet): Promise<HttpError | Pet> => {
+export const CreatePet = async (pet: PetRequest): Promise<HttpError | PetResponse> => {
     try {
         const response: Response = await fetch(url, {
             method: 'POST',
@@ -69,7 +70,7 @@ export const CreatePet = async (pet: Pet): Promise<HttpError | Pet> => {
     throw new Error('Unknown response');
 };
 
-export const ReadPet = async (id: string): Promise<HttpError | Pet> => {
+export const ReadPet = async (id: string): Promise<HttpError | PetResponse> => {
     try {
         const response: Response = await fetch(`${url}/${id}`, {
             method: 'GET',
@@ -98,9 +99,9 @@ export const ReadPet = async (id: string): Promise<HttpError | Pet> => {
     throw new Error('Unknown response');
 };
 
-export const UpdatePet = async (pet: Pet): Promise<HttpError | Pet> => {
+export const UpdatePet = async (id: string, pet: PetRequest): Promise<HttpError | PetResponse> => {
     try {
-        const response: Response = await fetch(`${url}/${pet.id}`, {
+        const response: Response = await fetch(`${url}/${id}`, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
@@ -133,9 +134,9 @@ export const UpdatePet = async (pet: Pet): Promise<HttpError | Pet> => {
     throw new Error('Unknown response');
 };
 
-export const DeletePet = async (pet: Pet): Promise<HttpError | Pet | undefined> => {
+export const DeletePet = async (id: string): Promise<HttpError | PetResponse | undefined> => {
     try {
-        const response: Response = await fetch(`${url}/${pet.id}`, {
+        const response: Response = await fetch(`${url}/${id}`, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
