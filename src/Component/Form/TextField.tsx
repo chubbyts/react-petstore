@@ -9,7 +9,7 @@ type Props = {
     invalidParameters: Array<InvalidParameter>
 };
 
-const FormField: React.FC<Props> = ({ register, name, label, invalidParameters }: Props) => {
+const TextField: React.FC<Props> = ({ register, name, label, invalidParameters }: Props) => {
     return (
         <Form.Field className={invalidParameters.length > 0 ? 'error' : ''}>
             <label>{label}</label>
@@ -21,4 +21,4 @@ const FormField: React.FC<Props> = ({ register, name, label, invalidParameters }
     );
 };
 
-export default FormField;
+export default TextField;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import FormField from '../../../Component/Form/FormField';
+import TextField from '../../../Component/Form/TextField';
 import InvalidParameter from '../../../Type/Error/InvalidParameter';
 
 test('default', () => {
@@ -11,7 +11,7 @@ test('default', () => {
     ];
 
     const { container } = render(
-        <FormField register={register} name='name' label='label' invalidParameters={invalidParameters} />
+        <TextField register={register} name='name' label='label' invalidParameters={invalidParameters} />
     );
 
     expect(container.outerHTML).toBe(`
