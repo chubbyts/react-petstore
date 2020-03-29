@@ -9,6 +9,10 @@ import List from '../../../../Component/Page/Pet/List';
 import NotFound from '../../../../Model/Error/NotFound';
 import PetFilterFormProps from '../../../../Component/Form/PetFilterFormProps';
 import PetList from '../../../../Model/Pet/PetList';
+import Embedded from '../../../../Model/Pet/Embedded';
+import PetResponse from '../../../../Model/Pet/PetResponse';
+import Vaccination from '../../../../Model/Pet/Vaccination';
+import Link from '../../../../Model/Link';
 
 jest.mock('../../../../ApiClient/Pet');
 
@@ -54,60 +58,60 @@ test('bad request', async () => {
 });
 
 test('default', async () => {
-    const petList: PetList = {
+    const petList = new PetList({
         offset: 0,
         limit: 1,
         count: 2,
-        _embedded: {
+        _embedded: new Embedded({
             items: [
-                {
+                new PetResponse({
                     id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
                     createdAt: '2005-08-15T15:52:01+00:00',
                     updatedAt: '2005-08-15T15:55:01+00:00',
                     name: 'Brownie',
                     vaccinations: [
-                        { name: 'Rabies' }
+                        new Vaccination({ name: 'Rabies' })
                     ],
                     _links: {
-                        "read": {
+                        "read": new Link({
                             "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
                             "templated": false,
                             "rel": [],
                             "attributes": {
                                 "method": "GET"
                             }
-                        },
-                        "update": {
+                        }),
+                        "update": new Link({
                             "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
                             "templated": false,
                             "rel": [],
                             "attributes": {
                                 "method": "PUT"
                             }
-                        },
-                        "delete": {
+                        }),
+                        "delete": new Link({
                             "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
                             "templated": false,
                             "rel": [],
                             "attributes": {
                                 "method": "DELETE"
                             }
-                        }
+                        })
                     }
-                }
+                })
             ]
-        },
+        }),
         "_links": {
-            "create": {
+            "create": new Link({
                 "href": "/api/pets",
                 "templated": false,
                 "rel": [],
                 "attributes": {
                     "method": "POST"
                 }
-            }
-        },
-    };
+            })
+        }
+    });
 
     ApiClientPet.ListPets.mockImplementationOnce(() => {
         return new Promise((resolve) => resolve(petList));
@@ -169,35 +173,26 @@ test('default', async () => {
 });
 
 test('no actions', async () => {
-    const petList: PetList = {
+    const petList = new PetList({
         offset: 0,
         limit: 1,
         count: 2,
-        _embedded: {
+        _embedded: new Embedded({
             items: [
-                {
+                new PetResponse({
                     id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
                     createdAt: '2005-08-15T15:52:01+00:00',
                     updatedAt: '2005-08-15T15:55:01+00:00',
                     name: 'Brownie',
                     vaccinations: [
-                        { name: 'Rabies' }
+                        new Vaccination({ name: 'Rabies' })
                     ],
                     _links: {}
-                }
+                })
             ]
-        },
-        "_links": {
-            "create": {
-                "href": "/api/pets",
-                "templated": false,
-                "rel": [],
-                "attributes": {
-                    "method": "POST"
-                }
-            }
-        },
-    };
+        }),
+        "_links": {}
+    });
 
     ApiClientPet.ListPets.mockImplementationOnce(() => {
         return new Promise((resolve) => resolve(petList));
@@ -217,7 +212,6 @@ test('no actions', async () => {
         <div>
             <main class="ui padded grid" data-testid="page-pet-list">
                 <div class="row"><h1 class="ui huge dividing header">List Pets</h1></div>
-                <div class="row"><a class="ui button green" role="button" href="/pet/create">Create</a></div>
                 <div class="row"><div class="ui attached segment"><button data-testid="test-button"></button></div></div>
                 <div class="row">
                     <table class="ui single line striped selectable table">
@@ -255,60 +249,60 @@ test('no actions', async () => {
 });
 
 test('submit bad request', async () => {
-    const petList: PetList = {
+    const petList = new PetList({
         offset: 0,
         limit: 1,
         count: 2,
-        _embedded: {
+        _embedded: new Embedded({
             items: [
-                {
+                new PetResponse({
                     id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
                     createdAt: '2005-08-15T15:52:01+00:00',
                     updatedAt: '2005-08-15T15:55:01+00:00',
                     name: 'Brownie',
                     vaccinations: [
-                        { name: 'Rabies' }
+                        new Vaccination({ name: 'Rabies' })
                     ],
                     _links: {
-                        "read": {
+                        "read": new Link({
                             "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
                             "templated": false,
                             "rel": [],
                             "attributes": {
                                 "method": "GET"
                             }
-                        },
-                        "update": {
+                        }),
+                        "update": new Link({
                             "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
                             "templated": false,
                             "rel": [],
                             "attributes": {
                                 "method": "PUT"
                             }
-                        },
-                        "delete": {
+                        }),
+                        "delete": new Link({
                             "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
                             "templated": false,
                             "rel": [],
                             "attributes": {
                                 "method": "DELETE"
                             }
-                        }
+                        })
                     }
-                }
+                })
             ]
-        },
+        }),
         "_links": {
-            "create": {
+            "create": new Link({
                 "href": "/api/pets",
                 "templated": false,
                 "rel": [],
                 "attributes": {
                     "method": "POST"
                 }
-            }
-        },
-    };
+            })
+        }
+    });
 
     ApiClientPet.ListPets.mockImplementationOnce(() => {
         return new Promise((resolve) => resolve(petList));
@@ -379,60 +373,60 @@ test('submit bad request', async () => {
 });
 
 test('submit filter', async () => {
-    const petList: PetList = {
+    const petList = new PetList({
         offset: 0,
         limit: 1,
         count: 2,
-        _embedded: {
+        _embedded: new Embedded({
             items: [
-                {
+                new PetResponse({
                     id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
                     createdAt: '2005-08-15T15:52:01+00:00',
                     updatedAt: '2005-08-15T15:55:01+00:00',
                     name: 'Brownie',
                     vaccinations: [
-                        { name: 'Rabies' }
+                        new Vaccination({ name: 'Rabies' })
                     ],
                     _links: {
-                        "read": {
+                        "read": new Link({
                             "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
                             "templated": false,
                             "rel": [],
                             "attributes": {
                                 "method": "GET"
                             }
-                        },
-                        "update": {
+                        }),
+                        "update": new Link({
                             "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
                             "templated": false,
                             "rel": [],
                             "attributes": {
                                 "method": "PUT"
                             }
-                        },
-                        "delete": {
+                        }),
+                        "delete": new Link({
                             "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
                             "templated": false,
                             "rel": [],
                             "attributes": {
                                 "method": "DELETE"
                             }
-                        }
+                        })
                     }
-                }
+                })
             ]
-        },
+        }),
         "_links": {
-            "create": {
+            "create": new Link({
                 "href": "/api/pets",
                 "templated": false,
                 "rel": [],
                 "attributes": {
                     "method": "POST"
                 }
-            }
-        },
-    };
+            })
+        }
+    });
 
     ApiClientPet.ListPets.mockImplementationOnce(() => {
         return new Promise((resolve) => resolve(petList));
@@ -457,60 +451,60 @@ test('submit filter', async () => {
 });
 
 test('next', async () => {
-    const petList: PetList = {
+    const petList = new PetList({
         offset: 0,
         limit: 1,
         count: 2,
-        _embedded: {
+        _embedded: new Embedded({
             items: [
-                {
+                new PetResponse({
                     id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
                     createdAt: '2005-08-15T15:52:01+00:00',
                     updatedAt: '2005-08-15T15:55:01+00:00',
                     name: 'Brownie',
                     vaccinations: [
-                        { name: 'Rabies' }
+                        new Vaccination({ name: 'Rabies' })
                     ],
                     _links: {
-                        "read": {
+                        "read": new Link({
                             "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
                             "templated": false,
                             "rel": [],
                             "attributes": {
                                 "method": "GET"
                             }
-                        },
-                        "update": {
+                        }),
+                        "update": new Link({
                             "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
                             "templated": false,
                             "rel": [],
                             "attributes": {
                                 "method": "PUT"
                             }
-                        },
-                        "delete": {
+                        }),
+                        "delete": new Link({
                             "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
                             "templated": false,
                             "rel": [],
                             "attributes": {
                                 "method": "DELETE"
                             }
-                        }
+                        })
                     }
-                }
+                })
             ]
-        },
+        }),
         "_links": {
-            "create": {
+            "create": new Link({
                 "href": "/api/pets",
                 "templated": false,
                 "rel": [],
                 "attributes": {
                     "method": "POST"
                 }
-            }
-        },
-    };
+            })
+        }
+    });
 
     ApiClientPet.ListPets.mockImplementationOnce(() => {
         return new Promise((resolve) => resolve(petList));
@@ -537,60 +531,60 @@ test('next', async () => {
 });
 
 test('sort', async () => {
-    const petList: PetList = {
+    const petList = new PetList({
         offset: 0,
         limit: 1,
         count: 2,
-        _embedded: {
+        _embedded: new Embedded({
             items: [
-                {
+                new PetResponse({
                     id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
                     createdAt: '2005-08-15T15:52:01+00:00',
                     updatedAt: '2005-08-15T15:55:01+00:00',
                     name: 'Brownie',
                     vaccinations: [
-                        { name: 'Rabies' }
+                        new Vaccination({ name: 'Rabies' })
                     ],
                     _links: {
-                        "read": {
+                        "read": new Link({
                             "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
                             "templated": false,
                             "rel": [],
                             "attributes": {
                                 "method": "GET"
                             }
-                        },
-                        "update": {
+                        }),
+                        "update": new Link({
                             "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
                             "templated": false,
                             "rel": [],
                             "attributes": {
                                 "method": "PUT"
                             }
-                        },
-                        "delete": {
+                        }),
+                        "delete": new Link({
                             "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
                             "templated": false,
                             "rel": [],
                             "attributes": {
                                 "method": "DELETE"
                             }
-                        }
+                        })
                     }
-                }
+                })
             ]
-        },
+        }),
         "_links": {
-            "create": {
+            "create": new Link({
                 "href": "/api/pets",
                 "templated": false,
                 "rel": [],
                 "attributes": {
                     "method": "POST"
                 }
-            }
-        },
-    };
+            })
+        }
+    });
 
     ApiClientPet.ListPets.mockImplementationOnce(() => {
         return new Promise((resolve) => resolve(petList));
@@ -617,60 +611,60 @@ test('sort', async () => {
 });
 
 test('delete not found', async () => {
-    const petList: PetList = {
+    const petList = new PetList({
         offset: 0,
         limit: 1,
         count: 2,
-        _embedded: {
+        _embedded: new Embedded({
             items: [
-                {
+                new PetResponse({
                     id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
                     createdAt: '2005-08-15T15:52:01+00:00',
                     updatedAt: '2005-08-15T15:55:01+00:00',
                     name: 'Brownie',
                     vaccinations: [
-                        { name: 'Rabies' }
+                        new Vaccination({ name: 'Rabies' })
                     ],
                     _links: {
-                        "read": {
+                        "read": new Link({
                             "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
                             "templated": false,
                             "rel": [],
                             "attributes": {
                                 "method": "GET"
                             }
-                        },
-                        "update": {
+                        }),
+                        "update": new Link({
                             "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
                             "templated": false,
                             "rel": [],
                             "attributes": {
                                 "method": "PUT"
                             }
-                        },
-                        "delete": {
+                        }),
+                        "delete": new Link({
                             "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
                             "templated": false,
                             "rel": [],
                             "attributes": {
                                 "method": "DELETE"
                             }
-                        }
+                        })
                     }
-                }
+                })
             ]
-        },
+        }),
         "_links": {
-            "create": {
+            "create": new Link({
                 "href": "/api/pets",
                 "templated": false,
                 "rel": [],
                 "attributes": {
                     "method": "POST"
                 }
-            }
-        },
-    };
+            })
+        }
+    });
 
     ApiClientPet.ListPets.mockImplementationOnce(() => {
         return new Promise((resolve) => resolve(petList));
@@ -741,79 +735,80 @@ test('delete not found', async () => {
 });
 
 test('delete success', async () => {
-    const petList: PetList = {
+    const petList = new PetList({
         offset: 0,
         limit: 1,
         count: 2,
-        _embedded: {
+        _embedded: new Embedded({
             items: [
-                {
+                new PetResponse({
                     id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
                     createdAt: '2005-08-15T15:52:01+00:00',
                     updatedAt: '2005-08-15T15:55:01+00:00',
                     name: 'Brownie',
                     vaccinations: [
-                        { name: 'Rabies' }
+                        new Vaccination({ name: 'Rabies' })
                     ],
                     _links: {
-                        "read": {
+                        "read": new Link({
                             "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
                             "templated": false,
                             "rel": [],
                             "attributes": {
                                 "method": "GET"
                             }
-                        },
-                        "update": {
+                        }),
+                        "update": new Link({
                             "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
                             "templated": false,
                             "rel": [],
                             "attributes": {
                                 "method": "PUT"
                             }
-                        },
-                        "delete": {
+                        }),
+                        "delete": new Link({
                             "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
                             "templated": false,
                             "rel": [],
                             "attributes": {
                                 "method": "DELETE"
                             }
-                        }
+                        })
                     }
-                }
+                })
             ]
-        },
+        }),
         "_links": {
-            "create": {
+            "create": new Link({
                 "href": "/api/pets",
                 "templated": false,
                 "rel": [],
                 "attributes": {
                     "method": "POST"
                 }
-            }
-        },
-    };
+            })
+        }
+    });
 
-    const petListNoItem: PetList = {
+    const petListNoItem = new PetList({
         offset: 0,
         limit: 1,
         count: 2,
-        _embedded: {
-            items: []
-        },
+        _embedded: new Embedded({
+            items: [
+            ]
+        }),
         "_links": {
-            "create": {
+            "create": new Link({
                 "href": "/api/pets",
                 "templated": false,
                 "rel": [],
                 "attributes": {
                     "method": "POST"
                 }
-            }
-        },
-    };
+            })
+        }
+    });
 
     ApiClientPet.ListPets.mockImplementationOnce(() => {
         return new Promise((resolve) => resolve(petList));

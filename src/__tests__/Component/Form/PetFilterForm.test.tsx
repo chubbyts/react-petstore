@@ -3,13 +3,12 @@ import { fireEvent, render } from '@testing-library/react';
 import BadRequest from '../../../Model/Error/BadRequest';
 import InvalidParameter from '../../../Model/Error/InvalidParameter';
 import PetFilterForm from '../../../Component/Form/PetFilterForm';
+import PetFilters from '../../../Model/Pet/PetFilters';
 
 test('without error', () => {
     const submitPetFilter: { (filters: any): any; } = (filters: any) => { };
 
-    const filters = {
-        name: 'aa'
-    };
+    const filters = new PetFilters({name: 'aa'});
 
     const { container } = render(
         <PetFilterForm submitPetFilter={submitPetFilter} filters={filters} />
@@ -33,9 +32,7 @@ test('without error', () => {
 test('with error', () => {
     const submitPetFilter: { (filters: any): any; } = (filters: any) => { };
 
-    const filters = {
-        name: ''
-    };
+    const filters = new PetFilters({name: ''});
 
     const invalidParameters: Array<InvalidParameter> = [
         { name: 'name', reason: 'Should not be empty' },
@@ -69,9 +66,7 @@ test('with error', () => {
 test('submit', async () => {
     const submitPetFilter: { (filters: any): any; } = jest.fn((filters: any) => { });
 
-    const filters = {
-        name: 'aa'
-    };
+    const filters = new PetFilters({name: 'aa'});
 
     const { container, findByTestId } = render(
         <PetFilterForm submitPetFilter={submitPetFilter} filters={filters} />
@@ -103,9 +98,7 @@ test('submit', async () => {
 test('submit empty', async () => {
     const submitPetFilter: { (filters: any): any; } = jest.fn((filters: any) => { });
 
-    const filters = {
-        name: ''
-    };
+    const filters = new PetFilters({name: ''});
 
     const { container, findByTestId } = render(
         <PetFilterForm submitPetFilter={submitPetFilter} filters={filters} />

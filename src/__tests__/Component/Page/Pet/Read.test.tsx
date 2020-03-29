@@ -7,6 +7,7 @@ import HttpError from '../../../../Model/Error/HttpError';
 import NotFound from '../../../../Model/Error/NotFound';
 import PetResponse from '../../../../Model/Pet/PetResponse';
 import Read from '../../../../Component/Page/Pet/Read';
+import Vaccination from '../../../../Model/Pet/Vaccination';
 
 jest.mock('../../../../ApiClient/Pet');
 
@@ -49,13 +50,11 @@ test('not found', async () => {
 });
 
 test('minimal', async () => {
-    const pet: PetResponse = {
+    const pet = new PetResponse({
         id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
         createdAt: '2005-08-15T15:52:01+00:00',
-        name: 'Brownie',
-        vaccinations: [],
-        _links: {}
-    };
+        name: 'Brownie'
+    });
 
     ApiClientPet.ReadPet.mockImplementationOnce(() => {
         return new Promise((resolve) => resolve(pet));
@@ -110,16 +109,15 @@ test('minimal', async () => {
 });
 
 test('maximal', async () => {
-    const pet: PetResponse = {
+    const pet = new PetResponse({
         id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
         createdAt: '2005-08-15T15:52:01+00:00',
         updatedAt: '2005-08-15T15:55:01+00:00',
         name: 'Brownie',
         vaccinations: [
-            { name: 'Rabies' }
-        ],
-        _links: {}
-    };
+            new Vaccination({ name: 'Rabies' })
+        ]
+    });
 
     ApiClientPet.ReadPet.mockImplementationOnce(() => {
         return new Promise((resolve) => resolve(pet));

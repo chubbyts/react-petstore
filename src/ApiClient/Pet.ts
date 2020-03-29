@@ -22,7 +22,7 @@ export const ListPets = async (queryString: string): Promise<HttpError | PetList
         const json = await response.json();
 
         if (200 === response.status) {
-            return json;
+            return new PetList({ ...json });
         }
 
         if (400 === response.status) {
@@ -53,7 +53,7 @@ export const CreatePet = async (pet: PetRequest): Promise<HttpError | PetRespons
         const json = await response.json();
 
         if (201 === response.status) {
-            return json;
+            return new PetResponse({ ...json });
         }
 
         if (422 === response.status) {
@@ -82,7 +82,7 @@ export const ReadPet = async (id: string): Promise<HttpError | PetResponse> => {
         const json = await response.json();
 
         if (200 === response.status) {
-            return json;
+            return new PetResponse({ ...json });
         }
 
         if (404 === response.status) {
@@ -113,7 +113,7 @@ export const UpdatePet = async (id: string, pet: PetRequest): Promise<HttpError 
         const json = await response.json();
 
         if (200 === response.status) {
-            return json;
+            return new PetResponse({ ...json });
         }
 
         if (404 === response.status) {
