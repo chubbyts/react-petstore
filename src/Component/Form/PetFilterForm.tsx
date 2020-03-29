@@ -10,7 +10,7 @@ const PetFilterForm: React.FC<PetFilterFormProps> = ({ submitPetFilter, filters,
 
     const { register, handleSubmit } = useForm({ defaultValues: filters });
 
-    const onSubmit = async (data: any) => {
+    const onSubmit = (data: any) => {
         Object.keys(data).forEach(key => {
             data[key] = data[key] !== '' ? data[key] : undefined;
         });

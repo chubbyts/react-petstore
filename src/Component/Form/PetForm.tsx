@@ -13,12 +13,8 @@ const PetForm: React.FC<PetFormProps> = ({ submitPet, pet, error }: PetFormProps
 
     const vaccinations = useFieldArray({ control, name: 'vaccinations'});
 
-    const onSubmit = async (pet: PetRequest) => {
-        await submitPet(pet);
-    };
-
     return (
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(submitPet)}>
             <TextField register={register} name='name' label='Name' invalidParameters={invalidParameterByNameDenormalized.name ?? []} />
             <Form.Field>
                 <label>Vaccination</label>

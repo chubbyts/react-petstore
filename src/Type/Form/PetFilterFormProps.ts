@@ -1,7 +1,7 @@
 import BadRequest from "../Error/BadRequest";
 
 type PetFilterFormProps = {
-    submitPetFilter: { (filters: any): any; },
+    submitPetFilter: { (filters: object): void; },
     filters?: any,
     error?: BadRequest
 };
