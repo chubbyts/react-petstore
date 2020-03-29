@@ -1,12 +1,12 @@
-import BadRequest from '../Type/Error/BadRequest';
-import HttpError from '../Type/Error/HttpError';
-import InternalServerError from '../Type/Error/InternalServerError';
-import NetworkError from '../Type/Error/NetworkError';
-import NotFound from '../Type/Error/NotFound';
-import PetResponse from '../Type/Pet/PetResponse';
-import PetList from '../Type/Pet/PetList';
-import UnprocessableEntity from '../Type/Error/UnprocessableEntity';
-import PetRequest from '../Type/Pet/PetRequest';
+import BadRequest from '../Model/Error/BadRequest';
+import HttpError from '../Model/Error/HttpError';
+import InternalServerError from '../Model/Error/InternalServerError';
+import NetworkError from '../Model/Error/NetworkError';
+import NotFound from '../Model/Error/NotFound';
+import PetResponse from '../Model/Pet/PetResponse';
+import PetList from '../Model/Pet/PetList';
+import UnprocessableEntity from '../Model/Error/UnprocessableEntity';
+import PetRequest from '../Model/Pet/PetRequest';
 
 const url: string = `${process.env.REACT_APP_PETSTORE_URL}/api/pets`;
 

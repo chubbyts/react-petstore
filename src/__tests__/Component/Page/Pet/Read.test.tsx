@@ -3,9 +3,9 @@ import { createMemoryHistory } from 'history';
 import { render } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import * as ApiClientPet from '../../../../ApiClient/Pet';
-import HttpError from '../../../../Type/Error/HttpError';
-import NotFound from '../../../../Type/Error/NotFound';
-import PetResponse from '../../../../Type/Pet/PetResponse';
+import HttpError from '../../../../Model/Error/HttpError';
+import NotFound from '../../../../Model/Error/NotFound';
+import PetResponse from '../../../../Model/Pet/PetResponse';
 import Read from '../../../../Component/Page/Pet/Read';
 
 jest.mock('../../../../ApiClient/Pet');

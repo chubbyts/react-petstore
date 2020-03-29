@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import HttpErrorWithInvalidArguments from '../../../Type/Error/HttpErrorWithInvalidArguments';
+import HttpErrorWithInvalidArguments from '../../../Model/Error/HttpErrorWithInvalidArguments';
 import HttpError from '../../../Component/Partial/HttpError';
 
 test('minimal', () => {

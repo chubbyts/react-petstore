@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Button } from 'semantic-ui-react';
 import { Link, RouteComponentProps, useHistory } from 'react-router-dom';
 import { ReadPet, UpdatePet } from '../../../ApiClient/Pet';
-import HttpError from '../../../Type/Error/HttpError';
+import HttpError from '../../../Model/Error/HttpError';
 import HttpErrorPartial from '../../Partial/HttpError';
-import PetResponse from '../../../Type/Pet/PetResponse';
+import PetResponse from '../../../Model/Pet/PetResponse';
 import PetForm from '../../Form/PetForm';
-import UnprocessableEntity from '../../../Type/Error/UnprocessableEntity';
-import PetRequest from '../../../Type/Pet/PetRequest';
+import UnprocessableEntity from '../../../Model/Error/UnprocessableEntity';
+import PetRequest from '../../../Model/Pet/PetRequest';
 
 type Props = RouteComponentProps<{ id: string; }>;
 

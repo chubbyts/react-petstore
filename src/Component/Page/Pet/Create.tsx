@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Button } from 'semantic-ui-react';
 import { CreatePet } from '../../../ApiClient/Pet';
 import { Link, useHistory } from 'react-router-dom';
-import HttpError from '../../../Type/Error/HttpError';
+import HttpError from '../../../Model/Error/HttpError';
 import HttpErrorPartial from '../../Partial/HttpError';
 import PetForm from '../../Form/PetForm';
-import UnprocessableEntity from '../../../Type/Error/UnprocessableEntity';
-import PetRequest from '../../../Type/Pet/PetRequest';
+import UnprocessableEntity from '../../../Model/Error/UnprocessableEntity';
+import PetRequest from '../../../Model/Pet/PetRequest';
 
 const Create: React.FC = () => {
 

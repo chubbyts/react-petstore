@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import BadRequest from '../../../Type/Error/BadRequest';
-import InvalidParameter from '../../../Type/Error/InvalidParameter';
+import BadRequest from '../../../Model/Error/BadRequest';
+import InvalidParameter from '../../../Model/Error/InvalidParameter';
 import PetFilterForm from '../../../Component/Form/PetFilterForm';
 
 test('without error', () => {

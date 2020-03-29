@@ -4,11 +4,11 @@ import { de } from 'date-fns/locale';
 import { format } from 'date-fns';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { ListPets, DeletePet } from '../../../ApiClient/Pet';
-import BadRequest from '../../../Type/Error/BadRequest';
-import HttpError from '../../../Type/Error/HttpError';
+import BadRequest from '../../../Model/Error/BadRequest';
+import HttpError from '../../../Model/Error/HttpError';
 import HttpErrorPartial from '../../Partial/HttpError';
-import PetResponse from '../../../Type/Pet/PetResponse';
-import PetList from '../../../Type/Pet/PetList';
+import PetResponse from '../../../Model/Pet/PetResponse';
+import PetList from '../../../Model/Pet/PetList';
 import qs from 'qs';
 import PetFilterForm from '../../Form/PetFilterForm';
 

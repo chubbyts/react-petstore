@@ -1,11 +1,11 @@
 import { ListPets, CreatePet, ReadPet, UpdatePet, DeletePet } from '../../ApiClient/Pet';
-import BadRequest from '../../Type/Error/BadRequest';
+import BadRequest from '../../Model/Error/BadRequest';
 import fetchMock from 'fetch-mock';
-import InternalServerError from '../../Type/Error/InternalServerError';
-import NotFound from '../../Type/Error/NotFound';
-import UnprocessableEntity from '../../Type/Error/UnprocessableEntity';
-import NetworkError from '../../Type/Error/NetworkError';
-import PetRequest from '../../Type/Pet/PetRequest';
+import InternalServerError from '../../Model/Error/InternalServerError';
+import NotFound from '../../Model/Error/NotFound';
+import UnprocessableEntity from '../../Model/Error/UnprocessableEntity';
+import NetworkError from '../../Model/Error/NetworkError';
+import PetRequest from '../../Model/Pet/PetRequest';
 
 beforeEach(() => {
     fetchMock.restore();

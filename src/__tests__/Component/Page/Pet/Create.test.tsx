@@ -4,10 +4,10 @@ import { fireEvent, render } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import * as ApiClientPet from '../../../../ApiClient/Pet';
 import Create from '../../../../Component/Page/Pet/Create';
-import HttpError from '../../../../Type/Error/HttpError';
-import PetFormProps from '../../../../Type/Form/PetFormProps';
-import PetResponse from '../../../../Type/Pet/PetResponse';
-import UnprocessableEntity from '../../../../Type/Error/UnprocessableEntity';
+import HttpError from '../../../../Model/Error/HttpError';
+import PetFormProps from '../../../../Component/Form/PetFormProps';
+import PetResponse from '../../../../Model/Pet/PetResponse';
+import UnprocessableEntity from '../../../../Model/Error/UnprocessableEntity';
 
 jest.mock('../../../../ApiClient/Pet');
 

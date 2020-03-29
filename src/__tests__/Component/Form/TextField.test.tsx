@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import TextField from '../../../Component/Form/TextField';
-import InvalidParameter from '../../../Type/Error/InvalidParameter';
+import InvalidParameter from '../../../Model/Error/InvalidParameter';
 
 test('default', () => {
     const register = () => {};

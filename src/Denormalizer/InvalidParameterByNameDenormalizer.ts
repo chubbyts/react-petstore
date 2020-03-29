@@ -1,4 +1,4 @@
-import InvalidParameter from '../Type/Error/InvalidParameter';
+import InvalidParameter from '../Model/Error/InvalidParameter';
 
 type errorsByFieldsType = { [id: string]: Array<InvalidParameter>; };
 

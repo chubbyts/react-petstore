@@ -2,8 +2,8 @@ import React from 'react';
 import { Form, Button } from 'semantic-ui-react';
 import { useForm } from 'react-hook-form';
 import InvalidParameterByNameDenormalizer from '../../Denormalizer/InvalidParameterByNameDenormalizer';
-import PetFilterFormProps from '../../Type/Form/PetFilterFormProps';
-import PetFilters from '../../Type/Pet/PetFilters';
+import PetFilterFormProps from './PetFilterFormProps';
+import PetFilters from '../../Model/Pet/PetFilters';
 import TextField from './TextField';
 
 const PetFilterForm: React.FC<PetFilterFormProps> = ({ submitPetFilter, filters, error }: PetFilterFormProps) => {

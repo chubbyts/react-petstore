@@ -4,9 +4,9 @@ import { de } from 'date-fns/locale';
 import { format } from 'date-fns';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { ReadPet } from '../../../ApiClient/Pet';
-import HttpError from '../../../Type/Error/HttpError';
+import HttpError from '../../../Model/Error/HttpError';
 import HttpErrorPartial from '../../Partial/HttpError';
-import PetResponse from '../../../Type/Pet/PetResponse';
+import PetResponse from '../../../Model/Pet/PetResponse';
 
 type Props = RouteComponentProps<{ id: string; }>;
 

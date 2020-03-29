@@ -3,12 +3,12 @@ import { createMemoryHistory } from 'history';
 import { render, fireEvent } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import * as ApiClientPet from '../../../../ApiClient/Pet';
-import BadRequest from '../../../../Type/Error/BadRequest';
-import HttpError from '../../../../Type/Error/HttpError';
+import BadRequest from '../../../../Model/Error/BadRequest';
+import HttpError from '../../../../Model/Error/HttpError';
 import List from '../../../../Component/Page/Pet/List';
-import NotFound from '../../../../Type/Error/NotFound';
-import PetFilterFormProps from '../../../../Type/Form/PetFilterFormProps';
-import PetList from '../../../../Type/Pet/PetList';
+import NotFound from '../../../../Model/Error/NotFound';
+import PetFilterFormProps from '../../../../Component/Form/PetFilterFormProps';
+import PetList from '../../../../Model/Pet/PetList';
 
 jest.mock('../../../../ApiClient/Pet');
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import InvalidParameter from '../../../Type/Error/InvalidParameter';
+import InvalidParameter from '../../../Model/Error/InvalidParameter';
 import PetForm from '../../../Component/Form/PetForm';
-import PetRequest from '../../../Type/Pet/PetResponse';
-import PetResponse from '../../../Type/Pet/PetResponse';
-import UnprocessableEntity from '../../../Type/Error/UnprocessableEntity';
+import PetRequest from '../../../Model/Pet/PetResponse';
+import PetResponse from '../../../Model/Pet/PetResponse';
+import UnprocessableEntity from '../../../Model/Error/UnprocessableEntity';
 
 test('without error', () => {
     const submitPet: { (pet: PetRequest): any; } = (pet: PetRequest) => { };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form } from 'semantic-ui-react';
-import InvalidParameter from '../../Type/Error/InvalidParameter';
+import InvalidParameter from '../../Model/Error/InvalidParameter';
 
 type Props = {
     register: any,

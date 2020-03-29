@@ -1,8 +1,8 @@
 import React from 'react';
 import { Message } from 'semantic-ui-react';
-import HttpErrorType from '../../Type/Error/HttpError';
-import HttpErrorWithInvalidArguments from '../../Type/Error/HttpErrorWithInvalidArguments';
-import InvalidParameter from '../../Type/Error/InvalidParameter';
+import HttpErrorType from '../../Model/Error/HttpError';
+import HttpErrorWithInvalidArguments from '../../Model/Error/HttpErrorWithInvalidArguments';
+import InvalidParameter from '../../Model/Error/InvalidParameter';
 
 type Props = {
     httpError: HttpErrorType

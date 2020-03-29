@@ -1,5 +1,5 @@
 import InvalidParameterByNameDenormalizer from '../../Denormalizer/InvalidParameterByNameDenormalizer';
-import InvalidParameter from '../../Type/Error/InvalidParameter';
+import InvalidParameter from '../../Model/Error/InvalidParameter';
 
 test('default', () => {
     const invalidParameters: Array<InvalidParameter> = [
