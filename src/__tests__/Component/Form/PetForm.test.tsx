@@ -2,22 +2,22 @@ import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import InvalidParameter from '../../../Model/Error/InvalidParameter';
 import PetForm from '../../../Component/Form/PetForm';
-import PetRequest from '../../../Model/Pet/PetResponse';
+import PetRequest from '../../../Model/Pet/PetRequest';
 import PetResponse from '../../../Model/Pet/PetResponse';
 import UnprocessableEntity from '../../../Model/Error/UnprocessableEntity';
+import Vaccination from '../../../Model/Pet/Vaccination';
 
 test('without error', () => {
-    const submitPet: { (pet: PetRequest): any; } = (pet: PetRequest) => { };
+    const submitPet: { (pet: PetRequest): void; } = (pet: PetRequest): void => { };
 
-    const pet: PetResponse = {
-        id: '',
-        createdAt: '',
+    const pet = new PetResponse({
+        id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+        createdAt: '2005-08-15T15:52:01+00:00',
         name: 'Brownie',
         vaccinations: [
-            { name: 'Rabies' }
-        ],
-        _links: {}
-    };
+            new Vaccination({ name: 'Rabies' })
+        ]
+    });
 
     const { container } = render(
         <PetForm submitPet={submitPet} pet={pet} />
@@ -52,15 +52,14 @@ test('without error', () => {
 test('with error', () => {
     const submitPet: { (pet: PetRequest): any; } = (pet: PetRequest) => { };
 
-    const pet: PetRequest = {
-        id: '',
-        createdAt: '',
+    const pet = new PetResponse({
+        id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+        createdAt: '2005-08-15T15:52:01+00:00',
         name: '',
         vaccinations: [
-            { name: '' }
-        ],
-        _links: {}
-    };
+            new Vaccination({ name: '' })
+        ]
+    });
 
     const invalidParameters: Array<InvalidParameter> = [
         { name: 'name', reason: 'Should not be empty' },
@@ -107,15 +106,14 @@ test('with error', () => {
 test('add vaccination', async () => {
     const submitPet: { (pet: PetRequest): any; } = (pet: PetRequest) => { };
 
-    const pet: PetRequest = {
-        id: '',
-        createdAt: '',
+    const pet = new PetResponse({
+        id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+        createdAt: '2005-08-15T15:52:01+00:00',
         name: 'Brownie',
         vaccinations: [
-            { name: 'Rabies' }
-        ],
-        _links: {}
-    };
+            new Vaccination({ name: 'Rabies' })
+        ]
+    });
 
     const { container, findByTestId } = render(
         <PetForm submitPet={submitPet} pet={pet} />
@@ -165,15 +163,14 @@ test('add vaccination', async () => {
 test('remove vaccination', async () => {
     const submitPet: { (pet: PetRequest): any; } = (pet: PetRequest) => { };
 
-    const pet: PetRequest = {
-        id: '',
-        createdAt: '',
+    const pet = new PetResponse({
+        id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+        createdAt: '2005-08-15T15:52:01+00:00',
         name: 'Brownie',
         vaccinations: [
-            { name: 'Rabies' }
-        ],
-        _links: {}
-    };
+            new Vaccination({ name: 'Rabies' })
+        ]
+    });
 
     const { container, findByTestId } = render(
         <PetForm submitPet={submitPet} pet={pet} />
@@ -205,15 +202,14 @@ test('remove vaccination', async () => {
 test('submit', async () => {
     const submitPet: { (pet: PetRequest): any; } = jest.fn((pet: PetRequest) => { });
 
-    const pet: PetRequest = {
-        id: '',
-        createdAt: '',
+    const pet = new PetResponse({
+        id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+        createdAt: '2005-08-15T15:52:01+00:00',
         name: 'Brownie',
         vaccinations: [
-            { name: 'Rabies' }
-        ],
-        _links: {}
-    };
+            new Vaccination({ name: 'Rabies' })
+        ]
+    });
 
     const { container, findByTestId } = render(
         <PetForm submitPet={submitPet} pet={pet} />

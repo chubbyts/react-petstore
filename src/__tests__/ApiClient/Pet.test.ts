@@ -156,7 +156,7 @@ describe('list pets', () => {
 
 describe('create pet', () => {
     test('success', async () => {
-        const pet: PetRequest = { name: 'Brownie', vaccinations: [] };
+        const pet = new PetRequest({ name: 'Brownie' });
 
         fetchMock.post(
             'https://petstore.test/api/pets',
@@ -173,7 +173,7 @@ describe('create pet', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: pet
+                body: JSON.parse(JSON.stringify(pet))
             }
         );
 
@@ -186,7 +186,7 @@ describe('create pet', () => {
     });
 
     test('unprocessable entity', async () => {
-        const pet: PetRequest = { name: '', vaccinations: [] };
+        const pet = new PetRequest({ name: '' });
 
         fetchMock.post(
             'https://petstore.test/api/pets',
@@ -210,7 +210,7 @@ describe('create pet', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: pet
+                body: JSON.parse(JSON.stringify(pet))
             }
         );
 
@@ -224,7 +224,7 @@ describe('create pet', () => {
     });
 
     test('internal server error', async () => {
-        const pet: PetRequest = { name: 'Brownie', vaccinations: [] };
+        const pet = new PetRequest({ name: 'Brownie' });
 
         fetchMock.post(
             'https://petstore.test/api/pets',
@@ -244,7 +244,7 @@ describe('create pet', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: pet
+                body: JSON.parse(JSON.stringify(pet))
             }
         );
 
@@ -257,7 +257,7 @@ describe('create pet', () => {
     });
 
     test('network error', async () => {
-        const pet: PetRequest = { name: 'Brownie', vaccinations: [] };
+        const pet = new PetRequest({ name: 'Brownie' });
 
         fetchMock.post(
             'https://petstore.test/api/pets',
@@ -269,7 +269,7 @@ describe('create pet', () => {
                 headers: {
                     'Accept': 'application/json'
                 },
-                body: pet
+                body: JSON.parse(JSON.stringify(pet))
             }
         );
 
@@ -281,7 +281,7 @@ describe('create pet', () => {
     });
 
     test('unknown response', async () => {
-        const pet: PetRequest = { name: 'Brownie', vaccinations: [] };
+        const pet = new PetRequest({ name: 'Brownie' });
 
         fetchMock.post(
             'https://petstore.test/api/pets',
@@ -297,7 +297,7 @@ describe('create pet', () => {
                 headers: {
                     'Accept': 'application/json'
                 },
-                body: pet
+                body: JSON.parse(JSON.stringify(pet))
             }
         );
 
@@ -449,7 +449,7 @@ describe('read pet', () => {
 
 describe('update pet', () => {
     test('success', async () => {
-        const pet: PetRequest = { name: 'Brownie', vaccinations: [] };
+        const pet = new PetRequest({ name: 'Brownie' });
 
         fetchMock.put(
             'https://petstore.test/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
@@ -466,7 +466,7 @@ describe('update pet', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: pet
+                body: JSON.parse(JSON.stringify(pet))
             }
         );
 
@@ -479,7 +479,7 @@ describe('update pet', () => {
     });
 
     test('not found', async () => {
-        const pet: PetRequest = { name: 'Brownie', vaccinations: [] };
+        const pet = new PetRequest({ name: 'Brownie' });
 
         fetchMock.put(
             'https://petstore.test/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
@@ -500,7 +500,7 @@ describe('update pet', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: pet
+                body: JSON.parse(JSON.stringify(pet))
             }
         );
 
@@ -514,7 +514,7 @@ describe('update pet', () => {
     });
 
     test('unprocessable entity', async () => {
-        const pet: PetRequest = { name: '', vaccinations: [] };
+        const pet = new PetRequest({ name: '' });
 
         fetchMock.put(
             'https://petstore.test/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
@@ -538,7 +538,7 @@ describe('update pet', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: pet
+                body: JSON.parse(JSON.stringify(pet))
             }
         );
 
@@ -553,7 +553,7 @@ describe('update pet', () => {
 
 
     test('internal server error', async () => {
-        const pet: PetRequest = { name: 'Brownie', vaccinations: [] };
+        const pet = new PetRequest({ name: 'Brownie' });
 
         fetchMock.put(
             'https://petstore.test/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
@@ -573,7 +573,7 @@ describe('update pet', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: pet
+                body: JSON.parse(JSON.stringify(pet))
             }
         );
 
@@ -586,7 +586,7 @@ describe('update pet', () => {
     });
 
     test('network error', async () => {
-        const pet: PetRequest = { name: 'Brownie', vaccinations: [] };
+        const pet = new PetRequest({ name: 'Brownie' });
 
         fetchMock.put(
             'https://petstore.test/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
@@ -598,7 +598,7 @@ describe('update pet', () => {
                 headers: {
                     'Accept': 'application/json'
                 },
-                body: pet
+                body: JSON.parse(JSON.stringify(pet))
             }
         );
 
@@ -610,7 +610,7 @@ describe('update pet', () => {
     });
 
     test('unknown response', async () => {
-        const pet: PetRequest = { name: 'Brownie', vaccinations: [] };
+        const pet = new PetRequest({ name: 'Brownie' });
 
         fetchMock.put(
             'https://petstore.test/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
@@ -626,7 +626,7 @@ describe('update pet', () => {
                 headers: {
                     'Accept': 'application/json'
                 },
-                body: pet
+                body: JSON.parse(JSON.stringify(pet))
             }
         );
 
