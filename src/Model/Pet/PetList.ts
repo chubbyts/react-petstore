@@ -7,7 +7,13 @@ class PetList {
     count: number;
     _embedded: Embedded;
     _links: Links;
-    constructor({ offset, limit, count, _embedded, _links }: { offset: number, limit: number, count: number, _embedded: Embedded, _links: Links }) {
+    constructor({ offset, limit, count, _embedded, _links }: {
+        offset: number,
+        limit: number,
+        count: number,
+        _embedded: Embedded,
+        _links: Links
+    }) {
         this.offset = offset;
         this.limit = limit;
         this.count = count;

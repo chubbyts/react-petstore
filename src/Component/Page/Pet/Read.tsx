@@ -66,6 +66,10 @@ const Read: React.FC<Props> = ({ match }: Props) => {
                             {pet.name}
                         </List.Item>
                         <List.Item>
+                            <List.Header>Tag</List.Header>
+                            {pet.tag}
+                        </List.Item>
+                        <List.Item>
                             <List.Header>Vaccinations</List.Header>
                             {pet.vaccinations.length > 0 ? (
                                 <ul>{pet.vaccinations.map((vaccination, i) => (<li key={i}>{vaccination.name}</li>))}</ul>

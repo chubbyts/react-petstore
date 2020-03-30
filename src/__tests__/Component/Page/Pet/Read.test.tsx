@@ -98,6 +98,9 @@ test('minimal', async () => {
                             Brownie
                         </div>
                         <div role="listitem" class="item">
+                            <div class="header">Tag</div>
+                        </div>
+                        <div role="listitem" class="item">
                             <div class="header">Vaccinations</div>
                         </div>
                     </div>
@@ -114,6 +117,7 @@ test('maximal', async () => {
         createdAt: '2005-08-15T15:52:01+00:00',
         updatedAt: '2005-08-15T15:55:01+00:00',
         name: 'Brownie',
+        tag: '0001-000',
         vaccinations: [
             new Vaccination({ name: 'Rabies' })
         ]
@@ -160,6 +164,10 @@ test('maximal', async () => {
                         <div role="listitem" class="item">
                             <div class="header">Name</div>
                             Brownie
+                        </div>
+                        <div role="listitem" class="item">
+                            <div class="header">Tag</div>
+                            0001-000
                         </div>
                         <div role="listitem" class="item">
                             <div class="header">Vaccinations</div>

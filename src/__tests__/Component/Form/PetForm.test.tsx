@@ -31,6 +31,10 @@ test('without error', () => {
                     <input type="text" name="name">
                 </div>
                 <div class="field">
+                    <label>Tag</label>
+                    <input type="text" name="tag">
+                </div>
+                <div class="field">
                     <label>Vaccination</label>
                     <div class="ui bottom attached segment">
                         <div class="field"><
@@ -84,6 +88,10 @@ test('with error', () => {
                     <div class="ui pointing red basic label">Should not be empty</div>
                 </div>
                 <div class="field">
+                    <label>Tag</label>
+                    <input type="text" name="tag">
+                </div>
+                <div class="field">
                     <label>Vaccination</label>
                     <div class="ui bottom attached segment">
                         <div class="field error"><
@@ -131,6 +139,10 @@ test('add vaccination', async () => {
                 <div class="field">
                     <label>Name</label>
                     <input type="text" name="name">
+                </div>
+                <div class="field">
+                    <label>Tag</label>
+                    <input type="text" name="tag">
                 </div>
                 <div class="field">
                     <label>Vaccination</label>
@@ -190,6 +202,10 @@ test('remove vaccination', async () => {
                     <input type="text" name="name">
                 </div>
                 <div class="field">
+                    <label>Tag</label>
+                    <input type="text" name="tag">
+                </div>
+                <div class="field">
                     <label>Vaccination</label>
                     <button data-testid="add-vaccination" type="button" class="ui button green">Add</button>
                 </div>
@@ -199,13 +215,56 @@ test('remove vaccination', async () => {
     `.replace(/\n {2,}/g, ''));
 });
 
-test('submit', async () => {
+test('submit minimal', async () => {
+    const submitPet: { (pet: PetRequest): any; } = jest.fn((pet: PetRequest) => { });
+
+    const pet = new PetResponse({
+        id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+        createdAt: '2005-08-15T15:52:01+00:00',
+        name: 'Brownie'
+    });
+
+    const { container, findByTestId } = render(
+        <PetForm submitPet={submitPet} pet={pet} />
+    );
+
+    const submitButton = await findByTestId('submit-pet');
+
+    fireEvent.click(submitButton);
+
+    await findByTestId('submit-pet');
+
+    expect(container.outerHTML).toBe(`
+        <div>
+            <form class="ui form">
+                <div class="field">
+                    <label>Name</label>
+                    <input type="text" name="name">
+                </div>
+                <div class="field">
+                    <label>Tag</label>
+                    <input type="text" name="tag">
+                </div>
+                <div class="field">
+                    <label>Vaccination</label>
+                    <button data-testid="add-vaccination" type="button" class="ui button green">Add</button>
+                </div>
+                <button data-testid="submit-pet" class="ui button blue">Submit</button>
+            </form>
+        </div>
+    `.replace(/\n {2,}/g, ''));
+
+    expect(submitPet.mock.calls.length).toBe(1);
+});
+
+test('submit maximal', async () => {
     const submitPet: { (pet: PetRequest): any; } = jest.fn((pet: PetRequest) => { });
 
     const pet = new PetResponse({
         id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
         createdAt: '2005-08-15T15:52:01+00:00',
         name: 'Brownie',
+        tag: '0001-000',
         vaccinations: [
             new Vaccination({ name: 'Rabies' })
         ]
@@ -227,6 +286,10 @@ test('submit', async () => {
                 <div class="field">
                     <label>Name</label>
                     <input type="text" name="name">
+                </div>
+                <div class="field">
+                    <label>Tag</label>
+                    <input type="text" name="tag">
                 </div>
                 <div class="field">
                     <label>Vaccination</label>

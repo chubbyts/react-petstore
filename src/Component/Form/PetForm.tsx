@@ -11,11 +11,20 @@ const PetForm: React.FC<PetFormProps> = ({ submitPet, pet, error }: PetFormProps
 
     const { register, control, handleSubmit } = useForm<PetRequest>({ defaultValues: pet });
 
-    const vaccinations = useFieldArray({ control, name: 'vaccinations'});
+    const vaccinations = useFieldArray({ control, name: 'vaccinations' });
+
+    const onSubmit = (pet: PetRequest) => {
+        if ('' === pet.tag) {
+            pet.tag = undefined;
+        }
+
+        submitPet(pet);
+    };
 
     return (
-        <Form onSubmit={handleSubmit(submitPet)}>
+        <Form onSubmit={handleSubmit(onSubmit)}>
             <TextField register={register} name='name' label='Name' invalidParameters={invalidParameterByNameDenormalized.name ?? []} />
+            <TextField register={register} name='tag' label='Tag' invalidParameters={invalidParameterByNameDenormalized.tag ?? []} />
             <Form.Field>
                 <label>Vaccination</label>
                 {vaccinations.fields.map((vaccination, i) => {

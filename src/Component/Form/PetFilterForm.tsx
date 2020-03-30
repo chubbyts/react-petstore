@@ -11,12 +11,12 @@ const PetFilterForm: React.FC<PetFilterFormProps> = ({ submitPetFilter, filters,
 
     const { register, handleSubmit } = useForm<PetFilters>({ defaultValues: filters });
 
-    const onSubmit = (data: any) => {
-        Object.keys(data).forEach(key => {
-            data[key] = data[key] !== '' ? data[key] : undefined;
-        });
+    const onSubmit = (filters: PetFilters) => {
+        if ('' === filters.name) {
+            filters.name = undefined;
+        }
 
-        submitPetFilter(data);
+        submitPetFilter(filters);
     };
 
     return (

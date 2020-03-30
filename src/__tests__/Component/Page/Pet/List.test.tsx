@@ -69,6 +69,7 @@ test('default', async () => {
                     createdAt: '2005-08-15T15:52:01+00:00',
                     updatedAt: '2005-08-15T15:55:01+00:00',
                     name: 'Brownie',
+                    tag: '0001-000',
                     vaccinations: [
                         new Vaccination({ name: 'Rabies' })
                     ],
@@ -141,6 +142,7 @@ test('default', async () => {
                                 <th>CreatedAt</th>
                                 <th>UpdatedAt</th>
                                 <th>Name (<a data-testid="sort-pet-name-asc" href="/pet?sort%5Bname%5D=asc"> A-Z </a> |<a data-testid="sort-pet-name-desc" href="/pet?sort%5Bname%5D=desc"> Z-A </a> |<a data-testid="sort-pet-name--" href="/pet"> --- </a>)</th>
+                                <th>Tag</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -150,6 +152,7 @@ test('default', async () => {
                                 <td>15.08.2005 - 17:52:01</td>
                                 <td>15.08.2005 - 17:55:01</td>
                                 <td>Brownie</td>
+                                <td>0001-000</td>
                                 <td>
                                     <a class="ui button" role="button" href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9">Read</a>
                                     <a class="ui button" role="button" href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update">Update</a>
@@ -184,6 +187,7 @@ test('no actions', async () => {
                     createdAt: '2005-08-15T15:52:01+00:00',
                     updatedAt: '2005-08-15T15:55:01+00:00',
                     name: 'Brownie',
+                    tag: '0001-000',
                     vaccinations: [
                         new Vaccination({ name: 'Rabies' })
                     ],
@@ -221,6 +225,7 @@ test('no actions', async () => {
                                 <th>CreatedAt</th>
                                 <th>UpdatedAt</th>
                                 <th>Name (<a data-testid="sort-pet-name-asc" href="/pet?sort%5Bname%5D=asc"> A-Z </a> |<a data-testid="sort-pet-name-desc" href="/pet?sort%5Bname%5D=desc"> Z-A </a> |<a data-testid="sort-pet-name--" href="/pet"> --- </a>)</th>
+                                <th>Tag</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -230,6 +235,7 @@ test('no actions', async () => {
                                 <td>15.08.2005 - 17:52:01</td>
                                 <td>15.08.2005 - 17:55:01</td>
                                 <td>Brownie</td>
+                                <td>0001-000</td>
                                 <td></td>
                             </tr>
                         </tbody>
@@ -260,6 +266,7 @@ test('submit bad request', async () => {
                     createdAt: '2005-08-15T15:52:01+00:00',
                     updatedAt: '2005-08-15T15:55:01+00:00',
                     name: 'Brownie',
+                    tag: '0001-000',
                     vaccinations: [
                         new Vaccination({ name: 'Rabies' })
                     ],
@@ -329,7 +336,7 @@ test('submit bad request', async () => {
     expect(container.outerHTML).toBe(`
         <div>
             <main class="ui padded grid" data-testid="page-pet-list">
-                <div class=\"row\">httpError: title</div>
+                <div class="row">httpError: title</div>
                 <div class="row"><h1 class="ui huge dividing header">List Pets</h1></div>
                 <div class="row"><a class="ui button green" role="button" href="/pet/create">Create</a></div>
                 <div class="row"><div class="ui attached segment"><button data-testid="test-button"></button></div></div>
@@ -341,6 +348,7 @@ test('submit bad request', async () => {
                                 <th>CreatedAt</th>
                                 <th>UpdatedAt</th>
                                 <th>Name (<a data-testid="sort-pet-name-asc" href="/pet?filters%5Bname%5D=Bro&amp;sort%5Bname%5D=asc"> A-Z </a> |<a data-testid="sort-pet-name-desc" href="/pet?filters%5Bname%5D=Bro&amp;sort%5Bname%5D=desc"> Z-A </a> |<a data-testid="sort-pet-name--" href="/pet?filters%5Bname%5D=Bro"> --- </a>)</th>
+                                <th>Tag</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -350,6 +358,7 @@ test('submit bad request', async () => {
                                 <td>15.08.2005 - 17:52:01</td>
                                 <td>15.08.2005 - 17:55:01</td>
                                 <td>Brownie</td>
+                                <td>0001-000</td>
                                 <td>
                                     <a class="ui button" role="button" href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9">Read</a>
                                     <a class="ui button" role="button" href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update">Update</a>
@@ -384,6 +393,7 @@ test('submit filter', async () => {
                     createdAt: '2005-08-15T15:52:01+00:00',
                     updatedAt: '2005-08-15T15:55:01+00:00',
                     name: 'Brownie',
+                    tag: '0001-000',
                     vaccinations: [
                         new Vaccination({ name: 'Rabies' })
                     ],
@@ -462,6 +472,7 @@ test('next', async () => {
                     createdAt: '2005-08-15T15:52:01+00:00',
                     updatedAt: '2005-08-15T15:55:01+00:00',
                     name: 'Brownie',
+                    tag: '0001-000',
                     vaccinations: [
                         new Vaccination({ name: 'Rabies' })
                     ],
@@ -542,6 +553,7 @@ test('sort', async () => {
                     createdAt: '2005-08-15T15:52:01+00:00',
                     updatedAt: '2005-08-15T15:55:01+00:00',
                     name: 'Brownie',
+                    tag: '0001-000',
                     vaccinations: [
                         new Vaccination({ name: 'Rabies' })
                     ],
@@ -622,6 +634,7 @@ test('delete not found', async () => {
                     createdAt: '2005-08-15T15:52:01+00:00',
                     updatedAt: '2005-08-15T15:55:01+00:00',
                     name: 'Brownie',
+                    tag: '0001-000',
                     vaccinations: [
                         new Vaccination({ name: 'Rabies' })
                     ],
@@ -691,7 +704,7 @@ test('delete not found', async () => {
     expect(container.outerHTML).toBe(`
         <div>
             <main class="ui padded grid" data-testid="page-pet-list">
-                <div class=\"row\">httpError: title</div>
+                <div class="row">httpError: title</div>
                 <div class="row"><h1 class="ui huge dividing header">List Pets</h1></div>
                 <div class="row"><a class="ui button green" role="button" href="/pet/create">Create</a></div>
                 <div class="row"><div class="ui attached segment"><button data-testid="test-button"></button></div></div>
@@ -703,6 +716,7 @@ test('delete not found', async () => {
                                 <th>CreatedAt</th>
                                 <th>UpdatedAt</th>
                                 <th>Name (<a data-testid="sort-pet-name-asc" href="/pet?sort%5Bname%5D=asc"> A-Z </a> |<a data-testid="sort-pet-name-desc" href="/pet?sort%5Bname%5D=desc"> Z-A </a> |<a data-testid="sort-pet-name--" href="/pet"> --- </a>)</th>
+                                <th>Tag</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -712,6 +726,7 @@ test('delete not found', async () => {
                                 <td>15.08.2005 - 17:52:01</td>
                                 <td>15.08.2005 - 17:55:01</td>
                                 <td>Brownie</td>
+                                <td>0001-000</td>
                                 <td>
                                     <a class="ui button" role="button" href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9">Read</a>
                                     <a class="ui button" role="button" href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update">Update</a>
@@ -746,6 +761,7 @@ test('delete success', async () => {
                     createdAt: '2005-08-15T15:52:01+00:00',
                     updatedAt: '2005-08-15T15:55:01+00:00',
                     name: 'Brownie',
+                    tag: '0001-000',
                     vaccinations: [
                         new Vaccination({ name: 'Rabies' })
                     ],
@@ -850,6 +866,7 @@ test('delete success', async () => {
                                 <th>CreatedAt</th>
                                 <th>UpdatedAt</th>
                                 <th>Name (<a data-testid="sort-pet-name-asc" href="/pet?sort%5Bname%5D=asc"> A-Z </a> |<a data-testid="sort-pet-name-desc" href="/pet?sort%5Bname%5D=desc"> Z-A </a> |<a data-testid="sort-pet-name--" href="/pet"> --- </a>)</th>
+                                <th>Tag</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>

@@ -107,6 +107,7 @@ const List: React.FC = () => {
                                     <Link data-testid='sort-pet-name--' to={`/pet?${qs.stringify({ ...query, sort: { ...sort, name: undefined } })}`}> --- </Link>
                                     )
                                 </th>
+                                <th>Tag</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -117,6 +118,7 @@ const List: React.FC = () => {
                                     <td>{format(Date.parse(pet.createdAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}</td>
                                     <td>{pet.updatedAt && format(Date.parse(pet.updatedAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}</td>
                                     <td>{pet.name}</td>
+                                    <td>{pet.tag}</td>
                                     <td>
                                         {pet._links.read ? (
                                             <Button as={Link} to={`/pet/${pet.id}`}>Read</Button>
