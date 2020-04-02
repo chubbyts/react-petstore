@@ -7,11 +7,9 @@ const NotFound: React.FC = () => {
     }, []);
 
     return (
-        <main data-testid='page-not-found' className='ui padded grid'>
-            <div className='row'>
-                <h1 className='ui huge dividing header'>Not Found</h1>
-            </div>
-        </main>
+        <div>
+            <h1>Not Found</h1>
+        </div>
     );
 };
 

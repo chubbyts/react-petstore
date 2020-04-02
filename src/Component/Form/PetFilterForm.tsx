@@ -1,5 +1,4 @@
 import React from 'react';
-import { Form, Button } from 'semantic-ui-react';
 import { useForm } from 'react-hook-form';
 import InvalidParameterByNameDenormalizer from '../../Denormalizer/InvalidParameterByNameDenormalizer';
 import PetFilterFormProps from './PetFilterFormProps';
@@ -20,12 +19,12 @@ const PetFilterForm: React.FC<PetFilterFormProps> = ({ submitPetFilter, filters,
     };
 
     return (
-        <Form onSubmit={handleSubmit(onSubmit)}>
-            <Form.Group inline>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <fieldset>
                 <TextField register={register} name='name' label='Name' invalidParameters={invalidParameterByNameDenormalized.name ?? []} />
-                <Button data-testid="submit-pet-filter" className='blue'>Filter</Button>
-            </Form.Group>
-        </Form>
+                <button data-testid='submit-pet-filter' className='btn-blue'>Filter</button>
+            </fieldset>
+        </form>
     );
 };
 

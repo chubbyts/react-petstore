@@ -15,9 +15,9 @@ test('default', () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <main data-testid="page-home" class="ui padded grid">
-                <div class="row"><h1 class="ui huge dividing header">Home</h1></div>
-            </main>
+            <div>
+                <h1>Home</h1>
+            </div>
         </div>
     `.replace(/\n {2,}/g, ''));
 });

@@ -13,7 +13,7 @@ jest.mock('../../../../ApiClient/Pet');
 
 jest.mock('../../../../Component/Partial/HttpError', () => {
     return ({ httpError }: { httpError: HttpError; }) => {
-        return (<div className="row">httpError: {httpError.title}</div>);
+        return (<div>httpError: {httpError.title}</div>);
     };
 });
 
@@ -40,11 +40,10 @@ test('not found', async () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <main class="ui padded grid" data-testid="page-pet-read">
-                <div class="row">httpError: title</div>
-                <div class="row"><h1 class="ui huge dividing header">Read Pet</h1></div>
-                <div class="row"><a class="ui button" role="button" href="/pet">List</a></div>
-            </main>
+            <div data-testid="page-pet-read">
+                <div>httpError: title</div>
+                <h1>Read Pet</h1>
+            </div>
         </div>
     `.replace(/\n {2,}/g, ''));
 });
@@ -78,35 +77,26 @@ test('minimal', async () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <main class="ui padded grid" data-testid="page-pet-read">
-                <div class="row"><h1 class="ui huge dividing header">Read Pet</h1></div>
-                <div class="row">
-                    <div role="list" class="ui list">
-                        <div role="listitem" class="item">
-                            <div class="header">Id</div>
-                            4d783b77-eb09-4603-b99b-f590b605eaa9
-                        </div>
-                        <div role="listitem" class="item">
-                            <div class="header">CreatedAt</div>
-                            15.08.2005 - 17:52:01
-                        </div>
-                        <div role="listitem" class="item">
-                            <div class="header">UpdatedAt</div>
-                        </div>
-                        <div role="listitem" class="item">
-                            <div class="header">Name</div>
-                            Brownie
-                        </div>
-                        <div role="listitem" class="item">
-                            <div class="header">Tag</div>
-                        </div>
-                        <div role="listitem" class="item">
-                            <div class="header">Vaccinations</div>
-                        </div>
-                    </div>
+            <div data-testid="page-pet-read">
+                <h1>Read Pet</h1>
+                <div>
+                    <dl>
+                        <dt>Id</dt>
+                        <dd>4d783b77-eb09-4603-b99b-f590b605eaa9</dd>
+                        <dt>CreatedAt</dt>
+                        <dd>15.08.2005 - 17:52:01</dd>
+                        <dt>UpdatedAt</dt>
+                        <dd></dd>
+                        <dt>Name</dt>
+                        <dd>Brownie</dd>
+                        <dt>Tag</dt>
+                        <dd></dd>
+                        <dt>Vaccinations</dt>
+                        <dd></dd>
+                    </dl>
+                    <a class="btn-gray" href="/pet">List</a>
                 </div>
-                <div class="row"><a class="ui button" role="button" href="/pet">List</a></div>
-            </main>
+            </div>
         </div>
     `.replace(/\n {2,}/g, ''));
 });
@@ -145,40 +135,30 @@ test('maximal', async () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <main class="ui padded grid" data-testid="page-pet-read">
-                <div class="row"><h1 class="ui huge dividing header">Read Pet</h1></div>
-                <div class="row">
-                    <div role="list" class="ui list">
-                        <div role="listitem" class="item">
-                            <div class="header">Id</div>
-                            4d783b77-eb09-4603-b99b-f590b605eaa9
-                        </div>
-                        <div role="listitem" class="item">
-                            <div class="header">CreatedAt</div>
-                            15.08.2005 - 17:52:01
-                        </div>
-                        <div role="listitem" class="item">
-                            <div class="header">UpdatedAt</div>
-                            15.08.2005 - 17:55:01
-                        </div>
-                        <div role="listitem" class="item">
-                            <div class="header">Name</div>
-                            Brownie
-                        </div>
-                        <div role="listitem" class="item">
-                            <div class="header">Tag</div>
-                            0001-000
-                        </div>
-                        <div role="listitem" class="item">
-                            <div class="header">Vaccinations</div>
+            <div data-testid="page-pet-read">
+                <h1>Read Pet</h1>
+                <div>
+                    <dl>
+                        <dt>Id</dt>
+                        <dd>4d783b77-eb09-4603-b99b-f590b605eaa9</dd>
+                        <dt>CreatedAt</dt>
+                        <dd>15.08.2005 - 17:52:01</dd>
+                        <dt>UpdatedAt</dt>
+                        <dd>15.08.2005 - 17:55:01</dd>
+                        <dt>Name</dt>
+                        <dd>Brownie</dd>
+                        <dt>Tag</dt>
+                        <dd>0001-000</dd>
+                        <dt>Vaccinations</dt>
+                        <dd>
                             <ul>
                                 <li>Rabies</li>
                             </ul>
-                        </div>
-                    </div>
+                        </dd>
+                    </dl>
+                    <a class="btn-gray" href="/pet">List</a>
                 </div>
-                <div class="row"><a class="ui button" role="button" href="/pet">List</a></div>
-            </main>
+            </div>
         </div>
     `.replace(/\n {2,}/g, ''));
 });

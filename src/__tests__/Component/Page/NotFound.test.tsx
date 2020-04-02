@@ -15,9 +15,9 @@ test('default', () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <main data-testid="page-not-found" class="ui padded grid">
-                <div class="row"><h1 class="ui huge dividing header">Not Found</h1></div>
-            </main>
+            <div>
+                <h1>Not Found</h1>
+            </div>
         </div>
     `.replace(/\n {2,}/g, ''));
 });

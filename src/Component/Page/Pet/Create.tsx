@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Button } from 'semantic-ui-react';
 import { CreatePet } from '../../../ApiClient/Pet';
 import { Link, useHistory } from 'react-router-dom';
 import HttpError from '../../../Model/Error/HttpError';
@@ -29,22 +28,14 @@ const Create: React.FC = () => {
     };
 
     return (
-        <main className='ui padded grid'>
+        <div data-testid='page-pet-create'>
             {httpError instanceof HttpError ? (
                 <HttpErrorPartial httpError={httpError} />
             ) : ''}
-            <div className='row'>
-                <h1 className='ui huge dividing header'>Create Pet</h1>
-            </div>
-            <div className='row'>
-                <div className='ui attached segment'>
-                    <PetForm submitPet={submitPet} error={httpError instanceof UnprocessableEntity ? httpError : undefined} />
-                </div>
-            </div>
-            <div className='row'>
-                <Button as={Link} to='/pet'>List</Button>
-            </div>
-        </main>
+            <h1>Create Pet</h1>
+            <PetForm submitPet={submitPet} error={httpError instanceof UnprocessableEntity ? httpError : undefined} />
+            <Link to='/pet' className='btn-gray'>List</Link>
+        </div>
     );
 };
 

@@ -16,10 +16,12 @@ test('default', () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <div class="field error">
+            <div class="form-field error">
                 <label>label</label>
                 <input type="text" name="name">
-                <div class="ui pointing red basic label">Should not be empty</div>
+                <ul>
+                    <li>Should not be empty</li>
+                </ul>
             </div>
         </div>
     `.replace(/\n {2,}/g, ''));

@@ -7,11 +7,9 @@ const Home: React.FC = () => {
     }, []);
 
     return (
-        <main data-testid='page-home' className='ui padded grid'>
-            <div className='row'>
-                <h1 className='ui huge dividing header'>Home</h1>
-            </div>
-        </main>
+        <div>
+            <h1>Home</h1>
+        </div>
     );
 };
 

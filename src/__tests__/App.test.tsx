@@ -1,21 +1,9 @@
 import React from 'react';
 import ReactRouterDom, { MemoryRouter } from 'react-router-dom';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import App from '../App';
 
 ReactRouterDom.BrowserRouter = ({children}) => <div>{children}</div>
-
-jest.mock('../Component/Navigation/Left', () => {
-    return () => {
-        return (<div data-testid="navigation-left-mock"></div>);
-    };
-});
-
-jest.mock('../Component/Navigation/Top', () => {
-    return () => {
-        return (<div data-testid="navigation-top-mock"></div>);
-    };
-});
 
 jest.mock('../Component/Page/Home', () => {
     return () => {
@@ -53,6 +41,47 @@ jest.mock('../Component/Page/NotFound', () => {
     };
 });
 
+test('toggle', async () => {
+    const { container, findByTestId } = render(
+        <MemoryRouter>
+            <App />
+        </MemoryRouter>
+    );
+
+    const navigationToggle = await findByTestId('navigation-toggle');
+
+    fireEvent.click(navigationToggle);
+
+    await findByTestId('navigation-toggle');
+
+    expect(container.outerHTML).toBe(`
+        <div>
+            <div>
+                <div id="wrapper" class="displayMenu">
+                    <nav id="top-nav" class="clearfix">
+                        <button id="toggle" data-testid="navigation-toggle">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                        <a aria-current="page" class="header item active" href="/">Petstore</a>
+                    </nav>
+                    <nav id="left-nav">
+                        <ul>
+                            <li>
+                                <a class="item" href="/pet">Pets</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div id="main">
+                        <div data-testid="page-home-mock"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `.replace(/\n {2,}/g, ''));
+});
+
 test('home page', () => {
     const { container } = render(
         <MemoryRouter>
@@ -63,10 +92,23 @@ test('home page', () => {
     expect(container.outerHTML).toBe(`
         <div>
             <div>
-                <div data-testid="navigation-top-mock"></div>
-                <div class="ui padded grid">
-                    <div data-testid="navigation-left-mock"></div>
-                    <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="content">
+                <div id="wrapper" class="">
+                    <nav id="top-nav" class="clearfix">
+                        <button id="toggle" data-testid="navigation-toggle">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                        <a aria-current="page" class="header item active" href="/">Petstore</a>
+                    </nav>
+                    <nav id="left-nav">
+                        <ul>
+                            <li>
+                                <a class="item" href="/pet">Pets</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div id="main">
                         <div data-testid="page-home-mock"></div>
                     </div>
                 </div>
@@ -85,10 +127,23 @@ test('not found', () => {
     expect(container.outerHTML).toBe(`
         <div>
             <div>
-                <div data-testid="navigation-top-mock"></div>
-                <div class="ui padded grid">
-                    <div data-testid="navigation-left-mock"></div>
-                    <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="content">
+                <div id="wrapper" class="">
+                    <nav id="top-nav" class="clearfix">
+                        <button id="toggle" data-testid="navigation-toggle">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                        <a aria-current="page" class="header item active" href="/">Petstore</a>
+                    </nav>
+                    <nav id="left-nav">
+                        <ul>
+                            <li>
+                                <a class="item" href="/pet">Pets</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div id="main">
                         <div data-testid="page-not-found-mock"></div>
                     </div>
                 </div>
@@ -107,10 +162,23 @@ test('pet list', () => {
     expect(container.outerHTML).toBe(`
         <div>
             <div>
-                <div data-testid="navigation-top-mock"></div>
-                <div class="ui padded grid">
-                    <div data-testid="navigation-left-mock"></div>
-                    <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="content">
+                <div id="wrapper" class="">
+                    <nav id="top-nav" class="clearfix">
+                        <button id="toggle" data-testid="navigation-toggle">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                        <a aria-current="page" class="header item active" href="/">Petstore</a>
+                    </nav>
+                    <nav id="left-nav">
+                        <ul>
+                            <li>
+                                <a aria-current="page" class="item active" href="/pet">Pets</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div id="main">
                         <div data-testid="page-pet-list-mock"></div>
                     </div>
                 </div>
@@ -129,10 +197,23 @@ test('pet create', () => {
     expect(container.outerHTML).toBe(`
         <div>
             <div>
-                <div data-testid="navigation-top-mock"></div>
-                <div class="ui padded grid">
-                    <div data-testid="navigation-left-mock"></div>
-                    <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="content">
+                <div id="wrapper" class="">
+                    <nav id="top-nav" class="clearfix">
+                        <button id="toggle" data-testid="navigation-toggle">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                        <a aria-current="page" class="header item active" href="/">Petstore</a>
+                    </nav>
+                    <nav id="left-nav">
+                        <ul>
+                            <li>
+                                <a aria-current="page" class="item active" href="/pet">Pets</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div id="main">
                         <div data-testid="page-pet-create-mock"></div>
                     </div>
                 </div>
@@ -151,10 +232,23 @@ test('pet read', () => {
     expect(container.outerHTML).toBe(`
         <div>
             <div>
-                <div data-testid="navigation-top-mock"></div>
-                <div class="ui padded grid">
-                    <div data-testid="navigation-left-mock"></div>
-                    <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="content">
+                <div id="wrapper" class="">
+                    <nav id="top-nav" class="clearfix">
+                        <button id="toggle" data-testid="navigation-toggle">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                        <a aria-current="page" class="header item active" href="/">Petstore</a>
+                    </nav>
+                    <nav id="left-nav">
+                        <ul>
+                            <li>
+                                <a aria-current="page" class="item active" href="/pet">Pets</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div id="main">
                         <div data-testid="page-pet-read-mock"></div>
                     </div>
                 </div>
@@ -173,10 +267,23 @@ test('pet update', () => {
     expect(container.outerHTML).toBe(`
         <div>
             <div>
-                <div data-testid="navigation-top-mock"></div>
-                <div class="ui padded grid">
-                    <div data-testid="navigation-left-mock"></div>
-                    <div class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column" id="content">
+                <div id="wrapper" class="">
+                    <nav id="top-nav" class="clearfix">
+                        <button id="toggle" data-testid="navigation-toggle">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                        <a aria-current="page" class="header item active" href="/">Petstore</a>
+                    </nav>
+                    <nav id="left-nav">
+                        <ul>
+                            <li>
+                                <a aria-current="page" class="item active" href="/pet">Pets</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div id="main">
                         <div data-testid="page-pet-update-mock"></div>
                     </div>
                 </div>
