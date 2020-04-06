@@ -12,10 +12,8 @@ test('minimal', () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <div class="row">
-                <div class="ui negative message attached segment">
-                    <div class="header">This is the title</div>
-                </div>
+            <div id="httpError">
+                <p>This is the title</p>
             </div>
         </div>
     `.replace(/\n {2,}/g, ''));
@@ -35,15 +33,13 @@ test('maximal', () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <div class="row">
-                <div class="ui negative message attached segment">
-                    <div class="header">This is the title</div>
-                    <p>This is the detail</p>
-                    <p>This is the instance</p>
-                    <ul>
-                        <li><strong>Invalid Parameter Name</strong>: Invalid Parameter Reason</li>
-                    </ul>
-                </div>
+            <div id="httpError">
+                <p>This is the title</p>
+                <p>This is the detail</p>
+                <p>This is the instance</p>
+                <ul>
+                    <li><strong>Invalid Parameter Name</strong>: Invalid Parameter Reason</li>
+                </ul>
             </div>
         </div>
     `.replace(/\n {2,}/g, ''));

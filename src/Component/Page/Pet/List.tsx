@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Pagination, PaginationProps } from 'semantic-ui-react';
 import { de } from 'date-fns/locale';
 import { format } from 'date-fns';
 import { Link, useHistory, useLocation } from 'react-router-dom';
@@ -11,6 +10,7 @@ import PetResponse from '../../../Model/Pet/PetResponse';
 import PetList from '../../../Model/Pet/PetList';
 import qs from 'qs';
 import PetFilterForm from '../../Form/PetFilterForm';
+import Pagination from '../../Partial/Pagination';
 
 const List: React.FC = () => {
 
@@ -20,11 +20,12 @@ const List: React.FC = () => {
     const query = qs.parse(location.search.substr(1));
 
     const page = parseInt(query.page ? query.page : '1');
-    const offset = (page * 10) - 10;
+    const perPage = 10;
+    const offset = (page * perPage) - perPage;
     const filters = query.filters ? query.filters : {};
     const sort = query.sort ? query.sort : {};
 
-    const queryString = qs.stringify({ limit: 10, offset: offset, filters: filters, sort: sort });
+    const queryString = qs.stringify({ limit: perPage, offset: offset, filters: filters, sort: sort });
 
     const [petList, setPetList] = useState<PetList>();
     const [httpError, setHttpError] = useState<HttpError>();
@@ -60,41 +61,31 @@ const List: React.FC = () => {
         fetchPetList(queryString);
     };
 
-    const changePage = (e: any, data: PaginationProps) => {
-        history.push(`/pet?${qs.stringify({ ...query, page: data.activePage })}`);
+    const changePage = (page: number) => {
+        history.push(`/pet?${qs.stringify({ ...query, page: page })}`);
     };
 
     const submitPetFilter = (filters: any) => {
-        history.push(`/pet?${qs.stringify({ ...query, filters: filters })}`);
+        history.push(`/pet?${qs.stringify({ ...query, page: undefined, filters: filters })}`);
     };
 
     if (!petList && !httpError) {
-        return (<main className='ui padded grid'></main>);
+        return (<div></div>);
     }
 
     return (
-        <main data-testid='page-pet-list' className='ui padded grid'>
+        <div data-testid='page-pet-list'>
             {httpError instanceof HttpError ? (
                 <HttpErrorPartial httpError={httpError} />
             ) : ''}
-            <div className='row'>
-                <h1 className='ui huge dividing header'>List Pets</h1>
-            </div>
-            {petList && petList._links.create ? (
-                <div className='row'>
-                    <Button as={Link} to='/pet/create' className='green'>Create</Button>
-                </div>
-            ) : ''}
+            <h1>List Pets</h1>
             {petList ? (
-                <div className='row'>
-                    <div className='ui attached segment'>
-                        <PetFilterForm submitPetFilter={submitPetFilter} filters={filters} error={httpError instanceof BadRequest ? httpError : undefined} />
-                    </div>
-                </div>
-            ) : ''}
-            {petList ? (
-                <div className='row'>
-                    <table className='ui single line striped selectable table'>
+                <div>
+                    {petList._links.create ? (
+                        <Link to='/pet/create' className='btn-green mb-4'>Create</Link>
+                    ) : ''}
+                    <PetFilterForm submitPetFilter={submitPetFilter} filters={filters} error={httpError instanceof BadRequest ? httpError : undefined} />
+                    <table className="my-4">
                         <thead>
                             <tr>
                                 <th>Id</th>
@@ -121,23 +112,23 @@ const List: React.FC = () => {
                                     <td>{pet.tag}</td>
                                     <td>
                                         {pet._links.read ? (
-                                            <Button as={Link} to={`/pet/${pet.id}`}>Read</Button>
+                                            <Link to={`/pet/${pet.id}`} className='btn-gray mr-4'>Read</Link>
                                         ) : ''}
                                         {pet._links.update ? (
-                                            <Button as={Link} to={`/pet/${pet.id}/update`}>Update</Button>
+                                            <Link to={`/pet/${pet.id}/update`} className='btn-gray mr-4'>Update</Link>
                                         ) : ''}
                                         {pet._links.delete ? (
-                                            <Button data-testid={`remove-pet-${i}`} onClick={() => { deletePet(pet.id); }} className='red'>Delete</Button>
+                                            <button data-testid={`remove-pet-${i}`} onClick={() => { deletePet(pet.id); }} className='btn-red'>Delete</button>
                                         ) : ''}
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
-                    <Pagination defaultActivePage={page} totalPages={Math.ceil(petList.count / petList.limit)} onPageChange={changePage} />
+                    <Pagination currentPage={page} totalPages={Math.ceil(petList.count / petList.limit)} maxPages={7} submitPage={changePage} />
                 </div>
             ) : ''}
-        </main>
+        </div>
     );
 };
 

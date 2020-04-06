@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Button, List } from 'semantic-ui-react';
 import { de } from 'date-fns/locale';
 import { format } from 'date-fns';
 import { Link, RouteComponentProps } from 'react-router-dom';
@@ -35,53 +34,40 @@ const Read: React.FC<Props> = ({ match }: Props) => {
     };
 
     if (!pet && !httpError) {
-        return (<main className='ui padded grid'></main>);
+        return (<div></div>);
     }
 
     return (
-        <main data-testid='page-pet-read' className='ui padded grid'>
+        <div data-testid='page-pet-read'>
             {httpError instanceof HttpError ? (
                 <HttpErrorPartial httpError={httpError} />
             ) : ''}
-            <div className='row'>
-                <h1 className='ui huge dividing header'>Read Pet</h1>
-            </div>
+            <h1>Read Pet</h1>
             {pet ? (
-                <div className='row'>
-                    <List>
-                        <List.Item>
-                            <List.Header>Id</List.Header>
-                            {pet.id}
-                        </List.Item>
-                        <List.Item>
-                            <List.Header>CreatedAt</List.Header>
-                            {format(Date.parse(pet.createdAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}
-                        </List.Item>
-                        <List.Item>
-                            <List.Header>UpdatedAt</List.Header>
-                            {pet.updatedAt && format(Date.parse(pet.updatedAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}
-                        </List.Item>
-                        <List.Item>
-                            <List.Header>Name</List.Header>
-                            {pet.name}
-                        </List.Item>
-                        <List.Item>
-                            <List.Header>Tag</List.Header>
-                            {pet.tag}
-                        </List.Item>
-                        <List.Item>
-                            <List.Header>Vaccinations</List.Header>
+                <div>
+                    <dl>
+                        <dt>Id</dt>
+                        <dd>{pet.id}</dd>
+                        <dt>CreatedAt</dt>
+                        <dd>{format(Date.parse(pet.createdAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}</dd>
+                        <dt>UpdatedAt</dt>
+                        <dd>{pet.updatedAt && format(Date.parse(pet.updatedAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}</dd>
+                        <dt>Name</dt>
+                        <dd>{pet.name}</dd>
+                        <dt>Tag</dt>
+                        <dd>{pet.tag}</dd>
+                        <dt>Vaccinations</dt>
+                        <dd>
                             {pet.vaccinations.length > 0 ? (
                                 <ul>{pet.vaccinations.map((vaccination, i) => (<li key={i}>{vaccination.name}</li>))}</ul>
                             ) : ''}
-                        </List.Item>
-                    </List>
+                        </dd>
+                    </dl>
+                    <Link to='/pet' className='btn-gray'>List</Link>
                 </div>
             ) : ''}
-            <div className='row'>
-                <Button as={Link} to='/pet'>List</Button>
-            </div>
-        </main>
+
+        </div>
     );
 };
 

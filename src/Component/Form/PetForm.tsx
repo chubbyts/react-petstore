@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button, Form } from 'semantic-ui-react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import InvalidParameterByNameDenormalizer from '../../Denormalizer/InvalidParameterByNameDenormalizer';
 import PetFormProps from './PetFormProps';
@@ -22,25 +21,27 @@ const PetForm: React.FC<PetFormProps> = ({ submitPet, pet, error }: PetFormProps
     };
 
     return (
-        <Form onSubmit={handleSubmit(onSubmit)}>
-            <TextField register={register} name='name' label='Name' invalidParameters={invalidParameterByNameDenormalized.name ?? []} />
-            <TextField register={register} name='tag' label='Tag' invalidParameters={invalidParameterByNameDenormalized.tag ?? []} />
-            <Form.Field>
-                <label>Vaccination</label>
-                {vaccinations.fields.map((vaccination, i) => {
-                    return (
-                        <div key={vaccination.id} className='ui bottom attached segment'>
-                            <TextField register={register} name={`vaccinations[${i}].name`} label='Name' invalidParameters={invalidParameterByNameDenormalized[`vaccinations[${i}].name`] ?? []} />
-                            <Form.Field>
-                                <button data-testid={`remove-vaccination-${i}`} type='button' className='ui button red' onClick={() => vaccinations.remove(i)}>Remove</button>
-                            </Form.Field>
-                        </div>
-                    );
-                })}
-                <button data-testid='add-vaccination' type='button' className='ui button green' onClick={() => vaccinations.append({})}>Add</button>
-            </Form.Field>
-            <Button data-testid="submit-pet" className='blue'>Submit</Button>
-        </Form>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <fieldset>
+                <TextField register={register} name='name' label='Name' invalidParameters={invalidParameterByNameDenormalized.name ?? []} />
+                <TextField register={register} name='tag' label='Tag' invalidParameters={invalidParameterByNameDenormalized.tag ?? []} />
+                <div className='form-field'>
+                    <label>Vaccanations</label>
+                    <div>
+                        {vaccinations.fields.map((item, i) => {
+                            return (
+                                <fieldset key={item.id}>
+                                    <TextField register={register} name={`vaccinations[${i}].name`} label='Name' invalidParameters={invalidParameterByNameDenormalized[`vaccinations[${i}].name`] ?? []} />
+                                    <button data-testid={`remove-vaccination-${i}`} type='button' onClick={() => vaccinations.remove(i)} className='btn-red'>Remove</button>
+                                </fieldset>
+                            );
+                        })}
+                        <button data-testid='add-vaccination' type='button' onClick={() => vaccinations.append({})} className='btn-green'>Add</button>
+                    </div>
+                </div>
+                <button data-testid='submit-pet' className='btn-blue'>Save</button>
+            </fieldset>
+        </form>
     );
 };
 

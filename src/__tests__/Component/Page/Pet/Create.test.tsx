@@ -23,7 +23,7 @@ jest.mock('../../../../Component/Form/PetForm', () => {
 
 jest.mock('../../../../Component/Partial/HttpError', () => {
     return ({ httpError }: { httpError: HttpError; }) => {
-        return (<div className="row">httpError: {httpError.title}</div>);
+        return (<div>httpError: {httpError.title}</div>);
     };
 });
 
@@ -38,11 +38,11 @@ test('default', () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <main class="ui padded grid">
-                <div class="row"><h1 class="ui huge dividing header">Create Pet</h1></div>
-                <div class="row"><div class="ui attached segment"><button data-testid="test-button"></button></div></div>
-                <div class="row"><a class="ui button" role="button" href="/pet">List</a></div>
-            </main>
+            <div data-testid="page-pet-create">
+                <h1>Create Pet</h1>
+                <button data-testid="test-button"></button>
+                <a class="btn-gray" href="/pet">List</a>
+            </div>
         </div>
     `.replace(/\n {2,}/g, ''));
 });
@@ -68,12 +68,12 @@ test('unprocessable entity', async () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <main class="ui padded grid">
-                <div class="row">httpError: title</div>
-                <div class="row"><h1 class="ui huge dividing header">Create Pet</h1></div>
-                <div class="row"><div class="ui attached segment"><button data-testid="test-button"></button></div></div>
-                <div class="row"><a class="ui button" role="button" href="/pet">List</a></div>
-            </main>
+            <div data-testid="page-pet-create">
+                <div>httpError: title</div>
+                <h1>Create Pet</h1>
+                <button data-testid="test-button"></button>
+                <a class="btn-gray" href="/pet">List</a>
+            </div>
         </div>
     `.replace(/\n {2,}/g, ''));
 });

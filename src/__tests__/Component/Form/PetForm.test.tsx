@@ -25,29 +25,31 @@ test('without error', () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <form class="ui form">
-                <div class="field">
-                    <label>Name</label>
-                    <input type="text" name="name">
-                </div>
-                <div class="field">
-                    <label>Tag</label>
-                    <input type="text" name="tag">
-                </div>
-                <div class="field">
-                    <label>Vaccination</label>
-                    <div class="ui bottom attached segment">
-                        <div class="field"><
-                            label>Name</label>
-                            <input type="text" name="vaccinations[0].name">
-                        </div>
-                        <div class="field">
-                            <button data-testid="remove-vaccination-0" type="button" class="ui button red">Remove</button>
+            <form>
+                <fieldset>
+                    <div class="form-field">
+                        <label>Name</label>
+                        <input type="text" name="name">
+                    </div>
+                    <div class="form-field">
+                        <label>Tag</label>
+                        <input type="text" name="tag">
+                    </div>
+                    <div class="form-field">
+                        <label>Vaccanations</label>
+                        <div>
+                            <fieldset>
+                                <div class="form-field">
+                                    <label>Name</label>
+                                    <input type="text" name="vaccinations[0].name">
+                                </div>
+                                <button data-testid="remove-vaccination-0" type="button" class="btn-red">Remove</button>
+                            </fieldset>
+                            <button data-testid="add-vaccination" type="button" class="btn-green">Add</button>
                         </div>
                     </div>
-                    <button data-testid="add-vaccination" type="button" class="ui button green">Add</button>
-                </div>
-                <button data-testid="submit-pet" class="ui button blue">Submit</button>
+                    <button data-testid="submit-pet" class="btn-blue">Save</button>
+                </fieldset>
             </form>
         </div>
     `.replace(/\n {2,}/g, ''));
@@ -81,31 +83,37 @@ test('with error', () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <form class="ui form">
-                <div class="field error">
-                    <label>Name</label>
-                    <input type="text" name="name">
-                    <div class="ui pointing red basic label">Should not be empty</div>
-                </div>
-                <div class="field">
-                    <label>Tag</label>
-                    <input type="text" name="tag">
-                </div>
-                <div class="field">
-                    <label>Vaccination</label>
-                    <div class="ui bottom attached segment">
-                        <div class="field error"><
-                            label>Name</label>
-                            <input type="text" name="vaccinations[0].name">
-                            <div class="ui pointing red basic label">Should not be empty</div>
-                        </div>
-                        <div class="field">
-                            <button data-testid="remove-vaccination-0" type="button" class="ui button red">Remove</button>
+            <form>
+                <fieldset>
+                    <div class="form-field error">
+                        <label>Name</label>
+                        <input type="text" name="name">
+                        <ul>
+                            <li>Should not be empty</li>
+                        </ul>
+                    </div>
+                    <div class="form-field">
+                        <label>Tag</label>
+                        <input type="text" name="tag">
+                    </div>
+                    <div class="form-field">
+                        <label>Vaccanations</label>
+                        <div>
+                            <fieldset>
+                                <div class="form-field error">
+                                    <label>Name</label>
+                                    <input type="text" name="vaccinations[0].name">
+                                    <ul>
+                                        <li>Should not be empty</li>
+                                    </ul>
+                                </div>
+                                <button data-testid="remove-vaccination-0" type="button" class="btn-red">Remove</button>
+                            </fieldset>
+                            <button data-testid="add-vaccination" type="button" class="btn-green">Add</button>
                         </div>
                     </div>
-                    <button data-testid="add-vaccination" type="button" class="ui button green">Add</button>
-                </div>
-                <button data-testid="submit-pet" class="ui button blue">Submit</button>
+                    <button data-testid="submit-pet" class="btn-blue">Save</button>
+                </fieldset>
             </form>
         </div>
     `.replace(/\n {2,}/g, ''));
@@ -135,38 +143,38 @@ test('add vaccination', async () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <form class="ui form">
-                <div class="field">
-                    <label>Name</label>
-                    <input type="text" name="name">
-                </div>
-                <div class="field">
-                    <label>Tag</label>
-                    <input type="text" name="tag">
-                </div>
-                <div class="field">
-                    <label>Vaccination</label>
-                    <div class="ui bottom attached segment">
-                        <div class="field">
-                            <label>Name</label>
-                            <input type="text" name="vaccinations[0].name">
-                        </div>
-                        <div class="field">
-                            <button data-testid="remove-vaccination-0" type="button" class="ui button red">Remove</button>
+            <form>
+                <fieldset>
+                    <div class="form-field">
+                        <label>Name</label>
+                        <input type="text" name="name">
+                    </div>
+                    <div class="form-field">
+                        <label>Tag</label>
+                        <input type="text" name="tag">
+                    </div>
+                    <div class="form-field">
+                        <label>Vaccanations</label>
+                        <div>
+                            <fieldset>
+                                <div class="form-field">
+                                    <label>Name</label>
+                                    <input type="text" name="vaccinations[0].name">
+                                </div>
+                                <button data-testid="remove-vaccination-0" type="button" class="btn-red">Remove</button>
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-field">
+                                    <label>Name</label>
+                                    <input type="text" name="vaccinations[1].name">
+                                </div>
+                                <button data-testid="remove-vaccination-1" type="button" class="btn-red">Remove</button>
+                            </fieldset>
+                            <button data-testid="add-vaccination" type="button" class="btn-green">Add</button>
                         </div>
                     </div>
-                    <div class="ui bottom attached segment">
-                        <div class="field">
-                            <label>Name</label>
-                            <input type="text" name="vaccinations[1].name">
-                        </div>
-                        <div class="field">
-                            <button data-testid="remove-vaccination-1" type="button" class="ui button red">Remove</button>
-                        </div>
-                    </div>
-                    <button data-testid="add-vaccination" type="button" class="ui button green">Add</button>
-                </div>
-                <button data-testid="submit-pet" class="ui button blue">Submit</button>
+                    <button data-testid="submit-pet" class="btn-blue">Save</button>
+                </fieldset>
             </form>
         </div>
     `.replace(/\n {2,}/g, ''));
@@ -196,20 +204,24 @@ test('remove vaccination', async () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <form class="ui form">
-                <div class="field">
-                    <label>Name</label>
-                    <input type="text" name="name">
-                </div>
-                <div class="field">
-                    <label>Tag</label>
-                    <input type="text" name="tag">
-                </div>
-                <div class="field">
-                    <label>Vaccination</label>
-                    <button data-testid="add-vaccination" type="button" class="ui button green">Add</button>
-                </div>
-                <button data-testid="submit-pet" class="ui button blue">Submit</button>
+            <form>
+                <fieldset>
+                    <div class="form-field">
+                        <label>Name</label>
+                        <input type="text" name="name">
+                    </div>
+                    <div class="form-field">
+                        <label>Tag</label>
+                        <input type="text" name="tag">
+                    </div>
+                    <div class="form-field">
+                        <label>Vaccanations</label>
+                        <div>
+                            <button data-testid="add-vaccination" type="button" class="btn-green">Add</button>
+                        </div>
+                    </div>
+                    <button data-testid="submit-pet" class="btn-blue">Save</button>
+                </fieldset>
             </form>
         </div>
     `.replace(/\n {2,}/g, ''));
@@ -236,20 +248,24 @@ test('submit minimal', async () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <form class="ui form">
-                <div class="field">
-                    <label>Name</label>
-                    <input type="text" name="name">
-                </div>
-                <div class="field">
-                    <label>Tag</label>
-                    <input type="text" name="tag">
-                </div>
-                <div class="field">
-                    <label>Vaccination</label>
-                    <button data-testid="add-vaccination" type="button" class="ui button green">Add</button>
-                </div>
-                <button data-testid="submit-pet" class="ui button blue">Submit</button>
+            <form>
+                <fieldset>
+                    <div class="form-field">
+                        <label>Name</label>
+                        <input type="text" name="name">
+                    </div>
+                    <div class="form-field">
+                        <label>Tag</label>
+                        <input type="text" name="tag">
+                    </div>
+                    <div class="form-field">
+                        <label>Vaccanations</label>
+                        <div>
+                            <button data-testid="add-vaccination" type="button" class="btn-green">Add</button>
+                        </div>
+                    </div>
+                    <button data-testid="submit-pet" class="btn-blue">Save</button>
+                </fieldset>
             </form>
         </div>
     `.replace(/\n {2,}/g, ''));
@@ -282,29 +298,31 @@ test('submit maximal', async () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <form class="ui form">
-                <div class="field">
-                    <label>Name</label>
-                    <input type="text" name="name">
-                </div>
-                <div class="field">
-                    <label>Tag</label>
-                    <input type="text" name="tag">
-                </div>
-                <div class="field">
-                    <label>Vaccination</label>
-                    <div class="ui bottom attached segment">
-                        <div class="field"><
-                            label>Name</label>
-                            <input type="text" name="vaccinations[0].name">
-                        </div>
-                        <div class="field">
-                            <button data-testid="remove-vaccination-0" type="button" class="ui button red">Remove</button>
+            <form>
+                <fieldset>
+                    <div class="form-field">
+                        <label>Name</label>
+                        <input type="text" name="name">
+                    </div>
+                    <div class="form-field">
+                        <label>Tag</label>
+                        <input type="text" name="tag">
+                    </div>
+                    <div class="form-field">
+                        <label>Vaccanations</label>
+                        <div>
+                            <fieldset>
+                                <div class="form-field">
+                                    <label>Name</label>
+                                    <input type="text" name="vaccinations[0].name">
+                                </div>
+                                <button data-testid="remove-vaccination-0" type="button" class="btn-red">Remove</button>
+                            </fieldset>
+                            <button data-testid="add-vaccination" type="button" class="btn-green">Add</button>
                         </div>
                     </div>
-                    <button data-testid="add-vaccination" type="button" class="ui button green">Add</button>
-                </div>
-                <button data-testid="submit-pet" class="ui button blue">Submit</button>
+                    <button data-testid="submit-pet" class="btn-blue">Save</button>
+                </fieldset>
             </form>
         </div>
     `.replace(/\n {2,}/g, ''));

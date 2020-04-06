@@ -13,6 +13,7 @@ import Embedded from '../../../../Model/Pet/Embedded';
 import PetResponse from '../../../../Model/Pet/PetResponse';
 import Vaccination from '../../../../Model/Pet/Vaccination';
 import Link from '../../../../Model/Link';
+import PaginationProps from '../../../../Component/Partial/PaginationProps';
 
 jest.mock('../../../../ApiClient/Pet');
 
@@ -22,13 +23,31 @@ jest.mock('../../../../Component/Form/PetFilterForm', () => {
             await submitPetFilter({ name: 'Bro' });
         };
 
-        return (<button data-testid="test-button" onClick={submit}></button>);
+        return (<button data-testid="test-filter-button" onClick={submit}></button>);
     };
 });
 
 jest.mock('../../../../Component/Partial/HttpError', () => {
     return ({ httpError }: { httpError: HttpError; }) => {
-        return (<div className="row">httpError: {httpError.title}</div>);
+        return (<div>httpError: {httpError.title}</div>);
+    };
+});
+
+jest.mock('../../../../Component/Partial/Pagination', () => {
+    return ({ submitPage, currentPage, totalPages, maxPages }: PaginationProps) => {
+        const submit = () => {
+            submitPage(2);
+        };
+
+        return (
+            <button
+                data-testid="test-pagination-button"
+                data-current-page={currentPage}
+                data-total-pages={totalPages}
+                data-max-pages={maxPages}
+                onClick={submit}
+            ></button>
+        );
     };
 });
 
@@ -49,10 +68,10 @@ test('bad request', async () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <main class="ui padded grid" data-testid="page-pet-list">
-                <div class="row">httpError: title</div>
-                <div class="row"><h1 class="ui huge dividing header">List Pets</h1></div>
-            </main>
+            <div data-testid="page-pet-list">
+                <div>httpError: title</div>
+                <h1>List Pets</h1>
+            </div>
         </div>
     `.replace(/\n {2,}/g, ''));
 });
@@ -130,18 +149,24 @@ test('default', async () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <main class="ui padded grid" data-testid="page-pet-list">
-                <div class="row"><h1 class="ui huge dividing header">List Pets</h1></div>
-                <div class="row"><a class="ui button green" role="button" href="/pet/create">Create</a></div>
-                <div class="row"><div class="ui attached segment"><button data-testid="test-button"></button></div></div>
-                <div class="row">
-                    <table class="ui single line striped selectable table">
+            <div data-testid="page-pet-list">
+                <h1>List Pets</h1>
+                <div>
+                    <a class="btn-green mb-4" href="/pet/create">Create</a>
+                    <button data-testid="test-filter-button"></button>
+                    <table class="my-4">
                         <thead>
                             <tr>
                                 <th>Id</th>
                                 <th>CreatedAt</th>
                                 <th>UpdatedAt</th>
-                                <th>Name (<a data-testid="sort-pet-name-asc" href="/pet?sort%5Bname%5D=asc"> A-Z </a> |<a data-testid="sort-pet-name-desc" href="/pet?sort%5Bname%5D=desc"> Z-A </a> |<a data-testid="sort-pet-name--" href="/pet"> --- </a>)</th>
+                                <th>
+                                    Name (
+                                        <a data-testid="sort-pet-name-asc" href="/pet?sort%5Bname%5D=asc"> A-Z </a> |
+                                        <a data-testid="sort-pet-name-desc" href="/pet?sort%5Bname%5D=desc"> Z-A </a> |
+                                        <a data-testid="sort-pet-name--" href="/pet"> --- </a>
+                                    )
+                                </th>
                                 <th>Tag</th>
                                 <th>Actions</th>
                             </tr>
@@ -154,23 +179,16 @@ test('default', async () => {
                                 <td>Brownie</td>
                                 <td>0001-000</td>
                                 <td>
-                                    <a class="ui button" role="button" href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9">Read</a>
-                                    <a class="ui button" role="button" href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update">Update</a>
-                                    <button data-testid="remove-pet-0" class="ui button red">Delete</button>
+                                    <a class="btn-gray mr-4" href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9">Read</a>
+                                    <a class="btn-gray mr-4" href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update">Update</a>
+                                    <button data-testid="remove-pet-0" class="btn-red">Delete</button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <div aria-label="Pagination Navigation" role="navigation" class="ui pagination menu">
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="1" aria-label="First item" type="firstItem" class="item">«</a>
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="1" aria-label="Previous item" type="prevItem" class="item">⟨</a>
-                        <a aria-current="true" aria-disabled="false" tabindex="0" value="1" type="pageItem" class="active item">1</a>
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="2" type="pageItem" class="item">2</a>
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="2" aria-label="Next item" type="nextItem" class="item">⟩</a>
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="2" aria-label="Last item" type="lastItem" class="item">»</a>
-                    </div>
+                    <button data-testid="test-pagination-button" data-current-page="1" data-total-pages="2" data-max-pages="7"></button>
                 </div>
-            </main>
+            </div>
         </div>
     `.replace(/\n {2,}/g, ''));
 });
@@ -214,17 +232,23 @@ test('no actions', async () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <main class="ui padded grid" data-testid="page-pet-list">
-                <div class="row"><h1 class="ui huge dividing header">List Pets</h1></div>
-                <div class="row"><div class="ui attached segment"><button data-testid="test-button"></button></div></div>
-                <div class="row">
-                    <table class="ui single line striped selectable table">
+            <div data-testid="page-pet-list">
+                <h1>List Pets</h1>
+                <div>
+                    <button data-testid="test-filter-button"></button>
+                    <table class="my-4">
                         <thead>
                             <tr>
                                 <th>Id</th>
                                 <th>CreatedAt</th>
                                 <th>UpdatedAt</th>
-                                <th>Name (<a data-testid="sort-pet-name-asc" href="/pet?sort%5Bname%5D=asc"> A-Z </a> |<a data-testid="sort-pet-name-desc" href="/pet?sort%5Bname%5D=desc"> Z-A </a> |<a data-testid="sort-pet-name--" href="/pet"> --- </a>)</th>
+                                <th>
+                                    Name (
+                                        <a data-testid="sort-pet-name-asc" href="/pet?sort%5Bname%5D=asc"> A-Z </a> |
+                                        <a data-testid="sort-pet-name-desc" href="/pet?sort%5Bname%5D=desc"> Z-A </a> |
+                                        <a data-testid="sort-pet-name--" href="/pet"> --- </a>
+                                    )
+                                </th>
                                 <th>Tag</th>
                                 <th>Actions</th>
                             </tr>
@@ -240,16 +264,9 @@ test('no actions', async () => {
                             </tr>
                         </tbody>
                     </table>
-                    <div aria-label="Pagination Navigation" role="navigation" class="ui pagination menu">
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="1" aria-label="First item" type="firstItem" class="item">«</a>
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="1" aria-label="Previous item" type="prevItem" class="item">⟨</a>
-                        <a aria-current="true" aria-disabled="false" tabindex="0" value="1" type="pageItem" class="active item">1</a>
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="2" type="pageItem" class="item">2</a>
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="2" aria-label="Next item" type="nextItem" class="item">⟩</a>
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="2" aria-label="Last item" type="lastItem" class="item">»</a>
-                    </div>
+                    <button data-testid="test-pagination-button" data-current-page="1" data-total-pages="2" data-max-pages="7"></button>
                 </div>
-            </main>
+            </div>
         </div>
     `.replace(/\n {2,}/g, ''));
 });
@@ -327,27 +344,33 @@ test('submit bad request', async () => {
         </Router>
     );
 
-    const testButton = await findByTestId('test-button');
+    const testButton = await findByTestId('test-filter-button');
 
     fireEvent.click(testButton);
 
-    await findByTestId('test-button');
+    await findByTestId('test-filter-button');
 
     expect(container.outerHTML).toBe(`
         <div>
-            <main class="ui padded grid" data-testid="page-pet-list">
-                <div class="row">httpError: title</div>
-                <div class="row"><h1 class="ui huge dividing header">List Pets</h1></div>
-                <div class="row"><a class="ui button green" role="button" href="/pet/create">Create</a></div>
-                <div class="row"><div class="ui attached segment"><button data-testid="test-button"></button></div></div>
-                <div class="row">
-                    <table class="ui single line striped selectable table">
+            <div data-testid="page-pet-list">
+                <div>httpError: title</div>
+                <h1>List Pets</h1>
+                <div>
+                    <a class="btn-green mb-4" href="/pet/create">Create</a>
+                    <button data-testid="test-filter-button"></button>
+                    <table class="my-4">
                         <thead>
                             <tr>
                                 <th>Id</th>
                                 <th>CreatedAt</th>
                                 <th>UpdatedAt</th>
-                                <th>Name (<a data-testid="sort-pet-name-asc" href="/pet?filters%5Bname%5D=Bro&amp;sort%5Bname%5D=asc"> A-Z </a> |<a data-testid="sort-pet-name-desc" href="/pet?filters%5Bname%5D=Bro&amp;sort%5Bname%5D=desc"> Z-A </a> |<a data-testid="sort-pet-name--" href="/pet?filters%5Bname%5D=Bro"> --- </a>)</th>
+                                <th>
+                                    Name (
+                                        <a data-testid="sort-pet-name-asc" href="/pet?filters%5Bname%5D=Bro&amp;sort%5Bname%5D=asc"> A-Z </a> |
+                                        <a data-testid="sort-pet-name-desc" href="/pet?filters%5Bname%5D=Bro&amp;sort%5Bname%5D=desc"> Z-A </a> |
+                                        <a data-testid="sort-pet-name--" href="/pet?filters%5Bname%5D=Bro"> --- </a>
+                                    )
+                                </th>
                                 <th>Tag</th>
                                 <th>Actions</th>
                             </tr>
@@ -360,23 +383,16 @@ test('submit bad request', async () => {
                                 <td>Brownie</td>
                                 <td>0001-000</td>
                                 <td>
-                                    <a class="ui button" role="button" href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9">Read</a>
-                                    <a class="ui button" role="button" href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update">Update</a>
-                                    <button data-testid="remove-pet-0" class="ui button red">Delete</button>
+                                    <a class="btn-gray mr-4" href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9">Read</a>
+                                    <a class="btn-gray mr-4" href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update">Update</a>
+                                    <button data-testid="remove-pet-0" class="btn-red">Delete</button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <div aria-label="Pagination Navigation" role="navigation" class="ui pagination menu">
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="1" aria-label="First item" type="firstItem" class="item">«</a>
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="1" aria-label="Previous item" type="prevItem" class="item">⟨</a>
-                        <a aria-current="true" aria-disabled="false" tabindex="0" value="1" type="pageItem" class="active item">1</a>
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="2" type="pageItem" class="item">2</a>
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="2" aria-label="Next item" type="nextItem" class="item">⟩</a>
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="2" aria-label="Last item" type="lastItem" class="item">»</a>
-                    </div>
+                    <button data-testid="test-pagination-button" data-current-page="1" data-total-pages="2" data-max-pages="7"></button>
                 </div>
-            </main>
+            </div>
         </div>
     `.replace(/\n {2,}/g, ''));
 });
@@ -450,95 +466,14 @@ test('submit filter', async () => {
         </Router>
     );
 
-    const testButton = await findByTestId('test-button');
+    const testButton = await findByTestId('test-filter-button');
 
     fireEvent.click(testButton);
 
-    await findByTestId('test-button');
+    await findByTestId('test-filter-button');
 
     expect(history.location.pathname).toBe('/pet');
     expect(history.location.search).toBe('?filters%5Bname%5D=Bro');
-});
-
-test('next', async () => {
-    const petList = new PetList({
-        offset: 0,
-        limit: 1,
-        count: 2,
-        _embedded: new Embedded({
-            items: [
-                new PetResponse({
-                    id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-                    createdAt: '2005-08-15T15:52:01+00:00',
-                    updatedAt: '2005-08-15T15:55:01+00:00',
-                    name: 'Brownie',
-                    tag: '0001-000',
-                    vaccinations: [
-                        new Vaccination({ name: 'Rabies' })
-                    ],
-                    _links: {
-                        "read": new Link({
-                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
-                            "templated": false,
-                            "rel": [],
-                            "attributes": {
-                                "method": "GET"
-                            }
-                        }),
-                        "update": new Link({
-                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
-                            "templated": false,
-                            "rel": [],
-                            "attributes": {
-                                "method": "PUT"
-                            }
-                        }),
-                        "delete": new Link({
-                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
-                            "templated": false,
-                            "rel": [],
-                            "attributes": {
-                                "method": "DELETE"
-                            }
-                        })
-                    }
-                })
-            ]
-        }),
-        "_links": {
-            "create": new Link({
-                "href": "/api/pets",
-                "templated": false,
-                "rel": [],
-                "attributes": {
-                    "method": "POST"
-                }
-            })
-        }
-    });
-
-    ApiClientPet.ListPets.mockImplementationOnce(() => {
-        return new Promise((resolve) => resolve(petList));
-    });
-
-    const history = createMemoryHistory();
-
-    const { findByText } = render(
-        <Router history={history}>
-            <List />
-        </Router>
-    );
-
-    expect(history.location.pathname).toBe('/');
-
-    const nextButton = await findByText('»');
-
-    fireEvent.click(nextButton);
-
-    await findByText('»');
-
-    expect(history.location.pathname).toBe('/pet');
-    expect(history.location.search).toBe('?page=2');
 });
 
 test('sort', async () => {
@@ -622,6 +557,87 @@ test('sort', async () => {
     expect(history.location.search).toBe('?sort%5Bname%5D=desc');
 });
 
+test('next', async () => {
+    const petList = new PetList({
+        offset: 0,
+        limit: 1,
+        count: 2,
+        _embedded: new Embedded({
+            items: [
+                new PetResponse({
+                    id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+                    createdAt: '2005-08-15T15:52:01+00:00',
+                    updatedAt: '2005-08-15T15:55:01+00:00',
+                    name: 'Brownie',
+                    tag: '0001-000',
+                    vaccinations: [
+                        new Vaccination({ name: 'Rabies' })
+                    ],
+                    _links: {
+                        "read": new Link({
+                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
+                            "templated": false,
+                            "rel": [],
+                            "attributes": {
+                                "method": "GET"
+                            }
+                        }),
+                        "update": new Link({
+                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
+                            "templated": false,
+                            "rel": [],
+                            "attributes": {
+                                "method": "PUT"
+                            }
+                        }),
+                        "delete": new Link({
+                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
+                            "templated": false,
+                            "rel": [],
+                            "attributes": {
+                                "method": "DELETE"
+                            }
+                        })
+                    }
+                })
+            ]
+        }),
+        "_links": {
+            "create": new Link({
+                "href": "/api/pets",
+                "templated": false,
+                "rel": [],
+                "attributes": {
+                    "method": "POST"
+                }
+            })
+        }
+    });
+
+    ApiClientPet.ListPets.mockImplementationOnce(() => {
+        return new Promise((resolve) => resolve(petList));
+    });
+
+    const history = createMemoryHistory();
+
+    const { findByTestId } = render(
+        <Router history={history}>
+            <List />
+        </Router>
+    );
+
+    expect(history.location.pathname).toBe('/');
+
+    const testButton = await findByTestId('test-pagination-button');
+
+    fireEvent.click(testButton);
+
+    await findByTestId('test-pagination-button');
+
+    expect(history.location.pathname).toBe('/pet');
+    expect(history.location.search).toBe('?page=2');
+});
+
 test('delete not found', async () => {
     const petList = new PetList({
         offset: 0,
@@ -703,19 +719,25 @@ test('delete not found', async () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <main class="ui padded grid" data-testid="page-pet-list">
-                <div class="row">httpError: title</div>
-                <div class="row"><h1 class="ui huge dividing header">List Pets</h1></div>
-                <div class="row"><a class="ui button green" role="button" href="/pet/create">Create</a></div>
-                <div class="row"><div class="ui attached segment"><button data-testid="test-button"></button></div></div>
-                <div class="row">
-                    <table class="ui single line striped selectable table">
+            <div data-testid="page-pet-list">
+                <div>httpError: title</div>
+                <h1>List Pets</h1>
+                <div>
+                    <a class="btn-green mb-4" href="/pet/create">Create</a>
+                    <button data-testid="test-filter-button"></button>
+                    <table class="my-4">
                         <thead>
                             <tr>
                                 <th>Id</th>
                                 <th>CreatedAt</th>
                                 <th>UpdatedAt</th>
-                                <th>Name (<a data-testid="sort-pet-name-asc" href="/pet?sort%5Bname%5D=asc"> A-Z </a> |<a data-testid="sort-pet-name-desc" href="/pet?sort%5Bname%5D=desc"> Z-A </a> |<a data-testid="sort-pet-name--" href="/pet"> --- </a>)</th>
+                                <th>
+                                    Name (
+                                        <a data-testid="sort-pet-name-asc" href="/pet?sort%5Bname%5D=asc"> A-Z </a> |
+                                        <a data-testid="sort-pet-name-desc" href="/pet?sort%5Bname%5D=desc"> Z-A </a> |
+                                        <a data-testid="sort-pet-name--" href="/pet"> --- </a>
+                                    )
+                                </th>
                                 <th>Tag</th>
                                 <th>Actions</th>
                             </tr>
@@ -728,23 +750,16 @@ test('delete not found', async () => {
                                 <td>Brownie</td>
                                 <td>0001-000</td>
                                 <td>
-                                    <a class="ui button" role="button" href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9">Read</a>
-                                    <a class="ui button" role="button" href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update">Update</a>
-                                    <button data-testid="remove-pet-0" class="ui button red">Delete</button>
+                                    <a class="btn-gray mr-4" href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9">Read</a>
+                                    <a class="btn-gray mr-4" href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update">Update</a>
+                                    <button data-testid="remove-pet-0" class="btn-red">Delete</button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <div aria-label="Pagination Navigation" role="navigation" class="ui pagination menu">
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="1" aria-label="First item" type="firstItem" class="item">«</a>
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="1" aria-label="Previous item" type="prevItem" class="item">⟨</a>
-                        <a aria-current="true" aria-disabled="false" tabindex="0" value="1" type="pageItem" class="active item">1</a>
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="2" type="pageItem" class="item">2</a>
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="2" aria-label="Next item" type="nextItem" class="item">⟩</a>
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="2" aria-label="Last item" type="lastItem" class="item">»</a>
-                    </div>
+                    <button data-testid="test-pagination-button" data-current-page="1" data-total-pages="2" data-max-pages="7"></button>
                 </div>
-            </main>
+            </div>
         </div>
     `.replace(/\n {2,}/g, ''));
 });
@@ -854,18 +869,24 @@ test('delete success', async () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <main class="ui padded grid" data-testid="page-pet-list">
-                <div class="row"><h1 class="ui huge dividing header">List Pets</h1></div>
-                <div class="row"><a class="ui button green" role="button" href="/pet/create">Create</a></div>
-                <div class="row"><div class="ui attached segment"><button data-testid="test-button"></button></div></div>
-                <div class="row">
-                    <table class="ui single line striped selectable table">
+            <div data-testid="page-pet-list">
+                <h1>List Pets</h1>
+                <div>
+                    <a class="btn-green mb-4" href="/pet/create">Create</a>
+                    <button data-testid="test-filter-button"></button>
+                    <table class="my-4">
                         <thead>
                             <tr>
                                 <th>Id</th>
                                 <th>CreatedAt</th>
                                 <th>UpdatedAt</th>
-                                <th>Name (<a data-testid="sort-pet-name-asc" href="/pet?sort%5Bname%5D=asc"> A-Z </a> |<a data-testid="sort-pet-name-desc" href="/pet?sort%5Bname%5D=desc"> Z-A </a> |<a data-testid="sort-pet-name--" href="/pet"> --- </a>)</th>
+                                <th>
+                                    Name (
+                                        <a data-testid="sort-pet-name-asc" href="/pet?sort%5Bname%5D=asc"> A-Z </a> |
+                                        <a data-testid="sort-pet-name-desc" href="/pet?sort%5Bname%5D=desc"> Z-A </a> |
+                                        <a data-testid="sort-pet-name--" href="/pet"> --- </a>
+                                    )
+                                </th>
                                 <th>Tag</th>
                                 <th>Actions</th>
                             </tr>
@@ -873,16 +894,9 @@ test('delete success', async () => {
                         <tbody>
                         </tbody>
                     </table>
-                    <div aria-label="Pagination Navigation" role="navigation" class="ui pagination menu">
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="1" aria-label="First item" type="firstItem" class="item">«</a>
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="1" aria-label="Previous item" type="prevItem" class="item">⟨</a>
-                        <a aria-current="true" aria-disabled="false" tabindex="0" value="1" type="pageItem" class="active item">1</a>
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="2" type="pageItem" class="item">2</a>
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="2" aria-label="Next item" type="nextItem" class="item">⟩</a>
-                        <a aria-current="false" aria-disabled="false" tabindex="0" value="2" aria-label="Last item" type="lastItem" class="item">»</a>
-                    </div>
+                    <button data-testid="test-pagination-button" data-current-page="1" data-total-pages="2" data-max-pages="7"></button>
                 </div>
-            </main>
+            </div>
         </div>
     `.replace(/\n {2,}/g, ''));
 });

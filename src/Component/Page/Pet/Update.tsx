@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from 'semantic-ui-react';
 import { Link, RouteComponentProps, useHistory } from 'react-router-dom';
 import { ReadPet, UpdatePet } from '../../../ApiClient/Pet';
 import HttpError from '../../../Model/Error/HttpError';
@@ -51,28 +50,20 @@ const Update: React.FC<Props> = ({ match }: Props) => {
     };
 
     if (!pet && !httpError) {
-        return (<main className='ui padded grid'></main>);
+        return (<div></div>);
     }
 
     return (
-        <main data-testid='page-pet-update' className='ui padded grid'>
+        <div data-testid='page-pet-update'>
             {httpError instanceof HttpError ? (
                 <HttpErrorPartial httpError={httpError} />
             ) : ''}
-            <div className='row'>
-                <h1 className='ui huge dividing header'>Update Pet</h1>
-            </div>
+            <h1>Update Pet</h1>
             {pet ? (
-                <div className='row'>
-                    <div className='ui attached segment'>
-                        <PetForm submitPet={submitPet} pet={pet} error={httpError instanceof UnprocessableEntity ? httpError : undefined} />
-                    </div>
-                </div>
+                <PetForm submitPet={submitPet} pet={pet} error={httpError instanceof UnprocessableEntity ? httpError : undefined} />
             ) : ''}
-            <div className='row'>
-                <Button as={Link} to='/pet'>List</Button>
-            </div>
-        </main>
+            <Link to='/pet' className='btn-gray'>List</Link>
+        </div>
     );
 };
 

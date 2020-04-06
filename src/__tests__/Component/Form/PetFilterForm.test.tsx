@@ -16,14 +16,14 @@ test('without error', () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <form class="ui form">
-                <div class="inline fields">
-                    <div class="field">
+            <form>
+                <fieldset>
+                    <div class="form-field">
                         <label>Name</label>
                         <input type="text" name="name">
                     </div>
-                    <button data-testid="submit-pet-filter" class="ui button blue">Filter</button>
-                </div>
+                    <button data-testid="submit-pet-filter" class="btn-blue">Filter</button>
+                </fieldset>
             </form>
         </div>
     `.replace(/\n {2,}/g, ''));
@@ -49,15 +49,17 @@ test('with error', () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <form class="ui form">
-                <div class="inline fields">
-                    <div class="field error">
+            <form>
+                <fieldset>
+                    <div class="form-field error">
                         <label>Name</label>
                         <input type="text" name="name">
-                        <div class="ui pointing red basic label">Should not be empty</div>
+                        <ul>
+                            <li>Should not be empty</li>
+                        </ul>
                     </div>
-                    <button data-testid="submit-pet-filter" class="ui button blue">Filter</button>
-                </div>
+                    <button data-testid="submit-pet-filter" class="btn-blue">Filter</button>
+                </fieldset>
             </form>
         </div>
     `.replace(/\n {2,}/g, ''));
@@ -80,14 +82,14 @@ test('submit', async () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <form class="ui form">
-                <div class="inline fields">
-                    <div class="field">
+            <form>
+                <fieldset>
+                    <div class="form-field">
                         <label>Name</label>
                         <input type="text" name="name">
                     </div>
-                    <button data-testid="submit-pet-filter" class="ui button blue">Filter</button>
-                </div>
+                    <button data-testid="submit-pet-filter" class="btn-blue">Filter</button>
+                </fieldset>
             </form>
         </div>
     `.replace(/\n {2,}/g, ''));
@@ -112,14 +114,14 @@ test('submit empty', async () => {
 
     expect(container.outerHTML).toBe(`
         <div>
-            <form class="ui form">
-                <div class="inline fields">
-                    <div class="field">
+            <form>
+                <fieldset>
+                    <div class="form-field">
                         <label>Name</label>
                         <input type="text" name="name">
                     </div>
-                    <button data-testid="submit-pet-filter" class="ui button blue">Filter</button>
-                </div>
+                    <button data-testid="submit-pet-filter" class="btn-blue">Filter</button>
+                </fieldset>
             </form>
         </div>
     `.replace(/\n {2,}/g, ''));

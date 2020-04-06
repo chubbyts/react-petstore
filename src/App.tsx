@@ -1,24 +1,38 @@
-import React from 'react';
-import Top from './Component/Navigation/Top';
-import Left from './Component/Navigation/Left';
+import React, { useState } from 'react';
 import Home from './Component/Page/Home';
 import PetList from './Component/Page/Pet/List';
 import PetCreate from './Component/Page/Pet/Create';
 import PetRead from './Component/Page/Pet/Read';
 import PetUpdate from './Component/Page/Pet/Update';
 import NotFound from './Component/Page/NotFound';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
 
 const App: React.FC = () => {
+    const [displayMenu, setDisplayMenu] = useState<boolean>(false);
+
+    const toggleMenu = () => {
+        setDisplayMenu(!displayMenu);
+    };
+
     return (
         <BrowserRouter>
-            <Top />
-            <div className='ui padded grid'>
-                <Left />
-                <div
-                    className='sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column'
-                    id='content'
-                >
+            <div id="wrapper" className={displayMenu ? 'displayMenu' : ''}>
+                <nav id="top-nav" className="clearfix">
+                    <button id="toggle" data-testid='navigation-toggle' onClick={toggleMenu}>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <NavLink to='/' className='header item'>Petstore</NavLink>
+                </nav>
+                <nav id="left-nav">
+                    <ul>
+                        <li>
+                            <NavLink to='/pet' className='item'>Pets</NavLink>
+                        </li>
+                    </ul>
+                </nav>
+                <div id="main">
                     <Switch>
                         <Route path='/' exact component={Home} />
                         <Route path='/pet' exact component={PetList} />
