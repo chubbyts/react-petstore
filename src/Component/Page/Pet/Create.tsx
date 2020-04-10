@@ -29,7 +29,7 @@ const Create: React.FC = () => {
 
     return (
         <div data-testid='page-pet-create'>
-            {httpError instanceof HttpError ? (
+            {httpError ? (
                 <HttpErrorPartial httpError={httpError} />
             ) : ''}
             <h1>Create Pet</h1>

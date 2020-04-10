@@ -11,6 +11,7 @@ import PetList from '../../../Model/Pet/PetList';
 import qs from 'qs';
 import PetFilterForm from '../../Form/PetFilterForm';
 import Pagination from '../../Partial/Pagination';
+import PetFilters from '../../../Model/Pet/PetFilters';
 
 const List: React.FC = () => {
 
@@ -65,7 +66,7 @@ const List: React.FC = () => {
         history.push(`/pet?${qs.stringify({ ...query, page: page })}`);
     };
 
-    const submitPetFilter = (filters: any) => {
+    const submitPetFilter = (filters: PetFilters) => {
         history.push(`/pet?${qs.stringify({ ...query, page: undefined, filters: filters })}`);
     };
 
@@ -75,7 +76,7 @@ const List: React.FC = () => {
 
     return (
         <div data-testid='page-pet-list'>
-            {httpError instanceof HttpError ? (
+            {httpError ? (
                 <HttpErrorPartial httpError={httpError} />
             ) : ''}
             <h1>List Pets</h1>

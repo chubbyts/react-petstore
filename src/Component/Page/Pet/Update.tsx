@@ -55,7 +55,7 @@ const Update: React.FC<Props> = ({ match }: Props) => {
 
     return (
         <div data-testid='page-pet-update'>
-            {httpError instanceof HttpError ? (
+            {httpError ? (
                 <HttpErrorPartial httpError={httpError} />
             ) : ''}
             <h1>Update Pet</h1>

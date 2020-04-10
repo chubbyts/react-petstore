@@ -64,12 +64,12 @@ test('toggle', async () => {
                             <span></span>
                             <span></span>
                         </button>
-                        <a aria-current="page" class="header item active" href="/">Petstore</a>
+                        <a aria-current="page" class="active" href="/">Petstore</a>
                     </nav>
                     <nav id="left-nav">
                         <ul>
                             <li>
-                                <a class="item" href="/pet">Pets</a>
+                                <a href="/pet">Pets</a>
                             </li>
                         </ul>
                     </nav>
@@ -99,12 +99,12 @@ test('home page', () => {
                             <span></span>
                             <span></span>
                         </button>
-                        <a aria-current="page" class="header item active" href="/">Petstore</a>
+                        <a aria-current="page" class="active" href="/">Petstore</a>
                     </nav>
                     <nav id="left-nav">
                         <ul>
                             <li>
-                                <a class="item" href="/pet">Pets</a>
+                                <a href="/pet">Pets</a>
                             </li>
                         </ul>
                     </nav>
@@ -134,12 +134,12 @@ test('not found', () => {
                             <span></span>
                             <span></span>
                         </button>
-                        <a aria-current="page" class="header item active" href="/">Petstore</a>
+                        <a aria-current="page" class="active" href="/">Petstore</a>
                     </nav>
                     <nav id="left-nav">
                         <ul>
                             <li>
-                                <a class="item" href="/pet">Pets</a>
+                                <a href="/pet">Pets</a>
                             </li>
                         </ul>
                     </nav>
@@ -169,12 +169,12 @@ test('pet list', () => {
                             <span></span>
                             <span></span>
                         </button>
-                        <a aria-current="page" class="header item active" href="/">Petstore</a>
+                        <a aria-current="page" class="active" href="/">Petstore</a>
                     </nav>
                     <nav id="left-nav">
                         <ul>
                             <li>
-                                <a aria-current="page" class="item active" href="/pet">Pets</a>
+                                <a aria-current="page" class="active" href="/pet">Pets</a>
                             </li>
                         </ul>
                     </nav>
@@ -204,12 +204,12 @@ test('pet create', () => {
                             <span></span>
                             <span></span>
                         </button>
-                        <a aria-current="page" class="header item active" href="/">Petstore</a>
+                        <a aria-current="page" class="active" href="/">Petstore</a>
                     </nav>
                     <nav id="left-nav">
                         <ul>
                             <li>
-                                <a aria-current="page" class="item active" href="/pet">Pets</a>
+                                <a aria-current="page" class="active" href="/pet">Pets</a>
                             </li>
                         </ul>
                     </nav>
@@ -239,12 +239,12 @@ test('pet read', () => {
                             <span></span>
                             <span></span>
                         </button>
-                        <a aria-current="page" class="header item active" href="/">Petstore</a>
+                        <a aria-current="page" class="active" href="/">Petstore</a>
                     </nav>
                     <nav id="left-nav">
                         <ul>
                             <li>
-                                <a aria-current="page" class="item active" href="/pet">Pets</a>
+                                <a aria-current="page" class="active" href="/pet">Pets</a>
                             </li>
                         </ul>
                     </nav>
@@ -274,12 +274,12 @@ test('pet update', () => {
                             <span></span>
                             <span></span>
                         </button>
-                        <a aria-current="page" class="header item active" href="/">Petstore</a>
+                        <a aria-current="page" class="active" href="/">Petstore</a>
                     </nav>
                     <nav id="left-nav">
                         <ul>
                             <li>
-                                <a aria-current="page" class="item active" href="/pet">Pets</a>
+                                <a aria-current="page" class="active" href="/pet">Pets</a>
                             </li>
                         </ul>
                     </nav>

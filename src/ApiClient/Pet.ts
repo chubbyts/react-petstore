@@ -8,7 +8,7 @@ import PetList from '../Model/Pet/PetList';
 import UnprocessableEntity from '../Model/Error/UnprocessableEntity';
 import PetRequest from '../Model/Pet/PetRequest';
 
-const url: string = `${process.env.REACT_APP_PETSTORE_URL}/api/pets`;
+const url = `${process.env.REACT_APP_PETSTORE_URL}/api/pets`;
 
 export const ListPets = async (queryString: string): Promise<HttpError | PetList> => {
     try {

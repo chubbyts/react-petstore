@@ -16,23 +16,23 @@ const App: React.FC = () => {
 
     return (
         <BrowserRouter>
-            <div id="wrapper" className={displayMenu ? 'displayMenu' : ''}>
-                <nav id="top-nav" className="clearfix">
-                    <button id="toggle" data-testid='navigation-toggle' onClick={toggleMenu}>
+            <div id='wrapper' className={displayMenu ? 'displayMenu' : ''}>
+                <nav id='top-nav' className='clearfix'>
+                    <button id='toggle' data-testid='navigation-toggle' onClick={toggleMenu}>
                         <span></span>
                         <span></span>
                         <span></span>
                     </button>
-                    <NavLink to='/' className='header item'>Petstore</NavLink>
+                    <NavLink to='/'>Petstore</NavLink>
                 </nav>
-                <nav id="left-nav">
+                <nav id='left-nav'>
                     <ul>
                         <li>
-                            <NavLink to='/pet' className='item'>Pets</NavLink>
+                            <NavLink to='/pet'>Pets</NavLink>
                         </li>
                     </ul>
                 </nav>
-                <div id="main">
+                <div id='main'>
                     <Switch>
                         <Route path='/' exact component={Home} />
                         <Route path='/pet' exact component={PetList} />

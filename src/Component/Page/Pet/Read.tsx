@@ -39,7 +39,7 @@ const Read: React.FC<Props> = ({ match }: Props) => {
 
     return (
         <div data-testid='page-pet-read'>
-            {httpError instanceof HttpError ? (
+            {httpError ? (
                 <HttpErrorPartial httpError={httpError} />
             ) : ''}
             <h1>Read Pet</h1>
