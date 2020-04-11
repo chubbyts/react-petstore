@@ -20,13 +20,16 @@ const List: React.FC = () => {
 
     const query = qs.parse(location.search.substr(1));
 
-    const page = parseInt(query.page ? query.page : '1');
-    const perPage = 10;
-    const offset = (page * perPage) - perPage;
-    const filters = query.filters ? query.filters : {};
-    const sort = query.sort ? query.sort : {};
+    query.page = parseInt(query.page ?? '1');
+    query.filters = query.filters ?? {};
+    query.sort = query.sort ?? {};
 
-    const queryString = qs.stringify({ limit: perPage, offset: offset, filters: filters, sort: sort });
+    const queryString = qs.stringify({
+        limit: 10,
+        offset: (query.page * 10) - 10,
+        filters: query.filters,
+        sort: query.sort
+    });
 
     const [petList, setPetList] = useState<PetList>();
     const [httpError, setHttpError] = useState<HttpError>();
@@ -62,12 +65,19 @@ const List: React.FC = () => {
         fetchPetList(queryString);
     };
 
-    const changePage = (page: number) => {
+    const changePage = (page: number): void  => {
         history.push(`/pet?${qs.stringify({ ...query, page: page })}`);
     };
 
-    const submitPetFilter = (filters: PetFilters) => {
+    const submitPetFilter = (filters: PetFilters): void => {
         history.push(`/pet?${qs.stringify({ ...query, page: undefined, filters: filters })}`);
+    };
+
+    const sortLink = (field: string, order?: string): string => {
+        return `/pet?${qs.stringify({
+            ...query,
+            sort: { ...query.sort, [field]: order }
+        })}`;
     };
 
     if (!petList && !httpError) {
@@ -85,7 +95,7 @@ const List: React.FC = () => {
                     {petList._links.create ? (
                         <Link to='/pet/create' className='btn-green mb-4'>Create</Link>
                     ) : ''}
-                    <PetFilterForm submitPetFilter={submitPetFilter} filters={filters} error={httpError instanceof BadRequest ? httpError : undefined} />
+                    <PetFilterForm submitPetFilter={submitPetFilter} filters={query.filters} error={httpError instanceof BadRequest ? httpError : undefined} />
                     <table className="my-4">
                         <thead>
                             <tr>
@@ -94,9 +104,9 @@ const List: React.FC = () => {
                                 <th>UpdatedAt</th>
                                 <th>
                                     Name (
-                                    <Link data-testid='sort-pet-name-asc' to={`/pet?${qs.stringify({ ...query, sort: { ...sort, name: 'asc' } })}`}> A-Z </Link> |
-                                    <Link data-testid='sort-pet-name-desc' to={`/pet?${qs.stringify({ ...query, sort: { ...sort, name: 'desc' } })}`}> Z-A </Link> |
-                                    <Link data-testid='sort-pet-name--' to={`/pet?${qs.stringify({ ...query, sort: { ...sort, name: undefined } })}`}> --- </Link>
+                                    <Link data-testid='sort-pet-name-asc' to={sortLink('name', 'asc')}> A-Z </Link> |
+                                    <Link data-testid='sort-pet-name-desc' to={sortLink('name', 'desc')}> Z-A </Link> |
+                                    <Link data-testid='sort-pet-name--' to={sortLink('name', undefined)}> --- </Link>
                                     )
                                 </th>
                                 <th>Tag</th>
@@ -126,7 +136,7 @@ const List: React.FC = () => {
                             ))}
                         </tbody>
                     </table>
-                    <Pagination currentPage={page} totalPages={Math.ceil(petList.count / petList.limit)} maxPages={7} submitPage={changePage} />
+                    <Pagination currentPage={query.page} totalPages={Math.ceil(petList.count / petList.limit)} maxPages={7} submitPage={changePage} />
                 </div>
             ) : ''}
         </div>

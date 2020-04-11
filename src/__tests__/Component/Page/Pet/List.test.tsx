@@ -162,9 +162,9 @@ test('default', async () => {
                                 <th>UpdatedAt</th>
                                 <th>
                                     Name (
-                                        <a data-testid="sort-pet-name-asc" href="/pet?sort%5Bname%5D=asc"> A-Z </a> |
-                                        <a data-testid="sort-pet-name-desc" href="/pet?sort%5Bname%5D=desc"> Z-A </a> |
-                                        <a data-testid="sort-pet-name--" href="/pet"> --- </a>
+                                        <a data-testid="sort-pet-name-asc" href="/pet?page=1&amp;sort%5Bname%5D=asc"> A-Z </a> |
+                                        <a data-testid="sort-pet-name-desc" href="/pet?page=1&amp;sort%5Bname%5D=desc"> Z-A </a> |
+                                        <a data-testid="sort-pet-name--" href="/pet?page=1"> --- </a>
                                     )
                                 </th>
                                 <th>Tag</th>
@@ -244,9 +244,9 @@ test('no actions', async () => {
                                 <th>UpdatedAt</th>
                                 <th>
                                     Name (
-                                        <a data-testid="sort-pet-name-asc" href="/pet?sort%5Bname%5D=asc"> A-Z </a> |
-                                        <a data-testid="sort-pet-name-desc" href="/pet?sort%5Bname%5D=desc"> Z-A </a> |
-                                        <a data-testid="sort-pet-name--" href="/pet"> --- </a>
+                                        <a data-testid="sort-pet-name-asc" href="/pet?page=1&amp;sort%5Bname%5D=asc"> A-Z </a> |
+                                        <a data-testid="sort-pet-name-desc" href="/pet?page=1&amp;sort%5Bname%5D=desc"> Z-A </a> |
+                                        <a data-testid="sort-pet-name--" href="/pet?page=1"> --- </a>
                                     )
                                 </th>
                                 <th>Tag</th>
@@ -366,9 +366,9 @@ test('submit bad request', async () => {
                                 <th>UpdatedAt</th>
                                 <th>
                                     Name (
-                                        <a data-testid="sort-pet-name-asc" href="/pet?filters%5Bname%5D=Bro&amp;sort%5Bname%5D=asc"> A-Z </a> |
-                                        <a data-testid="sort-pet-name-desc" href="/pet?filters%5Bname%5D=Bro&amp;sort%5Bname%5D=desc"> Z-A </a> |
-                                        <a data-testid="sort-pet-name--" href="/pet?filters%5Bname%5D=Bro"> --- </a>
+                                        <a data-testid="sort-pet-name-asc" href="/pet?filters%5Bname%5D=Bro&amp;page=1&amp;sort%5Bname%5D=asc"> A-Z </a> |
+                                        <a data-testid="sort-pet-name-desc" href="/pet?filters%5Bname%5D=Bro&amp;page=1&amp;sort%5Bname%5D=desc"> Z-A </a> |
+                                        <a data-testid="sort-pet-name--" href="/pet?filters%5Bname%5D=Bro&amp;page=1"> --- </a>
                                     )
                                 </th>
                                 <th>Tag</th>
@@ -554,7 +554,7 @@ test('sort', async () => {
     await findByTestId('sort-pet-name-desc');
 
     expect(history.location.pathname).toBe('/pet');
-    expect(history.location.search).toBe('?sort%5Bname%5D=desc');
+    expect(history.location.search).toBe('?page=1&sort%5Bname%5D=desc');
 });
 
 test('next', async () => {
@@ -733,9 +733,9 @@ test('delete not found', async () => {
                                 <th>UpdatedAt</th>
                                 <th>
                                     Name (
-                                        <a data-testid="sort-pet-name-asc" href="/pet?sort%5Bname%5D=asc"> A-Z </a> |
-                                        <a data-testid="sort-pet-name-desc" href="/pet?sort%5Bname%5D=desc"> Z-A </a> |
-                                        <a data-testid="sort-pet-name--" href="/pet"> --- </a>
+                                        <a data-testid="sort-pet-name-asc" href="/pet?page=1&amp;sort%5Bname%5D=asc"> A-Z </a> |
+                                        <a data-testid="sort-pet-name-desc" href="/pet?page=1&amp;sort%5Bname%5D=desc"> Z-A </a> |
+                                        <a data-testid="sort-pet-name--" href="/pet?page=1"> --- </a>
                                     )
                                 </th>
                                 <th>Tag</th>
@@ -882,9 +882,9 @@ test('delete success', async () => {
                                 <th>UpdatedAt</th>
                                 <th>
                                     Name (
-                                        <a data-testid="sort-pet-name-asc" href="/pet?sort%5Bname%5D=asc"> A-Z </a> |
-                                        <a data-testid="sort-pet-name-desc" href="/pet?sort%5Bname%5D=desc"> Z-A </a> |
-                                        <a data-testid="sort-pet-name--" href="/pet"> --- </a>
+                                        <a data-testid="sort-pet-name-asc" href="/pet?page=1&amp;sort%5Bname%5D=asc"> A-Z </a> |
+                                        <a data-testid="sort-pet-name-desc" href="/pet?page=1&amp;sort%5Bname%5D=desc"> Z-A </a> |
+                                        <a data-testid="sort-pet-name--" href="/pet?page=1"> --- </a>
                                     )
                                 </th>
                                 <th>Tag</th>
