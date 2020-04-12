@@ -70,7 +70,7 @@ const List: React.FC = () => {
     };
 
     const submitPetFilter = (filters: PetFilters): void => {
-        history.push(`/pet?${qs.stringify({ ...query, page: undefined, filters: filters })}`);
+        history.push(`/pet?${qs.stringify({ ...query, page: 1, filters: filters })}`);
     };
 
     const sortLink = (field: string, order?: string): string => {

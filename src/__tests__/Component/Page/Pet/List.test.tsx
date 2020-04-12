@@ -366,9 +366,9 @@ test('submit bad request', async () => {
                                 <th>UpdatedAt</th>
                                 <th>
                                     Name (
-                                        <a data-testid="sort-pet-name-asc" href="/pet?filters%5Bname%5D=Bro&amp;page=1&amp;sort%5Bname%5D=asc"> A-Z </a> |
-                                        <a data-testid="sort-pet-name-desc" href="/pet?filters%5Bname%5D=Bro&amp;page=1&amp;sort%5Bname%5D=desc"> Z-A </a> |
-                                        <a data-testid="sort-pet-name--" href="/pet?filters%5Bname%5D=Bro&amp;page=1"> --- </a>
+                                        <a data-testid="sort-pet-name-asc" href="/pet?page=1&amp;filters%5Bname%5D=Bro&amp;sort%5Bname%5D=asc"> A-Z </a> |
+                                        <a data-testid="sort-pet-name-desc" href="/pet?page=1&amp;filters%5Bname%5D=Bro&amp;sort%5Bname%5D=desc"> Z-A </a> |
+                                        <a data-testid="sort-pet-name--" href="/pet?page=1&amp;filters%5Bname%5D=Bro"> --- </a>
                                     )
                                 </th>
                                 <th>Tag</th>
@@ -473,7 +473,7 @@ test('submit filter', async () => {
     await findByTestId('test-filter-button');
 
     expect(history.location.pathname).toBe('/pet');
-    expect(history.location.search).toBe('?filters%5Bname%5D=Bro');
+    expect(history.location.search).toBe('?page=1&filters%5Bname%5D=Bro');
 });
 
 test('sort', async () => {
