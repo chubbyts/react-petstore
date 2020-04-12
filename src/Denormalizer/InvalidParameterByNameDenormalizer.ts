@@ -1,11 +1,11 @@
 import InvalidParameter from '../Model/Error/InvalidParameter';
 
-type errorsByFieldsType = { [id: string]: Array<InvalidParameter>; };
+type errorsByFieldsType = { [id: string]: Array<InvalidParameter> };
 
 const InvalidParameterByNameDenormalizer = (invalidParameters: Array<InvalidParameter>): errorsByFieldsType => {
     const errorsByFields: errorsByFieldsType = {};
     invalidParameters.forEach((invalidParameter: InvalidParameter) => {
-        if (!errorsByFields.hasOwnProperty(invalidParameter.name)) {
+        if (!Object.prototype.hasOwnProperty.call(errorsByFields, invalidParameter.name)) {
             errorsByFields[invalidParameter.name] = [];
         }
 
