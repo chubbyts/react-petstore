@@ -19,5 +19,5 @@ test('default', () => {
                 <h1>Home</h1>
             </div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });

@@ -45,7 +45,7 @@ test('not found', async () => {
                 <h1>Read Pet</h1>
             </div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('minimal', async () => {
@@ -98,7 +98,7 @@ test('minimal', async () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('maximal', async () => {
@@ -160,5 +160,5 @@ test('maximal', async () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });

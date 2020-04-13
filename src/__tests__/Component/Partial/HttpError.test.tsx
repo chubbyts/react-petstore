@@ -16,7 +16,7 @@ test('minimal', () => {
                 <p>This is the title</p>
             </div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('maximal', () => {
@@ -42,5 +42,5 @@ test('maximal', () => {
                 </ul>
             </div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });

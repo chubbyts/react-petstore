@@ -26,7 +26,7 @@ test('without error', () => {
                 </fieldset>
             </form>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('with error', () => {
@@ -62,7 +62,7 @@ test('with error', () => {
                 </fieldset>
             </form>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('submit', async () => {
@@ -92,7 +92,7 @@ test('submit', async () => {
                 </fieldset>
             </form>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 
     expect(submitPetFilter.mock.calls.length).toBe(1);
 });
@@ -124,7 +124,7 @@ test('submit empty', async () => {
                 </fieldset>
             </form>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 
     expect(submitPetFilter.mock.calls.length).toBe(1);
 });

@@ -58,7 +58,7 @@ test('not found', async () => {
                 <a class="btn-gray" href="/pet">List</a>
             </div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('minimal', async () => {
@@ -96,7 +96,7 @@ test('minimal', async () => {
                 <a class="btn-gray" href="/pet">List</a>
             </div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('unprocessable entity', async () => {
@@ -147,7 +147,7 @@ test('unprocessable entity', async () => {
                 <a class="btn-gray" href="/pet">List</a>
             </div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('successful', async () => {

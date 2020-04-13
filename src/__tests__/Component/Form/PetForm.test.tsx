@@ -52,7 +52,7 @@ test('without error', () => {
                 </fieldset>
             </form>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('with error', () => {
@@ -116,7 +116,7 @@ test('with error', () => {
                 </fieldset>
             </form>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('add vaccination', async () => {
@@ -177,7 +177,7 @@ test('add vaccination', async () => {
                 </fieldset>
             </form>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('remove vaccination', async () => {
@@ -224,7 +224,7 @@ test('remove vaccination', async () => {
                 </fieldset>
             </form>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('submit minimal', async () => {
@@ -268,7 +268,7 @@ test('submit minimal', async () => {
                 </fieldset>
             </form>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 
     expect(submitPet.mock.calls.length).toBe(1);
 });
@@ -325,7 +325,7 @@ test('submit maximal', async () => {
                 </fieldset>
             </form>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 
     expect(submitPet.mock.calls.length).toBe(1);
 });

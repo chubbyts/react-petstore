@@ -79,7 +79,7 @@ test('toggle', async () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('home page', () => {
@@ -114,7 +114,7 @@ test('home page', () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('not found', () => {
@@ -149,7 +149,7 @@ test('not found', () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('pet list', () => {
@@ -184,7 +184,7 @@ test('pet list', () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('pet create', () => {
@@ -219,7 +219,7 @@ test('pet create', () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('pet read', () => {
@@ -254,7 +254,7 @@ test('pet read', () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('pet update', () => {
@@ -289,5 +289,5 @@ test('pet update', () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });

@@ -73,7 +73,7 @@ test('bad request', async () => {
                 <h1>List Pets</h1>
             </div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('default', async () => {
@@ -190,7 +190,7 @@ test('default', async () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('no actions', async () => {
@@ -268,7 +268,7 @@ test('no actions', async () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('submit bad request', async () => {
@@ -394,7 +394,7 @@ test('submit bad request', async () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('submit filter', async () => {
@@ -761,7 +761,7 @@ test('delete not found', async () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('delete success', async () => {
@@ -898,5 +898,5 @@ test('delete success', async () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });

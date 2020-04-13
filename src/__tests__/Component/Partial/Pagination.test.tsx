@@ -13,7 +13,7 @@ test('max pages 1', () => {
         <div>
             <div></div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('total pages 1', () => {
@@ -27,7 +27,7 @@ test('total pages 1', () => {
         <div>
             <div></div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('current 1', () => {
@@ -51,7 +51,7 @@ test('current 1', () => {
                 <li><button>»</button></li>
             </ul>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('current 4', () => {
@@ -77,7 +77,7 @@ test('current 4', () => {
                 <li><button>»</button></li>
             </ul>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('current 7', () => {
@@ -103,7 +103,7 @@ test('current 7', () => {
                 <li><button>»</button></li>
             </ul>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('current 10', () => {
@@ -127,7 +127,7 @@ test('current 10', () => {
                 <li><button class="current">10</button></li>
             </ul>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
 test('buttons', async () => {

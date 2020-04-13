@@ -24,5 +24,5 @@ test('default', () => {
                 </ul>
             </div>
         </div>
-    `.replace(/\n {2,}/g, ''));
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
