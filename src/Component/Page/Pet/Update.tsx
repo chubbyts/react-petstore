@@ -60,7 +60,7 @@ const Update: React.FC<Props> = ({ match }: Props) => {
             ) : ''}
             <h1>Update Pet</h1>
             {pet ? (
-                <PetForm submitPet={submitPet} pet={pet} error={httpError instanceof UnprocessableEntity ? httpError : undefined} />
+                <PetForm submitPet={submitPet} defaultPet={pet} unprocessableEntity={httpError instanceof UnprocessableEntity ? httpError : undefined} />
             ) : ''}
             <Link to='/pet' className='btn-gray'>List</Link>
         </div>

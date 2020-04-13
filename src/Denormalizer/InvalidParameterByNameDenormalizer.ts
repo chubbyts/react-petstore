@@ -1,6 +1,6 @@
 import InvalidParameter from '../Model/Error/InvalidParameter';
 
-type errorsByFieldsType = { [id: string]: Array<InvalidParameter> };
+type errorsByFieldsType = { [id: string]: Array<InvalidParameter>; };
 
 const InvalidParameterByNameDenormalizer = (invalidParameters: Array<InvalidParameter>): errorsByFieldsType => {
     const errorsByFields: errorsByFieldsType = {};

@@ -95,7 +95,7 @@ const List: React.FC = () => {
                     {petList._links.create ? (
                         <Link to='/pet/create' className='btn-green mb-4'>Create</Link>
                     ) : ''}
-                    <PetFilterForm submitPetFilter={submitPetFilter} filters={query.filters} error={httpError instanceof BadRequest ? httpError : undefined} />
+                    <PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={query.filters} badRequest={httpError instanceof BadRequest ? httpError : undefined} />
                     <table className="my-4">
                         <thead>
                             <tr>

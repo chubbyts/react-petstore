@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import Pagination from '../../../Component/Partial/Pagination';
 
 test('max pages 1', () => {
-    const submitPage = (page: number) => {
+    const submitPage = (page: number): void => {
 
     };
 
@@ -17,7 +17,7 @@ test('max pages 1', () => {
 });
 
 test('total pages 1', () => {
-    const submitPage = (page: number) => {
+    const submitPage = (page: number): void => {
 
     };
 
@@ -31,7 +31,7 @@ test('total pages 1', () => {
 });
 
 test('current 1', () => {
-    const submitPage = (page: number) => {
+    const submitPage = (page: number): void => {
 
     };
 
@@ -55,7 +55,7 @@ test('current 1', () => {
 });
 
 test('current 4', () => {
-    const submitPage = (page: number) => {
+    const submitPage = (page: number): void => {
 
     };
 
@@ -81,7 +81,7 @@ test('current 4', () => {
 });
 
 test('current 7', () => {
-    const submitPage = (page: number) => {
+    const submitPage = (page: number): void => {
 
     };
 
@@ -107,7 +107,7 @@ test('current 7', () => {
 });
 
 test('current 10', () => {
-    const submitPage = (page: number) => {
+    const submitPage = (page: number): void => {
 
     };
 
@@ -133,13 +133,13 @@ test('current 10', () => {
 test('buttons', async () => {
     const pages: number[] = [];
 
-    const submitPage = (page: number) => {
+    const submitPage = (page: number): void => {
         pages.push(page);
     };
 
     const { container } = render(<Pagination currentPage={7} maxPages={7} totalPages={10} submitPage={submitPage} />);
 
-    for (let element of container.getElementsByTagName('button')) {
+    for (const element of container.getElementsByTagName('button')) {
         element.click();
     }
 

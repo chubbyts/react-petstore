@@ -1,7 +1,7 @@
 import HttpError from './HttpError';
 import InvalidParameter from './InvalidParameter';
 
-class HttpErrorWithInvalidArguments extends HttpError {
+class HttpErrorWithInvalidParameters extends HttpError {
     invalidParameters: Array<InvalidParameter>;
     constructor({ title, detail, instance, invalidParameters }: { title: string, detail?: string, instance?: string, invalidParameters?: Array<InvalidParameter>; }) {
         super({ title, detail, instance });
@@ -9,4 +9,4 @@ class HttpErrorWithInvalidArguments extends HttpError {
     }
 };
 
-export default HttpErrorWithInvalidArguments;
+export default HttpErrorWithInvalidParameters;

@@ -4,8 +4,8 @@ import UnprocessableEntity from '../../Model/Error/UnprocessableEntity';
 
 type PetFormProps = {
     submitPet: { (pet: PetRequest): void; },
-    pet?: PetResponse,
-    error?: UnprocessableEntity
+    defaultPet?: PetResponse,
+    unprocessableEntity?: UnprocessableEntity
 };
 
 export default PetFormProps;

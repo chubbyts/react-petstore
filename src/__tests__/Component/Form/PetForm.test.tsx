@@ -10,7 +10,7 @@ import Vaccination from '../../../Model/Pet/Vaccination';
 test('without error', () => {
     const submitPet: { (pet: PetRequest): void; } = (pet: PetRequest): void => { };
 
-    const pet = new PetResponse({
+    const defaultPet = new PetResponse({
         id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
         createdAt: '2005-08-15T15:52:01+00:00',
         name: 'Brownie',
@@ -20,7 +20,7 @@ test('without error', () => {
     });
 
     const { container } = render(
-        <PetForm submitPet={submitPet} pet={pet} />
+        <PetForm submitPet={submitPet} defaultPet={defaultPet} />
     );
 
     expect(container.outerHTML).toBe(`
@@ -58,7 +58,7 @@ test('without error', () => {
 test('with error', () => {
     const submitPet: { (pet: PetRequest): any; } = (pet: PetRequest) => { };
 
-    const pet = new PetResponse({
+    const defaultPet = new PetResponse({
         id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
         createdAt: '2005-08-15T15:52:01+00:00',
         name: '',
@@ -78,7 +78,7 @@ test('with error', () => {
     });
 
     const { container } = render(
-        <PetForm submitPet={submitPet} pet={pet} error={unprocessableEntity} />
+        <PetForm submitPet={submitPet} defaultPet={defaultPet} unprocessableEntity={unprocessableEntity} />
     );
 
     expect(container.outerHTML).toBe(`
@@ -122,7 +122,7 @@ test('with error', () => {
 test('add vaccination', async () => {
     const submitPet: { (pet: PetRequest): any; } = (pet: PetRequest) => { };
 
-    const pet = new PetResponse({
+    const defaultPet = new PetResponse({
         id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
         createdAt: '2005-08-15T15:52:01+00:00',
         name: 'Brownie',
@@ -132,7 +132,7 @@ test('add vaccination', async () => {
     });
 
     const { container, findByTestId } = render(
-        <PetForm submitPet={submitPet} pet={pet} />
+        <PetForm submitPet={submitPet} defaultPet={defaultPet} />
     );
 
     const submitButton = await findByTestId('add-vaccination');
@@ -183,7 +183,7 @@ test('add vaccination', async () => {
 test('remove vaccination', async () => {
     const submitPet: { (pet: PetRequest): any; } = (pet: PetRequest) => { };
 
-    const pet = new PetResponse({
+    const defaultPet = new PetResponse({
         id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
         createdAt: '2005-08-15T15:52:01+00:00',
         name: 'Brownie',
@@ -193,7 +193,7 @@ test('remove vaccination', async () => {
     });
 
     const { container, findByTestId } = render(
-        <PetForm submitPet={submitPet} pet={pet} />
+        <PetForm submitPet={submitPet} defaultPet={defaultPet} />
     );
 
     const submitButton = await findByTestId('remove-vaccination-0');
@@ -228,16 +228,16 @@ test('remove vaccination', async () => {
 });
 
 test('submit minimal', async () => {
-    const submitPet: { (pet: PetRequest): any; } = jest.fn((pet: PetRequest) => { });
+    const submitPet = jest.fn((pet: PetRequest) => { });
 
-    const pet = new PetResponse({
+    const defaultPet = new PetResponse({
         id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
         createdAt: '2005-08-15T15:52:01+00:00',
         name: 'Brownie'
     });
 
     const { container, findByTestId } = render(
-        <PetForm submitPet={submitPet} pet={pet} />
+        <PetForm submitPet={submitPet} defaultPet={defaultPet} />
     );
 
     const submitButton = await findByTestId('submit-pet');
@@ -274,9 +274,9 @@ test('submit minimal', async () => {
 });
 
 test('submit maximal', async () => {
-    const submitPet: { (pet: PetRequest): any; } = jest.fn((pet: PetRequest) => { });
+    const submitPet = jest.fn((pet: PetRequest) => { });
 
-    const pet = new PetResponse({
+    const defaultPet = new PetResponse({
         id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
         createdAt: '2005-08-15T15:52:01+00:00',
         name: 'Brownie',
@@ -287,7 +287,7 @@ test('submit maximal', async () => {
     });
 
     const { container, findByTestId } = render(
-        <PetForm submitPet={submitPet} pet={pet} />
+        <PetForm submitPet={submitPet} defaultPet={defaultPet} />
     );
 
     const submitButton = await findByTestId('submit-pet');

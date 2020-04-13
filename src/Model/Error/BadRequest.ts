@@ -1,6 +1,6 @@
-import HttpErrorWithInvalidArguments from './HttpErrorWithInvalidArguments';
+import HttpErrorWithInvalidParameters from './HttpErrorWithInvalidParameters';
 
-class BadRequest extends HttpErrorWithInvalidArguments {
+class BadRequest extends HttpErrorWithInvalidParameters {
 };
 
 export default BadRequest;

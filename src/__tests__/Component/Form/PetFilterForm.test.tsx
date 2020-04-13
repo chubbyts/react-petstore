@@ -6,12 +6,12 @@ import PetFilterForm from '../../../Component/Form/PetFilterForm';
 import PetFilters from '../../../Model/Pet/PetFilters';
 
 test('without error', () => {
-    const submitPetFilter: { (filters: any): any; } = (filters: any) => { };
+    const submitPetFilter = (filters: PetFilters) => { };
 
-    const filters = new PetFilters({name: 'aa'});
+    const defaultPetFilters = new PetFilters({name: 'aa'});
 
     const { container } = render(
-        <PetFilterForm submitPetFilter={submitPetFilter} filters={filters} />
+        <PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={defaultPetFilters} />
     );
 
     expect(container.outerHTML).toBe(`
@@ -30,9 +30,7 @@ test('without error', () => {
 });
 
 test('with error', () => {
-    const submitPetFilter: { (filters: any): any; } = (filters: any) => { };
-
-    const filters = new PetFilters({name: ''});
+    const submitPetFilter = (filters: PetFilters) => { };
 
     const invalidParameters: Array<InvalidParameter> = [
         { name: 'name', reason: 'Should not be empty' },
@@ -44,7 +42,7 @@ test('with error', () => {
     });
 
     const { container } = render(
-        <PetFilterForm submitPetFilter={submitPetFilter} filters={filters} error={badRequest} />
+        <PetFilterForm submitPetFilter={submitPetFilter} badRequest={badRequest} />
     );
 
     expect(container.outerHTML).toBe(`
@@ -66,12 +64,12 @@ test('with error', () => {
 });
 
 test('submit', async () => {
-    const submitPetFilter: { (filters: any): any; } = jest.fn((filters: any) => { });
+    const submitPetFilter = jest.fn((filters: any) => { });
 
-    const filters = new PetFilters({name: 'aa'});
+    const defaultPetFilters = new PetFilters({name: 'aa'});
 
     const { container, findByTestId } = render(
-        <PetFilterForm submitPetFilter={submitPetFilter} filters={filters} />
+        <PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={defaultPetFilters} />
     );
 
     const submitButton = await findByTestId('submit-pet-filter');
@@ -98,12 +96,12 @@ test('submit', async () => {
 });
 
 test('submit empty', async () => {
-    const submitPetFilter: { (filters: any): any; } = jest.fn((filters: any) => { });
+    const submitPetFilter = jest.fn((filters: any) => { });
 
-    const filters = new PetFilters({name: ''});
+    const defaultPetFilters = new PetFilters({name: ''});
 
     const { container, findByTestId } = render(
-        <PetFilterForm submitPetFilter={submitPetFilter} filters={filters} />
+        <PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={defaultPetFilters} />
     );
 
     const submitButton = await findByTestId('submit-pet-filter');

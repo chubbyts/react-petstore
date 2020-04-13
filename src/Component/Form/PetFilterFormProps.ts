@@ -3,8 +3,8 @@ import PetFilters from '../../Model/Pet/PetFilters';
 
 type PetFilterFormProps = {
     submitPetFilter: { (filters: PetFilters): void; },
-    filters?: PetFilters,
-    error?: BadRequest
+    defaultPetFilters?: PetFilters,
+    badRequest?: BadRequest
 };
 
 export default PetFilterFormProps;

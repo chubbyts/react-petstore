@@ -1,6 +1,6 @@
-import HttpErrorWithInvalidArguments from './HttpErrorWithInvalidArguments';
+import HttpErrorWithInvalidParameters from './HttpErrorWithInvalidParameters';
 
-class UnprocessableEntity extends HttpErrorWithInvalidArguments {
+class UnprocessableEntity extends HttpErrorWithInvalidParameters {
 };
 
 export default UnprocessableEntity;

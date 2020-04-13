@@ -33,7 +33,7 @@ const Create: React.FC = () => {
                 <HttpErrorPartial httpError={httpError} />
             ) : ''}
             <h1>Create Pet</h1>
-            <PetForm submitPet={submitPet} error={httpError instanceof UnprocessableEntity ? httpError : undefined} />
+            <PetForm submitPet={submitPet} unprocessableEntity={httpError instanceof UnprocessableEntity ? httpError : undefined} />
             <Link to='/pet' className='btn-gray'>List</Link>
         </div>
     );
