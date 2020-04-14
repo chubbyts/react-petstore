@@ -7,8 +7,40 @@ import PetResponse from '../../../Model/Pet/PetResponse';
 import UnprocessableEntity from '../../../Model/Error/UnprocessableEntity';
 import Vaccination from '../../../Model/Pet/Vaccination';
 
+test('empty', () => {
+    const submitPet = (pet: PetRequest): void => { };
+
+    const { container } = render(
+        <PetForm submitPet={submitPet} />
+    );
+
+    expect(container.outerHTML).toBe(`
+        <div>
+            <form>
+                <fieldset>
+                    <div class="form-field">
+                        <label>Name</label>
+                        <input type="text" name="name">
+                    </div>
+                    <div class="form-field">
+                        <label>Tag</label>
+                        <input type="text" name="tag">
+                    </div>
+                    <div class="form-field">
+                        <label>Vaccanations</label>
+                        <div>
+                            <button data-testid="add-vaccination" type="button" class="btn-green">Add</button>
+                        </div>
+                    </div>
+                    <button data-testid="submit-pet" class="btn-blue">Save</button>
+                </fieldset>
+            </form>
+        </div>
+    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
+});
+
 test('without error', () => {
-    const submitPet: { (pet: PetRequest): void; } = (pet: PetRequest): void => { };
+    const submitPet = (pet: PetRequest): void => { };
 
     const defaultPet = new PetResponse({
         id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
@@ -56,7 +88,7 @@ test('without error', () => {
 });
 
 test('with error', () => {
-    const submitPet: { (pet: PetRequest): any; } = (pet: PetRequest) => { };
+    const submitPet = (pet: PetRequest): void => { };
 
     const defaultPet = new PetResponse({
         id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
@@ -120,7 +152,7 @@ test('with error', () => {
 });
 
 test('add vaccination', async () => {
-    const submitPet: { (pet: PetRequest): any; } = (pet: PetRequest) => { };
+    const submitPet = (pet: PetRequest): void => { };
 
     const defaultPet = new PetResponse({
         id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
@@ -181,7 +213,7 @@ test('add vaccination', async () => {
 });
 
 test('remove vaccination', async () => {
-    const submitPet: { (pet: PetRequest): any; } = (pet: PetRequest) => { };
+    const submitPet = (pet: PetRequest): void => { };
 
     const defaultPet = new PetResponse({
         id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
@@ -228,15 +260,19 @@ test('remove vaccination', async () => {
 });
 
 test('submit minimal', async () => {
-    const submitPet = jest.fn((pet: PetRequest) => { });
+    const submitPet = jest.fn((pet: PetRequest) => {
+        expect(pet.name).toBe('Brownie');
+        expect(pet.tag).toBeUndefined();
+    });
 
     const defaultPet = new PetResponse({
         id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
         createdAt: '2005-08-15T15:52:01+00:00',
-        name: 'Brownie'
+        name: 'Brownie',
+        tag: ''
     });
 
-    const { container, findByTestId } = render(
+    const { findByTestId } = render(
         <PetForm submitPet={submitPet} defaultPet={defaultPet} />
     );
 
@@ -246,35 +282,16 @@ test('submit minimal', async () => {
 
     await findByTestId('submit-pet');
 
-    expect(container.outerHTML).toBe(`
-        <div>
-            <form>
-                <fieldset>
-                    <div class="form-field">
-                        <label>Name</label>
-                        <input type="text" name="name">
-                    </div>
-                    <div class="form-field">
-                        <label>Tag</label>
-                        <input type="text" name="tag">
-                    </div>
-                    <div class="form-field">
-                        <label>Vaccanations</label>
-                        <div>
-                            <button data-testid="add-vaccination" type="button" class="btn-green">Add</button>
-                        </div>
-                    </div>
-                    <button data-testid="submit-pet" class="btn-blue">Save</button>
-                </fieldset>
-            </form>
-        </div>
-    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
-
     expect(submitPet.mock.calls.length).toBe(1);
 });
 
 test('submit maximal', async () => {
-    const submitPet = jest.fn((pet: PetRequest) => { });
+    const submitPet = jest.fn((pet: PetRequest) => {
+        expect(pet.name).toBe('Brownie');
+        expect(pet.tag).toBe('0001-000');
+        expect(pet.vaccinations).toHaveLength(1);
+        expect(pet.vaccinations[0].name).toBe('Rabies');
+    });
 
     const defaultPet = new PetResponse({
         id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
@@ -286,7 +303,7 @@ test('submit maximal', async () => {
         ]
     });
 
-    const { container, findByTestId } = render(
+    const { findByTestId } = render(
         <PetForm submitPet={submitPet} defaultPet={defaultPet} />
     );
 
@@ -295,37 +312,6 @@ test('submit maximal', async () => {
     fireEvent.click(submitButton);
 
     await findByTestId('submit-pet');
-
-    expect(container.outerHTML).toBe(`
-        <div>
-            <form>
-                <fieldset>
-                    <div class="form-field">
-                        <label>Name</label>
-                        <input type="text" name="name">
-                    </div>
-                    <div class="form-field">
-                        <label>Tag</label>
-                        <input type="text" name="tag">
-                    </div>
-                    <div class="form-field">
-                        <label>Vaccanations</label>
-                        <div>
-                            <fieldset>
-                                <div class="form-field">
-                                    <label>Name</label>
-                                    <input type="text" name="vaccinations[0].name">
-                                </div>
-                                <button data-testid="remove-vaccination-0" type="button" class="btn-red">Remove</button>
-                            </fieldset>
-                            <button data-testid="add-vaccination" type="button" class="btn-green">Add</button>
-                        </div>
-                    </div>
-                    <button data-testid="submit-pet" class="btn-blue">Save</button>
-                </fieldset>
-            </form>
-        </div>
-    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 
     expect(submitPet.mock.calls.length).toBe(1);
 });

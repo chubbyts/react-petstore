@@ -8,7 +8,7 @@ import PetFilters from '../../../Model/Pet/PetFilters';
 test('without error', () => {
     const submitPetFilter = (filters: PetFilters) => { };
 
-    const defaultPetFilters = new PetFilters({name: 'aa'});
+    const defaultPetFilters = new PetFilters({ name: 'aa' });
 
     const { container } = render(
         <PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={defaultPetFilters} />
@@ -64,11 +64,13 @@ test('with error', () => {
 });
 
 test('submit', async () => {
-    const submitPetFilter = jest.fn((filters: any) => { });
+    const submitPetFilter = jest.fn((filters: PetFilters) => {
+        expect(filters.name).toEqual('aa');
+    });
 
-    const defaultPetFilters = new PetFilters({name: 'aa'});
+    const defaultPetFilters = new PetFilters({ name: 'aa' });
 
-    const { container, findByTestId } = render(
+    const { findByTestId } = render(
         <PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={defaultPetFilters} />
     );
 
@@ -77,30 +79,18 @@ test('submit', async () => {
     fireEvent.click(submitButton);
 
     await findByTestId('submit-pet-filter');
-
-    expect(container.outerHTML).toBe(`
-        <div>
-            <form>
-                <fieldset>
-                    <div class="form-field">
-                        <label>Name</label>
-                        <input type="text" name="name">
-                    </div>
-                    <button data-testid="submit-pet-filter" class="btn-blue">Filter</button>
-                </fieldset>
-            </form>
-        </div>
-    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 
     expect(submitPetFilter.mock.calls.length).toBe(1);
 });
 
 test('submit empty', async () => {
-    const submitPetFilter = jest.fn((filters: any) => { });
+    const submitPetFilter = jest.fn((filters: PetFilters) => {
+        expect(filters.name).toBeUndefined();
+    });
 
-    const defaultPetFilters = new PetFilters({name: ''});
+    const defaultPetFilters = new PetFilters({ name: '' });
 
-    const { container, findByTestId } = render(
+    const { findByTestId } = render(
         <PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={defaultPetFilters} />
     );
 
@@ -109,20 +99,6 @@ test('submit empty', async () => {
     fireEvent.click(submitButton);
 
     await findByTestId('submit-pet-filter');
-
-    expect(container.outerHTML).toBe(`
-        <div>
-            <form>
-                <fieldset>
-                    <div class="form-field">
-                        <label>Name</label>
-                        <input type="text" name="name">
-                    </div>
-                    <button data-testid="submit-pet-filter" class="btn-blue">Filter</button>
-                </fieldset>
-            </form>
-        </div>
-    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 
     expect(submitPetFilter.mock.calls.length).toBe(1);
 });
