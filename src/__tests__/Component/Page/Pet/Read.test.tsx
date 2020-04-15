@@ -2,14 +2,21 @@ import React from 'react';
 import { createMemoryHistory } from 'history';
 import { render } from '@testing-library/react';
 import { Router } from 'react-router-dom';
-import * as ApiClientPet from '../../../../ApiClient/Pet';
 import HttpError from '../../../../Model/Error/HttpError';
 import NotFound from '../../../../Model/Error/NotFound';
 import PetResponse from '../../../../Model/Pet/PetResponse';
 import Read from '../../../../Component/Page/Pet/Read';
 import Vaccination from '../../../../Model/Pet/Vaccination';
 
-jest.mock('../../../../ApiClient/Pet');
+let mockReadPet = (id: string) => { };
+
+jest.mock('../../../../ApiClient/Pet', () => {
+    return {
+        ReadPet: (id: string) => {
+            return mockReadPet(id);
+        }
+    };
+});
 
 jest.mock('../../../../Component/Partial/HttpError', () => {
     return ({ httpError }: { httpError: HttpError; }) => {
@@ -18,9 +25,9 @@ jest.mock('../../../../Component/Partial/HttpError', () => {
 });
 
 test('not found', async () => {
-    ApiClientPet.ReadPet.mockResolvedValueOnce(new Promise((resolve) => {
-        resolve(new NotFound({ title: 'title' }));
-    }));
+    mockReadPet = async (id: string) => {
+        return new Promise((resolve) => resolve(new NotFound({ title: 'title' })));
+    };
 
     const history = createMemoryHistory();
 
@@ -55,9 +62,9 @@ test('minimal', async () => {
         name: 'Brownie'
     });
 
-    ApiClientPet.ReadPet.mockImplementationOnce(() => {
+    mockReadPet = async (id: string) => {
         return new Promise((resolve) => resolve(pet));
-    });
+    };
 
     const history = createMemoryHistory();
 
@@ -113,9 +120,9 @@ test('maximal', async () => {
         ]
     });
 
-    ApiClientPet.ReadPet.mockImplementationOnce(() => {
+    mockReadPet = async (id: string) => {
         return new Promise((resolve) => resolve(pet));
-    });
+    };
 
     const history = createMemoryHistory();
 

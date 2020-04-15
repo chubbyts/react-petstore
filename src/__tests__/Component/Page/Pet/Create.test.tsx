@@ -2,22 +2,29 @@ import React from 'react';
 import { createMemoryHistory } from 'history';
 import { fireEvent, render } from '@testing-library/react';
 import { Router } from 'react-router-dom';
-import * as ApiClientPet from '../../../../ApiClient/Pet';
 import Create from '../../../../Component/Page/Pet/Create';
 import HttpError from '../../../../Model/Error/HttpError';
 import PetFormProps from '../../../../Component/Form/PetFormProps';
-import PetResponse from '../../../../Model/Pet/PetResponse';
+import PetRequest from '../../../../Model/Pet/PetRequest';
 import UnprocessableEntity from '../../../../Model/Error/UnprocessableEntity';
 
-jest.mock('../../../../ApiClient/Pet');
+let mockCreatePet = (pet: PetRequest) => { };
+
+jest.mock('../../../../ApiClient/Pet', () => {
+    return {
+        CreatePet: (pet: PetRequest) => {
+            return mockCreatePet(pet);
+        }
+    };
+});
 
 jest.mock('../../../../Component/Form/PetForm', () => {
     return ({ submitPet }: PetFormProps) => {
-        const submit = async () => {
-            await submitPet({ name: '', vaccinations: [] });
+        const onSubmit = () => {
+            submitPet({ name: 'Brownie' });
         };
 
-        return (<button data-testid="test-button" onClick={submit}></button>);
+        return (<button data-testid="test-button" onClick={onSubmit}></button>);
     };
 });
 
@@ -48,9 +55,9 @@ test('default', () => {
 });
 
 test('unprocessable entity', async () => {
-    ApiClientPet.CreatePet.mockResolvedValueOnce(new Promise((resolve) => {
-        resolve(new UnprocessableEntity({ title: 'title' }));
-    }));
+    mockCreatePet = async (pet: PetRequest) => {
+        return new Promise((resolve) => resolve(new UnprocessableEntity({ title: 'title' })));
+    };
 
     const history = createMemoryHistory();
 
@@ -79,9 +86,9 @@ test('unprocessable entity', async () => {
 });
 
 test('successful', async () => {
-    ApiClientPet.CreatePet.mockImplementationOnce((pet: PetResponse) => {
+    mockCreatePet = async (pet: PetRequest) => {
         return new Promise((resolve) => resolve(pet));
-    });
+    };
 
     const history = createMemoryHistory();
 

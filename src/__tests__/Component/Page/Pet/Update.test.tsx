@@ -2,24 +2,36 @@ import React from 'react';
 import { createMemoryHistory } from 'history';
 import { render, fireEvent } from '@testing-library/react';
 import { Router } from 'react-router-dom';
-import * as ApiClientPet from '../../../../ApiClient/Pet';
 import HttpError from '../../../../Model/Error/HttpError';
 import NotFound from '../../../../Model/Error/NotFound';
 import PetFormProps from '../../../../Component/Form/PetFormProps';
+import PetRequest from '../../../../Model/Pet/PetRequest';
 import PetResponse from '../../../../Model/Pet/PetResponse';
 import UnprocessableEntity from '../../../../Model/Error/UnprocessableEntity';
 import Update from '../../../../Component/Page/Pet/Update';
 import Vaccination from '../../../../Model/Pet/Vaccination';
 
-jest.mock('../../../../ApiClient/Pet');
+let mockReadPet = (id: string) => { };
+let mockUpdatePet = (id: string, pet: PetRequest) => { };
+
+jest.mock('../../../../ApiClient/Pet', () => {
+    return {
+        ReadPet: (id: string) => {
+            return mockReadPet(id);
+        },
+        UpdatePet: (id: string, pet: PetRequest) => {
+            return mockUpdatePet(id, pet);
+        }
+    };
+});
 
 jest.mock('../../../../Component/Form/PetForm', () => {
     return ({ submitPet }: PetFormProps) => {
-        const submit = async () => {
-            await submitPet({ name: '', vaccinations: [] });
+        const onSubmit = () => {
+            submitPet({ name: 'Brownie' });
         };
 
-        return (<button data-testid="test-button" onClick={submit}></button>);
+        return (<button data-testid="test-button" onClick={onSubmit}></button>);
     };
 });
 
@@ -30,9 +42,9 @@ jest.mock('../../../../Component/Partial/HttpError', () => {
 });
 
 test('not found', async () => {
-    ApiClientPet.ReadPet.mockResolvedValueOnce(new Promise((resolve) => {
-        resolve(new NotFound({ title: 'title' }));
-    }));
+    mockReadPet = async (id: string) => {
+        return new Promise((resolve) => resolve(new NotFound({ title: 'title' })));
+    };
 
     const history = createMemoryHistory();
 
@@ -68,9 +80,9 @@ test('minimal', async () => {
         name: 'Brownie'
     });
 
-    ApiClientPet.ReadPet.mockImplementationOnce(() => {
+    mockReadPet = async (id: string) => {
         return new Promise((resolve) => resolve(pet));
-    });
+    };
 
     const history = createMemoryHistory();
 
@@ -110,13 +122,13 @@ test('unprocessable entity', async () => {
         ]
     });
 
-    ApiClientPet.ReadPet.mockImplementationOnce(() => {
+    mockReadPet = async (id: string) => {
         return new Promise((resolve) => resolve(pet));
-    });
+    };
 
-    ApiClientPet.UpdatePet.mockResolvedValueOnce(new Promise((resolve) => {
-        resolve(new UnprocessableEntity({ title: 'title' }));
-    }));
+    mockUpdatePet = async (id: string, pet: PetRequest) => {
+        return new Promise((resolve) => resolve(new UnprocessableEntity({ title: 'title' })));
+    };
 
     const history = createMemoryHistory();
 
@@ -161,13 +173,13 @@ test('successful', async () => {
         ]
     });
 
-    ApiClientPet.ReadPet.mockImplementationOnce(() => {
+    mockReadPet = async (id: string) => {
         return new Promise((resolve) => resolve(pet));
-    });
+    };
 
-    ApiClientPet.UpdatePet.mockImplementationOnce((pet: PetResponse) => {
+    mockUpdatePet = async (id: string, pet: PetRequest) => {
         return new Promise((resolve) => resolve(pet));
-    });
+    };
 
     const history = createMemoryHistory();
 

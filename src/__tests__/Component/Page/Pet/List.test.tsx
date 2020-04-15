@@ -2,28 +2,44 @@ import React from 'react';
 import { createMemoryHistory } from 'history';
 import { render, fireEvent } from '@testing-library/react';
 import { Router } from 'react-router-dom';
-import * as ApiClientPet from '../../../../ApiClient/Pet';
 import BadRequest from '../../../../Model/Error/BadRequest';
+import Embedded from '../../../../Model/Pet/Embedded';
 import HttpError from '../../../../Model/Error/HttpError';
+import Link from '../../../../Model/Link';
 import List from '../../../../Component/Page/Pet/List';
 import NotFound from '../../../../Model/Error/NotFound';
+import PaginationProps from '../../../../Component/Partial/PaginationProps';
 import PetFilterFormProps from '../../../../Component/Form/PetFilterFormProps';
 import PetList from '../../../../Model/Pet/PetList';
-import Embedded from '../../../../Model/Pet/Embedded';
 import PetResponse from '../../../../Model/Pet/PetResponse';
 import Vaccination from '../../../../Model/Pet/Vaccination';
-import Link from '../../../../Model/Link';
-import PaginationProps from '../../../../Component/Partial/PaginationProps';
 
-jest.mock('../../../../ApiClient/Pet');
+let mockListPets = (queryString: string) => { };
+let mockDeletePet = (id: string) => { };
+
+jest.mock('../../../../ApiClient/Pet', () => {
+    return {
+        ListPets: (queryString: string) => {
+            return mockListPets(queryString);
+        },
+        DeletePet: (id: string) => {
+            return mockDeletePet(id);
+        }
+    };
+});
+
+beforeEach(() => {
+    mockListPets = (queryString: string) => { };
+    mockDeletePet = (id: string) => { };
+});
 
 jest.mock('../../../../Component/Form/PetFilterForm', () => {
     return ({ submitPetFilter }: PetFilterFormProps) => {
-        const submit = async () => {
-            await submitPetFilter({ name: 'Bro' });
+        const onSubmit = () => {
+            submitPetFilter({ name: 'Bro' });
         };
 
-        return (<button data-testid="test-filter-button" onClick={submit}></button>);
+        return (<button data-testid="test-filter-button" onClick={onSubmit}></button>);
     };
 });
 
@@ -52,9 +68,9 @@ jest.mock('../../../../Component/Partial/Pagination', () => {
 });
 
 test('bad request', async () => {
-    ApiClientPet.ListPets.mockResolvedValueOnce(new Promise((resolve) => {
-        resolve(new BadRequest({ title: 'title' }));
-    }));
+    mockListPets = async (queryString: string) => {
+        return new Promise((resolve) => resolve(new BadRequest({ title: 'title' })));
+    };
 
     const history = createMemoryHistory();
 
@@ -133,9 +149,9 @@ test('default', async () => {
         }
     });
 
-    ApiClientPet.ListPets.mockImplementationOnce(() => {
+    mockListPets = async (queryString: string) => {
         return new Promise((resolve) => resolve(petList));
-    });
+    };
 
     const history = createMemoryHistory();
 
@@ -216,9 +232,9 @@ test('no actions', async () => {
         "_links": {}
     });
 
-    ApiClientPet.ListPets.mockImplementationOnce(() => {
+    mockListPets = async (queryString: string) => {
         return new Promise((resolve) => resolve(petList));
-    });
+    };
 
     const history = createMemoryHistory();
 
@@ -328,13 +344,9 @@ test('submit bad request', async () => {
         }
     });
 
-    ApiClientPet.ListPets.mockImplementationOnce(() => {
+    mockListPets = async (queryString: string) => {
         return new Promise((resolve) => resolve(petList));
-    });
-
-    ApiClientPet.ListPets.mockResolvedValueOnce(new Promise((resolve) => {
-        resolve(new BadRequest({ title: 'title' }));
-    }));
+    };
 
     const history = createMemoryHistory();
 
@@ -343,6 +355,10 @@ test('submit bad request', async () => {
             <List />
         </Router>
     );
+
+    mockListPets = async (queryString: string) => {
+        return new Promise((resolve) => resolve(new BadRequest({ title: 'title' })));
+    };
 
     const testButton = await findByTestId('test-filter-button');
 
@@ -454,9 +470,9 @@ test('submit filter', async () => {
         }
     });
 
-    ApiClientPet.ListPets.mockImplementationOnce(() => {
+    mockListPets = async (queryString: string) => {
         return new Promise((resolve) => resolve(petList));
-    });
+    };
 
     const history = createMemoryHistory();
 
@@ -533,9 +549,9 @@ test('sort', async () => {
         }
     });
 
-    ApiClientPet.ListPets.mockImplementationOnce(() => {
+    mockListPets = async (queryString: string) => {
         return new Promise((resolve) => resolve(petList));
-    });
+    };
 
     const history = createMemoryHistory();
 
@@ -614,9 +630,9 @@ test('next', async () => {
         }
     });
 
-    ApiClientPet.ListPets.mockImplementationOnce(() => {
+    mockListPets = async (queryString: string) => {
         return new Promise((resolve) => resolve(petList));
-    });
+    };
 
     const history = createMemoryHistory();
 
@@ -695,13 +711,9 @@ test('delete not found', async () => {
         }
     });
 
-    ApiClientPet.ListPets.mockImplementationOnce(() => {
+    mockListPets = async (queryString: string) => {
         return new Promise((resolve) => resolve(petList));
-    });
-
-    ApiClientPet.DeletePet.mockResolvedValueOnce(new Promise((resolve) => {
-        resolve(new NotFound({ title: 'title' }));
-    }));
+    };
 
     const history = createMemoryHistory();
 
@@ -710,6 +722,10 @@ test('delete not found', async () => {
             <List />
         </Router>
     );
+
+    mockDeletePet = async (id: string) => {
+        return new Promise((resolve) => resolve(new NotFound({ title: 'title' })));
+    };
 
     const removePetButton = await findByTestId('remove-pet-0');
 
@@ -821,6 +837,22 @@ test('delete success', async () => {
         }
     });
 
+    mockListPets = async (queryString: string) => {
+        return new Promise((resolve) => resolve(petList));
+    };
+
+    const history = createMemoryHistory();
+
+    const { container, findByTestId } = render(
+        <Router history={history}>
+            <List />
+        </Router>
+    );
+
+    mockDeletePet = async (id: string) => {
+        return new Promise((resolve) => resolve());
+    };
+
     const petListNoItem = new PetList({
         offset: 0,
         limit: 1,
@@ -841,25 +873,9 @@ test('delete success', async () => {
         }
     });
 
-    ApiClientPet.ListPets.mockImplementationOnce(() => {
-        return new Promise((resolve) => resolve(petList));
-    });
-
-    ApiClientPet.DeletePet.mockImplementationOnce(() => {
-        return new Promise((resolve) => resolve());
-    });
-
-    ApiClientPet.ListPets.mockImplementationOnce(() => {
+    mockListPets = async (queryString: string) => {
         return new Promise((resolve) => resolve(petListNoItem));
-    });
-
-    const history = createMemoryHistory();
-
-    const { container, findByTestId } = render(
-        <Router history={history}>
-            <List />
-        </Router>
-    );
+    };
 
     const removePetButton = await findByTestId('remove-pet-0');
 
