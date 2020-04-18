@@ -7,6 +7,23 @@
 
 This is a react frontend for the petstore skeleton.
 
+## Scripts
+
+### Compiles and hot-reloads for development
+```
+npm start
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Run your unit tests
+```
+npm test
+```
+
 ## Copyright
 
 Dominik Zogg 2020
