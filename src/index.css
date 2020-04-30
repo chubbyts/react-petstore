@@ -1,11 +1,6 @@
-/* purgecss start ignore */
 @tailwind  base;
 @tailwind  components;
-/* purgecss end ignore */
-
 @tailwind utilities;
-
-/* purgecss start ignore */
 
 html,
 body,
@@ -326,5 +321,3 @@ dd {
         @apply w-4/5;
     }
 }
-
-/* purgecss end ignore */
