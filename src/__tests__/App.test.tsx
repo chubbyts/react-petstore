@@ -1,7 +1,8 @@
 import React from 'react';
-import ReactRouterDom, { MemoryRouter } from 'react-router-dom';
-import { render, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import App from '../App';
+import ReactRouterDom, { MemoryRouter } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
 
 ReactRouterDom.BrowserRouter = ({children}) => <div>{children}</div>
 
@@ -42,17 +43,15 @@ jest.mock('../Component/Page/NotFound', () => {
 });
 
 test('toggle', async () => {
-    const { container, findByTestId } = render(
+    const { container } = render(
         <MemoryRouter>
             <App />
         </MemoryRouter>
     );
 
-    const navigationToggle = await findByTestId('navigation-toggle');
+    const navigationToggle = await screen.findByTestId('navigation-toggle');
 
-    fireEvent.click(navigationToggle);
-
-    await findByTestId('navigation-toggle');
+    userEvent.click(navigationToggle);
 
     expect(container.outerHTML).toBe(`
         <div>

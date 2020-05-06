@@ -1,6 +1,7 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import Pagination from '../../../Component/Partial/Pagination';
+import userEvent from '@testing-library/user-event';
 
 test('max pages 1', () => {
     const submitPage = (page: number): void => {
@@ -137,10 +138,10 @@ test('buttons', async () => {
         pages.push(page);
     };
 
-    const { container } = render(<Pagination currentPage={7} maxPages={7} totalPages={10} submitPage={submitPage} />);
+    render(<Pagination currentPage={7} maxPages={7} totalPages={10} submitPage={submitPage} />);
 
-    for (const element of container.getElementsByTagName('button')) {
-        element.click();
+    for (const element of screen.getAllByRole('button')) {
+        userEvent.click(element);
     }
 
     expect(pages).toEqual([1, 6, 4, 5, 6, 7, 8, 9, 10, 8, 10]);

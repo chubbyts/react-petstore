@@ -1,9 +1,10 @@
-import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import BadRequest from '../../../Model/Error/BadRequest';
 import InvalidParameter from '../../../Model/Error/InvalidParameter';
 import PetFilterForm from '../../../Component/Form/PetFilterForm';
 import PetFilters from '../../../Model/Pet/PetFilters';
+import React from 'react';
+import userEvent from '@testing-library/user-event';
 
 test('without error', () => {
     const submitPetFilter = (filters: PetFilters) => { };
@@ -70,15 +71,15 @@ test('submit', async () => {
 
     const defaultPetFilters = new PetFilters({ name: 'aa' });
 
-    const { findByTestId } = render(
+    render(
         <PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={defaultPetFilters} />
     );
 
-    const submitButton = await findByTestId('submit-pet-filter');
+    const submitButton = await screen.findByTestId('submit-pet-filter');
 
-    fireEvent.click(submitButton);
+    userEvent.click(submitButton);
 
-    await findByTestId('submit-pet-filter');
+    await screen.findByTestId('submit-pet-filter');
 
     expect(submitPetFilter.mock.calls.length).toBe(1);
 });
@@ -90,15 +91,15 @@ test('submit empty', async () => {
 
     const defaultPetFilters = new PetFilters({ name: '' });
 
-    const { findByTestId } = render(
+    render(
         <PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={defaultPetFilters} />
     );
 
-    const submitButton = await findByTestId('submit-pet-filter');
+    const submitButton = await screen.findByTestId('submit-pet-filter');
 
-    fireEvent.click(submitButton);
+    userEvent.click(submitButton);
 
-    await findByTestId('submit-pet-filter');
+    await screen.findByTestId('submit-pet-filter');
 
     expect(submitPetFilter.mock.calls.length).toBe(1);
 });

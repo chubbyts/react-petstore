@@ -1,10 +1,11 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import InvalidParameter from '../../../Model/Error/InvalidParameter';
 import PetForm from '../../../Component/Form/PetForm';
 import PetRequest from '../../../Model/Pet/PetRequest';
 import PetResponse from '../../../Model/Pet/PetResponse';
 import UnprocessableEntity from '../../../Model/Error/UnprocessableEntity';
+import userEvent from '@testing-library/user-event';
 import Vaccination from '../../../Model/Pet/Vaccination';
 
 test('empty', () => {
@@ -163,15 +164,15 @@ test('add vaccination', async () => {
         ]
     });
 
-    const { container, findByTestId } = render(
+    const { container } = render(
         <PetForm submitPet={submitPet} defaultPet={defaultPet} />
     );
 
-    const submitButton = await findByTestId('add-vaccination');
+    const submitButton = await screen.findByTestId('add-vaccination');
 
-    fireEvent.click(submitButton);
+    userEvent.click(submitButton);
 
-    await findByTestId('add-vaccination');
+    await screen.findByTestId('add-vaccination');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -224,15 +225,15 @@ test('remove vaccination', async () => {
         ]
     });
 
-    const { container, findByTestId } = render(
+    const { container } = render(
         <PetForm submitPet={submitPet} defaultPet={defaultPet} />
     );
 
-    const submitButton = await findByTestId('remove-vaccination-0');
+    const submitButton = await screen.findByTestId('remove-vaccination-0');
 
-    fireEvent.click(submitButton);
+    userEvent.click(submitButton);
 
-    await findByTestId('submit-pet');
+    await screen.findByTestId('submit-pet');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -272,15 +273,15 @@ test('submit minimal', async () => {
         tag: ''
     });
 
-    const { findByTestId } = render(
+    render(
         <PetForm submitPet={submitPet} defaultPet={defaultPet} />
     );
 
-    const submitButton = await findByTestId('submit-pet');
+    const submitButton = await screen.findByTestId('submit-pet');
 
-    fireEvent.click(submitButton);
+    userEvent.click(submitButton);
 
-    await findByTestId('submit-pet');
+    await screen.findByTestId('submit-pet');
 
     expect(submitPet.mock.calls.length).toBe(1);
 });
@@ -303,15 +304,15 @@ test('submit maximal', async () => {
         ]
     });
 
-    const { findByTestId } = render(
+    render(
         <PetForm submitPet={submitPet} defaultPet={defaultPet} />
     );
 
-    const submitButton = await findByTestId('submit-pet');
+    const submitButton = await screen.findByTestId('submit-pet');
 
-    fireEvent.click(submitButton);
+    userEvent.click(submitButton);
 
-    await findByTestId('submit-pet');
+    await screen.findByTestId('submit-pet');
 
     expect(submitPet.mock.calls.length).toBe(1);
 });

@@ -1,6 +1,6 @@
 import React from 'react';
 import { createMemoryHistory } from 'history';
-import { render, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import HttpError from '../../../../Model/Error/HttpError';
 import NotFound from '../../../../Model/Error/NotFound';
@@ -10,6 +10,7 @@ import PetResponse from '../../../../Model/Pet/PetResponse';
 import UnprocessableEntity from '../../../../Model/Error/UnprocessableEntity';
 import Update from '../../../../Component/Page/Pet/Update';
 import Vaccination from '../../../../Model/Pet/Vaccination';
+import userEvent from '@testing-library/user-event';
 
 let mockReadPet = (id: string) => { };
 let mockUpdatePet = (id: string, pet: PetRequest) => { };
@@ -54,13 +55,13 @@ test('not found', async () => {
         }
     };
 
-    const { container, findByTestId } = render(
+    const { container } = render(
         <Router history={history}>
             <Update match={match} />
         </Router>
     );
 
-    await findByTestId('page-pet-update');
+    await screen.findByTestId('page-pet-update');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -92,13 +93,13 @@ test('minimal', async () => {
         }
     };
 
-    const { container, findByTestId } = render(
+    const { container } = render(
         <Router history={history}>
             <Update match={match} />
         </Router>
     );
 
-    await findByTestId('page-pet-update');
+    await screen.findByTestId('page-pet-update');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -138,17 +139,17 @@ test('unprocessable entity', async () => {
         }
     };
 
-    const { container, findByTestId } = render(
+    const { container } = render(
         <Router history={history}>
             <Update match={match} />
         </Router>
     );
 
-    const testButton = await findByTestId('test-button');
+    const testButton = await screen.findByTestId('test-button');
 
-    fireEvent.click(testButton);
+    userEvent.click(testButton);
 
-    await findByTestId('test-button');
+    await screen.findByTestId('test-button');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -189,7 +190,7 @@ test('successful', async () => {
         }
     };
 
-    const { findByTestId } = render(
+    render(
         <Router history={history}>
             <Update match={match} />
         </Router>
@@ -197,11 +198,11 @@ test('successful', async () => {
 
     expect(history.location.pathname).toBe('/');
 
-    const testButton = await findByTestId('test-button');
+    const testButton = await screen.findByTestId('test-button');
 
-    fireEvent.click(testButton);
+    userEvent.click(testButton);
 
-    await findByTestId('test-button');
+    await screen.findByTestId('test-button');
 
     expect(history.location.pathname).toBe('/pet');
 });

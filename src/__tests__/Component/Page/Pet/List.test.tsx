@@ -1,6 +1,6 @@
 import React from 'react';
 import { createMemoryHistory } from 'history';
-import { render, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import BadRequest from '../../../../Model/Error/BadRequest';
 import Embedded from '../../../../Model/Pet/Embedded';
@@ -12,6 +12,7 @@ import PaginationProps from '../../../../Component/Partial/PaginationProps';
 import PetFilterFormProps from '../../../../Component/Form/PetFilterFormProps';
 import PetList from '../../../../Model/Pet/PetList';
 import PetResponse from '../../../../Model/Pet/PetResponse';
+import userEvent from '@testing-library/user-event';
 import Vaccination from '../../../../Model/Pet/Vaccination';
 
 let mockListPets = (queryString: string) => { };
@@ -74,13 +75,13 @@ test('bad request', async () => {
 
     const history = createMemoryHistory();
 
-    const { container, findByTestId } = render(
+    const { container } = render(
         <Router history={history}>
             <List />
         </Router>
     );
 
-    await findByTestId('page-pet-list');
+    await screen.findByTestId('page-pet-list');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -155,13 +156,13 @@ test('default', async () => {
 
     const history = createMemoryHistory();
 
-    const { container, findByTestId } = render(
+    const { container } = render(
         <Router history={history}>
             <List />
         </Router>
     );
 
-    await findByTestId('page-pet-list');
+    await screen.findByTestId('page-pet-list');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -238,13 +239,13 @@ test('no actions', async () => {
 
     const history = createMemoryHistory();
 
-    const { container, findByTestId } = render(
+    const { container } = render(
         <Router history={history}>
             <List />
         </Router>
     );
 
-    await findByTestId('page-pet-list');
+    await screen.findByTestId('page-pet-list');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -350,7 +351,7 @@ test('submit bad request', async () => {
 
     const history = createMemoryHistory();
 
-    const { container, findByTestId } = render(
+    const { container } = render(
         <Router history={history}>
             <List />
         </Router>
@@ -360,11 +361,11 @@ test('submit bad request', async () => {
         return new Promise((resolve) => resolve(new BadRequest({ title: 'title' })));
     };
 
-    const testButton = await findByTestId('test-filter-button');
+    const testButton = await screen.findByTestId('test-filter-button');
 
-    fireEvent.click(testButton);
+    userEvent.click(testButton);
 
-    await findByTestId('test-filter-button');
+    await screen.findByTestId('test-filter-button');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -476,17 +477,17 @@ test('submit filter', async () => {
 
     const history = createMemoryHistory();
 
-    const { findByTestId } = render(
+    render(
         <Router history={history}>
             <List />
         </Router>
     );
 
-    const testButton = await findByTestId('test-filter-button');
+    const testButton = await screen.findByTestId('test-filter-button');
 
-    fireEvent.click(testButton);
+    userEvent.click(testButton);
 
-    await findByTestId('test-filter-button');
+    await screen.findByTestId('test-filter-button');
 
     expect(history.location.pathname).toBe('/pet');
     expect(history.location.search).toBe('?page=1&filters%5Bname%5D=Bro');
@@ -555,7 +556,7 @@ test('sort', async () => {
 
     const history = createMemoryHistory();
 
-    const { findByTestId } = render(
+    render(
         <Router history={history}>
             <List />
         </Router>
@@ -563,11 +564,11 @@ test('sort', async () => {
 
     expect(history.location.pathname).toBe('/');
 
-    const sortNameDescLink = await findByTestId('sort-pet-name-desc');
+    const sortNameDescLink = await screen.findByTestId('sort-pet-name-desc');
 
-    fireEvent.click(sortNameDescLink);
+    userEvent.click(sortNameDescLink);
 
-    await findByTestId('sort-pet-name-desc');
+    await screen.findByTestId('sort-pet-name-desc');
 
     expect(history.location.pathname).toBe('/pet');
     expect(history.location.search).toBe('?page=1&sort%5Bname%5D=desc');
@@ -636,7 +637,7 @@ test('next', async () => {
 
     const history = createMemoryHistory();
 
-    const { findByTestId } = render(
+    render(
         <Router history={history}>
             <List />
         </Router>
@@ -644,11 +645,11 @@ test('next', async () => {
 
     expect(history.location.pathname).toBe('/');
 
-    const testButton = await findByTestId('test-pagination-button');
+    const testButton = await screen.findByTestId('test-pagination-button');
 
-    fireEvent.click(testButton);
+    userEvent.click(testButton);
 
-    await findByTestId('test-pagination-button');
+    await screen.findByTestId('test-pagination-button');
 
     expect(history.location.pathname).toBe('/pet');
     expect(history.location.search).toBe('?page=2');
@@ -717,7 +718,7 @@ test('delete not found', async () => {
 
     const history = createMemoryHistory();
 
-    const { container, findByTestId } = render(
+    const { container } = render(
         <Router history={history}>
             <List />
         </Router>
@@ -727,11 +728,11 @@ test('delete not found', async () => {
         return new Promise((resolve) => resolve(new NotFound({ title: 'title' })));
     };
 
-    const removePetButton = await findByTestId('remove-pet-0');
+    const removePetButton = await screen.findByTestId('remove-pet-0');
 
-    fireEvent.click(removePetButton);
+    userEvent.click(removePetButton);
 
-    await findByTestId('remove-pet-0');
+    await screen.findByTestId('remove-pet-0');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -843,7 +844,7 @@ test('delete success', async () => {
 
     const history = createMemoryHistory();
 
-    const { container, findByTestId } = render(
+    const { container } = render(
         <Router history={history}>
             <List />
         </Router>
@@ -877,11 +878,11 @@ test('delete success', async () => {
         return new Promise((resolve) => resolve(petListNoItem));
     };
 
-    const removePetButton = await findByTestId('remove-pet-0');
+    const removePetButton = await screen.findByTestId('remove-pet-0');
 
-    fireEvent.click(removePetButton);
+    userEvent.click(removePetButton);
 
-    await findByTestId('remove-pet-0');
+    await screen.findByTestId('remove-pet-0');
 
     expect(container.outerHTML).toBe(`
         <div>

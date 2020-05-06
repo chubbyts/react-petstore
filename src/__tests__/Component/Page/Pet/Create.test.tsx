@@ -1,12 +1,13 @@
 import React from 'react';
 import { createMemoryHistory } from 'history';
-import { fireEvent, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import Create from '../../../../Component/Page/Pet/Create';
 import HttpError from '../../../../Model/Error/HttpError';
 import PetFormProps from '../../../../Component/Form/PetFormProps';
 import PetRequest from '../../../../Model/Pet/PetRequest';
 import UnprocessableEntity from '../../../../Model/Error/UnprocessableEntity';
+import userEvent from '@testing-library/user-event';
 
 let mockCreatePet = (pet: PetRequest) => { };
 
@@ -61,17 +62,17 @@ test('unprocessable entity', async () => {
 
     const history = createMemoryHistory();
 
-    const { container, findByTestId } = render(
+    const { container } = render(
         <Router history={history}>
             <Create />
         </Router>
     );
 
-    const testButton = await findByTestId('test-button');
+    const testButton = await screen.findByTestId('test-button');
 
-    fireEvent.click(testButton);
+    userEvent.click(testButton);
 
-    await findByTestId('test-button');
+    await screen.findByTestId('test-button');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -92,7 +93,7 @@ test('successful', async () => {
 
     const history = createMemoryHistory();
 
-    const { findByTestId } = render(
+    render(
         <Router history={history}>
             <Create />
         </Router>
@@ -100,11 +101,11 @@ test('successful', async () => {
 
     expect(history.location.pathname).toBe('/');
 
-    const testButton = await findByTestId('test-button');
+    const testButton = await screen.findByTestId('test-button');
 
-    fireEvent.click(testButton);
+    userEvent.click(testButton);
 
-    await findByTestId('test-button');
+    await screen.findByTestId('test-button');
 
     expect(history.location.pathname).toBe('/pet');
 });
