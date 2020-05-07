@@ -6,23 +6,25 @@ import { ListPets, DeletePet } from '../../../ApiClient/Pet';
 import BadRequest from '../../../Model/Error/BadRequest';
 import HttpError from '../../../Model/Error/HttpError';
 import HttpErrorPartial from '../../Partial/HttpError';
-import PetResponse from '../../../Model/Pet/PetResponse';
-import PetList from '../../../Model/Pet/PetList';
-import qs from 'qs';
-import PetFilterForm from '../../Form/PetFilterForm';
 import Pagination from '../../Partial/Pagination';
+import PetFilterForm from '../../Form/PetFilterForm';
 import PetFilters from '../../../Model/Pet/PetFilters';
+import PetList from '../../../Model/Pet/PetList';
+import PetResponse from '../../../Model/Pet/PetResponse';
+import qs from 'qs';
 
 const List: React.FC = () => {
 
     const history = useHistory();
     const location = useLocation();
 
-    const query = qs.parse(location.search.substr(1));
+    const parsedQuery = qs.parse(location.search.substr(1));
 
-    query.page = parseInt(query.page ?? '1');
-    query.filters = query.filters ?? {};
-    query.sort = query.sort ?? {};
+    const query = {
+        page: typeof parsedQuery.page === 'string' ? parseInt(parsedQuery.page) : 1,
+        filters: typeof parsedQuery.filters === 'object' && !(parsedQuery.filters instanceof Array) ? parsedQuery.filters : {},
+        sort: typeof parsedQuery.sort === 'object' && !(parsedQuery.sort instanceof Array) ? parsedQuery.sort : {},
+    };
 
     const queryString = qs.stringify({
         limit: 10,
@@ -65,7 +67,7 @@ const List: React.FC = () => {
         fetchPetList(queryString);
     };
 
-    const changePage = (page: number): void  => {
+    const changePage = (page: number): void => {
         history.push(`/pet?${qs.stringify({ ...query, page: page })}`);
     };
 
