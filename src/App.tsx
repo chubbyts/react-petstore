@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import Home from './Component/Page/Home';
-import PetList from './Component/Page/Pet/List';
-import PetCreate from './Component/Page/Pet/Create';
-import PetRead from './Component/Page/Pet/Read';
-import PetUpdate from './Component/Page/Pet/Update';
-import NotFound from './Component/Page/NotFound';
+import React, { lazy, Suspense, useState } from 'react';
 import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
+
+const Home = lazy(() => import('./Component/Page/Home'));
+const NotFound = lazy(() => import('./Component/Page/NotFound'));
+const PetCreate = lazy(() => import('./Component/Page/Pet/Create'));
+const PetList = lazy(() => import('./Component/Page/Pet/List'));
+const PetRead = lazy(() => import('./Component/Page/Pet/Read'));
+const PetUpdate = lazy(() => import('./Component/Page/Pet/Update'));
 
 const App: React.FC = () => {
     const [displayMenu, setDisplayMenu] = useState<boolean>(false);
@@ -16,6 +17,7 @@ const App: React.FC = () => {
 
     return (
         <BrowserRouter>
+
             <div id='wrapper' className={displayMenu ? 'displayMenu' : ''}>
                 <nav id='top-nav' className='clearfix'>
                     <button id='toggle' data-testid='navigation-toggle' onClick={toggleMenu}>
@@ -33,14 +35,16 @@ const App: React.FC = () => {
                     </ul>
                 </nav>
                 <div id='main'>
-                    <Switch>
-                        <Route path='/' exact component={Home} />
-                        <Route path='/pet' exact component={PetList} />
-                        <Route path='/pet/create' exact component={PetCreate} />
-                        <Route path='/pet/:id' exact component={PetRead} />
-                        <Route path='/pet/:id/update' exact component={PetUpdate} />
-                        <Route component={NotFound} />
-                    </Switch>
+                    <Suspense fallback={<div></div>}>
+                        <Switch>
+                            <Route path='/' exact component={Home} />
+                            <Route path='/pet' exact component={PetList} />
+                            <Route path='/pet/create' exact component={PetCreate} />
+                            <Route path='/pet/:id' exact component={PetRead} />
+                            <Route path='/pet/:id/update' exact component={PetUpdate} />
+                            <Route component={NotFound} />
+                        </Switch>
+                    </Suspense>
                 </div>
             </div>
         </BrowserRouter>

@@ -116,12 +116,14 @@ test('home page', () => {
     `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
-test('not found', () => {
+test('not found', async () => {
     const { container } = render(
         <MemoryRouter initialEntries={['/unknown']}>
             <App />
         </MemoryRouter>
     );
+
+    await screen.findByTestId('page-not-found-mock');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -151,12 +153,14 @@ test('not found', () => {
     `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
-test('pet list', () => {
+test('pet list', async () => {
     const { container } = render(
         <MemoryRouter initialEntries={['/pet']}>
             <App />
         </MemoryRouter>
     );
+
+    await screen.findByTestId('page-pet-list-mock');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -186,12 +190,14 @@ test('pet list', () => {
     `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
-test('pet create', () => {
+test('pet create', async () => {
     const { container } = render(
         <MemoryRouter initialEntries={['/pet/create']}>
             <App />
         </MemoryRouter>
     );
+
+    await screen.findByTestId('page-pet-create-mock');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -221,12 +227,14 @@ test('pet create', () => {
     `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
-test('pet read', () => {
+test('pet read', async () => {
     const { container } = render(
         <MemoryRouter initialEntries={['/pet/4d783b77-eb09-4603-b99b-f590b605eaa9']}>
             <App />
         </MemoryRouter>
     );
+
+    await screen.findByTestId('page-pet-read-mock');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -256,12 +264,14 @@ test('pet read', () => {
     `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
-test('pet update', () => {
+test('pet update', async () => {
     const { container } = render(
         <MemoryRouter initialEntries={['/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update']}>
             <App />
         </MemoryRouter>
     );
+
+    await screen.findByTestId('page-pet-update-mock');
 
     expect(container.outerHTML).toBe(`
         <div>
