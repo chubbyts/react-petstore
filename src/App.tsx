@@ -17,7 +17,6 @@ const App: React.FC = () => {
 
     return (
         <BrowserRouter>
-
             <div id='wrapper' className={displayMenu ? 'displayMenu' : ''}>
                 <nav id='top-nav' className='clearfix'>
                     <button id='toggle' data-testid='navigation-toggle' onClick={toggleMenu}>
