@@ -81,12 +81,14 @@ test('toggle', async () => {
     `.replace(/\n/g, '').replace(/ {2,}/g, ''));
 });
 
-test('home page', () => {
+test('home page', async () => {
     const { container } = render(
         <MemoryRouter>
             <App />
         </MemoryRouter>
     );
+
+    await screen.findByTestId('page-home-mock');
 
     expect(container.outerHTML).toBe(`
         <div>
