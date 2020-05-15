@@ -1,6 +1,6 @@
 import React from 'react';
 import { createMemoryHistory } from 'history';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import HttpError from '../../../../Model/Error/HttpError';
 import NotFound from '../../../../Model/Error/NotFound';
@@ -37,13 +37,13 @@ test('not found', async () => {
         }
     };
 
-    const { container, findByTestId } = render(
+    const { container } = render(
         <Router history={history}>
             <Read match={match} />
         </Router>
     );
 
-    await findByTestId('page-pet-read');
+    await screen.findByTestId('page-pet-read');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -74,13 +74,13 @@ test('minimal', async () => {
         }
     };
 
-    const { container, findByTestId } = render(
+    const { container } = render(
         <Router history={history}>
             <Read match={match} />
         </Router>
     );
 
-    await findByTestId('page-pet-read');
+    await screen.findByTestId('page-pet-read');
 
     expect(container.outerHTML).toBe(`
         <div>
@@ -132,13 +132,13 @@ test('maximal', async () => {
         }
     };
 
-    const { container, findByTestId } = render(
+    const { container } = render(
         <Router history={history}>
             <Read match={match} />
         </Router>
     );
 
-    await findByTestId('page-pet-read');
+    await screen.findByTestId('page-pet-read');
 
     expect(container.outerHTML).toBe(`
         <div>
