@@ -21,7 +21,7 @@ const PetFilterForm: React.FC<PetFilterFormProps> = ({ submitPetFilter, defaultP
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <fieldset>
-                <TextField register={register} name='name' label='Name' invalidParameters={invalidParameterByNameDenormalized.name ?? []} />
+                <TextField register={register} name='name' label='Name' invalidParameters={invalidParameterByNameDenormalized.get('name') ?? []} />
                 <button data-testid='submit-pet-filter' className='btn-blue'>Filter</button>
             </fieldset>
         </form>

@@ -10,14 +10,20 @@ test('default', () => {
 
     const invalidParameterByName = InvalidParameterByNameDenormalizer(invalidParameters);
 
-    expect(invalidParameterByName).toHaveProperty('name');
-    expect(invalidParameterByName.name).toHaveLength(2);
+    expect(invalidParameterByName.has('name')).toBeTruthy();
 
-    expect(invalidParameterByName.name[0]).toBe(invalidParameters[0]);
-    expect(invalidParameterByName.name[1]).toBe(invalidParameters[1]);
+    const InvalidParametersOfName = invalidParameterByName.get('name');
 
-    expect(invalidParameterByName).toHaveProperty('description');
-    expect(invalidParameterByName.description).toHaveLength(1);
+    expect(InvalidParametersOfName).toBeInstanceOf(Array);
+    expect(InvalidParametersOfName).toHaveLength(2);
 
-    expect(invalidParameterByName.description[0]).toBe(invalidParameters[2]);
+    expect(InvalidParametersOfName instanceof Array ? InvalidParametersOfName[0] : null).toBe(invalidParameters[0]);
+    expect(InvalidParametersOfName instanceof Array ? InvalidParametersOfName[1] : null).toBe(invalidParameters[1]);
+
+    const InvalidParametersOfDescription = invalidParameterByName.get('description');
+
+    expect(InvalidParametersOfDescription).toBeInstanceOf(Array);
+    expect(InvalidParametersOfDescription).toHaveLength(1);
+
+    expect(InvalidParametersOfDescription instanceof Array ? InvalidParametersOfDescription[0] : null).toBe(invalidParameters[2]);
 });

@@ -23,15 +23,15 @@ const PetForm: React.FC<PetFormProps> = ({ submitPet, defaultPet: pet, unprocess
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <fieldset>
-                <TextField register={register} name='name' label='Name' invalidParameters={invalidParameterByNameDenormalized.name ?? []} />
-                <TextField register={register} name='tag' label='Tag' invalidParameters={invalidParameterByNameDenormalized.tag ?? []} />
+                <TextField register={register} name='name' label='Name' invalidParameters={invalidParameterByNameDenormalized.get('name') ?? []} />
+                <TextField register={register} name='tag' label='Tag' invalidParameters={invalidParameterByNameDenormalized.get('tag') ?? []} />
                 <div className='form-field'>
                     <label>Vaccanations</label>
                     <div>
                         {vaccinations.fields.map((item, i) => {
                             return (
                                 <fieldset key={item.id}>
-                                    <TextField register={register} name={`vaccinations[${i}].name`} label='Name' invalidParameters={invalidParameterByNameDenormalized[`vaccinations[${i}].name`] ?? []} />
+                                    <TextField register={register} name={`vaccinations[${i}].name`} label='Name' invalidParameters={invalidParameterByNameDenormalized.get(`vaccinations[${i}].name`) ?? []} />
                                     <button data-testid={`remove-vaccination-${i}`} type='button' onClick={() => vaccinations.remove(i)} className='btn-red'>Remove</button>
                                 </fieldset>
                             );
