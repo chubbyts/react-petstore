@@ -3,6 +3,6 @@ class Vaccination {
     constructor({ name }: { name: string }) {
         this.name = name;
     }
-};
+}
 
 export default Vaccination;

@@ -3,6 +3,6 @@ class PetFilters {
     constructor({ name }: { name?: string }) {
         this.name = name;
     }
-};
+}
 
 export default PetFilters;

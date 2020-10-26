@@ -14,6 +14,6 @@ class PetResponse extends PetRequest {
         this.updatedAt = updatedAt;
         this._links = _links ?? {};
     }
-};
+}
 
 export default PetResponse;

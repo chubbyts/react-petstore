@@ -32,20 +32,19 @@ describe('list pets', () => {
             }
         );
 
-        const response = await ListPets('sort[name]=asc');
 
-        if (response instanceof PetList) {
-            expect(response).toHaveProperty('offset');
-            expect(response.offset).toEqual(0);
+        const response = await ListPets('sort[name]=asc') as PetList;
 
-            expect(response).toHaveProperty('limit');
-            expect(response.limit).toEqual(20);
+        expect(response).toBeInstanceOf(PetList);
 
-            expect(response).toHaveProperty('count');
-            expect(response.count).toEqual(35);
-        } else {
-            throw Error('response expectes to be PetList');
-        }
+        expect(response).toHaveProperty('offset');
+        expect(response.offset).toEqual(0);
+
+        expect(response).toHaveProperty('limit');
+        expect(response.limit).toEqual(20);
+
+        expect(response).toHaveProperty('count');
+        expect(response.count).toEqual(35);
     });
 
     test('bad request', async () => {
@@ -73,15 +72,13 @@ describe('list pets', () => {
             }
         );
 
-        const response = await ListPets('sort[name]=asc');
+        const response = await ListPets('sort[name]=asc') as BadRequest;
 
-        if (response instanceof BadRequest) {
-            expect(response.title).toEqual('Bad Request');
-            expect(response.detail).toEqual('Sorting value');
-            expect(response.instance).toEqual('0123456789abcdef');
-        } else {
-            throw Error('response expectes to be BadRequest');
-        }
+        expect(response).toBeInstanceOf(BadRequest);
+
+        expect(response.title).toEqual('Bad Request');
+        expect(response.detail).toEqual('Sorting value');
+        expect(response.instance).toEqual('0123456789abcdef');
     });
 
     test('internal server error', async () => {
@@ -105,14 +102,12 @@ describe('list pets', () => {
             }
         );
 
-        const response = await ListPets('sort[name]=asc');
+        const response = await ListPets('sort[name]=asc') as InternalServerError;
 
-        if (response instanceof InternalServerError) {
-            expect(response.title).toEqual('Internal Server Error');
-            expect(response.instance).toEqual('0123456789abcdef');
-        } else {
-            throw Error('response expectes to be InternalServerError');
-        }
+        expect(response).toBeInstanceOf(InternalServerError);
+
+        expect(response.title).toEqual('Internal Server Error');
+        expect(response.instance).toEqual('0123456789abcdef');
     });
 
     test('network error', async () => {
@@ -129,13 +124,11 @@ describe('list pets', () => {
             }
         );
 
-        const response = await ListPets('sort[name]=asc');
+        const response = await ListPets('sort[name]=asc') as NetworkError;
 
-        if (response instanceof NetworkError) {
-            expect(response.title).toEqual('Failed to fetch');
-        } else {
-            throw Error('response expectes to be NetworkError');
-        }
+        expect(response).toBeInstanceOf(NetworkError);
+
+        expect(response.title).toEqual('Failed to fetch');
     });
 
     test('unknown response', async () => {
@@ -158,11 +151,7 @@ describe('list pets', () => {
 
         expect.assertions(1);
 
-        try {
-            await ListPets('sort[name]=asc');
-        } catch (e) {
-            expect(e).toEqual(new Error('Unknown response'));
-        }
+        await expect(ListPets('sort[name]=asc')).rejects.toThrow(new Error('Unknown response'));
     });
 });
 
@@ -189,16 +178,14 @@ describe('create pet', () => {
             }
         );
 
-        const response = await CreatePet(pet);
+        const response = await CreatePet(pet) as PetResponse;
 
-        if (response instanceof PetResponse) {
-            expect(response).toHaveProperty('id');
-            expect(response.id).toEqual('4d783b77-eb09-4603-b99b-f590b605eaa9');
-            expect(response).toHaveProperty('name');
-            expect(response.name).toEqual('Brownie');
-        } else {
-            throw Error('response expectes to be PetResponse');
-        }
+        expect(response).toBeInstanceOf(PetResponse);
+
+        expect(response).toHaveProperty('id');
+        expect(response.id).toEqual('4d783b77-eb09-4603-b99b-f590b605eaa9');
+        expect(response).toHaveProperty('name');
+        expect(response.name).toEqual('Brownie');
     });
 
     test('unprocessable entity', async () => {
@@ -230,15 +217,13 @@ describe('create pet', () => {
             }
         );
 
-        const response = await CreatePet(pet);
+        const response = await CreatePet(pet) as UnprocessableEntity;
 
-        if (response instanceof UnprocessableEntity) {
-            expect(response.title).toEqual('Unprocessable Entity');
-            expect(response.detail).toEqual('name');
-            expect(response.instance).toEqual('0123456789abcdef');
-        } else {
-            throw Error('response expectes to be UnprocessableEntity');
-        }
+        expect(response).toBeInstanceOf(UnprocessableEntity);
+
+        expect(response.title).toEqual('Unprocessable Entity');
+        expect(response.detail).toEqual('name');
+        expect(response.instance).toEqual('0123456789abcdef');
     });
 
     test('internal server error', async () => {
@@ -266,14 +251,12 @@ describe('create pet', () => {
             }
         );
 
-        const response = await CreatePet(pet);
+        const response = await CreatePet(pet) as InternalServerError;
 
-        if (response instanceof InternalServerError) {
-            expect(response.title).toEqual('Internal Server Error');
-            expect(response.instance).toEqual('0123456789abcdef');
-        } else {
-            throw Error('response expectes to be InternalServerError');
-        }
+        expect(response).toBeInstanceOf(InternalServerError);
+
+        expect(response.title).toEqual('Internal Server Error');
+        expect(response.instance).toEqual('0123456789abcdef');
     });
 
     test('network error', async () => {
@@ -293,13 +276,11 @@ describe('create pet', () => {
             }
         );
 
-        const response = await CreatePet(pet);
+        const response = await CreatePet(pet) as NetworkError;
 
-        if (response instanceof NetworkError) {
-            expect(response.title).toEqual('Failed to fetch');
-        } else {
-            throw Error('response expectes to be NetworkError');
-        }
+        expect(response).toBeInstanceOf(NetworkError);
+
+        expect(response.title).toEqual('Failed to fetch');
     });
 
     test('unknown response', async () => {
@@ -325,11 +306,7 @@ describe('create pet', () => {
 
         expect.assertions(1);
 
-        try {
-            await CreatePet(pet);
-        } catch (e) {
-            expect(e).toEqual(new Error('Unknown response'));
-        }
+        await expect(CreatePet(pet)).rejects.toThrow(new Error('Unknown response'));
     });
 });
 
@@ -352,16 +329,14 @@ describe('read pet', () => {
             }
         );
 
-        const response = await ReadPet('4d783b77-eb09-4603-b99b-f590b605eaa9');
+        const response = await ReadPet('4d783b77-eb09-4603-b99b-f590b605eaa9') as PetResponse;
 
-        if (response instanceof PetResponse) {
-            expect(response).toHaveProperty('id');
-            expect(response.id).toEqual('4d783b77-eb09-4603-b99b-f590b605eaa9');
-            expect(response).toHaveProperty('name');
-            expect(response.name).toEqual('Brownie');
-        } else {
-            throw Error('response expectes to be PetResponse');
-        }
+        expect(response).toBeInstanceOf(PetResponse);
+
+        expect(response).toHaveProperty('id');
+        expect(response.id).toEqual('4d783b77-eb09-4603-b99b-f590b605eaa9');
+        expect(response).toHaveProperty('name');
+        expect(response.name).toEqual('Brownie');
     });
 
     test('not found', async () => {
@@ -386,15 +361,13 @@ describe('read pet', () => {
             }
         );
 
-        const response = await ReadPet('4d783b77-eb09-4603-b99b-f590b605eaa9');
+        const response = await ReadPet('4d783b77-eb09-4603-b99b-f590b605eaa9') as NotFound;
 
-        if (response instanceof NotFound) {
-            expect(response.title).toEqual('Not Found');
-            expect(response.detail).toEqual('There is no pet with id "4d783b77-eb09-4603-b99b-f590b605eaa9"');
-            expect(response.instance).toEqual('0123456789abcdef');
-        } else {
-            throw Error('response expectes to be NotFound');
-        }
+        expect(response).toBeInstanceOf(NotFound);
+
+        expect(response.title).toEqual('Not Found');
+        expect(response.detail).toEqual('There is no pet with id "4d783b77-eb09-4603-b99b-f590b605eaa9"');
+        expect(response.instance).toEqual('0123456789abcdef');
     });
 
     test('internal server error', async () => {
@@ -418,14 +391,12 @@ describe('read pet', () => {
             }
         );
 
-        const response = await ReadPet('4d783b77-eb09-4603-b99b-f590b605eaa9');
+        const response = await ReadPet('4d783b77-eb09-4603-b99b-f590b605eaa9') as InternalServerError;
 
-        if (response instanceof InternalServerError) {
-            expect(response.title).toEqual('Internal Server Error');
-            expect(response.instance).toEqual('0123456789abcdef');
-        } else {
-            throw Error('response expectes to be InternalServerError');
-        }
+        expect(response).toBeInstanceOf(InternalServerError);
+
+        expect(response.title).toEqual('Internal Server Error');
+        expect(response.instance).toEqual('0123456789abcdef');
     });
 
     test('network error', async () => {
@@ -442,13 +413,11 @@ describe('read pet', () => {
             }
         );
 
-        const response = await ReadPet('4d783b77-eb09-4603-b99b-f590b605eaa9');
+        const response = await ReadPet('4d783b77-eb09-4603-b99b-f590b605eaa9') as NetworkError;
 
-        if (response instanceof NetworkError) {
-            expect(response.title).toEqual('Failed to fetch');
-        } else {
-            throw Error('response expectes to be NetworkError');
-        }
+        expect(response).toBeInstanceOf(NetworkError);
+
+        expect(response.title).toEqual('Failed to fetch');
     });
 
     test('unknown response', async () => {
@@ -471,11 +440,7 @@ describe('read pet', () => {
 
         expect.assertions(1);
 
-        try {
-            await ReadPet('4d783b77-eb09-4603-b99b-f590b605eaa9');
-        } catch (e) {
-            expect(e).toEqual(new Error('Unknown response'));
-        }
+        await expect(ReadPet('4d783b77-eb09-4603-b99b-f590b605eaa9')).rejects.toThrow(new Error('Unknown response'));
     });
 });
 
@@ -502,16 +467,14 @@ describe('update pet', () => {
             }
         );
 
-        const response = await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet);
+        const response = await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet) as PetResponse;
 
-        if (response instanceof PetResponse) {
-            expect(response).toHaveProperty('id');
-            expect(response.id).toEqual('4d783b77-eb09-4603-b99b-f590b605eaa9');
-            expect(response).toHaveProperty('name');
-            expect(response.name).toEqual('Brownie');
-        } else {
-            throw Error('response expectes to be PetResponse');
-        }
+        expect(response).toBeInstanceOf(PetResponse);
+
+        expect(response).toHaveProperty('id');
+        expect(response.id).toEqual('4d783b77-eb09-4603-b99b-f590b605eaa9');
+        expect(response).toHaveProperty('name');
+        expect(response.name).toEqual('Brownie');
     });
 
     test('not found', async () => {
@@ -540,15 +503,13 @@ describe('update pet', () => {
             }
         );
 
-        const response = await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet);
+        const response = await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet) as NotFound;
 
-        if (response instanceof NotFound) {
-            expect(response.title).toEqual('Not Found');
-            expect(response.detail).toEqual('There is no pet with id "4d783b77-eb09-4603-b99b-f590b605eaa9"');
-            expect(response.instance).toEqual('0123456789abcdef');
-        } else {
-            throw Error('response expectes to be NotFound');
-        }
+        expect(response).toBeInstanceOf(NotFound);
+
+        expect(response.title).toEqual('Not Found');
+        expect(response.detail).toEqual('There is no pet with id "4d783b77-eb09-4603-b99b-f590b605eaa9"');
+        expect(response.instance).toEqual('0123456789abcdef');
     });
 
     test('unprocessable entity', async () => {
@@ -580,15 +541,13 @@ describe('update pet', () => {
             }
         );
 
-        const response = await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet);
+        const response = await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet) as UnprocessableEntity;
 
-        if (response instanceof UnprocessableEntity) {
-            expect(response.title).toEqual('Unprocessable Entity');
-            expect(response.detail).toEqual('name');
-            expect(response.instance).toEqual('0123456789abcdef');
-        } else {
-            throw Error('response expectes to be UnprocessableEntity');
-        }
+        expect(response).toBeInstanceOf(UnprocessableEntity);
+
+        expect(response.title).toEqual('Unprocessable Entity');
+        expect(response.detail).toEqual('name');
+        expect(response.instance).toEqual('0123456789abcdef');
     });
 
     test('internal server error', async () => {
@@ -616,14 +575,12 @@ describe('update pet', () => {
             }
         );
 
-        const response = await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet);
+        const response = await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet) as InternalServerError;
 
-        if (response instanceof InternalServerError) {
-            expect(response.title).toEqual('Internal Server Error');
-            expect(response.instance).toEqual('0123456789abcdef');
-        } else {
-            throw Error('response expectes to be InternalServerError');
-        }
+        expect(response).toBeInstanceOf(InternalServerError);
+
+        expect(response.title).toEqual('Internal Server Error');
+        expect(response.instance).toEqual('0123456789abcdef');
     });
 
     test('network error', async () => {
@@ -643,13 +600,11 @@ describe('update pet', () => {
             }
         );
 
-        const response = await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet);
+        const response = await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet) as NetworkError;
 
-        if (response instanceof NetworkError) {
-            expect(response.title).toEqual('Failed to fetch');
-        } else {
-            throw Error('response expectes to be NetworkError');
-        }
+        expect(response).toBeInstanceOf(NetworkError);
+
+        expect(response.title).toEqual('Failed to fetch');
     });
 
     test('unknown response', async () => {
@@ -675,11 +630,7 @@ describe('update pet', () => {
 
         expect.assertions(1);
 
-        try {
-            await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet);
-        } catch (e) {
-            expect(e).toEqual(new Error('Unknown response'));
-        }
+        await expect(UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet)).rejects.toThrow(new Error('Unknown response'));
     });
 });
 
@@ -723,15 +674,13 @@ describe('delete pet', () => {
             }
         );
 
-        const response = await DeletePet('4d783b77-eb09-4603-b99b-f590b605eaa9');
+        const response = await DeletePet('4d783b77-eb09-4603-b99b-f590b605eaa9') as NotFound;
 
-        if (response instanceof NotFound) {
-            expect(response.title).toEqual('Not Found');
-            expect(response.detail).toEqual('There is no pet with id "4d783b77-eb09-4603-b99b-f590b605eaa9"');
-            expect(response.instance).toEqual('0123456789abcdef');
-        } else {
-            throw Error('response expectes to be NotFound');
-        }
+        expect(response).toBeInstanceOf(NotFound);
+
+        expect(response.title).toEqual('Not Found');
+        expect(response.detail).toEqual('There is no pet with id "4d783b77-eb09-4603-b99b-f590b605eaa9"');
+        expect(response.instance).toEqual('0123456789abcdef');
     });
 
     test('internal server error', async () => {
@@ -755,14 +704,12 @@ describe('delete pet', () => {
             }
         );
 
-        const response = await DeletePet('4d783b77-eb09-4603-b99b-f590b605eaa9');
+        const response = await DeletePet('4d783b77-eb09-4603-b99b-f590b605eaa9') as InternalServerError;
 
-        if (response instanceof InternalServerError) {
-            expect(response.title).toEqual('Internal Server Error');
-            expect(response.instance).toEqual('0123456789abcdef');
-        } else {
-            throw Error('response expectes to be InternalServerError');
-        }
+        expect(response).toBeInstanceOf(InternalServerError);
+
+        expect(response.title).toEqual('Internal Server Error');
+        expect(response.instance).toEqual('0123456789abcdef');
     });
 
     test('network error', async () => {
@@ -779,13 +726,11 @@ describe('delete pet', () => {
             }
         );
 
-        const response = await DeletePet('4d783b77-eb09-4603-b99b-f590b605eaa9');
+        const response = await DeletePet('4d783b77-eb09-4603-b99b-f590b605eaa9') as NetworkError;
 
-        if (response instanceof NetworkError) {
-            expect(response.title).toEqual('Failed to fetch');
-        } else {
-            throw Error('response expectes to be NetworkError');
-        }
+        expect(response).toBeInstanceOf(NetworkError);
+
+        expect(response.title).toEqual('Failed to fetch');
     });
 
     test('unknown response', async () => {
@@ -808,10 +753,6 @@ describe('delete pet', () => {
 
         expect.assertions(1);
 
-        try {
-            await DeletePet('4d783b77-eb09-4603-b99b-f590b605eaa9');
-        } catch (e) {
-            expect(e).toEqual(new Error('Unknown response'));
-        }
+        await expect(DeletePet('4d783b77-eb09-4603-b99b-f590b605eaa9')).rejects.toThrow(new Error('Unknown response'));
     });
 });

@@ -7,6 +7,6 @@ class HttpErrorWithInvalidParameters extends HttpError {
         super({ title, detail, instance });
         this.invalidParameters = invalidParameters ?? [];
     }
-};
+}
 
 export default HttpErrorWithInvalidParameters;

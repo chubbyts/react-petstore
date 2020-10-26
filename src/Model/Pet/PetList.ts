@@ -20,6 +20,6 @@ class PetList {
         this._embedded = _embedded;
         this._links = _links;
     }
-};
+}
 
 export default PetList;

@@ -7,6 +7,6 @@ class HttpError {
         this.detail = detail;
         this.instance = instance;
     }
-};
+}
 
 export default HttpError;

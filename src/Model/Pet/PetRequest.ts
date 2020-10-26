@@ -9,6 +9,6 @@ class PetRequest {
         this.tag = tag;
         this.vaccinations = vaccinations ?? [];
     }
-};
+}
 
 export default PetRequest;

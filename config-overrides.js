@@ -1,19 +1,20 @@
 module.exports = {
     webpack: function (config, env) {
         config.module.rules.push({
-            test: /\.css$/,
+            test: /\.css$/i,
             use: [
                 {
                     loader: 'postcss-loader',
                     options: {
-                        ident: 'postcss',
-                        plugins: [
-                            require('tailwindcss'),
-                            require('postcss-nested'),
-                            require('autoprefixer')
-                        ],
-                    },
-                },
+                        postcssOptions: {
+                            plugins: [
+                                require('tailwindcss'),
+                                require('postcss-nested'),
+                                require('autoprefixer')
+                            ]
+                        }
+                    }
+                }
             ]
         });
 
