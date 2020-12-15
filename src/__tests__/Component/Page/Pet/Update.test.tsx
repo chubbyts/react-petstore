@@ -44,7 +44,7 @@ jest.mock('../../../../Component/Partial/HttpError', () => {
 
 test('not found', async () => {
     mockReadPet = async (id: string) => {
-        return new Promise((resolve) => resolve(new NotFound({ title: 'title' })));
+        return new Promise<NotFound>((resolve) => resolve(new NotFound({ title: 'title' })));
     };
 
     const history = createMemoryHistory();
@@ -52,12 +52,15 @@ test('not found', async () => {
     const match = {
         params: {
             id: '4d783b77-eb09-4603-b99b-f590b605eaa9'
-        }
+        },
+        isExact: true,
+        path: '/pet/:id',
+        url: ''
     };
 
     const { container } = render(
         <Router history={history}>
-            <Update match={match} />
+            <Update history={history} location={history.location} match={match} />
         </Router>
     );
 
@@ -82,7 +85,7 @@ test('minimal', async () => {
     });
 
     mockReadPet = async (id: string) => {
-        return new Promise((resolve) => resolve(pet));
+        return new Promise<PetResponse>((resolve) => resolve(pet));
     };
 
     const history = createMemoryHistory();
@@ -90,12 +93,15 @@ test('minimal', async () => {
     const match = {
         params: {
             id: '4d783b77-eb09-4603-b99b-f590b605eaa9'
-        }
+        },
+        isExact: true,
+        path: '/pet/:id',
+        url: ''
     };
 
     const { container } = render(
         <Router history={history}>
-            <Update match={match} />
+            <Update history={history} location={history.location} match={match} />
         </Router>
     );
 
@@ -124,11 +130,11 @@ test('unprocessable entity', async () => {
     });
 
     mockReadPet = async (id: string) => {
-        return new Promise((resolve) => resolve(pet));
+        return new Promise<PetResponse>((resolve) => resolve(pet));
     };
 
     mockUpdatePet = async (id: string, pet: PetRequest) => {
-        return new Promise((resolve) => resolve(new UnprocessableEntity({ title: 'title' })));
+        return new Promise<UnprocessableEntity>((resolve) => resolve(new UnprocessableEntity({ title: 'title' })));
     };
 
     const history = createMemoryHistory();
@@ -136,12 +142,15 @@ test('unprocessable entity', async () => {
     const match = {
         params: {
             id: '4d783b77-eb09-4603-b99b-f590b605eaa9'
-        }
+        },
+        isExact: true,
+        path: '/pet/:id',
+        url: ''
     };
 
     const { container } = render(
         <Router history={history}>
-            <Update match={match} />
+            <Update history={history} location={history.location} match={match} />
         </Router>
     );
 
@@ -175,11 +184,11 @@ test('successful', async () => {
     });
 
     mockReadPet = async (id: string) => {
-        return new Promise((resolve) => resolve(pet));
+        return new Promise<PetResponse>((resolve) => resolve(pet));
     };
 
     mockUpdatePet = async (id: string, pet: PetRequest) => {
-        return new Promise((resolve) => resolve(pet));
+        return new Promise<PetRequest>((resolve) => resolve(pet));
     };
 
     const history = createMemoryHistory();
@@ -187,12 +196,15 @@ test('successful', async () => {
     const match = {
         params: {
             id: '4d783b77-eb09-4603-b99b-f590b605eaa9'
-        }
+        },
+        isExact: true,
+        path: '/pet/:id',
+        url: ''
     };
 
-    render(
+    const { container } = render(
         <Router history={history}>
-            <Update match={match} />
+            <Update history={history} location={history.location} match={match} />
         </Router>
     );
 

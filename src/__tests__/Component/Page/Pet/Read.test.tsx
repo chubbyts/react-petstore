@@ -26,7 +26,7 @@ jest.mock('../../../../Component/Partial/HttpError', () => {
 
 test('not found', async () => {
     mockReadPet = async (id: string) => {
-        return new Promise((resolve) => resolve(new NotFound({ title: 'title' })));
+        return new Promise<NotFound>((resolve) => resolve(new NotFound({ title: 'title' })));
     };
 
     const history = createMemoryHistory();
@@ -34,12 +34,15 @@ test('not found', async () => {
     const match = {
         params: {
             id: '4d783b77-eb09-4603-b99b-f590b605eaa9'
-        }
+        },
+        isExact: true,
+        path: '/pet/:id',
+        url: ''
     };
 
     const { container } = render(
         <Router history={history}>
-            <Read match={match} />
+            <Read history={history} location={history.location} match={match} />
         </Router>
     );
 
@@ -63,7 +66,7 @@ test('minimal', async () => {
     });
 
     mockReadPet = async (id: string) => {
-        return new Promise((resolve) => resolve(pet));
+        return new Promise<PetResponse>((resolve) => resolve(pet));
     };
 
     const history = createMemoryHistory();
@@ -71,12 +74,15 @@ test('minimal', async () => {
     const match = {
         params: {
             id: '4d783b77-eb09-4603-b99b-f590b605eaa9'
-        }
+        },
+        isExact: true,
+        path: '/pet/:id',
+        url: ''
     };
 
     const { container } = render(
         <Router history={history}>
-            <Read match={match} />
+            <Read history={history} location={history.location} match={match} />
         </Router>
     );
 
@@ -121,7 +127,7 @@ test('maximal', async () => {
     });
 
     mockReadPet = async (id: string) => {
-        return new Promise((resolve) => resolve(pet));
+        return new Promise<PetResponse>((resolve) => resolve(pet));
     };
 
     const history = createMemoryHistory();
@@ -129,15 +135,17 @@ test('maximal', async () => {
     const match = {
         params: {
             id: '4d783b77-eb09-4603-b99b-f590b605eaa9'
-        }
+        },
+        isExact: true,
+        path: '/pet/:id',
+        url: ''
     };
 
     const { container } = render(
         <Router history={history}>
-            <Read match={match} />
+            <Read history={history} location={history.location} match={match} />
         </Router>
     );
-
     await screen.findByTestId('page-pet-read');
 
     expect(container.outerHTML).toBe(`

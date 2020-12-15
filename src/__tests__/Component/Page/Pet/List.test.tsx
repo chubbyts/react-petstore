@@ -70,7 +70,7 @@ jest.mock('../../../../Component/Partial/Pagination', () => {
 
 test('bad request', async () => {
     mockListPets = async (queryString: string) => {
-        return new Promise((resolve) => resolve(new BadRequest({ title: 'title' })));
+        return new Promise<BadRequest>((resolve) => resolve(new BadRequest({ title: 'title' })));
     };
 
     const history = createMemoryHistory();
@@ -151,7 +151,7 @@ test('default', async () => {
     });
 
     mockListPets = async (queryString: string) => {
-        return new Promise((resolve) => resolve(petList));
+        return new Promise<PetList>((resolve) => resolve(petList));
     };
 
     const history = createMemoryHistory();
@@ -234,7 +234,7 @@ test('no actions', async () => {
     });
 
     mockListPets = async (queryString: string) => {
-        return new Promise((resolve) => resolve(petList));
+        return new Promise<PetList>((resolve) => resolve(petList));
     };
 
     const history = createMemoryHistory();
@@ -346,7 +346,7 @@ test('submit bad request', async () => {
     });
 
     mockListPets = async (queryString: string) => {
-        return new Promise((resolve) => resolve(petList));
+        return new Promise<PetList>((resolve) => resolve(petList));
     };
 
     const history = createMemoryHistory();
@@ -358,7 +358,7 @@ test('submit bad request', async () => {
     );
 
     mockListPets = async (queryString: string) => {
-        return new Promise((resolve) => resolve(new BadRequest({ title: 'title' })));
+        return new Promise<BadRequest>((resolve) => resolve(new BadRequest({ title: 'title' })));
     };
 
     const testButton = await screen.findByTestId('test-filter-button');
@@ -472,7 +472,7 @@ test('submit filter', async () => {
     });
 
     mockListPets = async (queryString: string) => {
-        return new Promise((resolve) => resolve(petList));
+        return new Promise<PetList>((resolve) => resolve(petList));
     };
 
     const history = createMemoryHistory();
@@ -551,7 +551,7 @@ test('sort', async () => {
     });
 
     mockListPets = async (queryString: string) => {
-        return new Promise((resolve) => resolve(petList));
+        return new Promise<PetList>((resolve) => resolve(petList));
     };
 
     const history = createMemoryHistory();
@@ -632,7 +632,7 @@ test('next', async () => {
     });
 
     mockListPets = async (queryString: string) => {
-        return new Promise((resolve) => resolve(petList));
+        return new Promise<PetList>((resolve) => resolve(petList));
     };
 
     const history = createMemoryHistory();
@@ -713,7 +713,7 @@ test('delete not found', async () => {
     });
 
     mockListPets = async (queryString: string) => {
-        return new Promise((resolve) => resolve(petList));
+        return new Promise<PetList>((resolve) => resolve(petList));
     };
 
     const history = createMemoryHistory();
@@ -725,7 +725,7 @@ test('delete not found', async () => {
     );
 
     mockDeletePet = async (id: string) => {
-        return new Promise((resolve) => resolve(new NotFound({ title: 'title' })));
+        return new Promise<NotFound>((resolve) => resolve(new NotFound({ title: 'title' })));
     };
 
     const removePetButton = await screen.findByTestId('remove-pet-0');
@@ -839,7 +839,7 @@ test('delete success', async () => {
     });
 
     mockListPets = async (queryString: string) => {
-        return new Promise((resolve) => resolve(petList));
+        return new Promise<PetList>((resolve) => resolve(petList));
     };
 
     const history = createMemoryHistory();
@@ -875,7 +875,7 @@ test('delete success', async () => {
     });
 
     mockListPets = async (queryString: string) => {
-        return new Promise((resolve) => resolve(petListNoItem));
+        return new Promise<PetList>((resolve) => resolve(petListNoItem));
     };
 
     const removePetButton = await screen.findByTestId('remove-pet-0');
