@@ -21,7 +21,7 @@ test('without error', () => {
                 <fieldset>
                     <div class="form-field">
                         <label>Name</label>
-                        <input type="text" name="name">
+                        <input type="text" name="name" value="">
                     </div>
                     <button data-testid="submit-pet-filter" class="btn-blue">Filter</button>
                 </fieldset>
@@ -52,7 +52,7 @@ test('with error', () => {
                 <fieldset>
                     <div class="form-field error">
                         <label>Name</label>
-                        <input type="text" name="name">
+                        <input type="text" name="name" value="">
                         <ul>
                             <li>Should not be empty</li>
                         </ul>

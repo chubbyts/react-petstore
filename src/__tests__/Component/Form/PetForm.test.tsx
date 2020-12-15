@@ -21,11 +21,11 @@ test('empty', () => {
                 <fieldset>
                     <div class="form-field">
                         <label>Name</label>
-                        <input type="text" name="name">
+                        <input type="text" name="name" value="">
                     </div>
                     <div class="form-field">
                         <label>Tag</label>
-                        <input type="text" name="tag">
+                        <input type="text" name="tag" value="">
                     </div>
                     <div class="form-field">
                         <label>Vaccanations</label>
@@ -62,11 +62,11 @@ test('without error', () => {
                 <fieldset>
                     <div class="form-field">
                         <label>Name</label>
-                        <input type="text" name="name">
+                        <input type="text" name="name" value="">
                     </div>
                     <div class="form-field">
                         <label>Tag</label>
-                        <input type="text" name="tag">
+                        <input type="text" name="tag" value="">
                     </div>
                     <div class="form-field">
                         <label>Vaccanations</label>
@@ -74,7 +74,7 @@ test('without error', () => {
                             <fieldset>
                                 <div class="form-field">
                                     <label>Name</label>
-                                    <input type="text" name="vaccinations[0].name">
+                                    <input type="text" name="vaccinations[0].name" value="Rabies">
                                 </div>
                                 <button data-testid="remove-vaccination-0" type="button" class="btn-red">Remove</button>
                             </fieldset>
@@ -120,14 +120,14 @@ test('with error', () => {
                 <fieldset>
                     <div class="form-field error">
                         <label>Name</label>
-                        <input type="text" name="name">
+                        <input type="text" name="name" value="">
                         <ul>
                             <li>Should not be empty</li>
                         </ul>
                     </div>
                     <div class="form-field">
                         <label>Tag</label>
-                        <input type="text" name="tag">
+                        <input type="text" name="tag" value="">
                     </div>
                     <div class="form-field">
                         <label>Vaccanations</label>
@@ -135,7 +135,7 @@ test('with error', () => {
                             <fieldset>
                                 <div class="form-field error">
                                     <label>Name</label>
-                                    <input type="text" name="vaccinations[0].name">
+                                    <input type="text" name="vaccinations[0].name" value="">
                                     <ul>
                                         <li>Should not be empty</li>
                                     </ul>
@@ -180,11 +180,11 @@ test('add vaccination', async () => {
                 <fieldset>
                     <div class="form-field">
                         <label>Name</label>
-                        <input type="text" name="name">
+                        <input type="text" name="name" value="">
                     </div>
                     <div class="form-field">
                         <label>Tag</label>
-                        <input type="text" name="tag">
+                        <input type="text" name="tag" value="">
                     </div>
                     <div class="form-field">
                         <label>Vaccanations</label>
@@ -192,14 +192,14 @@ test('add vaccination', async () => {
                             <fieldset>
                                 <div class="form-field">
                                     <label>Name</label>
-                                    <input type="text" name="vaccinations[0].name">
+                                    <input type="text" name="vaccinations[0].name" value="Rabies">
                                 </div>
                                 <button data-testid="remove-vaccination-0" type="button" class="btn-red">Remove</button>
                             </fieldset>
                             <fieldset>
                                 <div class="form-field">
                                     <label>Name</label>
-                                    <input type="text" name="vaccinations[1].name">
+                                    <input type="text" name="vaccinations[1].name" value="">
                                 </div>
                                 <button data-testid="remove-vaccination-1" type="button" class="btn-red">Remove</button>
                             </fieldset>
@@ -241,11 +241,11 @@ test('remove vaccination', async () => {
                 <fieldset>
                     <div class="form-field">
                         <label>Name</label>
-                        <input type="text" name="name">
+                        <input type="text" name="name" value="">
                     </div>
                     <div class="form-field">
                         <label>Tag</label>
-                        <input type="text" name="tag">
+                        <input type="text" name="tag" value="">
                     </div>
                     <div class="form-field">
                         <label>Vaccanations</label>

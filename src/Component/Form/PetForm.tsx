@@ -28,14 +28,12 @@ const PetForm: FC<PetFormProps> = ({ submitPet, defaultPet: pet, unprocessableEn
                 <div className='form-field'>
                     <label>Vaccanations</label>
                     <div>
-                        {vaccinations.fields.map((item, i) => {
-                            return (
-                                <fieldset key={item.id}>
-                                    <TextField register={register} name={`vaccinations[${i}].name`} label='Name' invalidParameters={invalidParameterByNameDenormalized.get(`vaccinations[${i}].name`) ?? []} />
-                                    <button data-testid={`remove-vaccination-${i}`} type='button' onClick={() => vaccinations.remove(i)} className='btn-red'>Remove</button>
-                                </fieldset>
-                            );
-                        })}
+                        {vaccinations.fields.map((item, i) => (
+                            <fieldset key={item.id}>
+                                <TextField register={register} name={`vaccinations[${i}].name`} label='Name' defaultValue={item.name} invalidParameters={invalidParameterByNameDenormalized.get(`vaccinations[${i}].name`) ?? []} />
+                                <button data-testid={`remove-vaccination-${i}`} type='button' onClick={() => vaccinations.remove(i)} className='btn-red'>Remove</button>
+                            </fieldset>
+                        ))}
                         <button data-testid='add-vaccination' type='button' onClick={() => vaccinations.append({})} className='btn-green'>Add</button>
                     </div>
                 </div>

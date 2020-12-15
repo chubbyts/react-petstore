@@ -18,7 +18,7 @@ test('default', () => {
         <div>
             <div class="form-field error">
                 <label>label</label>
-                <input type="text" name="name">
+                <input type="text" name="name" value="">
                 <ul>
                     <li>Should not be empty</li>
                 </ul>
