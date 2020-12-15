@@ -1,7 +1,7 @@
-import React from 'react';
+import { FC } from 'react';
 import PaginationProps from './PaginationProps';
 
-const Pagination: React.FC<PaginationProps> = ({ submitPage, currentPage, totalPages, maxPages }: PaginationProps) => {
+const Pagination: FC<PaginationProps> = ({ submitPage, currentPage, totalPages, maxPages }: PaginationProps) => {
     if (totalPages <= 1 || maxPages <=1) {
         return (<div></div>);
     }

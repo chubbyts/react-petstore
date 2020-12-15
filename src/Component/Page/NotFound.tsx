@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 
-const NotFound: React.FC = () => {
+const NotFound: FC = () => {
 
     useEffect(() => {
         document.title = 'Not Found';

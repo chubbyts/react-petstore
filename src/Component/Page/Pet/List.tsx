@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { de } from 'date-fns/locale';
 import { format } from 'date-fns';
 import { Link, useHistory, useLocation } from 'react-router-dom';
@@ -13,7 +13,7 @@ import PetList from '../../../Model/Pet/PetList';
 import PetResponse from '../../../Model/Pet/PetResponse';
 import qs from 'qs';
 
-const List: React.FC = () => {
+const List: FC = () => {
 
     const history = useHistory();
     const location = useLocation();

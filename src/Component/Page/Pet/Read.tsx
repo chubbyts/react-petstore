@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { de } from 'date-fns/locale';
 import { format } from 'date-fns';
 import { Link, RouteComponentProps } from 'react-router-dom';
@@ -9,7 +9,7 @@ import PetResponse from '../../../Model/Pet/PetResponse';
 
 type Props = RouteComponentProps<{ id: string; }>;
 
-const Read: React.FC<Props> = ({ match }: Props) => {
+const Read: FC<Props> = ({ match }: Props) => {
 
     const id = match.params.id;
 

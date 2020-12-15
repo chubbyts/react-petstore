@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import InvalidParameter from '../../Model/Error/InvalidParameter';
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
     invalidParameters: Array<InvalidParameter>
 };
 
-const TextField: React.FC<Props> = ({ register, name, label, invalidParameters }: Props) => {
+const TextField: FC<Props> = ({ register, name, label, invalidParameters }: Props) => {
     return (
         <div className={`form-field${invalidParameters.length > 0 ? ' error' : ''}`}>
             <label>{label}</label>

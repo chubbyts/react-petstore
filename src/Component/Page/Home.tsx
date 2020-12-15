@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 
-const Home: React.FC = () => {
+const Home: FC = () => {
 
     useEffect(() => {
         document.title = 'Home';

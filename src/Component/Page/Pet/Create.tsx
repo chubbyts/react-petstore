@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { FC, useState } from 'react';
 import { CreatePet } from '../../../ApiClient/Pet';
 import { Link, useHistory } from 'react-router-dom';
 import HttpError from '../../../Model/Error/HttpError';
@@ -7,7 +7,7 @@ import PetForm from '../../Form/PetForm';
 import UnprocessableEntity from '../../../Model/Error/UnprocessableEntity';
 import PetRequest from '../../../Model/Pet/PetRequest';
 
-const Create: React.FC = () => {
+const Create: FC = () => {
 
     const history = useHistory();
 

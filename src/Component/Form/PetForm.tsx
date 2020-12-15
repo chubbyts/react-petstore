@@ -1,11 +1,11 @@
-import React from 'react';
+import { FC } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import InvalidParameterByNameDenormalizer from '../../Denormalizer/InvalidParameterByNameDenormalizer';
 import PetFormProps from './PetFormProps';
 import PetRequest from '../../Model/Pet/PetRequest';
 import TextField from './TextField';
 
-const PetForm: React.FC<PetFormProps> = ({ submitPet, defaultPet: pet, unprocessableEntity: error }: PetFormProps) => {
+const PetForm: FC<PetFormProps> = ({ submitPet, defaultPet: pet, unprocessableEntity: error }: PetFormProps) => {
     const invalidParameterByNameDenormalized = InvalidParameterByNameDenormalizer(error ? error.invalidParameters : []);
 
     const { register, control, handleSubmit } = useForm<PetRequest>({ defaultValues: pet });

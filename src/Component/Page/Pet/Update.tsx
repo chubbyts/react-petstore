@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { Link, RouteComponentProps, useHistory } from 'react-router-dom';
 import { ReadPet, UpdatePet } from '../../../ApiClient/Pet';
 import HttpError from '../../../Model/Error/HttpError';
@@ -10,7 +10,7 @@ import PetRequest from '../../../Model/Pet/PetRequest';
 
 type Props = RouteComponentProps<{ id: string; }>;
 
-const Update: React.FC<Props> = ({ match }: Props) => {
+const Update: FC<Props> = ({ match }: Props) => {
 
     const id = match.params.id;
 

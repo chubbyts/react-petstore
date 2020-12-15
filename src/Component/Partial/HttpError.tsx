@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import HttpErrorType from '../../Model/Error/HttpError';
 import HttpErrorWithInvalidParameters from '../../Model/Error/HttpErrorWithInvalidParameters';
 import InvalidParameter from '../../Model/Error/InvalidParameter';
@@ -7,7 +7,7 @@ type Props = {
     httpError: HttpErrorType;
 };
 
-const HttpError: React.FC<Props> = ({ httpError }: Props) => {
+const HttpError: FC<Props> = ({ httpError }: Props) => {
     return (
         <div id='httpError'>
             <p>{httpError.title}</p>
