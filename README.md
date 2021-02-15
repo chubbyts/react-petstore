@@ -1,6 +1,6 @@
 # petstore-react
 
-[![Build Status](https://api.travis-ci.org/chubbyjs/petstore-react.png?branch=master)](https://travis-ci.org/chubbyjs/petstore-react)
+[![CI](https://github.com/chubbyjs/petstore-react/workflows/CI/badge.svg?branch=master)](https://github.com/chubbyjs/petstore-react/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/chubbyjs/petstore-react/badge.svg?branch=master)](https://coveralls.io/github/chubbyjs/petstore-react?branch=master)
 
 ## Description
