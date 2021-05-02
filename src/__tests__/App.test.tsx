@@ -57,7 +57,7 @@ test('toggle', async () => {
         <div>
             <div>
                 <div id="wrapper" class="displayMenu">
-                    <nav id="top-nav" class="clearfix">
+                    <nav id="top-nav" class="flow-root">
                         <button id="toggle" data-testid="navigation-toggle">
                             <span></span>
                             <span></span>
@@ -94,7 +94,7 @@ test('home page', async () => {
         <div>
             <div>
                 <div id="wrapper" class="">
-                    <nav id="top-nav" class="clearfix">
+                    <nav id="top-nav" class="flow-root">
                         <button id="toggle" data-testid="navigation-toggle">
                             <span></span>
                             <span></span>
@@ -131,7 +131,7 @@ test('not found', async () => {
         <div>
             <div>
                 <div id="wrapper" class="">
-                    <nav id="top-nav" class="clearfix">
+                    <nav id="top-nav" class="flow-root">
                         <button id="toggle" data-testid="navigation-toggle">
                             <span></span>
                             <span></span>
@@ -168,7 +168,7 @@ test('pet list', async () => {
         <div>
             <div>
                 <div id="wrapper" class="">
-                    <nav id="top-nav" class="clearfix">
+                    <nav id="top-nav" class="flow-root">
                         <button id="toggle" data-testid="navigation-toggle">
                             <span></span>
                             <span></span>
@@ -205,7 +205,7 @@ test('pet create', async () => {
         <div>
             <div>
                 <div id="wrapper" class="">
-                    <nav id="top-nav" class="clearfix">
+                    <nav id="top-nav" class="flow-root">
                         <button id="toggle" data-testid="navigation-toggle">
                             <span></span>
                             <span></span>
@@ -242,7 +242,7 @@ test('pet read', async () => {
         <div>
             <div>
                 <div id="wrapper" class="">
-                    <nav id="top-nav" class="clearfix">
+                    <nav id="top-nav" class="flow-root">
                         <button id="toggle" data-testid="navigation-toggle">
                             <span></span>
                             <span></span>
@@ -279,7 +279,7 @@ test('pet update', async () => {
         <div>
             <div>
                 <div id="wrapper" class="">
-                    <nav id="top-nav" class="clearfix">
+                    <nav id="top-nav" class="flow-root">
                         <button id="toggle" data-testid="navigation-toggle">
                             <span></span>
                             <span></span>
