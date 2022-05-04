@@ -1,5 +1,5 @@
-import React, { lazy, Suspense, useState } from 'react';
-import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
+import { FC, lazy, Suspense, useState } from 'react';
+import { BrowserRouter, Route, NavLink, Routes } from 'react-router-dom';
 
 const Home = lazy(() => import('./Component/Page/Home'));
 const NotFound = lazy(() => import('./Component/Page/NotFound'));
@@ -8,7 +8,7 @@ const PetList = lazy(() => import('./Component/Page/Pet/List'));
 const PetRead = lazy(() => import('./Component/Page/Pet/Read'));
 const PetUpdate = lazy(() => import('./Component/Page/Pet/Update'));
 
-const App: React.FC = () => {
+const App: FC = () => {
     const [displayMenu, setDisplayMenu] = useState<boolean>(false);
 
     const toggleMenu = () => {
@@ -17,32 +17,32 @@ const App: React.FC = () => {
 
     return (
         <BrowserRouter>
-            <div id='wrapper' className={displayMenu ? 'displayMenu' : ''}>
-                <nav id='top-nav' className='flow-root'>
-                    <button id='toggle' data-testid='navigation-toggle' onClick={toggleMenu}>
+            <div id="wrapper" className={displayMenu ? 'displayMenu' : ''}>
+                <nav id="top-nav" className="flow-root">
+                    <button id="toggle" data-testid="navigation-toggle" onClick={toggleMenu}>
                         <span></span>
                         <span></span>
                         <span></span>
                     </button>
-                    <NavLink to='/'>Petstore</NavLink>
+                    <NavLink to="/">Petstore</NavLink>
                 </nav>
-                <nav id='left-nav'>
+                <nav id="left-nav">
                     <ul>
                         <li>
-                            <NavLink to='/pet'>Pets</NavLink>
+                            <NavLink to="/pet">Pets</NavLink>
                         </li>
                     </ul>
                 </nav>
-                <div id='main'>
+                <div id="main">
                     <Suspense fallback={<div></div>}>
-                        <Switch>
-                            <Route path='/' exact component={Home} />
-                            <Route path='/pet' exact component={PetList} />
-                            <Route path='/pet/create' exact component={PetCreate} />
-                            <Route path='/pet/:id' exact component={PetRead} />
-                            <Route path='/pet/:id/update' exact component={PetUpdate} />
-                            <Route component={NotFound} />
-                        </Switch>
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/pet" element={<PetList />} />
+                            <Route path="/pet/create" element={<PetCreate />} />
+                            <Route path="/pet/:id" element={<PetRead />} />
+                            <Route path="/pet/:id/update" element={<PetUpdate />} />
+                            <Route path="*" element={<NotFound />} />
+                        </Routes>
                     </Suspense>
                 </div>
             </div>

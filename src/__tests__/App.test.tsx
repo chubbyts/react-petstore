@@ -1,59 +1,74 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from '../App';
-import ReactRouterDom, { MemoryRouter } from 'react-router-dom';
+import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+import { ReactNode } from 'react';
+import { createMemoryHistory } from 'history';
 
-ReactRouterDom.BrowserRouter = ({children}) => <div>{children}</div>
+jest.mock('react-router-dom', () => {
+    const originalModule = jest.requireActual('react-router-dom');
+
+    return {
+        __esModule: true,
+        ...originalModule,
+        // add your noops here
+        BrowserRouter: ({ children }: { children: ReactNode }) => <div>{children}</div>,
+    };
+});
 
 jest.mock('../Component/Page/Home', () => {
     return () => {
-        return (<div data-testid="page-home-mock"></div>);
+        return <div data-testid="page-home-mock"></div>;
     };
 });
 
 jest.mock('../Component/Page/Pet/List', () => {
     return () => {
-        return (<div data-testid="page-pet-list-mock"></div>);
+        return <div data-testid="page-pet-list-mock"></div>;
     };
 });
 
 jest.mock('../Component/Page/Pet/Create', () => {
     return () => {
-        return (<div data-testid="page-pet-create-mock"></div>);
+        return <div data-testid="page-pet-create-mock"></div>;
     };
 });
 
 jest.mock('../Component/Page/Pet/Read', () => {
     return () => {
-        return (<div data-testid="page-pet-read-mock"></div>);
+        return <div data-testid="page-pet-read-mock"></div>;
     };
 });
 
 jest.mock('../Component/Page/Pet/Update', () => {
     return () => {
-        return (<div data-testid="page-pet-update-mock"></div>);
+        return <div data-testid="page-pet-update-mock"></div>;
     };
 });
 
 jest.mock('../Component/Page/NotFound', () => {
     return () => {
-        return (<div data-testid="page-not-found-mock"></div>);
+        return <div data-testid="page-not-found-mock"></div>;
     };
 });
 
 test('toggle', async () => {
+    const history = createMemoryHistory();
+
     const { container } = render(
-        <MemoryRouter>
+        <HistoryRouter history={history}>
             <App />
-        </MemoryRouter>
+        </HistoryRouter>,
     );
+
+    await screen.findByTestId('page-home-mock');
 
     const navigationToggle = await screen.findByTestId('navigation-toggle');
 
-    userEvent.click(navigationToggle);
+    await userEvent.click(navigationToggle);
 
-    expect(container.outerHTML).toBe(`
+    expect(container.outerHTML).toBe(
+        `
         <div>
             <div>
                 <div id="wrapper" class="displayMenu">
@@ -68,7 +83,7 @@ test('toggle', async () => {
                     <nav id="left-nav">
                         <ul>
                             <li>
-                                <a href="/pet">Pets</a>
+                                <a class="" href="/pet">Pets</a>
                             </li>
                         </ul>
                     </nav>
@@ -78,19 +93,25 @@ test('toggle', async () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
+    `
+            .replace(/\n/g, '')
+            .replace(/ {2,}/g, ''),
+    );
 });
 
 test('home page', async () => {
+    const history = createMemoryHistory();
+
     const { container } = render(
-        <MemoryRouter>
+        <HistoryRouter history={history}>
             <App />
-        </MemoryRouter>
+        </HistoryRouter>,
     );
 
     await screen.findByTestId('page-home-mock');
 
-    expect(container.outerHTML).toBe(`
+    expect(container.outerHTML).toBe(
+        `
         <div>
             <div>
                 <div id="wrapper" class="">
@@ -105,7 +126,7 @@ test('home page', async () => {
                     <nav id="left-nav">
                         <ul>
                             <li>
-                                <a href="/pet">Pets</a>
+                                <a class="" href="/pet">Pets</a>
                             </li>
                         </ul>
                     </nav>
@@ -115,19 +136,26 @@ test('home page', async () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
+    `
+            .replace(/\n/g, '')
+            .replace(/ {2,}/g, ''),
+    );
 });
 
 test('not found', async () => {
+    const history = createMemoryHistory();
+    history.push('/unknown');
+
     const { container } = render(
-        <MemoryRouter initialEntries={['/unknown']}>
+        <HistoryRouter history={history}>
             <App />
-        </MemoryRouter>
+        </HistoryRouter>,
     );
 
     await screen.findByTestId('page-not-found-mock');
 
-    expect(container.outerHTML).toBe(`
+    expect(container.outerHTML).toBe(
+        `
         <div>
             <div>
                 <div id="wrapper" class="">
@@ -137,12 +165,12 @@ test('not found', async () => {
                             <span></span>
                             <span></span>
                         </button>
-                        <a aria-current="page" class="active" href="/">Petstore</a>
+                        <a class="" href="/">Petstore</a>
                     </nav>
                     <nav id="left-nav">
                         <ul>
                             <li>
-                                <a href="/pet">Pets</a>
+                                <a class="" href="/pet">Pets</a>
                             </li>
                         </ul>
                     </nav>
@@ -152,19 +180,26 @@ test('not found', async () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
+    `
+            .replace(/\n/g, '')
+            .replace(/ {2,}/g, ''),
+    );
 });
 
 test('pet list', async () => {
+    const history = createMemoryHistory();
+    history.push('/pet');
+
     const { container } = render(
-        <MemoryRouter initialEntries={['/pet']}>
+        <HistoryRouter history={history}>
             <App />
-        </MemoryRouter>
+        </HistoryRouter>,
     );
 
     await screen.findByTestId('page-pet-list-mock');
 
-    expect(container.outerHTML).toBe(`
+    expect(container.outerHTML).toBe(
+        `
         <div>
             <div>
                 <div id="wrapper" class="">
@@ -174,7 +209,7 @@ test('pet list', async () => {
                             <span></span>
                             <span></span>
                         </button>
-                        <a aria-current="page" class="active" href="/">Petstore</a>
+                        <a class="" href="/">Petstore</a>
                     </nav>
                     <nav id="left-nav">
                         <ul>
@@ -189,19 +224,26 @@ test('pet list', async () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
+    `
+            .replace(/\n/g, '')
+            .replace(/ {2,}/g, ''),
+    );
 });
 
 test('pet create', async () => {
+    const history = createMemoryHistory();
+    history.push('/pet/create');
+
     const { container } = render(
-        <MemoryRouter initialEntries={['/pet/create']}>
+        <HistoryRouter history={history}>
             <App />
-        </MemoryRouter>
+        </HistoryRouter>,
     );
 
     await screen.findByTestId('page-pet-create-mock');
 
-    expect(container.outerHTML).toBe(`
+    expect(container.outerHTML).toBe(
+        `
         <div>
             <div>
                 <div id="wrapper" class="">
@@ -211,7 +253,7 @@ test('pet create', async () => {
                             <span></span>
                             <span></span>
                         </button>
-                        <a aria-current="page" class="active" href="/">Petstore</a>
+                        <a class="" href="/">Petstore</a>
                     </nav>
                     <nav id="left-nav">
                         <ul>
@@ -226,19 +268,26 @@ test('pet create', async () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
+    `
+            .replace(/\n/g, '')
+            .replace(/ {2,}/g, ''),
+    );
 });
 
 test('pet read', async () => {
+    const history = createMemoryHistory();
+    history.push('/pet/4d783b77-eb09-4603-b99b-f590b605eaa9');
+
     const { container } = render(
-        <MemoryRouter initialEntries={['/pet/4d783b77-eb09-4603-b99b-f590b605eaa9']}>
+        <HistoryRouter history={history}>
             <App />
-        </MemoryRouter>
+        </HistoryRouter>,
     );
 
     await screen.findByTestId('page-pet-read-mock');
 
-    expect(container.outerHTML).toBe(`
+    expect(container.outerHTML).toBe(
+        `
         <div>
             <div>
                 <div id="wrapper" class="">
@@ -248,7 +297,7 @@ test('pet read', async () => {
                             <span></span>
                             <span></span>
                         </button>
-                        <a aria-current="page" class="active" href="/">Petstore</a>
+                        <a class="" href="/">Petstore</a>
                     </nav>
                     <nav id="left-nav">
                         <ul>
@@ -263,19 +312,26 @@ test('pet read', async () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
+    `
+            .replace(/\n/g, '')
+            .replace(/ {2,}/g, ''),
+    );
 });
 
 test('pet update', async () => {
+    const history = createMemoryHistory();
+    history.push('/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update');
+
     const { container } = render(
-        <MemoryRouter initialEntries={['/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update']}>
+        <HistoryRouter history={history}>
             <App />
-        </MemoryRouter>
+        </HistoryRouter>,
     );
 
     await screen.findByTestId('page-pet-update-mock');
 
-    expect(container.outerHTML).toBe(`
+    expect(container.outerHTML).toBe(
+        `
         <div>
             <div>
                 <div id="wrapper" class="">
@@ -285,7 +341,7 @@ test('pet update', async () => {
                             <span></span>
                             <span></span>
                         </button>
-                        <a aria-current="page" class="active" href="/">Petstore</a>
+                        <a class="" href="/">Petstore</a>
                     </nav>
                     <nav id="left-nav">
                         <ul>
@@ -300,5 +356,8 @@ test('pet update', async () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
+    `
+            .replace(/\n/g, '')
+            .replace(/ {2,}/g, ''),
+    );
 });

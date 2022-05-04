@@ -1,7 +1,6 @@
-import React from 'react';
 import { createMemoryHistory } from 'history';
-import { render, screen } from '@testing-library/react';
-import { Router } from 'react-router-dom';
+import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
 import BadRequest from '../../../../Model/Error/BadRequest';
 import Embedded from '../../../../Model/Pet/Embedded';
 import HttpError from '../../../../Model/Error/HttpError';
@@ -15,8 +14,8 @@ import PetResponse from '../../../../Model/Pet/PetResponse';
 import userEvent from '@testing-library/user-event';
 import Vaccination from '../../../../Model/Pet/Vaccination';
 
-let mockListPets = (queryString: string) => { };
-let mockDeletePet = (id: string) => { };
+let mockListPets = (queryString: string) => {};
+let mockDeletePet = (id: string) => {};
 
 jest.mock('../../../../ApiClient/Pet', () => {
     return {
@@ -25,13 +24,13 @@ jest.mock('../../../../ApiClient/Pet', () => {
         },
         DeletePet: (id: string) => {
             return mockDeletePet(id);
-        }
+        },
     };
 });
 
 beforeEach(() => {
-    mockListPets = (queryString: string) => { };
-    mockDeletePet = (id: string) => { };
+    mockListPets = (queryString: string) => {};
+    mockDeletePet = (id: string) => {};
 });
 
 jest.mock('../../../../Component/Form/PetFilterForm', () => {
@@ -40,13 +39,13 @@ jest.mock('../../../../Component/Form/PetFilterForm', () => {
             submitPetFilter({ name: 'Bro' });
         };
 
-        return (<button data-testid="test-filter-button" onClick={onSubmit}></button>);
+        return <button data-testid="test-filter-button" onClick={onSubmit}></button>;
     };
 });
 
 jest.mock('../../../../Component/Partial/HttpError', () => {
-    return ({ httpError }: { httpError: HttpError; }) => {
-        return (<div>httpError: {httpError.title}</div>);
+    return ({ httpError }: { httpError: HttpError }) => {
+        return <div>httpError: {httpError.title}</div>;
     };
 });
 
@@ -76,21 +75,25 @@ test('bad request', async () => {
     const history = createMemoryHistory();
 
     const { container } = render(
-        <Router history={history}>
+        <HistoryRouter history={history}>
             <List />
-        </Router>
+        </HistoryRouter>,
     );
 
     await screen.findByTestId('page-pet-list');
 
-    expect(container.outerHTML).toBe(`
+    expect(container.outerHTML).toBe(
+        `
         <div>
             <div data-testid="page-pet-list">
                 <div>httpError: title</div>
                 <h1>List Pets</h1>
             </div>
         </div>
-    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
+    `
+            .replace(/\n/g, '')
+            .replace(/ {2,}/g, ''),
+    );
 });
 
 test('default', async () => {
@@ -106,48 +109,46 @@ test('default', async () => {
                     updatedAt: '2005-08-15T15:55:01+00:00',
                     name: 'Brownie',
                     tag: '0001-000',
-                    vaccinations: [
-                        new Vaccination({ name: 'Rabies' })
-                    ],
+                    vaccinations: [new Vaccination({ name: 'Rabies' })],
                     _links: {
-                        "read": new Link({
-                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
-                            "templated": false,
-                            "rel": [],
-                            "attributes": {
-                                "method": "GET"
-                            }
+                        read: new Link({
+                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+                            templated: false,
+                            rel: [],
+                            attributes: {
+                                method: 'GET',
+                            },
                         }),
-                        "update": new Link({
-                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
-                            "templated": false,
-                            "rel": [],
-                            "attributes": {
-                                "method": "PUT"
-                            }
+                        update: new Link({
+                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+                            templated: false,
+                            rel: [],
+                            attributes: {
+                                method: 'PUT',
+                            },
                         }),
-                        "delete": new Link({
-                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
-                            "templated": false,
-                            "rel": [],
-                            "attributes": {
-                                "method": "DELETE"
-                            }
-                        })
-                    }
-                })
-            ]
+                        delete: new Link({
+                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+                            templated: false,
+                            rel: [],
+                            attributes: {
+                                method: 'DELETE',
+                            },
+                        }),
+                    },
+                }),
+            ],
         }),
-        "_links": {
-            "create": new Link({
-                "href": "/api/pets",
-                "templated": false,
-                "rel": [],
-                "attributes": {
-                    "method": "POST"
-                }
-            })
-        }
+        _links: {
+            create: new Link({
+                href: '/api/pets',
+                templated: false,
+                rel: [],
+                attributes: {
+                    method: 'POST',
+                },
+            }),
+        },
     });
 
     mockListPets = async (queryString: string) => {
@@ -157,14 +158,15 @@ test('default', async () => {
     const history = createMemoryHistory();
 
     const { container } = render(
-        <Router history={history}>
+        <HistoryRouter history={history}>
             <List />
-        </Router>
+        </HistoryRouter>,
     );
 
     await screen.findByTestId('page-pet-list');
 
-    expect(container.outerHTML).toBe(`
+    expect(container.outerHTML).toBe(
+        `
         <div>
             <div data-testid="page-pet-list">
                 <h1>List Pets</h1>
@@ -207,7 +209,10 @@ test('default', async () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
+    `
+            .replace(/\n/g, '')
+            .replace(/ {2,}/g, ''),
+    );
 });
 
 test('no actions', async () => {
@@ -223,14 +228,12 @@ test('no actions', async () => {
                     updatedAt: '2005-08-15T15:55:01+00:00',
                     name: 'Brownie',
                     tag: '0001-000',
-                    vaccinations: [
-                        new Vaccination({ name: 'Rabies' })
-                    ],
-                    _links: {}
-                })
-            ]
+                    vaccinations: [new Vaccination({ name: 'Rabies' })],
+                    _links: {},
+                }),
+            ],
         }),
-        "_links": {}
+        _links: {},
     });
 
     mockListPets = async (queryString: string) => {
@@ -240,14 +243,15 @@ test('no actions', async () => {
     const history = createMemoryHistory();
 
     const { container } = render(
-        <Router history={history}>
+        <HistoryRouter history={history}>
             <List />
-        </Router>
+        </HistoryRouter>,
     );
 
     await screen.findByTestId('page-pet-list');
 
-    expect(container.outerHTML).toBe(`
+    expect(container.outerHTML).toBe(
+        `
         <div>
             <div data-testid="page-pet-list">
                 <h1>List Pets</h1>
@@ -285,7 +289,10 @@ test('no actions', async () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
+    `
+            .replace(/\n/g, '')
+            .replace(/ {2,}/g, ''),
+    );
 });
 
 test('submit bad request', async () => {
@@ -301,48 +308,46 @@ test('submit bad request', async () => {
                     updatedAt: '2005-08-15T15:55:01+00:00',
                     name: 'Brownie',
                     tag: '0001-000',
-                    vaccinations: [
-                        new Vaccination({ name: 'Rabies' })
-                    ],
+                    vaccinations: [new Vaccination({ name: 'Rabies' })],
                     _links: {
-                        "read": new Link({
-                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
-                            "templated": false,
-                            "rel": [],
-                            "attributes": {
-                                "method": "GET"
-                            }
+                        read: new Link({
+                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+                            templated: false,
+                            rel: [],
+                            attributes: {
+                                method: 'GET',
+                            },
                         }),
-                        "update": new Link({
-                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
-                            "templated": false,
-                            "rel": [],
-                            "attributes": {
-                                "method": "PUT"
-                            }
+                        update: new Link({
+                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+                            templated: false,
+                            rel: [],
+                            attributes: {
+                                method: 'PUT',
+                            },
                         }),
-                        "delete": new Link({
-                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
-                            "templated": false,
-                            "rel": [],
-                            "attributes": {
-                                "method": "DELETE"
-                            }
-                        })
-                    }
-                })
-            ]
+                        delete: new Link({
+                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+                            templated: false,
+                            rel: [],
+                            attributes: {
+                                method: 'DELETE',
+                            },
+                        }),
+                    },
+                }),
+            ],
         }),
-        "_links": {
-            "create": new Link({
-                "href": "/api/pets",
-                "templated": false,
-                "rel": [],
-                "attributes": {
-                    "method": "POST"
-                }
-            })
-        }
+        _links: {
+            create: new Link({
+                href: '/api/pets',
+                templated: false,
+                rel: [],
+                attributes: {
+                    method: 'POST',
+                },
+            }),
+        },
     });
 
     mockListPets = async (queryString: string) => {
@@ -352,10 +357,12 @@ test('submit bad request', async () => {
     const history = createMemoryHistory();
 
     const { container } = render(
-        <Router history={history}>
+        <HistoryRouter history={history}>
             <List />
-        </Router>
+        </HistoryRouter>,
     );
+
+    await screen.findByTestId('page-pet-list');
 
     mockListPets = async (queryString: string) => {
         return new Promise<BadRequest>((resolve) => resolve(new BadRequest({ title: 'title' })));
@@ -363,11 +370,12 @@ test('submit bad request', async () => {
 
     const testButton = await screen.findByTestId('test-filter-button');
 
-    userEvent.click(testButton);
+    await userEvent.click(testButton);
 
-    await screen.findByTestId('test-filter-button');
+    await screen.findByText(/httpError/);
 
-    expect(container.outerHTML).toBe(`
+    expect(container.outerHTML).toBe(
+        `
         <div>
             <div data-testid="page-pet-list">
                 <div>httpError: title</div>
@@ -411,7 +419,10 @@ test('submit bad request', async () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
+    `
+            .replace(/\n/g, '')
+            .replace(/ {2,}/g, ''),
+    );
 });
 
 test('submit filter', async () => {
@@ -427,48 +438,46 @@ test('submit filter', async () => {
                     updatedAt: '2005-08-15T15:55:01+00:00',
                     name: 'Brownie',
                     tag: '0001-000',
-                    vaccinations: [
-                        new Vaccination({ name: 'Rabies' })
-                    ],
+                    vaccinations: [new Vaccination({ name: 'Rabies' })],
                     _links: {
-                        "read": new Link({
-                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
-                            "templated": false,
-                            "rel": [],
-                            "attributes": {
-                                "method": "GET"
-                            }
+                        read: new Link({
+                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+                            templated: false,
+                            rel: [],
+                            attributes: {
+                                method: 'GET',
+                            },
                         }),
-                        "update": new Link({
-                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
-                            "templated": false,
-                            "rel": [],
-                            "attributes": {
-                                "method": "PUT"
-                            }
+                        update: new Link({
+                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+                            templated: false,
+                            rel: [],
+                            attributes: {
+                                method: 'PUT',
+                            },
                         }),
-                        "delete": new Link({
-                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
-                            "templated": false,
-                            "rel": [],
-                            "attributes": {
-                                "method": "DELETE"
-                            }
-                        })
-                    }
-                })
-            ]
+                        delete: new Link({
+                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+                            templated: false,
+                            rel: [],
+                            attributes: {
+                                method: 'DELETE',
+                            },
+                        }),
+                    },
+                }),
+            ],
         }),
-        "_links": {
-            "create": new Link({
-                "href": "/api/pets",
-                "templated": false,
-                "rel": [],
-                "attributes": {
-                    "method": "POST"
-                }
-            })
-        }
+        _links: {
+            create: new Link({
+                href: '/api/pets',
+                templated: false,
+                rel: [],
+                attributes: {
+                    method: 'POST',
+                },
+            }),
+        },
     });
 
     mockListPets = async (queryString: string) => {
@@ -478,16 +487,16 @@ test('submit filter', async () => {
     const history = createMemoryHistory();
 
     render(
-        <Router history={history}>
+        <HistoryRouter history={history}>
             <List />
-        </Router>
+        </HistoryRouter>,
     );
+
+    await screen.findByTestId('page-pet-list');
 
     const testButton = await screen.findByTestId('test-filter-button');
 
-    userEvent.click(testButton);
-
-    await screen.findByTestId('test-filter-button');
+    await userEvent.click(testButton);
 
     expect(history.location.pathname).toBe('/pet');
     expect(history.location.search).toBe('?page=1&filters%5Bname%5D=Bro');
@@ -506,48 +515,46 @@ test('sort', async () => {
                     updatedAt: '2005-08-15T15:55:01+00:00',
                     name: 'Brownie',
                     tag: '0001-000',
-                    vaccinations: [
-                        new Vaccination({ name: 'Rabies' })
-                    ],
+                    vaccinations: [new Vaccination({ name: 'Rabies' })],
                     _links: {
-                        "read": new Link({
-                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
-                            "templated": false,
-                            "rel": [],
-                            "attributes": {
-                                "method": "GET"
-                            }
+                        read: new Link({
+                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+                            templated: false,
+                            rel: [],
+                            attributes: {
+                                method: 'GET',
+                            },
                         }),
-                        "update": new Link({
-                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
-                            "templated": false,
-                            "rel": [],
-                            "attributes": {
-                                "method": "PUT"
-                            }
+                        update: new Link({
+                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+                            templated: false,
+                            rel: [],
+                            attributes: {
+                                method: 'PUT',
+                            },
                         }),
-                        "delete": new Link({
-                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
-                            "templated": false,
-                            "rel": [],
-                            "attributes": {
-                                "method": "DELETE"
-                            }
-                        })
-                    }
-                })
-            ]
+                        delete: new Link({
+                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+                            templated: false,
+                            rel: [],
+                            attributes: {
+                                method: 'DELETE',
+                            },
+                        }),
+                    },
+                }),
+            ],
         }),
-        "_links": {
-            "create": new Link({
-                "href": "/api/pets",
-                "templated": false,
-                "rel": [],
-                "attributes": {
-                    "method": "POST"
-                }
-            })
-        }
+        _links: {
+            create: new Link({
+                href: '/api/pets',
+                templated: false,
+                rel: [],
+                attributes: {
+                    method: 'POST',
+                },
+            }),
+        },
     });
 
     mockListPets = async (queryString: string) => {
@@ -557,18 +564,18 @@ test('sort', async () => {
     const history = createMemoryHistory();
 
     render(
-        <Router history={history}>
+        <HistoryRouter history={history}>
             <List />
-        </Router>
+        </HistoryRouter>,
     );
+
+    await screen.findByTestId('page-pet-list');
 
     expect(history.location.pathname).toBe('/');
 
     const sortNameDescLink = await screen.findByTestId('sort-pet-name-desc');
 
-    userEvent.click(sortNameDescLink);
-
-    await screen.findByTestId('sort-pet-name-desc');
+    await userEvent.click(sortNameDescLink);
 
     expect(history.location.pathname).toBe('/pet');
     expect(history.location.search).toBe('?page=1&sort%5Bname%5D=desc');
@@ -587,48 +594,46 @@ test('next', async () => {
                     updatedAt: '2005-08-15T15:55:01+00:00',
                     name: 'Brownie',
                     tag: '0001-000',
-                    vaccinations: [
-                        new Vaccination({ name: 'Rabies' })
-                    ],
+                    vaccinations: [new Vaccination({ name: 'Rabies' })],
                     _links: {
-                        "read": new Link({
-                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
-                            "templated": false,
-                            "rel": [],
-                            "attributes": {
-                                "method": "GET"
-                            }
+                        read: new Link({
+                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+                            templated: false,
+                            rel: [],
+                            attributes: {
+                                method: 'GET',
+                            },
                         }),
-                        "update": new Link({
-                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
-                            "templated": false,
-                            "rel": [],
-                            "attributes": {
-                                "method": "PUT"
-                            }
+                        update: new Link({
+                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+                            templated: false,
+                            rel: [],
+                            attributes: {
+                                method: 'PUT',
+                            },
                         }),
-                        "delete": new Link({
-                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
-                            "templated": false,
-                            "rel": [],
-                            "attributes": {
-                                "method": "DELETE"
-                            }
-                        })
-                    }
-                })
-            ]
+                        delete: new Link({
+                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+                            templated: false,
+                            rel: [],
+                            attributes: {
+                                method: 'DELETE',
+                            },
+                        }),
+                    },
+                }),
+            ],
         }),
-        "_links": {
-            "create": new Link({
-                "href": "/api/pets",
-                "templated": false,
-                "rel": [],
-                "attributes": {
-                    "method": "POST"
-                }
-            })
-        }
+        _links: {
+            create: new Link({
+                href: '/api/pets',
+                templated: false,
+                rel: [],
+                attributes: {
+                    method: 'POST',
+                },
+            }),
+        },
     });
 
     mockListPets = async (queryString: string) => {
@@ -638,18 +643,18 @@ test('next', async () => {
     const history = createMemoryHistory();
 
     render(
-        <Router history={history}>
+        <HistoryRouter history={history}>
             <List />
-        </Router>
+        </HistoryRouter>,
     );
+
+    await screen.findByTestId('page-pet-list');
 
     expect(history.location.pathname).toBe('/');
 
     const testButton = await screen.findByTestId('test-pagination-button');
 
-    userEvent.click(testButton);
-
-    await screen.findByTestId('test-pagination-button');
+    await userEvent.click(testButton);
 
     expect(history.location.pathname).toBe('/pet');
     expect(history.location.search).toBe('?page=2');
@@ -668,48 +673,46 @@ test('delete not found', async () => {
                     updatedAt: '2005-08-15T15:55:01+00:00',
                     name: 'Brownie',
                     tag: '0001-000',
-                    vaccinations: [
-                        new Vaccination({ name: 'Rabies' })
-                    ],
+                    vaccinations: [new Vaccination({ name: 'Rabies' })],
                     _links: {
-                        "read": new Link({
-                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
-                            "templated": false,
-                            "rel": [],
-                            "attributes": {
-                                "method": "GET"
-                            }
+                        read: new Link({
+                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+                            templated: false,
+                            rel: [],
+                            attributes: {
+                                method: 'GET',
+                            },
                         }),
-                        "update": new Link({
-                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
-                            "templated": false,
-                            "rel": [],
-                            "attributes": {
-                                "method": "PUT"
-                            }
+                        update: new Link({
+                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+                            templated: false,
+                            rel: [],
+                            attributes: {
+                                method: 'PUT',
+                            },
                         }),
-                        "delete": new Link({
-                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
-                            "templated": false,
-                            "rel": [],
-                            "attributes": {
-                                "method": "DELETE"
-                            }
-                        })
-                    }
-                })
-            ]
+                        delete: new Link({
+                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+                            templated: false,
+                            rel: [],
+                            attributes: {
+                                method: 'DELETE',
+                            },
+                        }),
+                    },
+                }),
+            ],
         }),
-        "_links": {
-            "create": new Link({
-                "href": "/api/pets",
-                "templated": false,
-                "rel": [],
-                "attributes": {
-                    "method": "POST"
-                }
-            })
-        }
+        _links: {
+            create: new Link({
+                href: '/api/pets',
+                templated: false,
+                rel: [],
+                attributes: {
+                    method: 'POST',
+                },
+            }),
+        },
     });
 
     mockListPets = async (queryString: string) => {
@@ -719,10 +722,12 @@ test('delete not found', async () => {
     const history = createMemoryHistory();
 
     const { container } = render(
-        <Router history={history}>
+        <HistoryRouter history={history}>
             <List />
-        </Router>
+        </HistoryRouter>,
     );
+
+    await screen.findByTestId('page-pet-list');
 
     mockDeletePet = async (id: string) => {
         return new Promise<NotFound>((resolve) => resolve(new NotFound({ title: 'title' })));
@@ -730,11 +735,12 @@ test('delete not found', async () => {
 
     const removePetButton = await screen.findByTestId('remove-pet-0');
 
-    userEvent.click(removePetButton);
+    await userEvent.click(removePetButton);
 
-    await screen.findByTestId('remove-pet-0');
+    await screen.findByText(/httpError/);
 
-    expect(container.outerHTML).toBe(`
+    expect(container.outerHTML).toBe(
+        `
         <div>
             <div data-testid="page-pet-list">
                 <div>httpError: title</div>
@@ -778,7 +784,10 @@ test('delete not found', async () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
+    `
+            .replace(/\n/g, '')
+            .replace(/ {2,}/g, ''),
+    );
 });
 
 test('delete success', async () => {
@@ -794,48 +803,46 @@ test('delete success', async () => {
                     updatedAt: '2005-08-15T15:55:01+00:00',
                     name: 'Brownie',
                     tag: '0001-000',
-                    vaccinations: [
-                        new Vaccination({ name: 'Rabies' })
-                    ],
+                    vaccinations: [new Vaccination({ name: 'Rabies' })],
                     _links: {
-                        "read": new Link({
-                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
-                            "templated": false,
-                            "rel": [],
-                            "attributes": {
-                                "method": "GET"
-                            }
+                        read: new Link({
+                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+                            templated: false,
+                            rel: [],
+                            attributes: {
+                                method: 'GET',
+                            },
                         }),
-                        "update": new Link({
-                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
-                            "templated": false,
-                            "rel": [],
-                            "attributes": {
-                                "method": "PUT"
-                            }
+                        update: new Link({
+                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+                            templated: false,
+                            rel: [],
+                            attributes: {
+                                method: 'PUT',
+                            },
                         }),
-                        "delete": new Link({
-                            "href": "/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9",
-                            "templated": false,
-                            "rel": [],
-                            "attributes": {
-                                "method": "DELETE"
-                            }
-                        })
-                    }
-                })
-            ]
+                        delete: new Link({
+                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+                            templated: false,
+                            rel: [],
+                            attributes: {
+                                method: 'DELETE',
+                            },
+                        }),
+                    },
+                }),
+            ],
         }),
-        "_links": {
-            "create": new Link({
-                "href": "/api/pets",
-                "templated": false,
-                "rel": [],
-                "attributes": {
-                    "method": "POST"
-                }
-            })
-        }
+        _links: {
+            create: new Link({
+                href: '/api/pets',
+                templated: false,
+                rel: [],
+                attributes: {
+                    method: 'POST',
+                },
+            }),
+        },
     });
 
     mockListPets = async (queryString: string) => {
@@ -845,10 +852,12 @@ test('delete success', async () => {
     const history = createMemoryHistory();
 
     const { container } = render(
-        <Router history={history}>
+        <HistoryRouter history={history}>
             <List />
-        </Router>
+        </HistoryRouter>,
     );
+
+    await screen.findByTestId('page-pet-list');
 
     mockDeletePet = async (id: string) => {
         return new Promise((resolve) => resolve());
@@ -859,19 +868,18 @@ test('delete success', async () => {
         limit: 1,
         count: 2,
         _embedded: new Embedded({
-            items: [
-            ]
+            items: [],
         }),
-        "_links": {
-            "create": new Link({
-                "href": "/api/pets",
-                "templated": false,
-                "rel": [],
-                "attributes": {
-                    "method": "POST"
-                }
-            })
-        }
+        _links: {
+            create: new Link({
+                href: '/api/pets',
+                templated: false,
+                rel: [],
+                attributes: {
+                    method: 'POST',
+                },
+            }),
+        },
     });
 
     mockListPets = async (queryString: string) => {
@@ -880,11 +888,12 @@ test('delete success', async () => {
 
     const removePetButton = await screen.findByTestId('remove-pet-0');
 
-    userEvent.click(removePetButton);
+    await userEvent.click(removePetButton);
 
-    await screen.findByTestId('remove-pet-0');
+    await waitForElementToBeRemoved(() => screen.getByTestId('remove-pet-0'));
 
-    expect(container.outerHTML).toBe(`
+    expect(container.outerHTML).toBe(
+        `
         <div>
             <div data-testid="page-pet-list">
                 <h1>List Pets</h1>
@@ -915,5 +924,8 @@ test('delete success', async () => {
                 </div>
             </div>
         </div>
-    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
+    `
+            .replace(/\n/g, '')
+            .replace(/ {2,}/g, ''),
+    );
 });

@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import HttpError from '../../../Model/Error/HttpError';
 import HttpErrorPartial from '../../../Component/Partial/HttpError';
@@ -6,18 +5,22 @@ import HttpErrorWithInvalidParameters from '../../../Model/Error/HttpErrorWithIn
 
 test('minimal', () => {
     const httpError = new HttpError({
-        title: 'This is the title'
+        title: 'This is the title',
     });
 
     const { container } = render(<HttpErrorPartial httpError={httpError} />);
 
-    expect(container.outerHTML).toBe(`
+    expect(container.outerHTML).toBe(
+        `
         <div>
             <div id="httpError">
                 <p>This is the title</p>
             </div>
         </div>
-    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
+    `
+            .replace(/\n/g, '')
+            .replace(/ {2,}/g, ''),
+    );
 });
 
 test('maximal', () => {
@@ -25,14 +28,13 @@ test('maximal', () => {
         title: 'This is the title',
         detail: 'This is the detail',
         instance: 'This is the instance',
-        invalidParameters: [
-            { name: 'Invalid Parameter Name', reason: 'Invalid Parameter Reason' }
-        ]
+        invalidParameters: [{ name: 'Invalid Parameter Name', reason: 'Invalid Parameter Reason' }],
     });
 
     const { container } = render(<HttpErrorPartial httpError={httpError} />);
 
-    expect(container.outerHTML).toBe(`
+    expect(container.outerHTML).toBe(
+        `
         <div>
             <div id="httpError">
                 <p>This is the title</p>
@@ -43,5 +45,8 @@ test('maximal', () => {
                 </ul>
             </div>
         </div>
-    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
+    `
+            .replace(/\n/g, '')
+            .replace(/ {2,}/g, ''),
+    );
 });

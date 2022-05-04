@@ -1,7 +1,6 @@
 import { FC, useEffect } from 'react';
 
 const NotFound: FC = () => {
-
     useEffect(() => {
         document.title = 'Not Found';
     }, []);

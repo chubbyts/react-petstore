@@ -5,6 +5,6 @@ class Embedded {
     constructor({ items }: { items: Array<PetResponse> }) {
         this.items = items;
     }
-};
+}
 
 export default Embedded;
