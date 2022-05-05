@@ -3,7 +3,17 @@ import InvalidParameter from './InvalidParameter';
 
 class HttpErrorWithInvalidParameters extends HttpError {
     invalidParameters: Array<InvalidParameter>;
-    constructor({ title, detail, instance, invalidParameters }: { title: string, detail?: string, instance?: string, invalidParameters?: Array<InvalidParameter>; }) {
+    constructor({
+        title,
+        detail,
+        instance,
+        invalidParameters,
+    }: {
+        title: string;
+        detail?: string;
+        instance?: string;
+        invalidParameters?: Array<InvalidParameter>;
+    }) {
         super({ title, detail, instance });
         this.invalidParameters = invalidParameters ?? [];
     }

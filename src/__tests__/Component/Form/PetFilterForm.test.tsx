@@ -3,19 +3,19 @@ import BadRequest from '../../../Model/Error/BadRequest';
 import InvalidParameter from '../../../Model/Error/InvalidParameter';
 import PetFilterForm from '../../../Component/Form/PetFilterForm';
 import PetFilters from '../../../Model/Pet/PetFilters';
-import React from 'react';
 import userEvent from '@testing-library/user-event';
 
 test('without error', () => {
-    const submitPetFilter = (filters: PetFilters) => { };
+    const submitPetFilter = (filters: PetFilters) => {};
 
     const defaultPetFilters = new PetFilters({ name: 'aa' });
 
     const { container } = render(
-        <PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={defaultPetFilters} />
+        <PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={defaultPetFilters} />,
     );
 
-    expect(container.outerHTML).toBe(`
+    expect(container.outerHTML).toBe(
+        `
         <div>
             <form>
                 <fieldset>
@@ -27,26 +27,26 @@ test('without error', () => {
                 </fieldset>
             </form>
         </div>
-    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
+    `
+            .replace(/\n/g, '')
+            .replace(/ {2,}/g, ''),
+    );
 });
 
 test('with error', () => {
-    const submitPetFilter = (filters: PetFilters) => { };
+    const submitPetFilter = (filters: PetFilters) => {};
 
-    const invalidParameters: Array<InvalidParameter> = [
-        { name: 'name', reason: 'Should not be empty' },
-    ];
+    const invalidParameters: Array<InvalidParameter> = [{ name: 'name', reason: 'Should not be empty' }];
 
     const badRequest = new BadRequest({
         title: 'title',
-        invalidParameters: invalidParameters
+        invalidParameters: invalidParameters,
     });
 
-    const { container } = render(
-        <PetFilterForm submitPetFilter={submitPetFilter} badRequest={badRequest} />
-    );
+    const { container } = render(<PetFilterForm submitPetFilter={submitPetFilter} badRequest={badRequest} />);
 
-    expect(container.outerHTML).toBe(`
+    expect(container.outerHTML).toBe(
+        `
         <div>
             <form>
                 <fieldset>
@@ -61,7 +61,10 @@ test('with error', () => {
                 </fieldset>
             </form>
         </div>
-    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
+    `
+            .replace(/\n/g, '')
+            .replace(/ {2,}/g, ''),
+    );
 });
 
 test('submit', async () => {
@@ -71,15 +74,11 @@ test('submit', async () => {
 
     const defaultPetFilters = new PetFilters({ name: 'aa' });
 
-    render(
-        <PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={defaultPetFilters} />
-    );
+    render(<PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={defaultPetFilters} />);
 
     const submitButton = await screen.findByTestId('submit-pet-filter');
 
-    userEvent.click(submitButton);
-
-    await screen.findByTestId('submit-pet-filter');
+    await userEvent.click(submitButton);
 
     expect(submitPetFilter.mock.calls.length).toBe(1);
 });
@@ -91,15 +90,11 @@ test('submit empty', async () => {
 
     const defaultPetFilters = new PetFilters({ name: '' });
 
-    render(
-        <PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={defaultPetFilters} />
-    );
+    render(<PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={defaultPetFilters} />);
 
     const submitButton = await screen.findByTestId('submit-pet-filter');
 
-    userEvent.click(submitButton);
-
-    await screen.findByTestId('submit-pet-filter');
+    await userEvent.click(submitButton);
 
     expect(submitPetFilter.mock.calls.length).toBe(1);
 });

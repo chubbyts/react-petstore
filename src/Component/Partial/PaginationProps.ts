@@ -1,5 +1,5 @@
 type PaginationProps = {
-    submitPage: { (page: number): void; };
+    submitPage: { (page: number): void };
     currentPage: number;
     totalPages: number;
     maxPages: number;

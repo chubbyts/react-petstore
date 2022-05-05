@@ -8,14 +8,14 @@ module.exports = {
                     options: {
                         postcssOptions: {
                             plugins: [
-                                require('tailwindcss'),
-                                require('postcss-nested'),
-                                require('autoprefixer')
-                            ]
-                        }
-                    }
-                }
-            ]
+                                'tailwindcss/nesting',
+                                'tailwindcss',
+                                'autoprefixer',
+                            ],
+                        },
+                    },
+                },
+            ],
         });
 
         return config;

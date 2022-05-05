@@ -2,7 +2,7 @@ module.exports = {
   future: {
     purgeLayersByDefault: true,
   },
-  purge: [
+  content: [
     './src/**/*.html',
     './src/**/*.jsx',
     './src/**/*.tsx',

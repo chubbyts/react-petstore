@@ -7,6 +7,7 @@ import PetResponse from '../Model/Pet/PetResponse';
 import PetList from '../Model/Pet/PetList';
 import UnprocessableEntity from '../Model/Error/UnprocessableEntity';
 import PetRequest from '../Model/Pet/PetRequest';
+import { throwableToError } from '../throwable-to-error';
 
 const url = `${process.env.REACT_APP_PETSTORE_URL}/api/pets`;
 
@@ -15,8 +16,8 @@ export const ListPets = async (queryString: string): Promise<HttpError | PetList
         const response: Response = await fetch(`${url}?${queryString}`, {
             method: 'GET',
             headers: {
-                'Accept': 'application/json'
-            }
+                Accept: 'application/json',
+            },
         });
 
         const json = await response.json();
@@ -33,7 +34,7 @@ export const ListPets = async (queryString: string): Promise<HttpError | PetList
             return new InternalServerError({ ...json });
         }
     } catch (error) {
-        return new NetworkError({ title: error.message });
+        return new NetworkError({ title: throwableToError(error).message });
     }
 
     throw new Error('Unknown response');
@@ -44,10 +45,10 @@ export const CreatePet = async (pet: PetRequest): Promise<HttpError | PetRespons
         const response: Response = await fetch(url, {
             method: 'POST',
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(pet)
+            body: JSON.stringify(pet),
         });
 
         const json = await response.json();
@@ -64,7 +65,7 @@ export const CreatePet = async (pet: PetRequest): Promise<HttpError | PetRespons
             return new InternalServerError({ ...json });
         }
     } catch (error) {
-        return new NetworkError({ title: error.message });
+        return new NetworkError({ title: throwableToError(error).message });
     }
 
     throw new Error('Unknown response');
@@ -75,8 +76,8 @@ export const ReadPet = async (id: string): Promise<HttpError | PetResponse> => {
         const response: Response = await fetch(`${url}/${id}`, {
             method: 'GET',
             headers: {
-                'Accept': 'application/json'
-            }
+                Accept: 'application/json',
+            },
         });
 
         const json = await response.json();
@@ -93,7 +94,7 @@ export const ReadPet = async (id: string): Promise<HttpError | PetResponse> => {
             return new InternalServerError({ ...json });
         }
     } catch (error) {
-        return new NetworkError({ title: error.message });
+        return new NetworkError({ title: throwableToError(error).message });
     }
 
     throw new Error('Unknown response');
@@ -104,10 +105,10 @@ export const UpdatePet = async (id: string, pet: PetRequest): Promise<HttpError 
         const response: Response = await fetch(`${url}/${id}`, {
             method: 'PUT',
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(pet)
+            body: JSON.stringify(pet),
         });
 
         const json = await response.json();
@@ -128,7 +129,7 @@ export const UpdatePet = async (id: string, pet: PetRequest): Promise<HttpError 
             return new InternalServerError({ ...json });
         }
     } catch (error) {
-        return new NetworkError({ title: error.message });
+        return new NetworkError({ title: throwableToError(error).message });
     }
 
     throw new Error('Unknown response');
@@ -139,8 +140,8 @@ export const DeletePet = async (id: string): Promise<HttpError | PetResponse | u
         const response: Response = await fetch(`${url}/${id}`, {
             method: 'DELETE',
             headers: {
-                'Accept': 'application/json',
-            }
+                Accept: 'application/json',
+            },
         });
 
         if (204 === response.status) {
@@ -157,7 +158,7 @@ export const DeletePet = async (id: string): Promise<HttpError | PetResponse | u
             return new InternalServerError({ ...json });
         }
     } catch (error) {
-        return new NetworkError({ title: error.message });
+        return new NetworkError({ title: throwableToError(error).message });
     }
 
     throw new Error('Unknown response');

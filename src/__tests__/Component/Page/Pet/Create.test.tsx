@@ -1,7 +1,6 @@
-import React from 'react';
 import { createMemoryHistory } from 'history';
 import { render, screen } from '@testing-library/react';
-import { Router } from 'react-router-dom';
+import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
 import Create from '../../../../Component/Page/Pet/Create';
 import HttpError from '../../../../Model/Error/HttpError';
 import PetFormProps from '../../../../Component/Form/PetFormProps';
@@ -9,29 +8,29 @@ import PetRequest from '../../../../Model/Pet/PetRequest';
 import UnprocessableEntity from '../../../../Model/Error/UnprocessableEntity';
 import userEvent from '@testing-library/user-event';
 
-let mockCreatePet = (pet: PetRequest) => { };
+let mockCreatePet = (pet: PetRequest) => {};
 
 jest.mock('../../../../ApiClient/Pet', () => {
     return {
         CreatePet: (pet: PetRequest) => {
             return mockCreatePet(pet);
-        }
+        },
     };
 });
 
 jest.mock('../../../../Component/Form/PetForm', () => {
     return ({ submitPet }: PetFormProps) => {
         const onSubmit = () => {
-            submitPet({ name: 'Brownie' });
+            submitPet({ ...({} as PetRequest), name: 'Brownie' });
         };
 
-        return (<button data-testid="test-button" onClick={onSubmit}></button>);
+        return <button data-testid="test-button" onClick={onSubmit}></button>;
     };
 });
 
 jest.mock('../../../../Component/Partial/HttpError', () => {
-    return ({ httpError }: { httpError: HttpError; }) => {
-        return (<div>httpError: {httpError.title}</div>);
+    return ({ httpError }: { httpError: HttpError }) => {
+        return <div>httpError: {httpError.title}</div>;
     };
 });
 
@@ -39,12 +38,13 @@ test('default', () => {
     const history = createMemoryHistory();
 
     const { container } = render(
-        <Router history={history}>
+        <HistoryRouter history={history}>
             <Create />
-        </Router>
+        </HistoryRouter>,
     );
 
-    expect(container.outerHTML).toBe(`
+    expect(container.outerHTML).toBe(
+        `
         <div>
             <div data-testid="page-pet-create">
                 <h1>Create Pet</h1>
@@ -52,7 +52,10 @@ test('default', () => {
                 <a class="btn-gray" href="/pet">List</a>
             </div>
         </div>
-    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
+    `
+            .replace(/\n/g, '')
+            .replace(/ {2,}/g, ''),
+    );
 });
 
 test('unprocessable entity', async () => {
@@ -63,18 +66,19 @@ test('unprocessable entity', async () => {
     const history = createMemoryHistory();
 
     const { container } = render(
-        <Router history={history}>
+        <HistoryRouter history={history}>
             <Create />
-        </Router>
+        </HistoryRouter>,
     );
 
     const testButton = await screen.findByTestId('test-button');
 
-    userEvent.click(testButton);
+    await userEvent.click(testButton);
 
-    await screen.findByTestId('test-button');
+    await screen.findByText(/httpError/);
 
-    expect(container.outerHTML).toBe(`
+    expect(container.outerHTML).toBe(
+        `
         <div>
             <div data-testid="page-pet-create">
                 <div>httpError: title</div>
@@ -83,7 +87,10 @@ test('unprocessable entity', async () => {
                 <a class="btn-gray" href="/pet">List</a>
             </div>
         </div>
-    `.replace(/\n/g, '').replace(/ {2,}/g, ''));
+    `
+            .replace(/\n/g, '')
+            .replace(/ {2,}/g, ''),
+    );
 });
 
 test('successful', async () => {
@@ -94,18 +101,16 @@ test('successful', async () => {
     const history = createMemoryHistory();
 
     render(
-        <Router history={history}>
+        <HistoryRouter history={history}>
             <Create />
-        </Router>
+        </HistoryRouter>,
     );
 
     expect(history.location.pathname).toBe('/');
 
     const testButton = await screen.findByTestId('test-button');
 
-    userEvent.click(testButton);
-
-    await screen.findByTestId('test-button');
+    await userEvent.click(testButton);
 
     expect(history.location.pathname).toBe('/pet');
 });

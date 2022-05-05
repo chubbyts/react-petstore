@@ -22,18 +22,17 @@ describe('list pets', () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: { offset: 0, limit: 20, count: 35, _embedded: { items: [] }, _links: { create: {} } }
+                body: { offset: 0, limit: 20, count: 35, _embedded: { items: [] }, _links: { create: {} } },
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json'
-                }
-            }
+                    Accept: 'application/json',
+                },
+            },
         );
 
-
-        const response = await ListPets('sort[name]=asc') as PetList;
+        const response = (await ListPets('sort[name]=asc')) as PetList;
 
         expect(response).toBeInstanceOf(PetList);
 
@@ -59,20 +58,18 @@ describe('list pets', () => {
                     title: 'Bad Request',
                     detail: 'Sorting value',
                     instance: '0123456789abcdef',
-                    invalidParameters: [
-                        { name: 'name', reason: 'unknown field', details: { key: 'value1' } }
-                    ]
-                }
+                    invalidParameters: [{ name: 'name', reason: 'unknown field', details: { key: 'value1' } }],
+                },
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json'
-                }
-            }
+                    Accept: 'application/json',
+                },
+            },
         );
 
-        const response = await ListPets('sort[name]=asc') as BadRequest;
+        const response = (await ListPets('sort[name]=asc')) as BadRequest;
 
         expect(response).toBeInstanceOf(BadRequest);
 
@@ -91,18 +88,18 @@ describe('list pets', () => {
                 },
                 body: {
                     title: 'Internal Server Error',
-                    instance: '0123456789abcdef'
-                }
+                    instance: '0123456789abcdef',
+                },
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json'
-                }
-            }
+                    Accept: 'application/json',
+                },
+            },
         );
 
-        const response = await ListPets('sort[name]=asc') as InternalServerError;
+        const response = (await ListPets('sort[name]=asc')) as InternalServerError;
 
         expect(response).toBeInstanceOf(InternalServerError);
 
@@ -114,17 +111,17 @@ describe('list pets', () => {
         fetchMock.get(
             'https://petstore.test/api/pets?sort[name]=asc',
             {
-                throws: new TypeError('Failed to fetch')
+                throws: new TypeError('Failed to fetch'),
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json'
-                }
-            }
+                    Accept: 'application/json',
+                },
+            },
         );
 
-        const response = await ListPets('sort[name]=asc') as NetworkError;
+        const response = (await ListPets('sort[name]=asc')) as NetworkError;
 
         expect(response).toBeInstanceOf(NetworkError);
 
@@ -139,14 +136,14 @@ describe('list pets', () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: {}
+                body: {},
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json'
-                }
-            }
+                    Accept: 'application/json',
+                },
+            },
         );
 
         expect.assertions(1);
@@ -166,19 +163,19 @@ describe('create pet', () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: { id: '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' }
+                body: { id: '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' },
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.parse(JSON.stringify(pet))
-            }
+                body: JSON.parse(JSON.stringify(pet)),
+            },
         );
 
-        const response = await CreatePet(pet) as PetResponse;
+        const response = (await CreatePet(pet)) as PetResponse;
 
         expect(response).toBeInstanceOf(PetResponse);
 
@@ -202,22 +199,20 @@ describe('create pet', () => {
                     title: 'Unprocessable Entity',
                     detail: 'name',
                     instance: '0123456789abcdef',
-                    invalidParameters: [
-                        { name: 'name', reason: 'empty', details: { key: 'value1' } }
-                    ]
-                }
+                    invalidParameters: [{ name: 'name', reason: 'empty', details: { key: 'value1' } }],
+                },
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.parse(JSON.stringify(pet))
-            }
+                body: JSON.parse(JSON.stringify(pet)),
+            },
         );
 
-        const response = await CreatePet(pet) as UnprocessableEntity;
+        const response = (await CreatePet(pet)) as UnprocessableEntity;
 
         expect(response).toBeInstanceOf(UnprocessableEntity);
 
@@ -238,20 +233,20 @@ describe('create pet', () => {
                 },
                 body: {
                     title: 'Internal Server Error',
-                    instance: '0123456789abcdef'
-                }
+                    instance: '0123456789abcdef',
+                },
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.parse(JSON.stringify(pet))
-            }
+                body: JSON.parse(JSON.stringify(pet)),
+            },
         );
 
-        const response = await CreatePet(pet) as InternalServerError;
+        const response = (await CreatePet(pet)) as InternalServerError;
 
         expect(response).toBeInstanceOf(InternalServerError);
 
@@ -265,18 +260,18 @@ describe('create pet', () => {
         fetchMock.post(
             'https://petstore.test/api/pets',
             {
-                throws: new TypeError('Failed to fetch')
+                throws: new TypeError('Failed to fetch'),
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json'
+                    Accept: 'application/json',
                 },
-                body: JSON.parse(JSON.stringify(pet))
-            }
+                body: JSON.parse(JSON.stringify(pet)),
+            },
         );
 
-        const response = await CreatePet(pet) as NetworkError;
+        const response = (await CreatePet(pet)) as NetworkError;
 
         expect(response).toBeInstanceOf(NetworkError);
 
@@ -293,15 +288,15 @@ describe('create pet', () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: {}
+                body: {},
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json'
+                    Accept: 'application/json',
                 },
-                body: JSON.parse(JSON.stringify(pet))
-            }
+                body: JSON.parse(JSON.stringify(pet)),
+            },
         );
 
         expect.assertions(1);
@@ -319,17 +314,17 @@ describe('read pet', () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: { id: '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' }
+                body: { id: '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' },
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json'
-                }
-            }
+                    Accept: 'application/json',
+                },
+            },
         );
 
-        const response = await ReadPet('4d783b77-eb09-4603-b99b-f590b605eaa9') as PetResponse;
+        const response = (await ReadPet('4d783b77-eb09-4603-b99b-f590b605eaa9')) as PetResponse;
 
         expect(response).toBeInstanceOf(PetResponse);
 
@@ -350,18 +345,18 @@ describe('read pet', () => {
                 body: {
                     title: 'Not Found',
                     detail: 'There is no pet with id "4d783b77-eb09-4603-b99b-f590b605eaa9"',
-                    instance: '0123456789abcdef'
-                }
+                    instance: '0123456789abcdef',
+                },
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json'
-                }
-            }
+                    Accept: 'application/json',
+                },
+            },
         );
 
-        const response = await ReadPet('4d783b77-eb09-4603-b99b-f590b605eaa9') as NotFound;
+        const response = (await ReadPet('4d783b77-eb09-4603-b99b-f590b605eaa9')) as NotFound;
 
         expect(response).toBeInstanceOf(NotFound);
 
@@ -380,18 +375,18 @@ describe('read pet', () => {
                 },
                 body: {
                     title: 'Internal Server Error',
-                    instance: '0123456789abcdef'
-                }
+                    instance: '0123456789abcdef',
+                },
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json'
-                }
-            }
+                    Accept: 'application/json',
+                },
+            },
         );
 
-        const response = await ReadPet('4d783b77-eb09-4603-b99b-f590b605eaa9') as InternalServerError;
+        const response = (await ReadPet('4d783b77-eb09-4603-b99b-f590b605eaa9')) as InternalServerError;
 
         expect(response).toBeInstanceOf(InternalServerError);
 
@@ -403,17 +398,17 @@ describe('read pet', () => {
         fetchMock.get(
             'https://petstore.test/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
             {
-                throws: new TypeError('Failed to fetch')
+                throws: new TypeError('Failed to fetch'),
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json'
-                }
-            }
+                    Accept: 'application/json',
+                },
+            },
         );
 
-        const response = await ReadPet('4d783b77-eb09-4603-b99b-f590b605eaa9') as NetworkError;
+        const response = (await ReadPet('4d783b77-eb09-4603-b99b-f590b605eaa9')) as NetworkError;
 
         expect(response).toBeInstanceOf(NetworkError);
 
@@ -428,14 +423,14 @@ describe('read pet', () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: {}
+                body: {},
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json'
-                }
-            }
+                    Accept: 'application/json',
+                },
+            },
         );
 
         expect.assertions(1);
@@ -455,19 +450,19 @@ describe('update pet', () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: { id: '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' }
+                body: { id: '4d783b77-eb09-4603-b99b-f590b605eaa9', name: 'Brownie' },
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.parse(JSON.stringify(pet))
-            }
+                body: JSON.parse(JSON.stringify(pet)),
+            },
         );
 
-        const response = await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet) as PetResponse;
+        const response = (await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet)) as PetResponse;
 
         expect(response).toBeInstanceOf(PetResponse);
 
@@ -490,20 +485,20 @@ describe('update pet', () => {
                 body: {
                     title: 'Not Found',
                     detail: 'There is no pet with id "4d783b77-eb09-4603-b99b-f590b605eaa9"',
-                    instance: '0123456789abcdef'
-                }
+                    instance: '0123456789abcdef',
+                },
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.parse(JSON.stringify(pet))
-            }
+                body: JSON.parse(JSON.stringify(pet)),
+            },
         );
 
-        const response = await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet) as NotFound;
+        const response = (await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet)) as NotFound;
 
         expect(response).toBeInstanceOf(NotFound);
 
@@ -526,22 +521,20 @@ describe('update pet', () => {
                     title: 'Unprocessable Entity',
                     detail: 'name',
                     instance: '0123456789abcdef',
-                    invalidParameters: [
-                        { name: 'name', reason: 'empty', details: { key: 'value1' } }
-                    ]
-                }
+                    invalidParameters: [{ name: 'name', reason: 'empty', details: { key: 'value1' } }],
+                },
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.parse(JSON.stringify(pet))
-            }
+                body: JSON.parse(JSON.stringify(pet)),
+            },
         );
 
-        const response = await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet) as UnprocessableEntity;
+        const response = (await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet)) as UnprocessableEntity;
 
         expect(response).toBeInstanceOf(UnprocessableEntity);
 
@@ -562,20 +555,20 @@ describe('update pet', () => {
                 },
                 body: {
                     title: 'Internal Server Error',
-                    instance: '0123456789abcdef'
-                }
+                    instance: '0123456789abcdef',
+                },
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.parse(JSON.stringify(pet))
-            }
+                body: JSON.parse(JSON.stringify(pet)),
+            },
         );
 
-        const response = await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet) as InternalServerError;
+        const response = (await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet)) as InternalServerError;
 
         expect(response).toBeInstanceOf(InternalServerError);
 
@@ -589,18 +582,18 @@ describe('update pet', () => {
         fetchMock.put(
             'https://petstore.test/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
             {
-                throws: new TypeError('Failed to fetch')
+                throws: new TypeError('Failed to fetch'),
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json'
+                    Accept: 'application/json',
                 },
-                body: JSON.parse(JSON.stringify(pet))
-            }
+                body: JSON.parse(JSON.stringify(pet)),
+            },
         );
 
-        const response = await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet) as NetworkError;
+        const response = (await UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet)) as NetworkError;
 
         expect(response).toBeInstanceOf(NetworkError);
 
@@ -617,20 +610,22 @@ describe('update pet', () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: {}
+                body: {},
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json'
+                    Accept: 'application/json',
                 },
-                body: JSON.parse(JSON.stringify(pet))
-            }
+                body: JSON.parse(JSON.stringify(pet)),
+            },
         );
 
         expect.assertions(1);
 
-        await expect(UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet)).rejects.toThrow(new Error('Unknown response'));
+        await expect(UpdatePet('4d783b77-eb09-4603-b99b-f590b605eaa9', pet)).rejects.toThrow(
+            new Error('Unknown response'),
+        );
     });
 });
 
@@ -639,14 +634,14 @@ describe('delete pet', () => {
         fetchMock.delete(
             'https://petstore.test/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
             {
-                status: 204
+                status: 204,
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json'
-                }
-            }
+                    Accept: 'application/json',
+                },
+            },
         );
 
         await DeletePet('4d783b77-eb09-4603-b99b-f590b605eaa9');
@@ -663,18 +658,18 @@ describe('delete pet', () => {
                 body: {
                     title: 'Not Found',
                     detail: 'There is no pet with id "4d783b77-eb09-4603-b99b-f590b605eaa9"',
-                    instance: '0123456789abcdef'
-                }
+                    instance: '0123456789abcdef',
+                },
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json'
-                }
-            }
+                    Accept: 'application/json',
+                },
+            },
         );
 
-        const response = await DeletePet('4d783b77-eb09-4603-b99b-f590b605eaa9') as NotFound;
+        const response = (await DeletePet('4d783b77-eb09-4603-b99b-f590b605eaa9')) as NotFound;
 
         expect(response).toBeInstanceOf(NotFound);
 
@@ -693,18 +688,18 @@ describe('delete pet', () => {
                 },
                 body: {
                     title: 'Internal Server Error',
-                    instance: '0123456789abcdef'
-                }
+                    instance: '0123456789abcdef',
+                },
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json'
-                }
-            }
+                    Accept: 'application/json',
+                },
+            },
         );
 
-        const response = await DeletePet('4d783b77-eb09-4603-b99b-f590b605eaa9') as InternalServerError;
+        const response = (await DeletePet('4d783b77-eb09-4603-b99b-f590b605eaa9')) as InternalServerError;
 
         expect(response).toBeInstanceOf(InternalServerError);
 
@@ -716,17 +711,17 @@ describe('delete pet', () => {
         fetchMock.delete(
             'https://petstore.test/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
             {
-                throws: new TypeError('Failed to fetch')
+                throws: new TypeError('Failed to fetch'),
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json'
-                }
-            }
+                    Accept: 'application/json',
+                },
+            },
         );
 
-        const response = await DeletePet('4d783b77-eb09-4603-b99b-f590b605eaa9') as NetworkError;
+        const response = (await DeletePet('4d783b77-eb09-4603-b99b-f590b605eaa9')) as NetworkError;
 
         expect(response).toBeInstanceOf(NetworkError);
 
@@ -741,14 +736,14 @@ describe('delete pet', () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: {}
+                body: {},
             },
             {
                 delay: 10,
                 headers: {
-                    'Accept': 'application/json'
-                }
-            }
+                    Accept: 'application/json',
+                },
+            },
         );
 
         expect.assertions(1);

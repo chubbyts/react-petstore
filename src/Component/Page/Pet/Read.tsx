@@ -1,17 +1,15 @@
 import { FC, useState, useEffect } from 'react';
 import { de } from 'date-fns/locale';
 import { format } from 'date-fns';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { ReadPet } from '../../../ApiClient/Pet';
 import HttpError from '../../../Model/Error/HttpError';
 import HttpErrorPartial from '../../Partial/HttpError';
 import PetResponse from '../../../Model/Pet/PetResponse';
 
-type Props = RouteComponentProps<{ id: string; }>;
-
-const Read: FC<Props> = ({ match }: Props) => {
-
-    const id = match.params.id;
+const Read: FC = () => {
+    const params = useParams();
+    const id = params.id as string;
 
     const [pet, setPet] = useState<PetResponse>();
     const [httpError, setHttpError] = useState<HttpError>();
@@ -34,14 +32,12 @@ const Read: FC<Props> = ({ match }: Props) => {
     };
 
     if (!pet && !httpError) {
-        return (<div></div>);
+        return <div></div>;
     }
 
     return (
-        <div data-testid='page-pet-read'>
-            {httpError ? (
-                <HttpErrorPartial httpError={httpError} />
-            ) : ''}
+        <div data-testid="page-pet-read">
+            {httpError ? <HttpErrorPartial httpError={httpError} /> : null}
             <h1>Read Pet</h1>
             {pet ? (
                 <div>
@@ -51,7 +47,10 @@ const Read: FC<Props> = ({ match }: Props) => {
                         <dt>CreatedAt</dt>
                         <dd>{format(Date.parse(pet.createdAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}</dd>
                         <dt>UpdatedAt</dt>
-                        <dd>{pet.updatedAt && format(Date.parse(pet.updatedAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}</dd>
+                        <dd>
+                            {pet.updatedAt &&
+                                format(Date.parse(pet.updatedAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}
+                        </dd>
                         <dt>Name</dt>
                         <dd>{pet.name}</dd>
                         <dt>Tag</dt>
@@ -59,14 +58,19 @@ const Read: FC<Props> = ({ match }: Props) => {
                         <dt>Vaccinations</dt>
                         <dd>
                             {pet.vaccinations.length > 0 ? (
-                                <ul>{pet.vaccinations.map((vaccination, i) => (<li key={i}>{vaccination.name}</li>))}</ul>
-                            ) : ''}
+                                <ul>
+                                    {pet.vaccinations.map((vaccination, i) => (
+                                        <li key={i}>{vaccination.name}</li>
+                                    ))}
+                                </ul>
+                            ) : null}
                         </dd>
                     </dl>
-                    <Link to='/pet' className='btn-gray'>List</Link>
+                    <Link to="/pet" className="btn-gray">
+                        List
+                    </Link>
                 </div>
-            ) : ''}
-
+            ) : null}
         </div>
     );
 };

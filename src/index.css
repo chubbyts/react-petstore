@@ -1,5 +1,5 @@
-@tailwind  base;
-@tailwind  components;
+@tailwind base;
+@tailwind components;
 @tailwind utilities;
 
 html,
@@ -138,7 +138,7 @@ fieldset {
 .form-field {
     @apply mb-3;
 
-    &.error input[type="text"] {
+    &.error input[type='text'] {
         @apply border-red-600;
         @apply bg-red-100;
     }
@@ -154,7 +154,7 @@ fieldset {
     @apply mb-3;
 }
 
-.form-field input[type="text"] {
+.form-field input[type='text'] {
     @apply block;
     @apply border;
     @apply mb-3;
