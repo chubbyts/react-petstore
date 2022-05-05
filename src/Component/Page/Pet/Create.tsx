@@ -8,37 +8,37 @@ import UnprocessableEntity from '../../../Model/Error/UnprocessableEntity';
 import PetRequest from '../../../Model/Pet/PetRequest';
 
 const Create: FC = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const [httpError, setHttpError] = useState<HttpError>();
+  const [httpError, setHttpError] = useState<HttpError>();
 
-    document.title = 'Create Pet';
+  document.title = 'Create Pet';
 
-    const submitPet = async (pet: PetRequest) => {
-        const response = await CreatePet(pet);
+  const submitPet = async (pet: PetRequest) => {
+    const response = await CreatePet(pet);
 
-        if (response instanceof HttpError) {
-            setHttpError(response);
-        } else {
-            setHttpError(undefined);
+    if (response instanceof HttpError) {
+      setHttpError(response);
+    } else {
+      setHttpError(undefined);
 
-            navigate('/pet');
-        }
-    };
+      navigate('/pet');
+    }
+  };
 
-    return (
-        <div data-testid="page-pet-create">
-            {httpError ? <HttpErrorPartial httpError={httpError} /> : null}
-            <h1>Create Pet</h1>
-            <PetForm
-                submitPet={submitPet}
-                unprocessableEntity={httpError instanceof UnprocessableEntity ? httpError : undefined}
-            />
-            <Link to="/pet" className="btn-gray">
-                List
-            </Link>
-        </div>
-    );
+  return (
+    <div data-testid="page-pet-create">
+      {httpError ? <HttpErrorPartial httpError={httpError} /> : null}
+      <h1>Create Pet</h1>
+      <PetForm
+        submitPet={submitPet}
+        unprocessableEntity={httpError instanceof UnprocessableEntity ? httpError : undefined}
+      />
+      <Link to="/pet" className="btn-gray">
+        List
+      </Link>
+    </div>
+  );
 };
 
 export default Create;

@@ -4,23 +4,23 @@ import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
 import Home from '../../../Component/Page/Home';
 
 test('default', () => {
-    const history = createMemoryHistory();
+  const history = createMemoryHistory();
 
-    const { container } = render(
-        <HistoryRouter history={history}>
-            <Home />
-        </HistoryRouter>,
-    );
+  const { container } = render(
+    <HistoryRouter history={history}>
+      <Home />
+    </HistoryRouter>,
+  );
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <div>
                 <h1>Home</h1>
             </div>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });

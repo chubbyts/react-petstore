@@ -8,12 +8,12 @@ import userEvent from '@testing-library/user-event';
 import Vaccination from '../../../Model/Pet/Vaccination';
 
 test('empty', () => {
-    const submitPet = (pet: PetRequest): void => {};
+  const submitPet = (pet: PetRequest): void => {};
 
-    const { container } = render(<PetForm submitPet={submitPet} />);
+  const { container } = render(<PetForm submitPet={submitPet} />);
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <form>
                 <fieldset>
@@ -36,25 +36,25 @@ test('empty', () => {
             </form>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('without error', () => {
-    const submitPet = (pet: PetRequest): void => {};
+  const submitPet = (pet: PetRequest): void => {};
 
-    const defaultPet = new PetResponse({
-        id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-        createdAt: '2005-08-15T15:52:01+00:00',
-        name: 'Brownie',
-        vaccinations: [new Vaccination({ name: 'Rabies' })],
-    });
+  const defaultPet = new PetResponse({
+    id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+    createdAt: '2005-08-15T15:52:01+00:00',
+    name: 'Brownie',
+    vaccinations: [new Vaccination({ name: 'Rabies' })],
+  });
 
-    const { container } = render(<PetForm submitPet={submitPet} defaultPet={defaultPet} />);
+  const { container } = render(<PetForm submitPet={submitPet} defaultPet={defaultPet} />);
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <form>
                 <fieldset>
@@ -84,37 +84,37 @@ test('without error', () => {
             </form>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('with error', () => {
-    const submitPet = (pet: PetRequest): void => {};
+  const submitPet = (pet: PetRequest): void => {};
 
-    const defaultPet = new PetResponse({
-        id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-        createdAt: '2005-08-15T15:52:01+00:00',
-        name: '',
-        vaccinations: [new Vaccination({ name: '' })],
-    });
+  const defaultPet = new PetResponse({
+    id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+    createdAt: '2005-08-15T15:52:01+00:00',
+    name: '',
+    vaccinations: [new Vaccination({ name: '' })],
+  });
 
-    const invalidParameters: Array<InvalidParameter> = [
-        { name: 'name', reason: 'Should not be empty' },
-        { name: 'vaccinations[0].name', reason: 'Should not be empty' },
-    ];
+  const invalidParameters: Array<InvalidParameter> = [
+    { name: 'name', reason: 'Should not be empty' },
+    { name: 'vaccinations[0].name', reason: 'Should not be empty' },
+  ];
 
-    const unprocessableEntity = new UnprocessableEntity({
-        title: 'title',
-        invalidParameters: invalidParameters,
-    });
+  const unprocessableEntity = new UnprocessableEntity({
+    title: 'title',
+    invalidParameters: invalidParameters,
+  });
 
-    const { container } = render(
-        <PetForm submitPet={submitPet} defaultPet={defaultPet} unprocessableEntity={unprocessableEntity} />,
-    );
+  const { container } = render(
+    <PetForm submitPet={submitPet} defaultPet={defaultPet} unprocessableEntity={unprocessableEntity} />,
+  );
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <form>
                 <fieldset>
@@ -150,29 +150,29 @@ test('with error', () => {
             </form>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('add vaccination', async () => {
-    const submitPet = (pet: PetRequest): void => {};
+  const submitPet = (pet: PetRequest): void => {};
 
-    const defaultPet = new PetResponse({
-        id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-        createdAt: '2005-08-15T15:52:01+00:00',
-        name: 'Brownie',
-        vaccinations: [new Vaccination({ name: 'Rabies' })],
-    });
+  const defaultPet = new PetResponse({
+    id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+    createdAt: '2005-08-15T15:52:01+00:00',
+    name: 'Brownie',
+    vaccinations: [new Vaccination({ name: 'Rabies' })],
+  });
 
-    const { container } = render(<PetForm submitPet={submitPet} defaultPet={defaultPet} />);
+  const { container } = render(<PetForm submitPet={submitPet} defaultPet={defaultPet} />);
 
-    const submitButton = await screen.findByTestId('add-vaccination');
+  const submitButton = await screen.findByTestId('add-vaccination');
 
-    await userEvent.click(submitButton);
+  await userEvent.click(submitButton);
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <form>
                 <fieldset>
@@ -209,29 +209,29 @@ test('add vaccination', async () => {
             </form>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('remove vaccination', async () => {
-    const submitPet = (pet: PetRequest): void => {};
+  const submitPet = (pet: PetRequest): void => {};
 
-    const defaultPet = new PetResponse({
-        id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-        createdAt: '2005-08-15T15:52:01+00:00',
-        name: 'Brownie',
-        vaccinations: [new Vaccination({ name: 'Rabies' })],
-    });
+  const defaultPet = new PetResponse({
+    id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+    createdAt: '2005-08-15T15:52:01+00:00',
+    name: 'Brownie',
+    vaccinations: [new Vaccination({ name: 'Rabies' })],
+  });
 
-    const { container } = render(<PetForm submitPet={submitPet} defaultPet={defaultPet} />);
+  const { container } = render(<PetForm submitPet={submitPet} defaultPet={defaultPet} />);
 
-    const submitButton = await screen.findByTestId('remove-vaccination-0');
+  const submitButton = await screen.findByTestId('remove-vaccination-0');
 
-    await userEvent.click(submitButton);
+  await userEvent.click(submitButton);
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <form>
                 <fieldset>
@@ -254,75 +254,75 @@ test('remove vaccination', async () => {
             </form>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('submit minimal', async () => {
-    let submitPet = (pet: PetRequest) => {};
+  let submitPet = (pet: PetRequest) => {};
 
-    const submitPetMock = jest.fn((pet: PetRequest) => {
-        submitPet(pet);
+  const submitPetMock = jest.fn((pet: PetRequest) => {
+    submitPet(pet);
+  });
+
+  await new Promise(async (resolve) => {
+    submitPet = (pet: PetRequest) => {
+      expect(pet.name).toBe('Brownie');
+      expect(pet.tag).toBeUndefined();
+
+      resolve(undefined);
+    };
+
+    const defaultPet = new PetResponse({
+      id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+      createdAt: '2005-08-15T15:52:01+00:00',
+      name: 'Brownie',
+      tag: '',
     });
 
-    await new Promise(async (resolve) => {
-        submitPet = (pet: PetRequest) => {
-            expect(pet.name).toBe('Brownie');
-            expect(pet.tag).toBeUndefined();
+    render(<PetForm submitPet={submitPetMock} defaultPet={defaultPet} />);
 
-            resolve(undefined);
-        };
+    const submitButton = await screen.findByTestId('submit-pet');
 
-        const defaultPet = new PetResponse({
-            id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-            createdAt: '2005-08-15T15:52:01+00:00',
-            name: 'Brownie',
-            tag: '',
-        });
+    await userEvent.click(submitButton);
+  });
 
-        render(<PetForm submitPet={submitPetMock} defaultPet={defaultPet} />);
-
-        const submitButton = await screen.findByTestId('submit-pet');
-
-        await userEvent.click(submitButton);
-    });
-
-    expect(submitPetMock.mock.calls.length).toBe(1);
+  expect(submitPetMock.mock.calls.length).toBe(1);
 });
 
 // @todo fix test
 test('submit maximal', async () => {
-    let submitPet = (pet: PetRequest) => {};
+  let submitPet = (pet: PetRequest) => {};
 
-    const submitPetMock = jest.fn((pet: PetRequest) => {
-        submitPet(pet);
+  const submitPetMock = jest.fn((pet: PetRequest) => {
+    submitPet(pet);
+  });
+
+  await new Promise(async (resolve) => {
+    submitPet = (pet: PetRequest) => {
+      expect(pet.name).toBe('Brownie');
+      expect(pet.tag).toBe('0001-000');
+      expect(pet.vaccinations).toHaveLength(1);
+      expect(pet.vaccinations[0].name).toBe('Rabies');
+
+      resolve(undefined);
+    };
+
+    const defaultPet = new PetResponse({
+      id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+      createdAt: '2005-08-15T15:52:01+00:00',
+      name: 'Brownie',
+      tag: '0001-000',
+      vaccinations: [new Vaccination({ name: 'Rabies' })],
     });
 
-    await new Promise(async (resolve) => {
-        submitPet = (pet: PetRequest) => {
-            expect(pet.name).toBe('Brownie');
-            expect(pet.tag).toBe('0001-000');
-            expect(pet.vaccinations).toHaveLength(1);
-            expect(pet.vaccinations[0].name).toBe('Rabies');
+    render(<PetForm submitPet={submitPetMock} defaultPet={defaultPet} />);
 
-            resolve(undefined);
-        };
+    const submitButton = await screen.findByTestId('submit-pet');
 
-        const defaultPet = new PetResponse({
-            id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-            createdAt: '2005-08-15T15:52:01+00:00',
-            name: 'Brownie',
-            tag: '0001-000',
-            vaccinations: [new Vaccination({ name: 'Rabies' })],
-        });
+    await userEvent.click(submitButton);
+  });
 
-        render(<PetForm submitPet={submitPetMock} defaultPet={defaultPet} />);
-
-        const submitButton = await screen.findByTestId('submit-pet');
-
-        await userEvent.click(submitButton);
-    });
-
-    expect(submitPetMock.mock.calls.length).toBe(1);
+  expect(submitPetMock.mock.calls.length).toBe(1);
 });

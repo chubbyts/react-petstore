@@ -6,69 +6,69 @@ import { ReactNode } from 'react';
 import { createMemoryHistory } from 'history';
 
 jest.mock('react-router-dom', () => {
-    const originalModule = jest.requireActual('react-router-dom');
+  const originalModule = jest.requireActual('react-router-dom');
 
-    return {
-        __esModule: true,
-        ...originalModule,
-        // add your noops here
-        BrowserRouter: ({ children }: { children: ReactNode }) => <div>{children}</div>,
-    };
+  return {
+    __esModule: true,
+    ...originalModule,
+    // add your noops here
+    BrowserRouter: ({ children }: { children: ReactNode }) => <div>{children}</div>,
+  };
 });
 
 jest.mock('../Component/Page/Home', () => {
-    return () => {
-        return <div data-testid="page-home-mock"></div>;
-    };
+  return () => {
+    return <div data-testid="page-home-mock"></div>;
+  };
 });
 
 jest.mock('../Component/Page/Pet/List', () => {
-    return () => {
-        return <div data-testid="page-pet-list-mock"></div>;
-    };
+  return () => {
+    return <div data-testid="page-pet-list-mock"></div>;
+  };
 });
 
 jest.mock('../Component/Page/Pet/Create', () => {
-    return () => {
-        return <div data-testid="page-pet-create-mock"></div>;
-    };
+  return () => {
+    return <div data-testid="page-pet-create-mock"></div>;
+  };
 });
 
 jest.mock('../Component/Page/Pet/Read', () => {
-    return () => {
-        return <div data-testid="page-pet-read-mock"></div>;
-    };
+  return () => {
+    return <div data-testid="page-pet-read-mock"></div>;
+  };
 });
 
 jest.mock('../Component/Page/Pet/Update', () => {
-    return () => {
-        return <div data-testid="page-pet-update-mock"></div>;
-    };
+  return () => {
+    return <div data-testid="page-pet-update-mock"></div>;
+  };
 });
 
 jest.mock('../Component/Page/NotFound', () => {
-    return () => {
-        return <div data-testid="page-not-found-mock"></div>;
-    };
+  return () => {
+    return <div data-testid="page-not-found-mock"></div>;
+  };
 });
 
 test('toggle', async () => {
-    const history = createMemoryHistory();
+  const history = createMemoryHistory();
 
-    const { container } = render(
-        <HistoryRouter history={history}>
-            <App />
-        </HistoryRouter>,
-    );
+  const { container } = render(
+    <HistoryRouter history={history}>
+      <App />
+    </HistoryRouter>,
+  );
 
-    await screen.findByTestId('page-home-mock');
+  await screen.findByTestId('page-home-mock');
 
-    const navigationToggle = await screen.findByTestId('navigation-toggle');
+  const navigationToggle = await screen.findByTestId('navigation-toggle');
 
-    await userEvent.click(navigationToggle);
+  await userEvent.click(navigationToggle);
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <div>
                 <div id="wrapper" class="displayMenu">
@@ -94,24 +94,24 @@ test('toggle', async () => {
             </div>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('home page', async () => {
-    const history = createMemoryHistory();
+  const history = createMemoryHistory();
 
-    const { container } = render(
-        <HistoryRouter history={history}>
-            <App />
-        </HistoryRouter>,
-    );
+  const { container } = render(
+    <HistoryRouter history={history}>
+      <App />
+    </HistoryRouter>,
+  );
 
-    await screen.findByTestId('page-home-mock');
+  await screen.findByTestId('page-home-mock');
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <div>
                 <div id="wrapper" class="">
@@ -137,25 +137,25 @@ test('home page', async () => {
             </div>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('not found', async () => {
-    const history = createMemoryHistory();
-    history.push('/unknown');
+  const history = createMemoryHistory();
+  history.push('/unknown');
 
-    const { container } = render(
-        <HistoryRouter history={history}>
-            <App />
-        </HistoryRouter>,
-    );
+  const { container } = render(
+    <HistoryRouter history={history}>
+      <App />
+    </HistoryRouter>,
+  );
 
-    await screen.findByTestId('page-not-found-mock');
+  await screen.findByTestId('page-not-found-mock');
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <div>
                 <div id="wrapper" class="">
@@ -181,25 +181,25 @@ test('not found', async () => {
             </div>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('pet list', async () => {
-    const history = createMemoryHistory();
-    history.push('/pet');
+  const history = createMemoryHistory();
+  history.push('/pet');
 
-    const { container } = render(
-        <HistoryRouter history={history}>
-            <App />
-        </HistoryRouter>,
-    );
+  const { container } = render(
+    <HistoryRouter history={history}>
+      <App />
+    </HistoryRouter>,
+  );
 
-    await screen.findByTestId('page-pet-list-mock');
+  await screen.findByTestId('page-pet-list-mock');
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <div>
                 <div id="wrapper" class="">
@@ -225,25 +225,25 @@ test('pet list', async () => {
             </div>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('pet create', async () => {
-    const history = createMemoryHistory();
-    history.push('/pet/create');
+  const history = createMemoryHistory();
+  history.push('/pet/create');
 
-    const { container } = render(
-        <HistoryRouter history={history}>
-            <App />
-        </HistoryRouter>,
-    );
+  const { container } = render(
+    <HistoryRouter history={history}>
+      <App />
+    </HistoryRouter>,
+  );
 
-    await screen.findByTestId('page-pet-create-mock');
+  await screen.findByTestId('page-pet-create-mock');
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <div>
                 <div id="wrapper" class="">
@@ -269,25 +269,25 @@ test('pet create', async () => {
             </div>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('pet read', async () => {
-    const history = createMemoryHistory();
-    history.push('/pet/4d783b77-eb09-4603-b99b-f590b605eaa9');
+  const history = createMemoryHistory();
+  history.push('/pet/4d783b77-eb09-4603-b99b-f590b605eaa9');
 
-    const { container } = render(
-        <HistoryRouter history={history}>
-            <App />
-        </HistoryRouter>,
-    );
+  const { container } = render(
+    <HistoryRouter history={history}>
+      <App />
+    </HistoryRouter>,
+  );
 
-    await screen.findByTestId('page-pet-read-mock');
+  await screen.findByTestId('page-pet-read-mock');
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <div>
                 <div id="wrapper" class="">
@@ -313,25 +313,25 @@ test('pet read', async () => {
             </div>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('pet update', async () => {
-    const history = createMemoryHistory();
-    history.push('/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update');
+  const history = createMemoryHistory();
+  history.push('/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update');
 
-    const { container } = render(
-        <HistoryRouter history={history}>
-            <App />
-        </HistoryRouter>,
-    );
+  const { container } = render(
+    <HistoryRouter history={history}>
+      <App />
+    </HistoryRouter>,
+  );
 
-    await screen.findByTestId('page-pet-update-mock');
+  await screen.findByTestId('page-pet-update-mock');
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <div>
                 <div id="wrapper" class="">
@@ -357,7 +357,7 @@ test('pet update', async () => {
             </div>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });

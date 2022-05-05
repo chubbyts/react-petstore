@@ -18,72 +18,72 @@ let mockListPets = (queryString: string) => {};
 let mockDeletePet = (id: string) => {};
 
 jest.mock('../../../../ApiClient/Pet', () => {
-    return {
-        ListPets: (queryString: string) => {
-            return mockListPets(queryString);
-        },
-        DeletePet: (id: string) => {
-            return mockDeletePet(id);
-        },
-    };
+  return {
+    ListPets: (queryString: string) => {
+      return mockListPets(queryString);
+    },
+    DeletePet: (id: string) => {
+      return mockDeletePet(id);
+    },
+  };
 });
 
 beforeEach(() => {
-    mockListPets = (queryString: string) => {};
-    mockDeletePet = (id: string) => {};
+  mockListPets = (queryString: string) => {};
+  mockDeletePet = (id: string) => {};
 });
 
 jest.mock('../../../../Component/Form/PetFilterForm', () => {
-    return ({ submitPetFilter }: PetFilterFormProps) => {
-        const onSubmit = () => {
-            submitPetFilter({ name: 'Bro' });
-        };
-
-        return <button data-testid="test-filter-button" onClick={onSubmit}></button>;
+  return ({ submitPetFilter }: PetFilterFormProps) => {
+    const onSubmit = () => {
+      submitPetFilter({ name: 'Bro' });
     };
+
+    return <button data-testid="test-filter-button" onClick={onSubmit}></button>;
+  };
 });
 
 jest.mock('../../../../Component/Partial/HttpError', () => {
-    return ({ httpError }: { httpError: HttpError }) => {
-        return <div>httpError: {httpError.title}</div>;
-    };
+  return ({ httpError }: { httpError: HttpError }) => {
+    return <div>httpError: {httpError.title}</div>;
+  };
 });
 
 jest.mock('../../../../Component/Partial/Pagination', () => {
-    return ({ submitPage, currentPage, totalPages, maxPages }: PaginationProps) => {
-        const submit = () => {
-            submitPage(2);
-        };
-
-        return (
-            <button
-                data-testid="test-pagination-button"
-                data-current-page={currentPage}
-                data-total-pages={totalPages}
-                data-max-pages={maxPages}
-                onClick={submit}
-            ></button>
-        );
+  return ({ submitPage, currentPage, totalPages, maxPages }: PaginationProps) => {
+    const submit = () => {
+      submitPage(2);
     };
+
+    return (
+      <button
+        data-testid="test-pagination-button"
+        data-current-page={currentPage}
+        data-total-pages={totalPages}
+        data-max-pages={maxPages}
+        onClick={submit}
+      ></button>
+    );
+  };
 });
 
 test('bad request', async () => {
-    mockListPets = async (queryString: string) => {
-        return new Promise<BadRequest>((resolve) => resolve(new BadRequest({ title: 'title' })));
-    };
+  mockListPets = async (queryString: string) => {
+    return new Promise<BadRequest>((resolve) => resolve(new BadRequest({ title: 'title' })));
+  };
 
-    const history = createMemoryHistory();
+  const history = createMemoryHistory();
 
-    const { container } = render(
-        <HistoryRouter history={history}>
-            <List />
-        </HistoryRouter>,
-    );
+  const { container } = render(
+    <HistoryRouter history={history}>
+      <List />
+    </HistoryRouter>,
+  );
 
-    await screen.findByTestId('page-pet-list');
+  await screen.findByTestId('page-pet-list');
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <div data-testid="page-pet-list">
                 <div>httpError: title</div>
@@ -91,82 +91,82 @@ test('bad request', async () => {
             </div>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('default', async () => {
-    const petList = new PetList({
-        offset: 0,
-        limit: 1,
-        count: 2,
-        _embedded: new Embedded({
-            items: [
-                new PetResponse({
-                    id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-                    createdAt: '2005-08-15T15:52:01+00:00',
-                    updatedAt: '2005-08-15T15:55:01+00:00',
-                    name: 'Brownie',
-                    tag: '0001-000',
-                    vaccinations: [new Vaccination({ name: 'Rabies' })],
-                    _links: {
-                        read: new Link({
-                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-                            templated: false,
-                            rel: [],
-                            attributes: {
-                                method: 'GET',
-                            },
-                        }),
-                        update: new Link({
-                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-                            templated: false,
-                            rel: [],
-                            attributes: {
-                                method: 'PUT',
-                            },
-                        }),
-                        delete: new Link({
-                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-                            templated: false,
-                            rel: [],
-                            attributes: {
-                                method: 'DELETE',
-                            },
-                        }),
-                    },
-                }),
-            ],
-        }),
-        _links: {
-            create: new Link({
-                href: '/api/pets',
-                templated: false,
-                rel: [],
-                attributes: {
-                    method: 'POST',
-                },
+  const petList = new PetList({
+    offset: 0,
+    limit: 1,
+    count: 2,
+    _embedded: new Embedded({
+      items: [
+        new PetResponse({
+          id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+          createdAt: '2005-08-15T15:52:01+00:00',
+          updatedAt: '2005-08-15T15:55:01+00:00',
+          name: 'Brownie',
+          tag: '0001-000',
+          vaccinations: [new Vaccination({ name: 'Rabies' })],
+          _links: {
+            read: new Link({
+              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+              templated: false,
+              rel: [],
+              attributes: {
+                method: 'GET',
+              },
             }),
+            update: new Link({
+              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+              templated: false,
+              rel: [],
+              attributes: {
+                method: 'PUT',
+              },
+            }),
+            delete: new Link({
+              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+              templated: false,
+              rel: [],
+              attributes: {
+                method: 'DELETE',
+              },
+            }),
+          },
+        }),
+      ],
+    }),
+    _links: {
+      create: new Link({
+        href: '/api/pets',
+        templated: false,
+        rel: [],
+        attributes: {
+          method: 'POST',
         },
-    });
+      }),
+    },
+  });
 
-    mockListPets = async (queryString: string) => {
-        return new Promise<PetList>((resolve) => resolve(petList));
-    };
+  mockListPets = async (queryString: string) => {
+    return new Promise<PetList>((resolve) => resolve(petList));
+  };
 
-    const history = createMemoryHistory();
+  const history = createMemoryHistory();
 
-    const { container } = render(
-        <HistoryRouter history={history}>
-            <List />
-        </HistoryRouter>,
-    );
+  const { container } = render(
+    <HistoryRouter history={history}>
+      <List />
+    </HistoryRouter>,
+  );
 
-    await screen.findByTestId('page-pet-list');
+  await screen.findByTestId('page-pet-list');
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <div data-testid="page-pet-list">
                 <h1>List Pets</h1>
@@ -210,48 +210,48 @@ test('default', async () => {
             </div>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('no actions', async () => {
-    const petList = new PetList({
-        offset: 0,
-        limit: 1,
-        count: 2,
-        _embedded: new Embedded({
-            items: [
-                new PetResponse({
-                    id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-                    createdAt: '2005-08-15T15:52:01+00:00',
-                    updatedAt: '2005-08-15T15:55:01+00:00',
-                    name: 'Brownie',
-                    tag: '0001-000',
-                    vaccinations: [new Vaccination({ name: 'Rabies' })],
-                    _links: {},
-                }),
-            ],
+  const petList = new PetList({
+    offset: 0,
+    limit: 1,
+    count: 2,
+    _embedded: new Embedded({
+      items: [
+        new PetResponse({
+          id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+          createdAt: '2005-08-15T15:52:01+00:00',
+          updatedAt: '2005-08-15T15:55:01+00:00',
+          name: 'Brownie',
+          tag: '0001-000',
+          vaccinations: [new Vaccination({ name: 'Rabies' })],
+          _links: {},
         }),
-        _links: {},
-    });
+      ],
+    }),
+    _links: {},
+  });
 
-    mockListPets = async (queryString: string) => {
-        return new Promise<PetList>((resolve) => resolve(petList));
-    };
+  mockListPets = async (queryString: string) => {
+    return new Promise<PetList>((resolve) => resolve(petList));
+  };
 
-    const history = createMemoryHistory();
+  const history = createMemoryHistory();
 
-    const { container } = render(
-        <HistoryRouter history={history}>
-            <List />
-        </HistoryRouter>,
-    );
+  const { container } = render(
+    <HistoryRouter history={history}>
+      <List />
+    </HistoryRouter>,
+  );
 
-    await screen.findByTestId('page-pet-list');
+  await screen.findByTestId('page-pet-list');
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <div data-testid="page-pet-list">
                 <h1>List Pets</h1>
@@ -290,92 +290,92 @@ test('no actions', async () => {
             </div>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('submit bad request', async () => {
-    const petList = new PetList({
-        offset: 0,
-        limit: 1,
-        count: 2,
-        _embedded: new Embedded({
-            items: [
-                new PetResponse({
-                    id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-                    createdAt: '2005-08-15T15:52:01+00:00',
-                    updatedAt: '2005-08-15T15:55:01+00:00',
-                    name: 'Brownie',
-                    tag: '0001-000',
-                    vaccinations: [new Vaccination({ name: 'Rabies' })],
-                    _links: {
-                        read: new Link({
-                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-                            templated: false,
-                            rel: [],
-                            attributes: {
-                                method: 'GET',
-                            },
-                        }),
-                        update: new Link({
-                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-                            templated: false,
-                            rel: [],
-                            attributes: {
-                                method: 'PUT',
-                            },
-                        }),
-                        delete: new Link({
-                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-                            templated: false,
-                            rel: [],
-                            attributes: {
-                                method: 'DELETE',
-                            },
-                        }),
-                    },
-                }),
-            ],
-        }),
-        _links: {
-            create: new Link({
-                href: '/api/pets',
-                templated: false,
-                rel: [],
-                attributes: {
-                    method: 'POST',
-                },
+  const petList = new PetList({
+    offset: 0,
+    limit: 1,
+    count: 2,
+    _embedded: new Embedded({
+      items: [
+        new PetResponse({
+          id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+          createdAt: '2005-08-15T15:52:01+00:00',
+          updatedAt: '2005-08-15T15:55:01+00:00',
+          name: 'Brownie',
+          tag: '0001-000',
+          vaccinations: [new Vaccination({ name: 'Rabies' })],
+          _links: {
+            read: new Link({
+              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+              templated: false,
+              rel: [],
+              attributes: {
+                method: 'GET',
+              },
             }),
+            update: new Link({
+              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+              templated: false,
+              rel: [],
+              attributes: {
+                method: 'PUT',
+              },
+            }),
+            delete: new Link({
+              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+              templated: false,
+              rel: [],
+              attributes: {
+                method: 'DELETE',
+              },
+            }),
+          },
+        }),
+      ],
+    }),
+    _links: {
+      create: new Link({
+        href: '/api/pets',
+        templated: false,
+        rel: [],
+        attributes: {
+          method: 'POST',
         },
-    });
+      }),
+    },
+  });
 
-    mockListPets = async (queryString: string) => {
-        return new Promise<PetList>((resolve) => resolve(petList));
-    };
+  mockListPets = async (queryString: string) => {
+    return new Promise<PetList>((resolve) => resolve(petList));
+  };
 
-    const history = createMemoryHistory();
+  const history = createMemoryHistory();
 
-    const { container } = render(
-        <HistoryRouter history={history}>
-            <List />
-        </HistoryRouter>,
-    );
+  const { container } = render(
+    <HistoryRouter history={history}>
+      <List />
+    </HistoryRouter>,
+  );
 
-    await screen.findByTestId('page-pet-list');
+  await screen.findByTestId('page-pet-list');
 
-    mockListPets = async (queryString: string) => {
-        return new Promise<BadRequest>((resolve) => resolve(new BadRequest({ title: 'title' })));
-    };
+  mockListPets = async (queryString: string) => {
+    return new Promise<BadRequest>((resolve) => resolve(new BadRequest({ title: 'title' })));
+  };
 
-    const testButton = await screen.findByTestId('test-filter-button');
+  const testButton = await screen.findByTestId('test-filter-button');
 
-    await userEvent.click(testButton);
+  await userEvent.click(testButton);
 
-    await screen.findByText(/httpError/);
+  await screen.findByText(/httpError/);
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <div data-testid="page-pet-list">
                 <div>httpError: title</div>
@@ -420,327 +420,327 @@ test('submit bad request', async () => {
             </div>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('submit filter', async () => {
-    const petList = new PetList({
-        offset: 0,
-        limit: 1,
-        count: 2,
-        _embedded: new Embedded({
-            items: [
-                new PetResponse({
-                    id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-                    createdAt: '2005-08-15T15:52:01+00:00',
-                    updatedAt: '2005-08-15T15:55:01+00:00',
-                    name: 'Brownie',
-                    tag: '0001-000',
-                    vaccinations: [new Vaccination({ name: 'Rabies' })],
-                    _links: {
-                        read: new Link({
-                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-                            templated: false,
-                            rel: [],
-                            attributes: {
-                                method: 'GET',
-                            },
-                        }),
-                        update: new Link({
-                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-                            templated: false,
-                            rel: [],
-                            attributes: {
-                                method: 'PUT',
-                            },
-                        }),
-                        delete: new Link({
-                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-                            templated: false,
-                            rel: [],
-                            attributes: {
-                                method: 'DELETE',
-                            },
-                        }),
-                    },
-                }),
-            ],
-        }),
-        _links: {
-            create: new Link({
-                href: '/api/pets',
-                templated: false,
-                rel: [],
-                attributes: {
-                    method: 'POST',
-                },
+  const petList = new PetList({
+    offset: 0,
+    limit: 1,
+    count: 2,
+    _embedded: new Embedded({
+      items: [
+        new PetResponse({
+          id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+          createdAt: '2005-08-15T15:52:01+00:00',
+          updatedAt: '2005-08-15T15:55:01+00:00',
+          name: 'Brownie',
+          tag: '0001-000',
+          vaccinations: [new Vaccination({ name: 'Rabies' })],
+          _links: {
+            read: new Link({
+              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+              templated: false,
+              rel: [],
+              attributes: {
+                method: 'GET',
+              },
             }),
+            update: new Link({
+              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+              templated: false,
+              rel: [],
+              attributes: {
+                method: 'PUT',
+              },
+            }),
+            delete: new Link({
+              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+              templated: false,
+              rel: [],
+              attributes: {
+                method: 'DELETE',
+              },
+            }),
+          },
+        }),
+      ],
+    }),
+    _links: {
+      create: new Link({
+        href: '/api/pets',
+        templated: false,
+        rel: [],
+        attributes: {
+          method: 'POST',
         },
-    });
+      }),
+    },
+  });
 
-    mockListPets = async (queryString: string) => {
-        return new Promise<PetList>((resolve) => resolve(petList));
-    };
+  mockListPets = async (queryString: string) => {
+    return new Promise<PetList>((resolve) => resolve(petList));
+  };
 
-    const history = createMemoryHistory();
+  const history = createMemoryHistory();
 
-    render(
-        <HistoryRouter history={history}>
-            <List />
-        </HistoryRouter>,
-    );
+  render(
+    <HistoryRouter history={history}>
+      <List />
+    </HistoryRouter>,
+  );
 
-    await screen.findByTestId('page-pet-list');
+  await screen.findByTestId('page-pet-list');
 
-    const testButton = await screen.findByTestId('test-filter-button');
+  const testButton = await screen.findByTestId('test-filter-button');
 
-    await userEvent.click(testButton);
+  await userEvent.click(testButton);
 
-    expect(history.location.pathname).toBe('/pet');
-    expect(history.location.search).toBe('?page=1&filters%5Bname%5D=Bro');
+  expect(history.location.pathname).toBe('/pet');
+  expect(history.location.search).toBe('?page=1&filters%5Bname%5D=Bro');
 });
 
 test('sort', async () => {
-    const petList = new PetList({
-        offset: 0,
-        limit: 1,
-        count: 2,
-        _embedded: new Embedded({
-            items: [
-                new PetResponse({
-                    id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-                    createdAt: '2005-08-15T15:52:01+00:00',
-                    updatedAt: '2005-08-15T15:55:01+00:00',
-                    name: 'Brownie',
-                    tag: '0001-000',
-                    vaccinations: [new Vaccination({ name: 'Rabies' })],
-                    _links: {
-                        read: new Link({
-                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-                            templated: false,
-                            rel: [],
-                            attributes: {
-                                method: 'GET',
-                            },
-                        }),
-                        update: new Link({
-                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-                            templated: false,
-                            rel: [],
-                            attributes: {
-                                method: 'PUT',
-                            },
-                        }),
-                        delete: new Link({
-                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-                            templated: false,
-                            rel: [],
-                            attributes: {
-                                method: 'DELETE',
-                            },
-                        }),
-                    },
-                }),
-            ],
-        }),
-        _links: {
-            create: new Link({
-                href: '/api/pets',
-                templated: false,
-                rel: [],
-                attributes: {
-                    method: 'POST',
-                },
+  const petList = new PetList({
+    offset: 0,
+    limit: 1,
+    count: 2,
+    _embedded: new Embedded({
+      items: [
+        new PetResponse({
+          id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+          createdAt: '2005-08-15T15:52:01+00:00',
+          updatedAt: '2005-08-15T15:55:01+00:00',
+          name: 'Brownie',
+          tag: '0001-000',
+          vaccinations: [new Vaccination({ name: 'Rabies' })],
+          _links: {
+            read: new Link({
+              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+              templated: false,
+              rel: [],
+              attributes: {
+                method: 'GET',
+              },
             }),
+            update: new Link({
+              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+              templated: false,
+              rel: [],
+              attributes: {
+                method: 'PUT',
+              },
+            }),
+            delete: new Link({
+              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+              templated: false,
+              rel: [],
+              attributes: {
+                method: 'DELETE',
+              },
+            }),
+          },
+        }),
+      ],
+    }),
+    _links: {
+      create: new Link({
+        href: '/api/pets',
+        templated: false,
+        rel: [],
+        attributes: {
+          method: 'POST',
         },
-    });
+      }),
+    },
+  });
 
-    mockListPets = async (queryString: string) => {
-        return new Promise<PetList>((resolve) => resolve(petList));
-    };
+  mockListPets = async (queryString: string) => {
+    return new Promise<PetList>((resolve) => resolve(petList));
+  };
 
-    const history = createMemoryHistory();
+  const history = createMemoryHistory();
 
-    render(
-        <HistoryRouter history={history}>
-            <List />
-        </HistoryRouter>,
-    );
+  render(
+    <HistoryRouter history={history}>
+      <List />
+    </HistoryRouter>,
+  );
 
-    await screen.findByTestId('page-pet-list');
+  await screen.findByTestId('page-pet-list');
 
-    expect(history.location.pathname).toBe('/');
+  expect(history.location.pathname).toBe('/');
 
-    const sortNameDescLink = await screen.findByTestId('sort-pet-name-desc');
+  const sortNameDescLink = await screen.findByTestId('sort-pet-name-desc');
 
-    await userEvent.click(sortNameDescLink);
+  await userEvent.click(sortNameDescLink);
 
-    expect(history.location.pathname).toBe('/pet');
-    expect(history.location.search).toBe('?page=1&sort%5Bname%5D=desc');
+  expect(history.location.pathname).toBe('/pet');
+  expect(history.location.search).toBe('?page=1&sort%5Bname%5D=desc');
 });
 
 test('next', async () => {
-    const petList = new PetList({
-        offset: 0,
-        limit: 1,
-        count: 2,
-        _embedded: new Embedded({
-            items: [
-                new PetResponse({
-                    id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-                    createdAt: '2005-08-15T15:52:01+00:00',
-                    updatedAt: '2005-08-15T15:55:01+00:00',
-                    name: 'Brownie',
-                    tag: '0001-000',
-                    vaccinations: [new Vaccination({ name: 'Rabies' })],
-                    _links: {
-                        read: new Link({
-                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-                            templated: false,
-                            rel: [],
-                            attributes: {
-                                method: 'GET',
-                            },
-                        }),
-                        update: new Link({
-                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-                            templated: false,
-                            rel: [],
-                            attributes: {
-                                method: 'PUT',
-                            },
-                        }),
-                        delete: new Link({
-                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-                            templated: false,
-                            rel: [],
-                            attributes: {
-                                method: 'DELETE',
-                            },
-                        }),
-                    },
-                }),
-            ],
-        }),
-        _links: {
-            create: new Link({
-                href: '/api/pets',
-                templated: false,
-                rel: [],
-                attributes: {
-                    method: 'POST',
-                },
+  const petList = new PetList({
+    offset: 0,
+    limit: 1,
+    count: 2,
+    _embedded: new Embedded({
+      items: [
+        new PetResponse({
+          id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+          createdAt: '2005-08-15T15:52:01+00:00',
+          updatedAt: '2005-08-15T15:55:01+00:00',
+          name: 'Brownie',
+          tag: '0001-000',
+          vaccinations: [new Vaccination({ name: 'Rabies' })],
+          _links: {
+            read: new Link({
+              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+              templated: false,
+              rel: [],
+              attributes: {
+                method: 'GET',
+              },
             }),
+            update: new Link({
+              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+              templated: false,
+              rel: [],
+              attributes: {
+                method: 'PUT',
+              },
+            }),
+            delete: new Link({
+              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+              templated: false,
+              rel: [],
+              attributes: {
+                method: 'DELETE',
+              },
+            }),
+          },
+        }),
+      ],
+    }),
+    _links: {
+      create: new Link({
+        href: '/api/pets',
+        templated: false,
+        rel: [],
+        attributes: {
+          method: 'POST',
         },
-    });
+      }),
+    },
+  });
 
-    mockListPets = async (queryString: string) => {
-        return new Promise<PetList>((resolve) => resolve(petList));
-    };
+  mockListPets = async (queryString: string) => {
+    return new Promise<PetList>((resolve) => resolve(petList));
+  };
 
-    const history = createMemoryHistory();
+  const history = createMemoryHistory();
 
-    render(
-        <HistoryRouter history={history}>
-            <List />
-        </HistoryRouter>,
-    );
+  render(
+    <HistoryRouter history={history}>
+      <List />
+    </HistoryRouter>,
+  );
 
-    await screen.findByTestId('page-pet-list');
+  await screen.findByTestId('page-pet-list');
 
-    expect(history.location.pathname).toBe('/');
+  expect(history.location.pathname).toBe('/');
 
-    const testButton = await screen.findByTestId('test-pagination-button');
+  const testButton = await screen.findByTestId('test-pagination-button');
 
-    await userEvent.click(testButton);
+  await userEvent.click(testButton);
 
-    expect(history.location.pathname).toBe('/pet');
-    expect(history.location.search).toBe('?page=2');
+  expect(history.location.pathname).toBe('/pet');
+  expect(history.location.search).toBe('?page=2');
 });
 
 test('delete not found', async () => {
-    const petList = new PetList({
-        offset: 0,
-        limit: 1,
-        count: 2,
-        _embedded: new Embedded({
-            items: [
-                new PetResponse({
-                    id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-                    createdAt: '2005-08-15T15:52:01+00:00',
-                    updatedAt: '2005-08-15T15:55:01+00:00',
-                    name: 'Brownie',
-                    tag: '0001-000',
-                    vaccinations: [new Vaccination({ name: 'Rabies' })],
-                    _links: {
-                        read: new Link({
-                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-                            templated: false,
-                            rel: [],
-                            attributes: {
-                                method: 'GET',
-                            },
-                        }),
-                        update: new Link({
-                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-                            templated: false,
-                            rel: [],
-                            attributes: {
-                                method: 'PUT',
-                            },
-                        }),
-                        delete: new Link({
-                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-                            templated: false,
-                            rel: [],
-                            attributes: {
-                                method: 'DELETE',
-                            },
-                        }),
-                    },
-                }),
-            ],
-        }),
-        _links: {
-            create: new Link({
-                href: '/api/pets',
-                templated: false,
-                rel: [],
-                attributes: {
-                    method: 'POST',
-                },
+  const petList = new PetList({
+    offset: 0,
+    limit: 1,
+    count: 2,
+    _embedded: new Embedded({
+      items: [
+        new PetResponse({
+          id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+          createdAt: '2005-08-15T15:52:01+00:00',
+          updatedAt: '2005-08-15T15:55:01+00:00',
+          name: 'Brownie',
+          tag: '0001-000',
+          vaccinations: [new Vaccination({ name: 'Rabies' })],
+          _links: {
+            read: new Link({
+              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+              templated: false,
+              rel: [],
+              attributes: {
+                method: 'GET',
+              },
             }),
+            update: new Link({
+              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+              templated: false,
+              rel: [],
+              attributes: {
+                method: 'PUT',
+              },
+            }),
+            delete: new Link({
+              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+              templated: false,
+              rel: [],
+              attributes: {
+                method: 'DELETE',
+              },
+            }),
+          },
+        }),
+      ],
+    }),
+    _links: {
+      create: new Link({
+        href: '/api/pets',
+        templated: false,
+        rel: [],
+        attributes: {
+          method: 'POST',
         },
-    });
+      }),
+    },
+  });
 
-    mockListPets = async (queryString: string) => {
-        return new Promise<PetList>((resolve) => resolve(petList));
-    };
+  mockListPets = async (queryString: string) => {
+    return new Promise<PetList>((resolve) => resolve(petList));
+  };
 
-    const history = createMemoryHistory();
+  const history = createMemoryHistory();
 
-    const { container } = render(
-        <HistoryRouter history={history}>
-            <List />
-        </HistoryRouter>,
-    );
+  const { container } = render(
+    <HistoryRouter history={history}>
+      <List />
+    </HistoryRouter>,
+  );
 
-    await screen.findByTestId('page-pet-list');
+  await screen.findByTestId('page-pet-list');
 
-    mockDeletePet = async (id: string) => {
-        return new Promise<NotFound>((resolve) => resolve(new NotFound({ title: 'title' })));
-    };
+  mockDeletePet = async (id: string) => {
+    return new Promise<NotFound>((resolve) => resolve(new NotFound({ title: 'title' })));
+  };
 
-    const removePetButton = await screen.findByTestId('remove-pet-0');
+  const removePetButton = await screen.findByTestId('remove-pet-0');
 
-    await userEvent.click(removePetButton);
+  await userEvent.click(removePetButton);
 
-    await screen.findByText(/httpError/);
+  await screen.findByText(/httpError/);
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <div data-testid="page-pet-list">
                 <div>httpError: title</div>
@@ -785,115 +785,115 @@ test('delete not found', async () => {
             </div>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('delete success', async () => {
-    const petList = new PetList({
-        offset: 0,
-        limit: 1,
-        count: 2,
-        _embedded: new Embedded({
-            items: [
-                new PetResponse({
-                    id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-                    createdAt: '2005-08-15T15:52:01+00:00',
-                    updatedAt: '2005-08-15T15:55:01+00:00',
-                    name: 'Brownie',
-                    tag: '0001-000',
-                    vaccinations: [new Vaccination({ name: 'Rabies' })],
-                    _links: {
-                        read: new Link({
-                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-                            templated: false,
-                            rel: [],
-                            attributes: {
-                                method: 'GET',
-                            },
-                        }),
-                        update: new Link({
-                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-                            templated: false,
-                            rel: [],
-                            attributes: {
-                                method: 'PUT',
-                            },
-                        }),
-                        delete: new Link({
-                            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-                            templated: false,
-                            rel: [],
-                            attributes: {
-                                method: 'DELETE',
-                            },
-                        }),
-                    },
-                }),
-            ],
-        }),
-        _links: {
-            create: new Link({
-                href: '/api/pets',
-                templated: false,
-                rel: [],
-                attributes: {
-                    method: 'POST',
-                },
+  const petList = new PetList({
+    offset: 0,
+    limit: 1,
+    count: 2,
+    _embedded: new Embedded({
+      items: [
+        new PetResponse({
+          id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+          createdAt: '2005-08-15T15:52:01+00:00',
+          updatedAt: '2005-08-15T15:55:01+00:00',
+          name: 'Brownie',
+          tag: '0001-000',
+          vaccinations: [new Vaccination({ name: 'Rabies' })],
+          _links: {
+            read: new Link({
+              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+              templated: false,
+              rel: [],
+              attributes: {
+                method: 'GET',
+              },
             }),
-        },
-    });
-
-    mockListPets = async (queryString: string) => {
-        return new Promise<PetList>((resolve) => resolve(petList));
-    };
-
-    const history = createMemoryHistory();
-
-    const { container } = render(
-        <HistoryRouter history={history}>
-            <List />
-        </HistoryRouter>,
-    );
-
-    await screen.findByTestId('page-pet-list');
-
-    mockDeletePet = async (id: string) => {
-        return new Promise((resolve) => resolve());
-    };
-
-    const petListNoItem = new PetList({
-        offset: 0,
-        limit: 1,
-        count: 2,
-        _embedded: new Embedded({
-            items: [],
-        }),
-        _links: {
-            create: new Link({
-                href: '/api/pets',
-                templated: false,
-                rel: [],
-                attributes: {
-                    method: 'POST',
-                },
+            update: new Link({
+              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+              templated: false,
+              rel: [],
+              attributes: {
+                method: 'PUT',
+              },
             }),
+            delete: new Link({
+              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+              templated: false,
+              rel: [],
+              attributes: {
+                method: 'DELETE',
+              },
+            }),
+          },
+        }),
+      ],
+    }),
+    _links: {
+      create: new Link({
+        href: '/api/pets',
+        templated: false,
+        rel: [],
+        attributes: {
+          method: 'POST',
         },
-    });
+      }),
+    },
+  });
 
-    mockListPets = async (queryString: string) => {
-        return new Promise<PetList>((resolve) => resolve(petListNoItem));
-    };
+  mockListPets = async (queryString: string) => {
+    return new Promise<PetList>((resolve) => resolve(petList));
+  };
 
-    const removePetButton = await screen.findByTestId('remove-pet-0');
+  const history = createMemoryHistory();
 
-    await userEvent.click(removePetButton);
+  const { container } = render(
+    <HistoryRouter history={history}>
+      <List />
+    </HistoryRouter>,
+  );
 
-    await waitForElementToBeRemoved(() => screen.getByTestId('remove-pet-0'));
+  await screen.findByTestId('page-pet-list');
 
-    expect(container.outerHTML).toBe(
-        `
+  mockDeletePet = async (id: string) => {
+    return new Promise((resolve) => resolve());
+  };
+
+  const petListNoItem = new PetList({
+    offset: 0,
+    limit: 1,
+    count: 2,
+    _embedded: new Embedded({
+      items: [],
+    }),
+    _links: {
+      create: new Link({
+        href: '/api/pets',
+        templated: false,
+        rel: [],
+        attributes: {
+          method: 'POST',
+        },
+      }),
+    },
+  });
+
+  mockListPets = async (queryString: string) => {
+    return new Promise<PetList>((resolve) => resolve(petListNoItem));
+  };
+
+  const removePetButton = await screen.findByTestId('remove-pet-0');
+
+  await userEvent.click(removePetButton);
+
+  await waitForElementToBeRemoved(() => screen.getByTestId('remove-pet-0'));
+
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <div data-testid="page-pet-list">
                 <h1>List Pets</h1>
@@ -925,7 +925,7 @@ test('delete success', async () => {
             </div>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });

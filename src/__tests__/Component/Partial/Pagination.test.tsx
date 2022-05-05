@@ -3,44 +3,44 @@ import Pagination from '../../../Component/Partial/Pagination';
 import userEvent from '@testing-library/user-event';
 
 test('max pages 1', () => {
-    const submitPage = (page: number): void => {};
+  const submitPage = (page: number): void => {};
 
-    const { container } = render(<Pagination currentPage={1} maxPages={1} totalPages={10} submitPage={submitPage} />);
+  const { container } = render(<Pagination currentPage={1} maxPages={1} totalPages={10} submitPage={submitPage} />);
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <div></div>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('total pages 1', () => {
-    const submitPage = (page: number): void => {};
+  const submitPage = (page: number): void => {};
 
-    const { container } = render(<Pagination currentPage={1} maxPages={7} totalPages={1} submitPage={submitPage} />);
+  const { container } = render(<Pagination currentPage={1} maxPages={7} totalPages={1} submitPage={submitPage} />);
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <div></div>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('current 1', () => {
-    const submitPage = (page: number): void => {};
+  const submitPage = (page: number): void => {};
 
-    const { container } = render(<Pagination currentPage={1} maxPages={7} totalPages={10} submitPage={submitPage} />);
+  const { container } = render(<Pagination currentPage={1} maxPages={7} totalPages={10} submitPage={submitPage} />);
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <ul class="pagination">
                 <li><button class="current">1</button></li>
@@ -55,18 +55,18 @@ test('current 1', () => {
             </ul>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('current 4', () => {
-    const submitPage = (page: number): void => {};
+  const submitPage = (page: number): void => {};
 
-    const { container } = render(<Pagination currentPage={4} maxPages={7} totalPages={10} submitPage={submitPage} />);
+  const { container } = render(<Pagination currentPage={4} maxPages={7} totalPages={10} submitPage={submitPage} />);
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <ul class="pagination">
                 <li><button>«</button></li>
@@ -83,18 +83,18 @@ test('current 4', () => {
             </ul>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('current 7', () => {
-    const submitPage = (page: number): void => {};
+  const submitPage = (page: number): void => {};
 
-    const { container } = render(<Pagination currentPage={7} maxPages={7} totalPages={10} submitPage={submitPage} />);
+  const { container } = render(<Pagination currentPage={7} maxPages={7} totalPages={10} submitPage={submitPage} />);
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <ul class="pagination">
                 <li><button>«</button></li>
@@ -111,18 +111,18 @@ test('current 7', () => {
             </ul>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('current 10', () => {
-    const submitPage = (page: number): void => {};
+  const submitPage = (page: number): void => {};
 
-    const { container } = render(<Pagination currentPage={10} maxPages={7} totalPages={10} submitPage={submitPage} />);
+  const { container } = render(<Pagination currentPage={10} maxPages={7} totalPages={10} submitPage={submitPage} />);
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <ul class="pagination">
                 <li><button>«</button></li>
@@ -137,23 +137,23 @@ test('current 10', () => {
             </ul>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('buttons', async () => {
-    const pages: number[] = [];
+  const pages: number[] = [];
 
-    const submitPage = (page: number): void => {
-        pages.push(page);
-    };
+  const submitPage = (page: number): void => {
+    pages.push(page);
+  };
 
-    render(<Pagination currentPage={7} maxPages={7} totalPages={10} submitPage={submitPage} />);
+  render(<Pagination currentPage={7} maxPages={7} totalPages={10} submitPage={submitPage} />);
 
-    for await (const element of screen.getAllByRole('button')) {
-        await userEvent.click(element);
-    }
+  for await (const element of screen.getAllByRole('button')) {
+    await userEvent.click(element);
+  }
 
-    expect(pages).toEqual([1, 6, 4, 5, 6, 7, 8, 9, 10, 8, 10]);
+  expect(pages).toEqual([1, 6, 4, 5, 6, 7, 8, 9, 10, 8, 10]);
 });

@@ -6,16 +6,16 @@ import PetFilters from '../../../Model/Pet/PetFilters';
 import userEvent from '@testing-library/user-event';
 
 test('without error', () => {
-    const submitPetFilter = (filters: PetFilters) => {};
+  const submitPetFilter = (filters: PetFilters) => {};
 
-    const defaultPetFilters = new PetFilters({ name: 'aa' });
+  const defaultPetFilters = new PetFilters({ name: 'aa' });
 
-    const { container } = render(
-        <PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={defaultPetFilters} />,
-    );
+  const { container } = render(
+    <PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={defaultPetFilters} />,
+  );
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <form>
                 <fieldset>
@@ -28,25 +28,25 @@ test('without error', () => {
             </form>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('with error', () => {
-    const submitPetFilter = (filters: PetFilters) => {};
+  const submitPetFilter = (filters: PetFilters) => {};
 
-    const invalidParameters: Array<InvalidParameter> = [{ name: 'name', reason: 'Should not be empty' }];
+  const invalidParameters: Array<InvalidParameter> = [{ name: 'name', reason: 'Should not be empty' }];
 
-    const badRequest = new BadRequest({
-        title: 'title',
-        invalidParameters: invalidParameters,
-    });
+  const badRequest = new BadRequest({
+    title: 'title',
+    invalidParameters: invalidParameters,
+  });
 
-    const { container } = render(<PetFilterForm submitPetFilter={submitPetFilter} badRequest={badRequest} />);
+  const { container } = render(<PetFilterForm submitPetFilter={submitPetFilter} badRequest={badRequest} />);
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <form>
                 <fieldset>
@@ -62,39 +62,39 @@ test('with error', () => {
             </form>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('submit', async () => {
-    const submitPetFilter = jest.fn((filters: PetFilters) => {
-        expect(filters.name).toEqual('aa');
-    });
+  const submitPetFilter = jest.fn((filters: PetFilters) => {
+    expect(filters.name).toEqual('aa');
+  });
 
-    const defaultPetFilters = new PetFilters({ name: 'aa' });
+  const defaultPetFilters = new PetFilters({ name: 'aa' });
 
-    render(<PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={defaultPetFilters} />);
+  render(<PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={defaultPetFilters} />);
 
-    const submitButton = await screen.findByTestId('submit-pet-filter');
+  const submitButton = await screen.findByTestId('submit-pet-filter');
 
-    await userEvent.click(submitButton);
+  await userEvent.click(submitButton);
 
-    expect(submitPetFilter.mock.calls.length).toBe(1);
+  expect(submitPetFilter.mock.calls.length).toBe(1);
 });
 
 test('submit empty', async () => {
-    const submitPetFilter = jest.fn((filters: PetFilters) => {
-        expect(filters.name).toBeUndefined();
-    });
+  const submitPetFilter = jest.fn((filters: PetFilters) => {
+    expect(filters.name).toBeUndefined();
+  });
 
-    const defaultPetFilters = new PetFilters({ name: '' });
+  const defaultPetFilters = new PetFilters({ name: '' });
 
-    render(<PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={defaultPetFilters} />);
+  render(<PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={defaultPetFilters} />);
 
-    const submitButton = await screen.findByTestId('submit-pet-filter');
+  const submitButton = await screen.findByTestId('submit-pet-filter');
 
-    await userEvent.click(submitButton);
+  await userEvent.click(submitButton);
 
-    expect(submitPetFilter.mock.calls.length).toBe(1);
+  expect(submitPetFilter.mock.calls.length).toBe(1);
 });

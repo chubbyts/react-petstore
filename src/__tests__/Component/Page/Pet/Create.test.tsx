@@ -11,40 +11,40 @@ import userEvent from '@testing-library/user-event';
 let mockCreatePet = (pet: PetRequest) => {};
 
 jest.mock('../../../../ApiClient/Pet', () => {
-    return {
-        CreatePet: (pet: PetRequest) => {
-            return mockCreatePet(pet);
-        },
-    };
+  return {
+    CreatePet: (pet: PetRequest) => {
+      return mockCreatePet(pet);
+    },
+  };
 });
 
 jest.mock('../../../../Component/Form/PetForm', () => {
-    return ({ submitPet }: PetFormProps) => {
-        const onSubmit = () => {
-            submitPet({ ...({} as PetRequest), name: 'Brownie' });
-        };
-
-        return <button data-testid="test-button" onClick={onSubmit}></button>;
+  return ({ submitPet }: PetFormProps) => {
+    const onSubmit = () => {
+      submitPet({ ...({} as PetRequest), name: 'Brownie' });
     };
+
+    return <button data-testid="test-button" onClick={onSubmit}></button>;
+  };
 });
 
 jest.mock('../../../../Component/Partial/HttpError', () => {
-    return ({ httpError }: { httpError: HttpError }) => {
-        return <div>httpError: {httpError.title}</div>;
-    };
+  return ({ httpError }: { httpError: HttpError }) => {
+    return <div>httpError: {httpError.title}</div>;
+  };
 });
 
 test('default', () => {
-    const history = createMemoryHistory();
+  const history = createMemoryHistory();
 
-    const { container } = render(
-        <HistoryRouter history={history}>
-            <Create />
-        </HistoryRouter>,
-    );
+  const { container } = render(
+    <HistoryRouter history={history}>
+      <Create />
+    </HistoryRouter>,
+  );
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <div data-testid="page-pet-create">
                 <h1>Create Pet</h1>
@@ -53,32 +53,32 @@ test('default', () => {
             </div>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('unprocessable entity', async () => {
-    mockCreatePet = async (pet: PetRequest) => {
-        return new Promise<UnprocessableEntity>((resolve) => resolve(new UnprocessableEntity({ title: 'title' })));
-    };
+  mockCreatePet = async (pet: PetRequest) => {
+    return new Promise<UnprocessableEntity>((resolve) => resolve(new UnprocessableEntity({ title: 'title' })));
+  };
 
-    const history = createMemoryHistory();
+  const history = createMemoryHistory();
 
-    const { container } = render(
-        <HistoryRouter history={history}>
-            <Create />
-        </HistoryRouter>,
-    );
+  const { container } = render(
+    <HistoryRouter history={history}>
+      <Create />
+    </HistoryRouter>,
+  );
 
-    const testButton = await screen.findByTestId('test-button');
+  const testButton = await screen.findByTestId('test-button');
 
-    await userEvent.click(testButton);
+  await userEvent.click(testButton);
 
-    await screen.findByText(/httpError/);
+  await screen.findByText(/httpError/);
 
-    expect(container.outerHTML).toBe(
-        `
+  expect(container.outerHTML).toBe(
+    `
         <div>
             <div data-testid="page-pet-create">
                 <div>httpError: title</div>
@@ -88,29 +88,29 @@ test('unprocessable entity', async () => {
             </div>
         </div>
     `
-            .replace(/\n/g, '')
-            .replace(/ {2,}/g, ''),
-    );
+      .replace(/\n/g, '')
+      .replace(/ {2,}/g, ''),
+  );
 });
 
 test('successful', async () => {
-    mockCreatePet = async (pet: PetRequest) => {
-        return new Promise<PetRequest>((resolve) => resolve(pet));
-    };
+  mockCreatePet = async (pet: PetRequest) => {
+    return new Promise<PetRequest>((resolve) => resolve(pet));
+  };
 
-    const history = createMemoryHistory();
+  const history = createMemoryHistory();
 
-    render(
-        <HistoryRouter history={history}>
-            <Create />
-        </HistoryRouter>,
-    );
+  render(
+    <HistoryRouter history={history}>
+      <Create />
+    </HistoryRouter>,
+  );
 
-    expect(history.location.pathname).toBe('/');
+  expect(history.location.pathname).toBe('/');
 
-    const testButton = await screen.findByTestId('test-button');
+  const testButton = await screen.findByTestId('test-button');
 
-    await userEvent.click(testButton);
+  await userEvent.click(testButton);
 
-    expect(history.location.pathname).toBe('/pet');
+  expect(history.location.pathname).toBe('/pet');
 });

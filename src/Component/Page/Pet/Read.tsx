@@ -8,71 +8,68 @@ import HttpErrorPartial from '../../Partial/HttpError';
 import PetResponse from '../../../Model/Pet/PetResponse';
 
 const Read: FC = () => {
-    const params = useParams();
-    const id = params.id as string;
+  const params = useParams();
+  const id = params.id as string;
 
-    const [pet, setPet] = useState<PetResponse>();
-    const [httpError, setHttpError] = useState<HttpError>();
+  const [pet, setPet] = useState<PetResponse>();
+  const [httpError, setHttpError] = useState<HttpError>();
 
-    useEffect(() => {
-        fetchPet(id);
+  useEffect(() => {
+    fetchPet(id);
 
-        document.title = 'Read Pet';
-    }, [id]);
+    document.title = 'Read Pet';
+  }, [id]);
 
-    const fetchPet = async (id: string) => {
-        const response = await ReadPet(id);
+  const fetchPet = async (id: string) => {
+    const response = await ReadPet(id);
 
-        if (response instanceof HttpError) {
-            setHttpError(response);
-        } else {
-            setHttpError(undefined);
-            setPet(response);
-        }
-    };
-
-    if (!pet && !httpError) {
-        return <div></div>;
+    if (response instanceof HttpError) {
+      setHttpError(response);
+    } else {
+      setHttpError(undefined);
+      setPet(response);
     }
+  };
 
-    return (
-        <div data-testid="page-pet-read">
-            {httpError ? <HttpErrorPartial httpError={httpError} /> : null}
-            <h1>Read Pet</h1>
-            {pet ? (
-                <div>
-                    <dl>
-                        <dt>Id</dt>
-                        <dd>{pet.id}</dd>
-                        <dt>CreatedAt</dt>
-                        <dd>{format(Date.parse(pet.createdAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}</dd>
-                        <dt>UpdatedAt</dt>
-                        <dd>
-                            {pet.updatedAt &&
-                                format(Date.parse(pet.updatedAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}
-                        </dd>
-                        <dt>Name</dt>
-                        <dd>{pet.name}</dd>
-                        <dt>Tag</dt>
-                        <dd>{pet.tag}</dd>
-                        <dt>Vaccinations</dt>
-                        <dd>
-                            {pet.vaccinations.length > 0 ? (
-                                <ul>
-                                    {pet.vaccinations.map((vaccination, i) => (
-                                        <li key={i}>{vaccination.name}</li>
-                                    ))}
-                                </ul>
-                            ) : null}
-                        </dd>
-                    </dl>
-                    <Link to="/pet" className="btn-gray">
-                        List
-                    </Link>
-                </div>
-            ) : null}
+  if (!pet && !httpError) {
+    return <div></div>;
+  }
+
+  return (
+    <div data-testid="page-pet-read">
+      {httpError ? <HttpErrorPartial httpError={httpError} /> : null}
+      <h1>Read Pet</h1>
+      {pet ? (
+        <div>
+          <dl>
+            <dt>Id</dt>
+            <dd>{pet.id}</dd>
+            <dt>CreatedAt</dt>
+            <dd>{format(Date.parse(pet.createdAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}</dd>
+            <dt>UpdatedAt</dt>
+            <dd>{pet.updatedAt && format(Date.parse(pet.updatedAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}</dd>
+            <dt>Name</dt>
+            <dd>{pet.name}</dd>
+            <dt>Tag</dt>
+            <dd>{pet.tag}</dd>
+            <dt>Vaccinations</dt>
+            <dd>
+              {pet.vaccinations.length > 0 ? (
+                <ul>
+                  {pet.vaccinations.map((vaccination, i) => (
+                    <li key={i}>{vaccination.name}</li>
+                  ))}
+                </ul>
+              ) : null}
+            </dd>
+          </dl>
+          <Link to="/pet" className="btn-gray">
+            List
+          </Link>
         </div>
-    );
+      ) : null}
+    </div>
+  );
 };
 
 export default Read;
