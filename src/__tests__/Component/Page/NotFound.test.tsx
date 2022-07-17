@@ -1,15 +1,15 @@
 import { createMemoryHistory } from 'history';
 import { render } from '@testing-library/react';
-import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import NotFound from '../../../Component/Page/NotFound';
 
 test('default', () => {
   const history = createMemoryHistory();
 
   const { container } = render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <NotFound />
-    </HistoryRouter>,
+    </Router>,
   );
 
   expect(container.outerHTML).toBe(
