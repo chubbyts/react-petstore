@@ -20,8 +20,10 @@ vi.mock('../../../../ApiClient/Pet', () => {
 });
 
 vi.mock('../../../../Component/Partial/HttpError', () => {
-  return ({ httpError }: { httpError: HttpError }) => {
-    return <div>httpError: {httpError.title}</div>;
+  return {
+    default: ({ httpError }: { httpError: HttpError }) => {
+      return <div>httpError: {httpError.title}</div>;
+    },
   };
 });
 

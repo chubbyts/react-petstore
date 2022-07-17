@@ -28,18 +28,22 @@ vi.mock('../../../../ApiClient/Pet', () => {
 });
 
 vi.mock('../../../../Component/Form/PetForm', () => {
-  return ({ submitPet }: PetFormProps) => {
-    const onSubmit = () => {
-      submitPet({ ...({} as PetRequest), name: 'Brownie' });
-    };
+  return {
+    default: ({ submitPet }: PetFormProps) => {
+      const onSubmit = () => {
+        submitPet({ ...({} as PetRequest), name: 'Brownie' });
+      };
 
-    return <button data-testid="test-button" onClick={onSubmit}></button>;
+      return <button data-testid="test-button" onClick={onSubmit}></button>;
+    },
   };
 });
 
 vi.mock('../../../../Component/Partial/HttpError', () => {
-  return ({ httpError }: { httpError: HttpError }) => {
-    return <div>httpError: {httpError.title}</div>;
+  return {
+    default: ({ httpError }: { httpError: HttpError }) => {
+      return <div>httpError: {httpError.title}</div>;
+    },
   };
 });
 

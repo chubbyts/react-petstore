@@ -1,5 +1,5 @@
 import { createMemoryHistory } from 'history';
-import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import BadRequest from '../../../../Model/Error/BadRequest';
 import Embedded from '../../../../Model/Pet/Embedded';
@@ -36,36 +36,42 @@ beforeEach(() => {
 });
 
 vi.mock('../../../../Component/Form/PetFilterForm', () => {
-  return ({ submitPetFilter }: PetFilterFormProps) => {
-    const onSubmit = () => {
-      submitPetFilter({ name: 'Bro' });
-    };
+  return {
+    default: ({ submitPetFilter }: PetFilterFormProps) => {
+      const onSubmit = () => {
+        submitPetFilter({ name: 'Bro' });
+      };
 
-    return <button data-testid="test-filter-button" onClick={onSubmit}></button>;
+      return <button data-testid="test-filter-button" onClick={onSubmit}></button>;
+    },
   };
 });
 
 vi.mock('../../../../Component/Partial/HttpError', () => {
-  return ({ httpError }: { httpError: HttpError }) => {
-    return <div>httpError: {httpError.title}</div>;
+  return {
+    default: ({ httpError }: { httpError: HttpError }) => {
+      return <div>httpError: {httpError.title}</div>;
+    },
   };
 });
 
 vi.mock('../../../../Component/Partial/Pagination', () => {
-  return ({ submitPage, currentPage, totalPages, maxPages }: PaginationProps) => {
-    const submit = () => {
-      submitPage(2);
-    };
+  return {
+    default: ({ submitPage, currentPage, totalPages, maxPages }: PaginationProps) => {
+      const submit = () => {
+        submitPage(2);
+      };
 
-    return (
-      <button
-        data-testid="test-pagination-button"
-        data-current-page={currentPage}
-        data-total-pages={totalPages}
-        data-max-pages={maxPages}
-        onClick={submit}
-      ></button>
-    );
+      return (
+        <button
+          data-testid="test-pagination-button"
+          data-current-page={currentPage}
+          data-total-pages={totalPages}
+          data-max-pages={maxPages}
+          onClick={submit}
+        ></button>
+      );
+    },
   };
 });
 
@@ -900,8 +906,6 @@ test('delete success', async () => {
   const removePetButton = await screen.findByTestId('remove-pet-0');
 
   await userEvent.click(removePetButton);
-
-  await waitForElementToBeRemoved(() => screen.getByTestId('remove-pet-0'));
 
   expect(container.outerHTML).toBe(
     `

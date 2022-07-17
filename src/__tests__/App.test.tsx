@@ -9,46 +9,44 @@ import { test, expect } from 'vitest';
 
 vi.mock('react-router-dom', async () => {
   return {
-    ...((await vi.importActual(
-      "react-router-dom"
-    )) as typeof import("react-router-dom")),
+    ...((await vi.importActual('react-router-dom')) as typeof import('react-router-dom')),
     BrowserRouter: ({ children }: { children: ReactNode }) => <div>{children}</div>,
   };
 });
 
 vi.mock('../Component/Page/Home', () => {
-  return () => {
-    return <div data-testid="page-home-mock"></div>;
+  return {
+    default: () => <div data-testid="page-home-mock"></div>,
   };
 });
 
 vi.mock('../Component/Page/Pet/List', () => {
-  return () => {
-    return <div data-testid="page-pet-list-mock"></div>;
+  return {
+    default: () => <div data-testid="page-pet-list-mock"></div>,
   };
 });
 
 vi.mock('../Component/Page/Pet/Create', () => {
-  return () => {
-    return <div data-testid="page-pet-create-mock"></div>;
+  return {
+    default: () => <div data-testid="page-pet-create-mock"></div>,
   };
 });
 
 vi.mock('../Component/Page/Pet/Read', () => {
-  return () => {
-    return <div data-testid="page-pet-read-mock"></div>;
+  return {
+    default: () => <div data-testid="page-pet-read-mock"></div>,
   };
 });
 
 vi.mock('../Component/Page/Pet/Update', () => {
-  return () => {
-    return <div data-testid="page-pet-update-mock"></div>;
+  return {
+    default: () => <div data-testid="page-pet-update-mock"></div>,
   };
 });
 
 vi.mock('../Component/Page/NotFound', () => {
-  return () => {
-    return <div data-testid="page-not-found-mock"></div>;
+  return {
+    default: () => <div data-testid="page-not-found-mock"></div>,
   };
 });
 
