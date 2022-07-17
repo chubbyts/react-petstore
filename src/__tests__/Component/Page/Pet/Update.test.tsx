@@ -10,11 +10,13 @@ import UnprocessableEntity from '../../../../Model/Error/UnprocessableEntity';
 import Update from '../../../../Component/Page/Pet/Update';
 import Vaccination from '../../../../Model/Pet/Vaccination';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
+import { test, expect } from 'vitest';
 
 let mockReadPet = (id: string) => {};
 let mockUpdatePet = (id: string, pet: PetRequest) => {};
 
-jest.mock('../../../../ApiClient/Pet', () => {
+vi.mock('../../../../ApiClient/Pet', () => {
   return {
     ReadPet: (id: string) => {
       return mockReadPet(id);
@@ -25,19 +27,23 @@ jest.mock('../../../../ApiClient/Pet', () => {
   };
 });
 
-jest.mock('../../../../Component/Form/PetForm', () => {
-  return ({ submitPet }: PetFormProps) => {
-    const onSubmit = () => {
-      submitPet({ ...({} as PetRequest), name: 'Brownie' });
-    };
+vi.mock('../../../../Component/Form/PetForm', () => {
+  return {
+    default: ({ submitPet }: PetFormProps) => {
+      const onSubmit = () => {
+        submitPet({ ...({} as PetRequest), name: 'Brownie' });
+      };
 
-    return <button data-testid="test-button" onClick={onSubmit}></button>;
+      return <button data-testid="test-button" onClick={onSubmit}></button>;
+    },
   };
 });
 
-jest.mock('../../../../Component/Partial/HttpError', () => {
-  return ({ httpError }: { httpError: HttpError }) => {
-    return <div>httpError: {httpError.title}</div>;
+vi.mock('../../../../Component/Partial/HttpError', () => {
+  return {
+    default: ({ httpError }: { httpError: HttpError }) => {
+      return <div>httpError: {httpError.title}</div>;
+    },
   };
 });
 

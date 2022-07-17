@@ -6,10 +6,12 @@ import NotFound from '../../../../Model/Error/NotFound';
 import PetResponse from '../../../../Model/Pet/PetResponse';
 import Read from '../../../../Component/Page/Pet/Read';
 import Vaccination from '../../../../Model/Pet/Vaccination';
+import { vi } from 'vitest';
+import { test, expect } from 'vitest';
 
 let mockReadPet = (id: string) => {};
 
-jest.mock('../../../../ApiClient/Pet', () => {
+vi.mock('../../../../ApiClient/Pet', () => {
   return {
     ReadPet: (id: string) => {
       return mockReadPet(id);
@@ -17,9 +19,11 @@ jest.mock('../../../../ApiClient/Pet', () => {
   };
 });
 
-jest.mock('../../../../Component/Partial/HttpError', () => {
-  return ({ httpError }: { httpError: HttpError }) => {
-    return <div>httpError: {httpError.title}</div>;
+vi.mock('../../../../Component/Partial/HttpError', () => {
+  return {
+    default: ({ httpError }: { httpError: HttpError }) => {
+      return <div>httpError: {httpError.title}</div>;
+    },
   };
 });
 

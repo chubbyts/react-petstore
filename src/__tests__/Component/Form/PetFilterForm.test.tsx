@@ -4,6 +4,8 @@ import InvalidParameter from '../../../Model/Error/InvalidParameter';
 import PetFilterForm from '../../../Component/Form/PetFilterForm';
 import PetFilters from '../../../Model/Pet/PetFilters';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
+import { test, expect } from 'vitest';
 
 test('without error', () => {
   const submitPetFilter = (filters: PetFilters) => {};
@@ -68,7 +70,7 @@ test('with error', () => {
 });
 
 test('submit', async () => {
-  const submitPetFilter = jest.fn((filters: PetFilters) => {
+  const submitPetFilter = vi.fn((filters: PetFilters) => {
     expect(filters.name).toEqual('aa');
   });
 
@@ -84,7 +86,7 @@ test('submit', async () => {
 });
 
 test('submit empty', async () => {
-  const submitPetFilter = jest.fn((filters: PetFilters) => {
+  const submitPetFilter = vi.fn((filters: PetFilters) => {
     expect(filters.name).toBeUndefined();
   });
 

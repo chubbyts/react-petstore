@@ -9,7 +9,7 @@ import UnprocessableEntity from '../Model/Error/UnprocessableEntity';
 import PetRequest from '../Model/Pet/PetRequest';
 import { throwableToError } from '../throwable-to-error';
 
-const url = `${process.env.REACT_APP_PETSTORE_URL}/api/pets`;
+const url = `${import.meta.env.VITE_PETSTORE_URL}/api/pets`;
 
 export const ListPets = async (queryString: string): Promise<HttpError | PetList> => {
   try {

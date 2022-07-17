@@ -4,51 +4,49 @@ import { Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { ReactNode } from 'react';
 import { createMemoryHistory } from 'history';
+import { vi } from 'vitest';
+import { test, expect } from 'vitest';
 
-jest.mock('react-router-dom', () => {
-  const originalModule = jest.requireActual('react-router-dom');
-
+vi.mock('react-router-dom', async () => {
   return {
-    __esModule: true,
-    ...originalModule,
-    // add your noops here
+    ...((await vi.importActual('react-router-dom')) as typeof import('react-router-dom')),
     BrowserRouter: ({ children }: { children: ReactNode }) => <div>{children}</div>,
   };
 });
 
-jest.mock('../Component/Page/Home', () => {
-  return () => {
-    return <div data-testid="page-home-mock"></div>;
+vi.mock('../Component/Page/Home', () => {
+  return {
+    default: () => <div data-testid="page-home-mock"></div>,
   };
 });
 
-jest.mock('../Component/Page/Pet/List', () => {
-  return () => {
-    return <div data-testid="page-pet-list-mock"></div>;
+vi.mock('../Component/Page/Pet/List', () => {
+  return {
+    default: () => <div data-testid="page-pet-list-mock"></div>,
   };
 });
 
-jest.mock('../Component/Page/Pet/Create', () => {
-  return () => {
-    return <div data-testid="page-pet-create-mock"></div>;
+vi.mock('../Component/Page/Pet/Create', () => {
+  return {
+    default: () => <div data-testid="page-pet-create-mock"></div>,
   };
 });
 
-jest.mock('../Component/Page/Pet/Read', () => {
-  return () => {
-    return <div data-testid="page-pet-read-mock"></div>;
+vi.mock('../Component/Page/Pet/Read', () => {
+  return {
+    default: () => <div data-testid="page-pet-read-mock"></div>,
   };
 });
 
-jest.mock('../Component/Page/Pet/Update', () => {
-  return () => {
-    return <div data-testid="page-pet-update-mock"></div>;
+vi.mock('../Component/Page/Pet/Update', () => {
+  return {
+    default: () => <div data-testid="page-pet-update-mock"></div>,
   };
 });
 
-jest.mock('../Component/Page/NotFound', () => {
-  return () => {
-    return <div data-testid="page-not-found-mock"></div>;
+vi.mock('../Component/Page/NotFound', () => {
+  return {
+    default: () => <div data-testid="page-not-found-mock"></div>,
   };
 });
 

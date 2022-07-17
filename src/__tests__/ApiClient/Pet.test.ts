@@ -8,6 +8,7 @@ import PetList from '../../Model/Pet/PetList';
 import PetRequest from '../../Model/Pet/PetRequest';
 import PetResponse from '../../Model/Pet/PetResponse';
 import UnprocessableEntity from '../../Model/Error/UnprocessableEntity';
+import { describe, test, expect, beforeEach } from 'vitest';
 
 beforeEach(() => {
   fetchMock.restore();

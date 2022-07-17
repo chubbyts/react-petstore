@@ -6,6 +6,8 @@ import PetResponse from '../../../Model/Pet/PetResponse';
 import UnprocessableEntity from '../../../Model/Error/UnprocessableEntity';
 import userEvent from '@testing-library/user-event';
 import Vaccination from '../../../Model/Pet/Vaccination';
+import { vi } from 'vitest';
+import { test, expect } from 'vitest';
 
 test('empty', () => {
   const submitPet = (pet: PetRequest): void => {};
@@ -262,7 +264,7 @@ test('remove vaccination', async () => {
 test('submit minimal', async () => {
   let submitPet = (pet: PetRequest) => {};
 
-  const submitPetMock = jest.fn((pet: PetRequest) => {
+  const submitPetMock = vi.fn((pet: PetRequest) => {
     submitPet(pet);
   });
 
@@ -295,7 +297,7 @@ test('submit minimal', async () => {
 test('submit maximal', async () => {
   let submitPet = (pet: PetRequest) => {};
 
-  const submitPetMock = jest.fn((pet: PetRequest) => {
+  const submitPetMock = vi.fn((pet: PetRequest) => {
     submitPet(pet);
   });
 
