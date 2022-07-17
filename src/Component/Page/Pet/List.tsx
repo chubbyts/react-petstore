@@ -58,21 +58,18 @@ const List: FC = () => {
 
     if (deleteResponse instanceof HttpError) {
       setHttpError(deleteResponse);
-
-      return;
+    } else {
+      setHttpError(undefined);
+      fetchPetList(queryString);
     }
-
-    setHttpError(undefined);
-
-    fetchPetList(queryString);
   };
 
   const changePage = (page: number): void => {
-    navigate(`/pet?${qs.stringify({ ...query, page: page })}`);
+    navigate(`/pet?${qs.stringify({ ...query, page })}`);
   };
 
   const submitPetFilter = (filters: PetFilters): void => {
-    navigate(`/pet?${qs.stringify({ ...query, page: 1, filters: filters })}`);
+    navigate(`/pet?${qs.stringify({ ...query, page: 1, filters })}`);
   };
 
   const sortLink = (field: string, order?: string): string => {

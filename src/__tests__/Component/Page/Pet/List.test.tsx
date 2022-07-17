@@ -1,6 +1,6 @@
 import { createMemoryHistory } from 'history';
 import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
-import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import BadRequest from '../../../../Model/Error/BadRequest';
 import Embedded from '../../../../Model/Pet/Embedded';
 import HttpError from '../../../../Model/Error/HttpError';
@@ -77,9 +77,9 @@ test('bad request', async () => {
   const history = createMemoryHistory();
 
   const { container } = render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <List />
-    </HistoryRouter>,
+    </Router>,
   );
 
   await screen.findByTestId('page-pet-list');
@@ -160,9 +160,9 @@ test('default', async () => {
   const history = createMemoryHistory();
 
   const { container } = render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <List />
-    </HistoryRouter>,
+    </Router>,
   );
 
   await screen.findByTestId('page-pet-list');
@@ -245,9 +245,9 @@ test('no actions', async () => {
   const history = createMemoryHistory();
 
   const { container } = render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <List />
-    </HistoryRouter>,
+    </Router>,
   );
 
   await screen.findByTestId('page-pet-list');
@@ -358,10 +358,10 @@ test('submit bad request', async () => {
 
   const history = createMemoryHistory();
 
-  const { container } = render(
-    <HistoryRouter history={history}>
+  const { container, rerender } = render(
+    <Router location={history.location} navigator={history}>
       <List />
-    </HistoryRouter>,
+    </Router>,
   );
 
   await screen.findByTestId('page-pet-list');
@@ -373,6 +373,15 @@ test('submit bad request', async () => {
   const testButton = await screen.findByTestId('test-filter-button');
 
   await userEvent.click(testButton);
+
+  expect(history.location.pathname).toBe('/pet');
+  expect(history.location.search).toBe('?page=1&filters%5Bname%5D=Bro');
+
+  rerender(
+    <Router location={history.location} navigator={history}>
+      <List />
+    </Router>,
+  );
 
   await screen.findByText(/httpError/);
 
@@ -489,9 +498,9 @@ test('submit filter', async () => {
   const history = createMemoryHistory();
 
   render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <List />
-    </HistoryRouter>,
+    </Router>,
   );
 
   await screen.findByTestId('page-pet-list');
@@ -566,9 +575,9 @@ test('sort', async () => {
   const history = createMemoryHistory();
 
   render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <List />
-    </HistoryRouter>,
+    </Router>,
   );
 
   await screen.findByTestId('page-pet-list');
@@ -645,9 +654,9 @@ test('next', async () => {
   const history = createMemoryHistory();
 
   render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <List />
-    </HistoryRouter>,
+    </Router>,
   );
 
   await screen.findByTestId('page-pet-list');
@@ -724,9 +733,9 @@ test('delete not found', async () => {
   const history = createMemoryHistory();
 
   const { container } = render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <List />
-    </HistoryRouter>,
+    </Router>,
   );
 
   await screen.findByTestId('page-pet-list');
@@ -854,9 +863,9 @@ test('delete success', async () => {
   const history = createMemoryHistory();
 
   const { container } = render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <List />
-    </HistoryRouter>,
+    </Router>,
   );
 
   await screen.findByTestId('page-pet-list');
