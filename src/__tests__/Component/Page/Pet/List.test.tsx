@@ -13,11 +13,13 @@ import PetList from '../../../../Model/Pet/PetList';
 import PetResponse from '../../../../Model/Pet/PetResponse';
 import userEvent from '@testing-library/user-event';
 import Vaccination from '../../../../Model/Pet/Vaccination';
+import { vi } from 'vitest';
+import { test, expect } from 'vitest';
 
 let mockListPets = (queryString: string) => {};
 let mockDeletePet = (id: string) => {};
 
-jest.mock('../../../../ApiClient/Pet', () => {
+vi.mock('../../../../ApiClient/Pet', () => {
   return {
     ListPets: (queryString: string) => {
       return mockListPets(queryString);
@@ -33,7 +35,7 @@ beforeEach(() => {
   mockDeletePet = (id: string) => {};
 });
 
-jest.mock('../../../../Component/Form/PetFilterForm', () => {
+vi.mock('../../../../Component/Form/PetFilterForm', () => {
   return ({ submitPetFilter }: PetFilterFormProps) => {
     const onSubmit = () => {
       submitPetFilter({ name: 'Bro' });
@@ -43,13 +45,13 @@ jest.mock('../../../../Component/Form/PetFilterForm', () => {
   };
 });
 
-jest.mock('../../../../Component/Partial/HttpError', () => {
+vi.mock('../../../../Component/Partial/HttpError', () => {
   return ({ httpError }: { httpError: HttpError }) => {
     return <div>httpError: {httpError.title}</div>;
   };
 });
 
-jest.mock('../../../../Component/Partial/Pagination', () => {
+vi.mock('../../../../Component/Partial/Pagination', () => {
   return ({ submitPage, currentPage, totalPages, maxPages }: PaginationProps) => {
     const submit = () => {
       submitPage(2);

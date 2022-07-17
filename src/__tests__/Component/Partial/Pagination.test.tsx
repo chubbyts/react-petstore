@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import Pagination from '../../../Component/Partial/Pagination';
 import userEvent from '@testing-library/user-event';
+import { test, expect } from 'vitest';
 
 test('max pages 1', () => {
   const submitPage = (page: number): void => {};

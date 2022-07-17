@@ -1,4 +1,5 @@
 import { throwableToError } from '../throwable-to-error';
+import { describe, test, expect } from 'vitest';
 
 describe('throwableToError', () => {
   it('do not convert', () => {
@@ -14,10 +15,6 @@ describe('throwableToError', () => {
     { e: 42, error: { name: 'number', message: '42' } },
     { e: 3.14159, error: { name: 'number', message: '3.14159' } },
     { e: 'example', error: { name: 'string', message: 'example' } },
-    {
-      e: Symbol('example'),
-      error: { name: 'symbol', message: 'Symbol(example)' },
-    },
     { e: () => null, error: { name: 'function', message: '() => null' } },
     {
       e: { key: 'value' },

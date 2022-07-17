@@ -1,10 +1,11 @@
 import { render } from '@testing-library/react';
 import TextField from '../../../Component/Form/TextField';
 import InvalidParameter from '../../../Model/Error/InvalidParameter';
-import { UseFormRegisterReturn } from 'react-hook-form';
+import { UseFormRegister } from 'react-hook-form';
+import { test, expect } from 'vitest';
 
 test('default', () => {
-  const register = (name: string) => ({ ...({} as UseFormRegisterReturn), name });
+  const register = ((name: string) => ({ name })) as UseFormRegister<any>;
 
   const invalidParameters: Array<InvalidParameter> = [{ name: 'name', reason: 'Should not be empty' }];
 

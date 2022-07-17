@@ -1,3 +1,4 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   future: {
     purgeLayersByDefault: true,
@@ -10,4 +11,4 @@ module.exports = {
   theme: {},
   variants: {},
   plugins: [],
-}
+};
