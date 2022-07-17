@@ -7,19 +7,6 @@ on:
     - cron: '0 0 * * *'
 
 jobs:
-  node12:
-    name: Node 12
-    runs-on: ubuntu-20.04
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
-      - name: checkout node
-        uses: actions/setup-node@v2
-        with:
-          node-version: '12'
-      - run: npm install
-      - run: npm run build
-      - run: TZ=Europe/Zurich npm test -- run --coverage
   node14:
     name: Node 14
     runs-on: ubuntu-20.04
