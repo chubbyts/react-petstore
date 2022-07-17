@@ -1,6 +1,6 @@
 import { createMemoryHistory } from 'history';
 import { render, screen } from '@testing-library/react';
-import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import Create from '../../../../Component/Page/Pet/Create';
 import HttpError from '../../../../Model/Error/HttpError';
 import PetFormProps from '../../../../Component/Form/PetFormProps';
@@ -38,9 +38,9 @@ test('default', () => {
   const history = createMemoryHistory();
 
   const { container } = render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <Create />
-    </HistoryRouter>,
+    </Router>,
   );
 
   expect(container.outerHTML).toBe(
@@ -66,9 +66,9 @@ test('unprocessable entity', async () => {
   const history = createMemoryHistory();
 
   const { container } = render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <Create />
-    </HistoryRouter>,
+    </Router>,
   );
 
   const testButton = await screen.findByTestId('test-button');
@@ -101,9 +101,9 @@ test('successful', async () => {
   const history = createMemoryHistory();
 
   render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <Create />
-    </HistoryRouter>,
+    </Router>,
   );
 
   expect(history.location.pathname).toBe('/');

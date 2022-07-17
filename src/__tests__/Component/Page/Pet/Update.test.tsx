@@ -1,6 +1,6 @@
 import { createMemoryHistory } from 'history';
 import { render, screen } from '@testing-library/react';
-import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import HttpError from '../../../../Model/Error/HttpError';
 import NotFound from '../../../../Model/Error/NotFound';
 import PetFormProps from '../../../../Component/Form/PetFormProps';
@@ -50,9 +50,9 @@ test('not found', async () => {
   history.push('/pet/4d783b77-eb09-4603-b99b-f590b605eaa9');
 
   const { container } = render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <Update />
-    </HistoryRouter>,
+    </Router>,
   );
 
   await screen.findByTestId('page-pet-update');
@@ -87,9 +87,9 @@ test('minimal', async () => {
   history.push('/pet/4d783b77-eb09-4603-b99b-f590b605eaa9');
 
   const { container } = render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <Update />
-    </HistoryRouter>,
+    </Router>,
   );
 
   await screen.findByTestId('page-pet-update');
@@ -130,9 +130,9 @@ test('unprocessable entity', async () => {
   history.push('/pet/4d783b77-eb09-4603-b99b-f590b605eaa9');
 
   const { container } = render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <Update />
-    </HistoryRouter>,
+    </Router>,
   );
 
   await screen.findByTestId('page-pet-update');
@@ -180,9 +180,9 @@ test('successful', async () => {
   history.push('/pet/4d783b77-eb09-4603-b99b-f590b605eaa9');
 
   const { container } = render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <Update />
-    </HistoryRouter>,
+    </Router>,
   );
 
   await screen.findByTestId('page-pet-update');

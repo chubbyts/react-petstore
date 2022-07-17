@@ -1,6 +1,6 @@
 import { createMemoryHistory } from 'history';
 import { render, screen } from '@testing-library/react';
-import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import HttpError from '../../../../Model/Error/HttpError';
 import NotFound from '../../../../Model/Error/NotFound';
 import PetResponse from '../../../../Model/Pet/PetResponse';
@@ -32,9 +32,9 @@ test('not found', async () => {
   history.push('/pet/4d783b77-eb09-4603-b99b-f590b605eaa9');
 
   const { container } = render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <Read />
-    </HistoryRouter>,
+    </Router>,
   );
 
   await screen.findByTestId('page-pet-read');
@@ -68,9 +68,9 @@ test('minimal', async () => {
   history.push('/pet/4d783b77-eb09-4603-b99b-f590b605eaa9');
 
   const { container } = render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <Read />
-    </HistoryRouter>,
+    </Router>,
   );
 
   await screen.findByTestId('page-pet-read');
@@ -123,9 +123,9 @@ test('maximal', async () => {
   history.push('/pet/4d783b77-eb09-4603-b99b-f590b605eaa9');
 
   const { container } = render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <Read />
-    </HistoryRouter>,
+    </Router>,
   );
 
   await screen.findByTestId('page-pet-read');

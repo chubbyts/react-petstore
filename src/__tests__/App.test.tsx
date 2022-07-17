@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import App from '../App';
-import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { ReactNode } from 'react';
 import { createMemoryHistory } from 'history';
@@ -56,9 +56,9 @@ test('toggle', async () => {
   const history = createMemoryHistory();
 
   const { container } = render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <App />
-    </HistoryRouter>,
+    </Router>,
   );
 
   await screen.findByTestId('page-home-mock');
@@ -103,9 +103,9 @@ test('home page', async () => {
   const history = createMemoryHistory();
 
   const { container } = render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <App />
-    </HistoryRouter>,
+    </Router>,
   );
 
   await screen.findByTestId('page-home-mock');
@@ -147,9 +147,9 @@ test('not found', async () => {
   history.push('/unknown');
 
   const { container } = render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <App />
-    </HistoryRouter>,
+    </Router>,
   );
 
   await screen.findByTestId('page-not-found-mock');
@@ -191,9 +191,9 @@ test('pet list', async () => {
   history.push('/pet');
 
   const { container } = render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <App />
-    </HistoryRouter>,
+    </Router>,
   );
 
   await screen.findByTestId('page-pet-list-mock');
@@ -235,9 +235,9 @@ test('pet create', async () => {
   history.push('/pet/create');
 
   const { container } = render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <App />
-    </HistoryRouter>,
+    </Router>,
   );
 
   await screen.findByTestId('page-pet-create-mock');
@@ -279,9 +279,9 @@ test('pet read', async () => {
   history.push('/pet/4d783b77-eb09-4603-b99b-f590b605eaa9');
 
   const { container } = render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <App />
-    </HistoryRouter>,
+    </Router>,
   );
 
   await screen.findByTestId('page-pet-read-mock');
@@ -323,9 +323,9 @@ test('pet update', async () => {
   history.push('/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update');
 
   const { container } = render(
-    <HistoryRouter history={history}>
+    <Router location={history.location} navigator={history}>
       <App />
-    </HistoryRouter>,
+    </Router>,
   );
 
   await screen.findByTestId('page-pet-update-mock');
