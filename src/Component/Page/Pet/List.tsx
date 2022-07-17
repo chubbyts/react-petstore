@@ -36,12 +36,6 @@ const List: FC = () => {
   const [petList, setPetList] = useState<PetList>();
   const [httpError, setHttpError] = useState<HttpError>();
 
-  useEffect(() => {
-    fetchPetList(queryString);
-
-    document.title = 'List Pets';
-  }, [queryString]);
-
   const fetchPetList = async (queryString: string) => {
     const response = await ListPets(queryString);
 
@@ -78,6 +72,12 @@ const List: FC = () => {
       sort: { ...query.sort, [field]: order },
     })}`;
   };
+
+  useEffect(() => {
+    document.title = 'List Pets';
+
+    fetchPetList(queryString);
+  }, [queryString]);
 
   if (!petList && !httpError) {
     return <div></div>;

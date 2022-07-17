@@ -17,12 +17,6 @@ const Update: FC = () => {
   const [pet, setPet] = useState<PetResponse>();
   const [httpError, setHttpError] = useState<HttpError>();
 
-  useEffect(() => {
-    fetchPet(id);
-
-    document.title = 'Update Pet';
-  }, [id]);
-
   const fetchPet = async (id: string) => {
     const response = await ReadPet(id);
 
@@ -46,6 +40,12 @@ const Update: FC = () => {
       navigate('/pet');
     }
   };
+
+  useEffect(() => {
+    document.title = 'Update Pet';
+
+    fetchPet(id);
+  }, [id]);
 
   if (!pet && !httpError) {
     return <div></div>;
