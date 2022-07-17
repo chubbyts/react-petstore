@@ -19,7 +19,7 @@ jobs:
           node-version: '12'
       - run: npm install
       - run: npm run build
-      - run: TZ=Europe/Zurich npm test -- --coverage --no-cache
+      - run: TZ=Europe/Zurich npm test -- run --coverage
   node14:
     name: Node 14
     runs-on: ubuntu-20.04
@@ -32,7 +32,7 @@ jobs:
           node-version: '14'
       - run: npm install
       - run: npm run build
-      - run: TZ=Europe/Zurich npm test -- --coverage --no-cache
+      - run: TZ=Europe/Zurich npm test -- run --coverage
   node16:
     name: Node 16
     runs-on: ubuntu-20.04
@@ -45,7 +45,7 @@ jobs:
           node-version: '16'
       - run: npm install
       - run: npm run build
-      - run: TZ=Europe/Zurich npm test -- --coverage --no-cache
+      - run: TZ=Europe/Zurich npm test -- run --coverage
   node18:
     name: Node 18
     runs-on: ubuntu-20.04
@@ -58,7 +58,7 @@ jobs:
           node-version: '18'
       - run: npm install
       - run: npm run build
-      - run: TZ=Europe/Zurich npm test -- --coverage --no-cache
+      - run: TZ=Europe/Zurich npm test -- run --coverage
       - name: coveralls.io
         uses: coverallsapp/github-action@master
         with:

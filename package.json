@@ -8,7 +8,7 @@
     "cs-fix": "prettier --write src",
     "cs": "prettier --check src",
     "start": "vite",
-    "test": "vitest run --coverage"
+    "test": "vitest"
   },
   "dependencies": {
     "date-fns": "^2.28.0",
