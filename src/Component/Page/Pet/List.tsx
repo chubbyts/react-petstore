@@ -36,7 +36,7 @@ const List: FC = () => {
   const [petList, setPetList] = useState<PetList>();
   const [httpError, setHttpError] = useState<HttpError>();
 
-  const fetchPetList = async (queryString: string) => {
+  const fetchPetList = async () => {
     const response = await ListPets(queryString);
 
     if (response instanceof HttpError) {
@@ -54,7 +54,7 @@ const List: FC = () => {
       setHttpError(deleteResponse);
     } else {
       setHttpError(undefined);
-      fetchPetList(queryString);
+      fetchPetList();
     }
   };
 
@@ -76,7 +76,7 @@ const List: FC = () => {
   useEffect(() => {
     document.title = 'List Pets';
 
-    fetchPetList(queryString);
+    fetchPetList();
   }, [queryString]);
 
   if (!petList && !httpError) {
@@ -117,7 +117,7 @@ const List: FC = () => {
                     Z-A{' '}
                   </Link>{' '}
                   |
-                  <Link data-testid="sort-pet-name--" to={sortLink('name', undefined)}>
+                  <Link data-testid="sort-pet-name--" to={sortLink('name')}>
                     {' '}
                     ---{' '}
                   </Link>

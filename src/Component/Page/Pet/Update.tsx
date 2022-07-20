@@ -17,7 +17,7 @@ const Update: FC = () => {
   const [pet, setPet] = useState<PetResponse>();
   const [httpError, setHttpError] = useState<HttpError>();
 
-  const fetchPet = async (id: string) => {
+  const fetchPet = async () => {
     const response = await ReadPet(id);
 
     if (response instanceof HttpError) {
@@ -28,8 +28,8 @@ const Update: FC = () => {
     }
   };
 
-  const submitPet = async (pet: PetRequest) => {
-    const response = await UpdatePet(id, pet);
+  const submitPet = async (petRequest: PetRequest) => {
+    const response = await UpdatePet(id, petRequest);
 
     if (response instanceof HttpError) {
       setHttpError(response);
@@ -44,7 +44,7 @@ const Update: FC = () => {
   useEffect(() => {
     document.title = 'Update Pet';
 
-    fetchPet(id);
+    fetchPet();
   }, [id]);
 
   if (!pet && !httpError) {

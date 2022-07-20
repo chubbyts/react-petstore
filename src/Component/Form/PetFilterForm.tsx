@@ -14,12 +14,12 @@ const PetFilterForm: FC<PetFilterFormProps> = ({
 
   const { register, handleSubmit } = useForm<PetFilters>({ defaultValues: filters });
 
-  const onSubmit = (filters: PetFilters) => {
-    if ('' === filters.name) {
-      filters.name = undefined;
+  const onSubmit = (petFilters: PetFilters) => {
+    if ('' === petFilters.name) {
+      petFilters.name = undefined;
     }
 
-    submitPetFilter(filters);
+    submitPetFilter(petFilters);
   };
 
   return (
