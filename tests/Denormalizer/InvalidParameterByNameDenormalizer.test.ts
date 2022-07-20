@@ -1,5 +1,5 @@
-import InvalidParameterByNameDenormalizer from '../../Denormalizer/InvalidParameterByNameDenormalizer';
-import InvalidParameter from '../../Model/Error/InvalidParameter';
+import InvalidParameterByNameDenormalizer from '../../src/Denormalizer/InvalidParameterByNameDenormalizer';
+import InvalidParameter from '../../src/Model/Error/InvalidParameter';
 import { test, expect } from 'vitest';
 
 test('default', () => {

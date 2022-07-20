@@ -1,7 +1,7 @@
 import { createMemoryHistory } from 'history';
 import { render } from '@testing-library/react';
 import { Router } from 'react-router-dom';
-import NotFound from '../../../Component/Page/NotFound';
+import NotFound from '../../../src/Component/Page/NotFound';
 import { test, expect } from 'vitest';
 
 test('default', () => {

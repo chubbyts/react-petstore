@@ -1,4 +1,4 @@
-import { throwableToError } from '../throwable-to-error';
+import { throwableToError } from '../src/throwable-to-error';
 import { describe, test, expect } from 'vitest';
 
 describe('throwableToError', () => {

@@ -1,25 +1,25 @@
 import { createMemoryHistory } from 'history';
 import { render, screen } from '@testing-library/react';
 import { Router } from 'react-router-dom';
-import BadRequest from '../../../../Model/Error/BadRequest';
-import Embedded from '../../../../Model/Pet/Embedded';
-import HttpError from '../../../../Model/Error/HttpError';
-import Link from '../../../../Model/Link';
-import List from '../../../../Component/Page/Pet/List';
-import NotFound from '../../../../Model/Error/NotFound';
-import PaginationProps from '../../../../Component/Partial/PaginationProps';
-import PetFilterFormProps from '../../../../Component/Form/PetFilterFormProps';
-import PetList from '../../../../Model/Pet/PetList';
-import PetResponse from '../../../../Model/Pet/PetResponse';
+import BadRequest from '../../../../src/Model/Error/BadRequest';
+import Embedded from '../../../../src/Model/Pet/Embedded';
+import HttpError from '../../../../src/Model/Error/HttpError';
+import Link from '../../../../src/Model/Link';
+import List from '../../../../src/Component/Page/Pet/List';
+import NotFound from '../../../../src/Model/Error/NotFound';
+import PaginationProps from '../../../../src/Component/Partial/PaginationProps';
+import PetFilterFormProps from '../../../../src/Component/Form/PetFilterFormProps';
+import PetList from '../../../../src/Model/Pet/PetList';
+import PetResponse from '../../../../src/Model/Pet/PetResponse';
 import userEvent from '@testing-library/user-event';
-import Vaccination from '../../../../Model/Pet/Vaccination';
+import Vaccination from '../../../../src/Model/Pet/Vaccination';
 import { vi } from 'vitest';
 import { test, expect } from 'vitest';
 
-let mockListPets = (queryString: string) => {};
-let mockDeletePet = (id: string) => {};
+let mockListPets = (queryString: string) => { };
+let mockDeletePet = (id: string) => { };
 
-vi.mock('../../../../ApiClient/Pet', () => {
+vi.mock('../../../../src/ApiClient/Pet', () => {
   return {
     ListPets: (queryString: string) => {
       return mockListPets(queryString);
@@ -31,11 +31,11 @@ vi.mock('../../../../ApiClient/Pet', () => {
 });
 
 beforeEach(() => {
-  mockListPets = (queryString: string) => {};
-  mockDeletePet = (id: string) => {};
+  mockListPets = (queryString: string) => { };
+  mockDeletePet = (id: string) => { };
 });
 
-vi.mock('../../../../Component/Form/PetFilterForm', () => {
+vi.mock('../../../../src/Component/Form/PetFilterForm', () => {
   return {
     default: ({ submitPetFilter }: PetFilterFormProps) => {
       const onSubmit = () => {
@@ -47,15 +47,15 @@ vi.mock('../../../../Component/Form/PetFilterForm', () => {
   };
 });
 
-vi.mock('../../../../Component/Partial/HttpError', () => {
+vi.mock('../../../../src/Component/Partial/HttpError', () => {
   return {
-    default: ({ httpError }: { httpError: HttpError }) => {
+    default: ({ httpError }: { httpError: HttpError; }) => {
       return <div>httpError: {httpError.title}</div>;
     },
   };
 });
 
-vi.mock('../../../../Component/Partial/Pagination', () => {
+vi.mock('../../../../src/Component/Partial/Pagination', () => {
   return {
     default: ({ submitPage, currentPage, totalPages, maxPages }: PaginationProps) => {
       const submit = () => {

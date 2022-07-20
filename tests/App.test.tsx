@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import App from '../App';
+import App from '../src/App';
 import { Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { ReactNode } from 'react';
@@ -10,41 +10,41 @@ import { test, expect } from 'vitest';
 vi.mock('react-router-dom', async () => {
   return {
     ...((await vi.importActual('react-router-dom')) as typeof import('react-router-dom')),
-    BrowserRouter: ({ children }: { children: ReactNode }) => <div>{children}</div>,
+    BrowserRouter: ({ children }: { children: ReactNode; }) => <div>{children}</div>,
   };
 });
 
-vi.mock('../Component/Page/Home', () => {
+vi.mock('../src/Component/Page/Home', () => {
   return {
     default: () => <div data-testid="page-home-mock"></div>,
   };
 });
 
-vi.mock('../Component/Page/Pet/List', () => {
+vi.mock('../src/Component/Page/Pet/List', () => {
   return {
     default: () => <div data-testid="page-pet-list-mock"></div>,
   };
 });
 
-vi.mock('../Component/Page/Pet/Create', () => {
+vi.mock('../src/Component/Page/Pet/Create', () => {
   return {
     default: () => <div data-testid="page-pet-create-mock"></div>,
   };
 });
 
-vi.mock('../Component/Page/Pet/Read', () => {
+vi.mock('../src/Component/Page/Pet/Read', () => {
   return {
     default: () => <div data-testid="page-pet-read-mock"></div>,
   };
 });
 
-vi.mock('../Component/Page/Pet/Update', () => {
+vi.mock('../src/Component/Page/Pet/Update', () => {
   return {
     default: () => <div data-testid="page-pet-update-mock"></div>,
   };
 });
 
-vi.mock('../Component/Page/NotFound', () => {
+vi.mock('../src/Component/Page/NotFound', () => {
   return {
     default: () => <div data-testid="page-not-found-mock"></div>,
   };

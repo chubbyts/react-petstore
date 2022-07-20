@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
-import TextField from '../../../Component/Form/TextField';
-import InvalidParameter from '../../../Model/Error/InvalidParameter';
+import TextField from '../../../src/Component/Form/TextField';
+import InvalidParameter from '../../../src/Model/Error/InvalidParameter';
 import { UseFormRegister } from 'react-hook-form';
 import { test, expect } from 'vitest';
 

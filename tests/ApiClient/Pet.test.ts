@@ -1,13 +1,13 @@
-import { ListPets, CreatePet, ReadPet, UpdatePet, DeletePet } from '../../ApiClient/Pet';
-import BadRequest from '../../Model/Error/BadRequest';
+import { ListPets, CreatePet, ReadPet, UpdatePet, DeletePet } from '../../src/ApiClient/Pet';
+import BadRequest from '../../src/Model/Error/BadRequest';
 import fetchMock from 'fetch-mock';
-import InternalServerError from '../../Model/Error/InternalServerError';
-import NetworkError from '../../Model/Error/NetworkError';
-import NotFound from '../../Model/Error/NotFound';
-import PetList from '../../Model/Pet/PetList';
-import PetRequest from '../../Model/Pet/PetRequest';
-import PetResponse from '../../Model/Pet/PetResponse';
-import UnprocessableEntity from '../../Model/Error/UnprocessableEntity';
+import InternalServerError from '../../src/Model/Error/InternalServerError';
+import NetworkError from '../../src/Model/Error/NetworkError';
+import NotFound from '../../src/Model/Error/NotFound';
+import PetList from '../../src/Model/Pet/PetList';
+import PetRequest from '../../src/Model/Pet/PetRequest';
+import PetResponse from '../../src/Model/Pet/PetResponse';
+import UnprocessableEntity from '../../src/Model/Error/UnprocessableEntity';
 import { describe, test, expect, beforeEach } from 'vitest';
 
 beforeEach(() => {

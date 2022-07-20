@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/react';
-import BadRequest from '../../../Model/Error/BadRequest';
-import InvalidParameter from '../../../Model/Error/InvalidParameter';
-import PetFilterForm from '../../../Component/Form/PetFilterForm';
-import PetFilters from '../../../Model/Pet/PetFilters';
+import BadRequest from '../../../src/Model/Error/BadRequest';
+import InvalidParameter from '../../../src/Model/Error/InvalidParameter';
+import PetFilterForm from '../../../src/Component/Form/PetFilterForm';
+import PetFilters from '../../../src/Model/Pet/PetFilters';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import { test, expect } from 'vitest';
 
 test('without error', () => {
-  const submitPetFilter = (filters: PetFilters) => {};
+  const submitPetFilter = (filters: PetFilters) => { };
 
   const defaultPetFilters = new PetFilters({ name: 'aa' });
 
@@ -36,7 +36,7 @@ test('without error', () => {
 });
 
 test('with error', () => {
-  const submitPetFilter = (filters: PetFilters) => {};
+  const submitPetFilter = (filters: PetFilters) => { };
 
   const invalidParameters: Array<InvalidParameter> = [{ name: 'name', reason: 'Should not be empty' }];
 

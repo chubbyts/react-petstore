@@ -1,17 +1,17 @@
 import { createMemoryHistory } from 'history';
 import { render, screen } from '@testing-library/react';
 import { Router } from 'react-router-dom';
-import HttpError from '../../../../Model/Error/HttpError';
-import NotFound from '../../../../Model/Error/NotFound';
-import PetResponse from '../../../../Model/Pet/PetResponse';
-import Read from '../../../../Component/Page/Pet/Read';
-import Vaccination from '../../../../Model/Pet/Vaccination';
+import HttpError from '../../../../src/Model/Error/HttpError';
+import NotFound from '../../../../src/Model/Error/NotFound';
+import PetResponse from '../../../../src/Model/Pet/PetResponse';
+import Read from '../../../../src/Component/Page/Pet/Read';
+import Vaccination from '../../../../src/Model/Pet/Vaccination';
 import { vi } from 'vitest';
 import { test, expect } from 'vitest';
 
-let mockReadPet = (id: string) => {};
+let mockReadPet = (id: string) => { };
 
-vi.mock('../../../../ApiClient/Pet', () => {
+vi.mock('../../../../src/ApiClient/Pet', () => {
   return {
     ReadPet: (id: string) => {
       return mockReadPet(id);
@@ -19,9 +19,9 @@ vi.mock('../../../../ApiClient/Pet', () => {
   };
 });
 
-vi.mock('../../../../Component/Partial/HttpError', () => {
+vi.mock('../../../../src/Component/Partial/HttpError', () => {
   return {
-    default: ({ httpError }: { httpError: HttpError }) => {
+    default: ({ httpError }: { httpError: HttpError; }) => {
       return <div>httpError: {httpError.title}</div>;
     },
   };

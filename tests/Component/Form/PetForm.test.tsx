@@ -1,16 +1,16 @@
 import { render, screen } from '@testing-library/react';
-import InvalidParameter from '../../../Model/Error/InvalidParameter';
-import PetForm from '../../../Component/Form/PetForm';
-import PetRequest from '../../../Model/Pet/PetRequest';
-import PetResponse from '../../../Model/Pet/PetResponse';
-import UnprocessableEntity from '../../../Model/Error/UnprocessableEntity';
+import InvalidParameter from '../../../src/Model/Error/InvalidParameter';
+import PetForm from '../../../src/Component/Form/PetForm';
+import PetRequest from '../../../src/Model/Pet/PetRequest';
+import PetResponse from '../../../src/Model/Pet/PetResponse';
+import UnprocessableEntity from '../../../src/Model/Error/UnprocessableEntity';
 import userEvent from '@testing-library/user-event';
-import Vaccination from '../../../Model/Pet/Vaccination';
+import Vaccination from '../../../src/Model/Pet/Vaccination';
 import { vi } from 'vitest';
 import { test, expect } from 'vitest';
 
 test('empty', () => {
-  const submitPet = (pet: PetRequest): void => {};
+  const submitPet = (pet: PetRequest): void => { };
 
   const { container } = render(<PetForm submitPet={submitPet} />);
 
@@ -44,7 +44,7 @@ test('empty', () => {
 });
 
 test('without error', () => {
-  const submitPet = (pet: PetRequest): void => {};
+  const submitPet = (pet: PetRequest): void => { };
 
   const defaultPet = new PetResponse({
     id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
@@ -92,7 +92,7 @@ test('without error', () => {
 });
 
 test('with error', () => {
-  const submitPet = (pet: PetRequest): void => {};
+  const submitPet = (pet: PetRequest): void => { };
 
   const defaultPet = new PetResponse({
     id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
@@ -158,7 +158,7 @@ test('with error', () => {
 });
 
 test('add vaccination', async () => {
-  const submitPet = (pet: PetRequest): void => {};
+  const submitPet = (pet: PetRequest): void => { };
 
   const defaultPet = new PetResponse({
     id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
@@ -217,7 +217,7 @@ test('add vaccination', async () => {
 });
 
 test('remove vaccination', async () => {
-  const submitPet = (pet: PetRequest): void => {};
+  const submitPet = (pet: PetRequest): void => { };
 
   const defaultPet = new PetResponse({
     id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
@@ -262,7 +262,7 @@ test('remove vaccination', async () => {
 });
 
 test('submit minimal', async () => {
-  let submitPet = (pet: PetRequest) => {};
+  let submitPet = (pet: PetRequest) => { };
 
   const submitPetMock = vi.fn((pet: PetRequest) => {
     submitPet(pet);
@@ -295,7 +295,7 @@ test('submit minimal', async () => {
 
 // @todo fix test
 test('submit maximal', async () => {
-  let submitPet = (pet: PetRequest) => {};
+  let submitPet = (pet: PetRequest) => { };
 
   const submitPetMock = vi.fn((pet: PetRequest) => {
     submitPet(pet);

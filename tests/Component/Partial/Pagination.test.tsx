@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
-import Pagination from '../../../Component/Partial/Pagination';
+import Pagination from '../../../src/Component/Partial/Pagination';
 import userEvent from '@testing-library/user-event';
 import { test, expect } from 'vitest';
 
 test('max pages 1', () => {
-  const submitPage = (page: number): void => {};
+  const submitPage = (page: number): void => { };
 
   const { container } = render(<Pagination currentPage={1} maxPages={1} totalPages={10} submitPage={submitPage} />);
 
@@ -20,7 +20,7 @@ test('max pages 1', () => {
 });
 
 test('total pages 1', () => {
-  const submitPage = (page: number): void => {};
+  const submitPage = (page: number): void => { };
 
   const { container } = render(<Pagination currentPage={1} maxPages={7} totalPages={1} submitPage={submitPage} />);
 
@@ -36,7 +36,7 @@ test('total pages 1', () => {
 });
 
 test('current 1', () => {
-  const submitPage = (page: number): void => {};
+  const submitPage = (page: number): void => { };
 
   const { container } = render(<Pagination currentPage={1} maxPages={7} totalPages={10} submitPage={submitPage} />);
 
@@ -62,7 +62,7 @@ test('current 1', () => {
 });
 
 test('current 4', () => {
-  const submitPage = (page: number): void => {};
+  const submitPage = (page: number): void => { };
 
   const { container } = render(<Pagination currentPage={4} maxPages={7} totalPages={10} submitPage={submitPage} />);
 
@@ -90,7 +90,7 @@ test('current 4', () => {
 });
 
 test('current 7', () => {
-  const submitPage = (page: number): void => {};
+  const submitPage = (page: number): void => { };
 
   const { container } = render(<Pagination currentPage={7} maxPages={7} totalPages={10} submitPage={submitPage} />);
 
@@ -118,7 +118,7 @@ test('current 7', () => {
 });
 
 test('current 10', () => {
-  const submitPage = (page: number): void => {};
+  const submitPage = (page: number): void => { };
 
   const { container } = render(<Pagination currentPage={10} maxPages={7} totalPages={10} submitPage={submitPage} />);
 

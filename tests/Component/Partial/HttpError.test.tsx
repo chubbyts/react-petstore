@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
-import HttpError from '../../../Model/Error/HttpError';
-import HttpErrorPartial from '../../../Component/Partial/HttpError';
-import HttpErrorWithInvalidParameters from '../../../Model/Error/HttpErrorWithInvalidParameters';
+import HttpError from '../../../src/Model/Error/HttpError';
+import HttpErrorPartial from '../../../src/Component/Partial/HttpError';
+import HttpErrorWithInvalidParameters from '../../../src/Model/Error/HttpErrorWithInvalidParameters';
 import { test, expect } from 'vitest';
 
 test('minimal', () => {

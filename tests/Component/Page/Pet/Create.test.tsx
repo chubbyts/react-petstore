@@ -1,18 +1,18 @@
 import { createMemoryHistory } from 'history';
 import { render, screen } from '@testing-library/react';
 import { Router } from 'react-router-dom';
-import Create from '../../../../Component/Page/Pet/Create';
-import HttpError from '../../../../Model/Error/HttpError';
-import PetFormProps from '../../../../Component/Form/PetFormProps';
-import PetRequest from '../../../../Model/Pet/PetRequest';
-import UnprocessableEntity from '../../../../Model/Error/UnprocessableEntity';
+import Create from '../../../../src/Component/Page/Pet/Create';
+import HttpError from '../../../../src/Model/Error/HttpError';
+import PetFormProps from '../../../../src/Component/Form/PetFormProps';
+import PetRequest from '../../../../src/Model/Pet/PetRequest';
+import UnprocessableEntity from '../../../../src/Model/Error/UnprocessableEntity';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import { test, expect } from 'vitest';
 
-let mockCreatePet = (pet: PetRequest) => {};
+let mockCreatePet = (pet: PetRequest) => { };
 
-vi.mock('../../../../ApiClient/Pet', () => {
+vi.mock('../../../../src/ApiClient/Pet', () => {
   return {
     CreatePet: (pet: PetRequest) => {
       return mockCreatePet(pet);
@@ -20,7 +20,7 @@ vi.mock('../../../../ApiClient/Pet', () => {
   };
 });
 
-vi.mock('../../../../Component/Form/PetForm', () => {
+vi.mock('../../../../src/Component/Form/PetForm', () => {
   return {
     default: ({ submitPet }: PetFormProps) => {
       const onSubmit = () => {
@@ -32,9 +32,9 @@ vi.mock('../../../../Component/Form/PetForm', () => {
   };
 });
 
-vi.mock('../../../../Component/Partial/HttpError', () => {
+vi.mock('../../../../src/Component/Partial/HttpError', () => {
   return {
-    default: ({ httpError }: { httpError: HttpError }) => {
+    default: ({ httpError }: { httpError: HttpError; }) => {
       return <div>httpError: {httpError.title}</div>;
     },
   };
