@@ -112,7 +112,7 @@ test('with error', () => {
   });
 
   const { container } = render(
-    <PetForm submitPet={submitPet} defaultPet={defaultPet} unprocessableEntity={unprocessableEntity} />,
+    <PetForm submitPet={submitPet} defaultPet={defaultPet} error={unprocessableEntity} />,
   );
 
   expect(container.outerHTML).toBe(

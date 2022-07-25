@@ -57,6 +57,10 @@ export const CreatePet = async (pet: PetRequest): Promise<HttpError | PetRespons
       return new PetResponse({ ...json });
     }
 
+    if (400 === response.status) {
+      return new BadRequest({ ...json });
+    }
+
     if (422 === response.status) {
       return new UnprocessableEntity({ ...json });
     }
@@ -115,6 +119,10 @@ export const UpdatePet = async (id: string, pet: PetRequest): Promise<HttpError 
 
     if (200 === response.status) {
       return new PetResponse({ ...json });
+    }
+
+    if (400 === response.status) {
+      return new BadRequest({ ...json });
     }
 
     if (404 === response.status) {

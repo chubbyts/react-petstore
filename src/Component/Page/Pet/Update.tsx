@@ -5,8 +5,8 @@ import HttpError from '../../../Model/Error/HttpError';
 import HttpErrorPartial from '../../Partial/HttpError';
 import PetResponse from '../../../Model/Pet/PetResponse';
 import PetForm from '../../Form/PetForm';
-import UnprocessableEntity from '../../../Model/Error/UnprocessableEntity';
 import PetRequest from '../../../Model/Pet/PetRequest';
+import HttpErrorWithInvalidParameters from '../../../Model/Error/HttpErrorWithInvalidParameters';
 
 const Update: FC = () => {
   const params = useParams();
@@ -59,7 +59,7 @@ const Update: FC = () => {
         <PetForm
           submitPet={submitPet}
           defaultPet={pet}
-          unprocessableEntity={httpError instanceof UnprocessableEntity ? httpError : undefined}
+          error={httpError instanceof HttpErrorWithInvalidParameters ? httpError : undefined}
         />
       ) : null}
       <Link to="/pet" className="btn-gray">

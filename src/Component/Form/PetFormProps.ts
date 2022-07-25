@@ -1,11 +1,11 @@
 import PetRequest from '../../Model/Pet/PetRequest';
 import PetResponse from '../../Model/Pet/PetResponse';
-import UnprocessableEntity from '../../Model/Error/UnprocessableEntity';
+import HttpErrorWithInvalidParameters from '../../Model/Error/HttpErrorWithInvalidParameters';
 
 type PetFormProps = {
   submitPet: { (pet: PetRequest): void };
   defaultPet?: PetResponse;
-  unprocessableEntity?: UnprocessableEntity;
+  error?: HttpErrorWithInvalidParameters;
 };
 
 export default PetFormProps;

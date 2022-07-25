@@ -5,7 +5,7 @@ import PetFormProps from './PetFormProps';
 import PetRequest from '../../Model/Pet/PetRequest';
 import TextField from './TextField';
 
-const PetForm: FC<PetFormProps> = ({ submitPet, defaultPet, unprocessableEntity: error }: PetFormProps) => {
+const PetForm: FC<PetFormProps> = ({ submitPet, defaultPet, error }: PetFormProps) => {
   const invalidParameterByNameDenormalized = InvalidParameterByNameDenormalizer(error ? error.invalidParameters : []);
 
   const { register, control, handleSubmit } = useForm<PetRequest>({ defaultValues: defaultPet });
