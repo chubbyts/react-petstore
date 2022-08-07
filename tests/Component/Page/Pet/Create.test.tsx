@@ -4,11 +4,11 @@ import { Router } from 'react-router-dom';
 import Create from '../../../../src/Component/Page/Pet/Create';
 import HttpError from '../../../../src/Model/Error/HttpError';
 import PetFormProps from '../../../../src/Component/Form/PetFormProps';
-import PetRequest from '../../../../src/Model/Pet/PetRequest';
 import UnprocessableEntity from '../../../../src/Model/Error/UnprocessableEntity';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import { test, expect } from 'vitest';
+import { PetRequest } from '../../../../src/Model/model';
 
 let mockCreatePet = (pet: PetRequest) => { };
 

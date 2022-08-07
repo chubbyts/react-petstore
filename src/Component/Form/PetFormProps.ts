@@ -1,6 +1,5 @@
-import PetRequest from '../../Model/Pet/PetRequest';
-import PetResponse from '../../Model/Pet/PetResponse';
 import HttpErrorWithInvalidParameters from '../../Model/Error/HttpErrorWithInvalidParameters';
+import { PetRequest, PetResponse } from '../../Model/model';
 
 type PetFormProps = {
   submitPet: { (pet: PetRequest): void };

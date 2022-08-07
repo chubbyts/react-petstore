@@ -1,13 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import InvalidParameter from '../../../src/Model/Error/InvalidParameter';
 import PetForm from '../../../src/Component/Form/PetForm';
-import PetRequest from '../../../src/Model/Pet/PetRequest';
-import PetResponse from '../../../src/Model/Pet/PetResponse';
 import UnprocessableEntity from '../../../src/Model/Error/UnprocessableEntity';
 import userEvent from '@testing-library/user-event';
-import Vaccination from '../../../src/Model/Pet/Vaccination';
 import { vi } from 'vitest';
 import { test, expect } from 'vitest';
+import { PetRequest } from '../../../src/Model/model';
 
 test('empty', () => {
   const submitPet = (pet: PetRequest): void => { };
@@ -46,12 +44,12 @@ test('empty', () => {
 test('without error', () => {
   const submitPet = (pet: PetRequest): void => { };
 
-  const defaultPet = new PetResponse({
+  const defaultPet = {
     id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
     createdAt: '2005-08-15T15:52:01+00:00',
     name: 'Brownie',
-    vaccinations: [new Vaccination({ name: 'Rabies' })],
-  });
+    vaccinations: [{ name: 'Rabies' }],
+  };
 
   const { container } = render(<PetForm submitPet={submitPet} defaultPet={defaultPet} />);
 
@@ -94,12 +92,12 @@ test('without error', () => {
 test('with error', () => {
   const submitPet = (pet: PetRequest): void => { };
 
-  const defaultPet = new PetResponse({
+  const defaultPet = {
     id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
     createdAt: '2005-08-15T15:52:01+00:00',
     name: '',
-    vaccinations: [new Vaccination({ name: '' })],
-  });
+    vaccinations: [{ name: '' }],
+  };
 
   const invalidParameters: Array<InvalidParameter> = [
     { name: 'name', reason: 'Should not be empty' },
@@ -160,12 +158,12 @@ test('with error', () => {
 test('add vaccination', async () => {
   const submitPet = (pet: PetRequest): void => { };
 
-  const defaultPet = new PetResponse({
+  const defaultPet = {
     id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
     createdAt: '2005-08-15T15:52:01+00:00',
     name: 'Brownie',
-    vaccinations: [new Vaccination({ name: 'Rabies' })],
-  });
+    vaccinations: [{ name: 'Rabies' }],
+  };
 
   const { container } = render(<PetForm submitPet={submitPet} defaultPet={defaultPet} />);
 
@@ -219,12 +217,12 @@ test('add vaccination', async () => {
 test('remove vaccination', async () => {
   const submitPet = (pet: PetRequest): void => { };
 
-  const defaultPet = new PetResponse({
+  const defaultPet = {
     id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
     createdAt: '2005-08-15T15:52:01+00:00',
     name: 'Brownie',
-    vaccinations: [new Vaccination({ name: 'Rabies' })],
-  });
+    vaccinations: [{ name: 'Rabies' }],
+  };
 
   const { container } = render(<PetForm submitPet={submitPet} defaultPet={defaultPet} />);
 
@@ -276,12 +274,12 @@ test('submit minimal', async () => {
       resolve(undefined);
     };
 
-    const defaultPet = new PetResponse({
+    const defaultPet = {
       id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
       createdAt: '2005-08-15T15:52:01+00:00',
       name: 'Brownie',
       tag: '',
-    });
+    };
 
     render(<PetForm submitPet={submitPetMock} defaultPet={defaultPet} />);
 
@@ -306,18 +304,18 @@ test('submit maximal', async () => {
       expect(pet.name).toBe('Brownie');
       expect(pet.tag).toBe('0001-000');
       expect(pet.vaccinations).toHaveLength(1);
-      expect(pet.vaccinations[0].name).toBe('Rabies');
+      expect(pet.vaccinations ? pet.vaccinations[0].name : '').toBe('Rabies');
 
       resolve(undefined);
     };
 
-    const defaultPet = new PetResponse({
+    const defaultPet = {
       id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
       createdAt: '2005-08-15T15:52:01+00:00',
       name: 'Brownie',
       tag: '0001-000',
-      vaccinations: [new Vaccination({ name: 'Rabies' })],
-    });
+      vaccinations: [{ name: 'Rabies' }],
+    };
 
     render(<PetForm submitPet={submitPetMock} defaultPet={defaultPet} />);
 

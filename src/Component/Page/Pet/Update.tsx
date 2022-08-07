@@ -3,10 +3,9 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ReadPet, UpdatePet } from '../../../ApiClient/Pet';
 import HttpError from '../../../Model/Error/HttpError';
 import HttpErrorPartial from '../../Partial/HttpError';
-import PetResponse from '../../../Model/Pet/PetResponse';
 import PetForm from '../../Form/PetForm';
-import PetRequest from '../../../Model/Pet/PetRequest';
 import HttpErrorWithInvalidParameters from '../../../Model/Error/HttpErrorWithInvalidParameters';
+import { PetRequest, PetResponse } from '../../../Model/model';
 
 const Update: FC = () => {
   const params = useParams();

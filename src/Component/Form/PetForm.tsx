@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import InvalidParameterByNameDenormalizer from '../../Denormalizer/InvalidParameterByNameDenormalizer';
+import { PetRequest } from '../../Model/model';
 import PetFormProps from './PetFormProps';
-import PetRequest from '../../Model/Pet/PetRequest';
 import TextField from './TextField';
 
 const PetForm: FC<PetFormProps> = ({ submitPet, defaultPet, error }: PetFormProps) => {

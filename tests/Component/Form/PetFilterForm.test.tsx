@@ -2,15 +2,15 @@ import { render, screen } from '@testing-library/react';
 import BadRequest from '../../../src/Model/Error/BadRequest';
 import InvalidParameter from '../../../src/Model/Error/InvalidParameter';
 import PetFilterForm from '../../../src/Component/Form/PetFilterForm';
-import PetFilters from '../../../src/Model/Pet/PetFilters';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import { test, expect } from 'vitest';
+import { PetFilters } from '../../../src/Model/model';
 
 test('without error', () => {
   const submitPetFilter = (filters: PetFilters) => { };
 
-  const defaultPetFilters = new PetFilters({ name: 'aa' });
+  const defaultPetFilters = { name: 'aa' };
 
   const { container } = render(
     <PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={defaultPetFilters} />,
@@ -74,7 +74,7 @@ test('submit', async () => {
     expect(filters.name).toEqual('aa');
   });
 
-  const defaultPetFilters = new PetFilters({ name: 'aa' });
+  const defaultPetFilters = { name: 'aa' };
 
   render(<PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={defaultPetFilters} />);
 
@@ -90,7 +90,7 @@ test('submit empty', async () => {
     expect(filters.name).toBeUndefined();
   });
 
-  const defaultPetFilters = new PetFilters({ name: '' });
+  const defaultPetFilters = { name: '' };
 
   render(<PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={defaultPetFilters} />);
 

@@ -3,11 +3,10 @@ import { render, screen } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import HttpError from '../../../../src/Model/Error/HttpError';
 import NotFound from '../../../../src/Model/Error/NotFound';
-import PetResponse from '../../../../src/Model/Pet/PetResponse';
 import Read from '../../../../src/Component/Page/Pet/Read';
-import Vaccination from '../../../../src/Model/Pet/Vaccination';
 import { vi } from 'vitest';
 import { test, expect } from 'vitest';
+import { PetResponse } from '../../../../src/Model/model';
 
 let mockReadPet = (id: string) => { };
 
@@ -58,11 +57,11 @@ test('not found', async () => {
 });
 
 test('minimal', async () => {
-  const pet = new PetResponse({
+  const pet = {
     id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
     createdAt: '2005-08-15T15:52:01+00:00',
     name: 'Brownie',
-  });
+  };
 
   mockReadPet = async (id: string) => {
     return new Promise<PetResponse>((resolve) => resolve(pet));
@@ -110,14 +109,14 @@ test('minimal', async () => {
 });
 
 test('maximal', async () => {
-  const pet = new PetResponse({
+  const pet = {
     id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
     createdAt: '2005-08-15T15:52:01+00:00',
     updatedAt: '2005-08-15T15:55:01+00:00',
     name: 'Brownie',
     tag: '0001-000',
-    vaccinations: [new Vaccination({ name: 'Rabies' })],
-  });
+    vaccinations: [{ name: 'Rabies' }],
+  };
 
   mockReadPet = async (id: string) => {
     return new Promise<PetResponse>((resolve) => resolve(pet));

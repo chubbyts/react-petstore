@@ -3,10 +3,8 @@ import HttpError from '../Model/Error/HttpError';
 import InternalServerError from '../Model/Error/InternalServerError';
 import NetworkError from '../Model/Error/NetworkError';
 import NotFound from '../Model/Error/NotFound';
-import PetResponse from '../Model/Pet/PetResponse';
-import PetList from '../Model/Pet/PetList';
 import UnprocessableEntity from '../Model/Error/UnprocessableEntity';
-import PetRequest from '../Model/Pet/PetRequest';
+import { PetList, petListSchema, PetRequest, PetResponse, petResponseSchema } from '../Model/model';
 import { throwableToError } from '../throwable-to-error';
 
 const url = `${import.meta.env.VITE_PETSTORE_URL}/api/pets`;
@@ -23,7 +21,7 @@ export const ListPets = async (queryString: string): Promise<HttpError | PetList
     const json = await response.json();
 
     if (200 === response.status) {
-      return new PetList({ ...json });
+      return petListSchema.parse(json);
     }
 
     if (400 === response.status) {
@@ -54,7 +52,7 @@ export const CreatePet = async (pet: PetRequest): Promise<HttpError | PetRespons
     const json = await response.json();
 
     if (201 === response.status) {
-      return new PetResponse({ ...json });
+      return petResponseSchema.parse(json);
     }
 
     if (400 === response.status) {
@@ -87,7 +85,7 @@ export const ReadPet = async (id: string): Promise<HttpError | PetResponse> => {
     const json = await response.json();
 
     if (200 === response.status) {
-      return new PetResponse({ ...json });
+      return petResponseSchema.parse(json);
     }
 
     if (404 === response.status) {
@@ -118,7 +116,7 @@ export const UpdatePet = async (id: string, pet: PetRequest): Promise<HttpError 
     const json = await response.json();
 
     if (200 === response.status) {
-      return new PetResponse({ ...json });
+      return petResponseSchema.parse(json);
     }
 
     if (400 === response.status) {

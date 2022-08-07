@@ -2,19 +2,15 @@ import { createMemoryHistory } from 'history';
 import { render, screen } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import BadRequest from '../../../../src/Model/Error/BadRequest';
-import Embedded from '../../../../src/Model/Pet/Embedded';
 import HttpError from '../../../../src/Model/Error/HttpError';
-import Link from '../../../../src/Model/Link';
 import List from '../../../../src/Component/Page/Pet/List';
 import NotFound from '../../../../src/Model/Error/NotFound';
 import PaginationProps from '../../../../src/Component/Partial/PaginationProps';
 import PetFilterFormProps from '../../../../src/Component/Form/PetFilterFormProps';
-import PetList from '../../../../src/Model/Pet/PetList';
-import PetResponse from '../../../../src/Model/Pet/PetResponse';
 import userEvent from '@testing-library/user-event';
-import Vaccination from '../../../../src/Model/Pet/Vaccination';
 import { vi } from 'vitest';
 import { test, expect } from 'vitest';
+import { PetList } from '../../../../src/Model/model';
 
 let mockListPets = (queryString: string) => { };
 let mockDeletePet = (id: string) => { };
@@ -105,59 +101,51 @@ test('bad request', async () => {
 });
 
 test('default', async () => {
-  const petList = new PetList({
+  const petList = {
     offset: 0,
     limit: 1,
     count: 2,
-    _embedded: new Embedded({
+    _embedded: {
       items: [
-        new PetResponse({
+        {
           id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
           createdAt: '2005-08-15T15:52:01+00:00',
           updatedAt: '2005-08-15T15:55:01+00:00',
           name: 'Brownie',
           tag: '0001-000',
-          vaccinations: [new Vaccination({ name: 'Rabies' })],
+          vaccinations: [{ name: 'Rabies' }],
           _links: {
-            read: new Link({
+            read: {
               href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              templated: false,
-              rel: [],
               attributes: {
                 method: 'GET',
               },
-            }),
-            update: new Link({
+            },
+            update: {
               href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              templated: false,
-              rel: [],
               attributes: {
                 method: 'PUT',
               },
-            }),
-            delete: new Link({
+            },
+            delete: {
               href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              templated: false,
-              rel: [],
               attributes: {
                 method: 'DELETE',
               },
-            }),
+            },
           },
-        }),
+        },
       ],
-    }),
+    },
     _links: {
-      create: new Link({
+      create: {
         href: '/api/pets',
-        templated: false,
-        rel: [],
         attributes: {
           method: 'POST',
         },
-      }),
+      },
     },
-  });
+  };
 
   mockListPets = async (queryString: string) => {
     return new Promise<PetList>((resolve) => resolve(petList));
@@ -224,25 +212,25 @@ test('default', async () => {
 });
 
 test('no actions', async () => {
-  const petList = new PetList({
+  const petList = {
     offset: 0,
     limit: 1,
     count: 2,
-    _embedded: new Embedded({
+    _embedded: {
       items: [
-        new PetResponse({
+        {
           id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
           createdAt: '2005-08-15T15:52:01+00:00',
           updatedAt: '2005-08-15T15:55:01+00:00',
           name: 'Brownie',
           tag: '0001-000',
-          vaccinations: [new Vaccination({ name: 'Rabies' })],
+          vaccinations: [{ name: 'Rabies' }],
           _links: {},
-        }),
+        },
       ],
-    }),
+    },
     _links: {},
-  });
+  };
 
   mockListPets = async (queryString: string) => {
     return new Promise<PetList>((resolve) => resolve(petList));
@@ -304,59 +292,51 @@ test('no actions', async () => {
 });
 
 test('submit bad request', async () => {
-  const petList = new PetList({
+  const petList = {
     offset: 0,
     limit: 1,
     count: 2,
-    _embedded: new Embedded({
+    _embedded: {
       items: [
-        new PetResponse({
+        {
           id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
           createdAt: '2005-08-15T15:52:01+00:00',
           updatedAt: '2005-08-15T15:55:01+00:00',
           name: 'Brownie',
           tag: '0001-000',
-          vaccinations: [new Vaccination({ name: 'Rabies' })],
+          vaccinations: [{ name: 'Rabies' }],
           _links: {
-            read: new Link({
+            read: {
               href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              templated: false,
-              rel: [],
               attributes: {
                 method: 'GET',
               },
-            }),
-            update: new Link({
+            },
+            update: {
               href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              templated: false,
-              rel: [],
               attributes: {
                 method: 'PUT',
               },
-            }),
-            delete: new Link({
+            },
+            delete: {
               href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              templated: false,
-              rel: [],
               attributes: {
                 method: 'DELETE',
               },
-            }),
+            },
           },
-        }),
+        },
       ],
-    }),
+    },
     _links: {
-      create: new Link({
+      create: {
         href: '/api/pets',
-        templated: false,
-        rel: [],
         attributes: {
           method: 'POST',
         },
-      }),
+      },
     },
-  });
+  };
 
   mockListPets = async (queryString: string) => {
     return new Promise<PetList>((resolve) => resolve(petList));
@@ -443,59 +423,51 @@ test('submit bad request', async () => {
 });
 
 test('submit filter', async () => {
-  const petList = new PetList({
+  const petList = {
     offset: 0,
     limit: 1,
     count: 2,
-    _embedded: new Embedded({
+    _embedded: {
       items: [
-        new PetResponse({
+        {
           id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
           createdAt: '2005-08-15T15:52:01+00:00',
           updatedAt: '2005-08-15T15:55:01+00:00',
           name: 'Brownie',
           tag: '0001-000',
-          vaccinations: [new Vaccination({ name: 'Rabies' })],
+          vaccinations: [{ name: 'Rabies' }],
           _links: {
-            read: new Link({
+            read: {
               href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              templated: false,
-              rel: [],
               attributes: {
                 method: 'GET',
               },
-            }),
-            update: new Link({
+            },
+            update: {
               href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              templated: false,
-              rel: [],
               attributes: {
                 method: 'PUT',
               },
-            }),
-            delete: new Link({
+            },
+            delete: {
               href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              templated: false,
-              rel: [],
               attributes: {
                 method: 'DELETE',
               },
-            }),
+            },
           },
-        }),
+        },
       ],
-    }),
+    },
     _links: {
-      create: new Link({
+      create: {
         href: '/api/pets',
-        templated: false,
-        rel: [],
         attributes: {
           method: 'POST',
         },
-      }),
+      },
     },
-  });
+  };
 
   mockListPets = async (queryString: string) => {
     return new Promise<PetList>((resolve) => resolve(petList));
@@ -520,59 +492,51 @@ test('submit filter', async () => {
 });
 
 test('sort', async () => {
-  const petList = new PetList({
+  const petList = {
     offset: 0,
     limit: 1,
     count: 2,
-    _embedded: new Embedded({
+    _embedded: {
       items: [
-        new PetResponse({
+        {
           id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
           createdAt: '2005-08-15T15:52:01+00:00',
           updatedAt: '2005-08-15T15:55:01+00:00',
           name: 'Brownie',
           tag: '0001-000',
-          vaccinations: [new Vaccination({ name: 'Rabies' })],
+          vaccinations: [{ name: 'Rabies' }],
           _links: {
-            read: new Link({
+            read: {
               href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              templated: false,
-              rel: [],
               attributes: {
                 method: 'GET',
               },
-            }),
-            update: new Link({
+            },
+            update: {
               href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              templated: false,
-              rel: [],
               attributes: {
                 method: 'PUT',
               },
-            }),
-            delete: new Link({
+            },
+            delete: {
               href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              templated: false,
-              rel: [],
               attributes: {
                 method: 'DELETE',
               },
-            }),
+            },
           },
-        }),
+        },
       ],
-    }),
+    },
     _links: {
-      create: new Link({
+      create: {
         href: '/api/pets',
-        templated: false,
-        rel: [],
         attributes: {
           method: 'POST',
         },
-      }),
+      },
     },
-  });
+  };
 
   mockListPets = async (queryString: string) => {
     return new Promise<PetList>((resolve) => resolve(petList));
@@ -599,59 +563,51 @@ test('sort', async () => {
 });
 
 test('next', async () => {
-  const petList = new PetList({
+  const petList = {
     offset: 0,
     limit: 1,
     count: 2,
-    _embedded: new Embedded({
+    _embedded: {
       items: [
-        new PetResponse({
+        {
           id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
           createdAt: '2005-08-15T15:52:01+00:00',
           updatedAt: '2005-08-15T15:55:01+00:00',
           name: 'Brownie',
           tag: '0001-000',
-          vaccinations: [new Vaccination({ name: 'Rabies' })],
+          vaccinations: [{ name: 'Rabies' }],
           _links: {
-            read: new Link({
+            read: {
               href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              templated: false,
-              rel: [],
               attributes: {
                 method: 'GET',
               },
-            }),
-            update: new Link({
+            },
+            update: {
               href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              templated: false,
-              rel: [],
               attributes: {
                 method: 'PUT',
               },
-            }),
-            delete: new Link({
+            },
+            delete: {
               href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              templated: false,
-              rel: [],
               attributes: {
                 method: 'DELETE',
               },
-            }),
+            },
           },
-        }),
+        },
       ],
-    }),
+    },
     _links: {
-      create: new Link({
+      create: {
         href: '/api/pets',
-        templated: false,
-        rel: [],
         attributes: {
           method: 'POST',
         },
-      }),
+      },
     },
-  });
+  };
 
   mockListPets = async (queryString: string) => {
     return new Promise<PetList>((resolve) => resolve(petList));
@@ -678,59 +634,51 @@ test('next', async () => {
 });
 
 test('delete not found', async () => {
-  const petList = new PetList({
+  const petList = {
     offset: 0,
     limit: 1,
     count: 2,
-    _embedded: new Embedded({
+    _embedded: {
       items: [
-        new PetResponse({
+        {
           id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
           createdAt: '2005-08-15T15:52:01+00:00',
           updatedAt: '2005-08-15T15:55:01+00:00',
           name: 'Brownie',
           tag: '0001-000',
-          vaccinations: [new Vaccination({ name: 'Rabies' })],
+          vaccinations: [{ name: 'Rabies' }],
           _links: {
-            read: new Link({
+            read: {
               href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              templated: false,
-              rel: [],
               attributes: {
                 method: 'GET',
               },
-            }),
-            update: new Link({
+            },
+            update: {
               href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              templated: false,
-              rel: [],
               attributes: {
                 method: 'PUT',
               },
-            }),
-            delete: new Link({
+            },
+            delete: {
               href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              templated: false,
-              rel: [],
               attributes: {
                 method: 'DELETE',
               },
-            }),
+            },
           },
-        }),
+        },
       ],
-    }),
+    },
     _links: {
-      create: new Link({
+      create: {
         href: '/api/pets',
-        templated: false,
-        rel: [],
         attributes: {
           method: 'POST',
         },
-      }),
+      },
     },
-  });
+  };
 
   mockListPets = async (queryString: string) => {
     return new Promise<PetList>((resolve) => resolve(petList));
@@ -808,59 +756,51 @@ test('delete not found', async () => {
 });
 
 test('delete success', async () => {
-  const petList = new PetList({
+  const petList = {
     offset: 0,
     limit: 1,
     count: 2,
-    _embedded: new Embedded({
+    _embedded: {
       items: [
-        new PetResponse({
+        {
           id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
           createdAt: '2005-08-15T15:52:01+00:00',
           updatedAt: '2005-08-15T15:55:01+00:00',
           name: 'Brownie',
           tag: '0001-000',
-          vaccinations: [new Vaccination({ name: 'Rabies' })],
+          vaccinations: [{ name: 'Rabies' }],
           _links: {
-            read: new Link({
+            read: {
               href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              templated: false,
-              rel: [],
               attributes: {
                 method: 'GET',
               },
-            }),
-            update: new Link({
+            },
+            update: {
               href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              templated: false,
-              rel: [],
               attributes: {
                 method: 'PUT',
               },
-            }),
-            delete: new Link({
+            },
+            delete: {
               href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              templated: false,
-              rel: [],
               attributes: {
                 method: 'DELETE',
               },
-            }),
+            },
           },
-        }),
+        },
       ],
-    }),
+    },
     _links: {
-      create: new Link({
+      create: {
         href: '/api/pets',
-        templated: false,
-        rel: [],
         attributes: {
           method: 'POST',
         },
-      }),
+      },
     },
-  });
+  };
 
   mockListPets = async (queryString: string) => {
     return new Promise<PetList>((resolve) => resolve(petList));
@@ -880,24 +820,22 @@ test('delete success', async () => {
     return new Promise((resolve) => resolve());
   };
 
-  const petListNoItem = new PetList({
+  const petListNoItem = {
     offset: 0,
     limit: 1,
     count: 2,
-    _embedded: new Embedded({
+    _embedded: {
       items: [],
-    }),
+    },
     _links: {
-      create: new Link({
+      create: {
         href: '/api/pets',
-        templated: false,
-        rel: [],
         attributes: {
           method: 'POST',
         },
-      }),
+      },
     },
-  });
+  };
 
   mockListPets = async (queryString: string) => {
     return new Promise<PetList>((resolve) => resolve(petListNoItem));

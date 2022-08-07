@@ -1,5 +1,5 @@
 import BadRequest from '../../Model/Error/BadRequest';
-import PetFilters from '../../Model/Pet/PetFilters';
+import { PetFilters } from '../../Model/model';
 
 type PetFilterFormProps = {
   submitPetFilter: { (filters: PetFilters): void };

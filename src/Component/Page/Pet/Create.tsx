@@ -4,8 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import HttpError from '../../../Model/Error/HttpError';
 import HttpErrorPartial from '../../Partial/HttpError';
 import PetForm from '../../Form/PetForm';
-import PetRequest from '../../../Model/Pet/PetRequest';
 import HttpErrorWithInvalidParameters from '../../../Model/Error/HttpErrorWithInvalidParameters';
+import { PetRequest } from '../../../Model/model';
 
 const Create: FC = () => {
   const navigate = useNavigate();

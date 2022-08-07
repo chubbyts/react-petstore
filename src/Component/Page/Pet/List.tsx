@@ -8,10 +8,8 @@ import HttpError from '../../../Model/Error/HttpError';
 import HttpErrorPartial from '../../Partial/HttpError';
 import Pagination from '../../Partial/Pagination';
 import PetFilterForm from '../../Form/PetFilterForm';
-import PetFilters from '../../../Model/Pet/PetFilters';
-import PetList from '../../../Model/Pet/PetList';
-import PetResponse from '../../../Model/Pet/PetResponse';
 import qs from 'qs';
+import { PetFilters, PetList, PetResponse } from '../../../Model/model';
 
 const List: FC = () => {
   const navigate = useNavigate();
@@ -89,7 +87,7 @@ const List: FC = () => {
       <h1>List Pets</h1>
       {petList ? (
         <div>
-          {petList._links.create ? (
+          {petList._links?.create ? (
             <Link to="/pet/create" className="btn-green mb-4">
               Create
             </Link>
@@ -128,7 +126,7 @@ const List: FC = () => {
               </tr>
             </thead>
             <tbody>
-              {petList._embedded.items.map((pet: PetResponse, i) => (
+              {(petList._embedded?.items ?? petList.items ?? []).map((pet: PetResponse, i) => (
                 <tr key={pet.id}>
                   <td>{pet.id}</td>
                   <td>{format(Date.parse(pet.createdAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}</td>
@@ -136,17 +134,17 @@ const List: FC = () => {
                   <td>{pet.name}</td>
                   <td>{pet.tag}</td>
                   <td>
-                    {pet._links.read ? (
+                    {pet._links?.read ? (
                       <Link to={`/pet/${pet.id}`} className="btn-gray mr-4">
                         Read
                       </Link>
                     ) : null}
-                    {pet._links.update ? (
+                    {pet._links?.update ? (
                       <Link to={`/pet/${pet.id}/update`} className="btn-gray mr-4">
                         Update
                       </Link>
                     ) : null}
-                    {pet._links.delete ? (
+                    {pet._links?.delete ? (
                       <button
                         data-testid={`remove-pet-${i}`}
                         onClick={() => {

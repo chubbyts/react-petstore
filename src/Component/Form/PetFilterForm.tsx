@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import InvalidParameterByNameDenormalizer from '../../Denormalizer/InvalidParameterByNameDenormalizer';
+import { PetFilters } from '../../Model/model';
 import PetFilterFormProps from './PetFilterFormProps';
-import PetFilters from '../../Model/Pet/PetFilters';
 import TextField from './TextField';
 
 const PetFilterForm: FC<PetFilterFormProps> = ({

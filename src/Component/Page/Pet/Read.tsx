@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 import { ReadPet } from '../../../ApiClient/Pet';
 import HttpError from '../../../Model/Error/HttpError';
 import HttpErrorPartial from '../../Partial/HttpError';
-import PetResponse from '../../../Model/Pet/PetResponse';
+import { PetResponse } from '../../../Model/model';
 
 const Read: FC = () => {
   const params = useParams();
@@ -54,7 +54,7 @@ const Read: FC = () => {
             <dd>{pet.tag}</dd>
             <dt>Vaccinations</dt>
             <dd>
-              {pet.vaccinations.length > 0 ? (
+              {pet.vaccinations ? (
                 <ul>
                   {pet.vaccinations.map((vaccination, i) => (
                     <li key={i}>{vaccination.name}</li>

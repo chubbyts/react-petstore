@@ -4,14 +4,12 @@ import { Router } from 'react-router-dom';
 import HttpError from '../../../../src/Model/Error/HttpError';
 import NotFound from '../../../../src/Model/Error/NotFound';
 import PetFormProps from '../../../../src/Component/Form/PetFormProps';
-import PetRequest from '../../../../src/Model/Pet/PetRequest';
-import PetResponse from '../../../../src/Model/Pet/PetResponse';
 import UnprocessableEntity from '../../../../src/Model/Error/UnprocessableEntity';
 import Update from '../../../../src/Component/Page/Pet/Update';
-import Vaccination from '../../../../src/Model/Pet/Vaccination';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import { test, expect } from 'vitest';
+import { PetRequest, PetResponse } from '../../../../src/Model/model';
 
 let mockReadPet = (id: string) => { };
 let mockUpdatePet = (id: string, pet: PetRequest) => { };
@@ -79,11 +77,11 @@ test('not found', async () => {
 });
 
 test('minimal', async () => {
-  const pet = new PetResponse({
+  const pet = {
     id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
     createdAt: '2005-08-15T15:52:01+00:00',
     name: 'Brownie',
-  });
+  };
 
   mockReadPet = async (id: string) => {
     return new Promise<PetResponse>((resolve) => resolve(pet));
@@ -116,13 +114,13 @@ test('minimal', async () => {
 });
 
 test('unprocessable entity', async () => {
-  const pet = new PetResponse({
+  const pet = {
     id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
     createdAt: '2005-08-15T15:52:01+00:00',
     updatedAt: '2005-08-15T15:55:01+00:00',
     name: 'Brownie',
-    vaccinations: [new Vaccination({ name: 'Rabies' })],
-  });
+    vaccinations: [{ name: 'Rabies' }],
+  };
 
   mockReadPet = async (id: string) => {
     return new Promise<PetResponse>((resolve) => resolve(pet));
@@ -166,13 +164,13 @@ test('unprocessable entity', async () => {
 });
 
 test('successful', async () => {
-  const pet = new PetResponse({
+  const pet = {
     id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
     createdAt: '2005-08-15T15:52:01+00:00',
     updatedAt: '2005-08-15T15:55:01+00:00',
     name: 'Brownie',
-    vaccinations: [new Vaccination({ name: 'Rabies' })],
-  });
+    vaccinations: [{ name: 'Rabies' }],
+  };
 
   mockReadPet = async (id: string) => {
     return new Promise<PetResponse>((resolve) => resolve(pet));
@@ -185,7 +183,7 @@ test('successful', async () => {
   const history = createMemoryHistory();
   history.push('/pet/4d783b77-eb09-4603-b99b-f590b605eaa9');
 
-  const { container } = render(
+  render(
     <Router location={history.location} navigator={history}>
       <Update />
     </Router>,
