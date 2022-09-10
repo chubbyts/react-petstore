@@ -60,7 +60,7 @@ const PetForm: FC<PetFormProps> = ({ submitPet, defaultPet, error }: PetFormProp
             <button
               data-testid="add-vaccination"
               type="button"
-              onClick={() => vaccinations.append({})}
+              onClick={() => vaccinations.append({ name: '' })}
               className="btn-green"
             >
               Add
