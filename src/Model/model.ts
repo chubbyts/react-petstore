@@ -6,7 +6,7 @@ const linkSchema = z.object({
 
 export const petRequestSchema = z.object({
   name: z.string(),
-  tag: z.string().optional(),
+  tag: z.string().nullish(),
   vaccinations: z
     .array(
       z.object({
@@ -21,7 +21,7 @@ export type PetRequest = z.infer<typeof petRequestSchema>;
 export const petResponseSchema = z.object({
   id: z.string(),
   createdAt: z.string(),
-  updatedAt: z.string().optional(),
+  updatedAt: z.string().nullish(),
   ...petRequestSchema.shape,
   _links: z
     .object({
