@@ -163,7 +163,7 @@ test('not found', async () => {
                             <span></span>
                             <span></span>
                         </button>
-                        <a aria-current="page" class="active" href="/">Petstore</a>
+                        <a class="" href="/">Petstore</a>
                     </nav>
                     <nav id="left-nav">
                         <ul>
@@ -207,7 +207,7 @@ test('pet list', async () => {
                             <span></span>
                             <span></span>
                         </button>
-                        <a aria-current="page" class="active" href="/">Petstore</a>
+                        <a class="" href="/">Petstore</a>
                     </nav>
                     <nav id="left-nav">
                         <ul>
@@ -251,7 +251,7 @@ test('pet create', async () => {
                             <span></span>
                             <span></span>
                         </button>
-                        <a aria-current="page" class="active" href="/">Petstore</a>
+                        <a class="" href="/">Petstore</a>
                     </nav>
                     <nav id="left-nav">
                         <ul>
@@ -295,7 +295,7 @@ test('pet read', async () => {
                             <span></span>
                             <span></span>
                         </button>
-                        <a aria-current="page" class="active" href="/">Petstore</a>
+                        <a class="" href="/">Petstore</a>
                     </nav>
                     <nav id="left-nav">
                         <ul>
@@ -339,7 +339,7 @@ test('pet update', async () => {
                             <span></span>
                             <span></span>
                         </button>
-                        <a aria-current="page" class="active" href="/">Petstore</a>
+                        <a class="" href="/">Petstore</a>
                     </nav>
                     <nav id="left-nav">
                         <ul>
