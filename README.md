@@ -38,4 +38,4 @@ npm test
 
 ## Copyright
 
-Dominik Zogg 2022
+2023 Dominik Zogg
