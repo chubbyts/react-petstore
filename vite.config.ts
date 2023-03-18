@@ -15,7 +15,10 @@ export default defineConfig({
     setupFiles: "./vitest.setup.ts",
     include: ['tests/**/*.test.*'],
     coverage: {
+      all: true,
+      clean: true,
       reporter: ['text', 'html', 'lcov'],
-    },
+      provider: 'c8',
+    }
   },
 });
