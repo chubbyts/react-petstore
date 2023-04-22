@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import { test, expect } from 'vitest';
 import { PetFilters } from '../../../src/Model/model';
+import { formatHtml } from '../../formatter';
 
 test('without error', () => {
   const submitPetFilter = (filters: PetFilters) => { };
@@ -16,23 +17,19 @@ test('without error', () => {
     <PetFilterForm submitPetFilter={submitPetFilter} defaultPetFilters={defaultPetFilters} />,
   );
 
-  expect(container.outerHTML).toBe(
-    `
-        <div>
-            <form>
-                <fieldset>
-                    <div class="form-field">
-                        <label>Name</label>
-                        <input type="text" name="name" value="">
-                    </div>
-                    <button data-testid="submit-pet-filter" class="btn-blue">Filter</button>
-                </fieldset>
-            </form>
-        </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <form>
+        <fieldset>
+          <div class=\\"form-field\\">
+            <label>Name</label><input type=\\"text\\" name=\\"name\\" value=\\"\\" />
+          </div>
+          <button data-testid=\\"submit-pet-filter\\" class=\\"btn-blue\\">Filter</button>
+        </fieldset>
+      </form>
+    </div>
+    "
+  `);
 });
 
 test('with error', () => {
@@ -47,26 +44,22 @@ test('with error', () => {
 
   const { container } = render(<PetFilterForm submitPetFilter={submitPetFilter} badRequest={badRequest} />);
 
-  expect(container.outerHTML).toBe(
-    `
-        <div>
-            <form>
-                <fieldset>
-                    <div class="form-field error">
-                        <label>Name</label>
-                        <input type="text" name="name" value="">
-                        <ul>
-                            <li>Should not be empty</li>
-                        </ul>
-                    </div>
-                    <button data-testid="submit-pet-filter" class="btn-blue">Filter</button>
-                </fieldset>
-            </form>
-        </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <form>
+        <fieldset>
+          <div class=\\"form-field error\\">
+            <label>Name</label><input type=\\"text\\" name=\\"name\\" value=\\"\\" />
+            <ul>
+              <li>Should not be empty</li>
+            </ul>
+          </div>
+          <button data-testid=\\"submit-pet-filter\\" class=\\"btn-blue\\">Filter</button>
+        </fieldset>
+      </form>
+    </div>
+    "
+  `);
 });
 
 test('submit', async () => {

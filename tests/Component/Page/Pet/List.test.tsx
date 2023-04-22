@@ -11,6 +11,7 @@ import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import { test, expect } from 'vitest';
 import { PetList } from '../../../../src/Model/model';
+import { formatHtml } from '../../../formatter';
 
 let mockListPets = (queryString: string) => { };
 let mockDeletePet = (id: string) => { };
@@ -86,18 +87,15 @@ test('bad request', async () => {
 
   await screen.findByTestId('page-pet-list');
 
-  expect(container.outerHTML).toBe(
-    `
-        <div>
-            <div data-testid="page-pet-list">
-                <div>httpError: title</div>
-                <h1>List Pets</h1>
-            </div>
-        </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <div data-testid=\\"page-pet-list\\">
+        <div>httpError: title</div>
+        <h1>List Pets</h1>
+      </div>
+    </div>
+    "
+  `);
 });
 
 test('default', async () => {
@@ -161,54 +159,72 @@ test('default', async () => {
 
   await screen.findByTestId('page-pet-list');
 
-  expect(container.outerHTML).toBe(
-    `
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <div data-testid=\\"page-pet-list\\">
+        <h1>List Pets</h1>
         <div>
-            <div data-testid="page-pet-list">
-                <h1>List Pets</h1>
-                <div>
-                    <a class="btn-green mb-4" href="/pet/create">Create</a>
-                    <button data-testid="test-filter-button"></button>
-                    <table class="my-4">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>CreatedAt</th>
-                                <th>UpdatedAt</th>
-                                <th>
-                                    Name (
-                                        <a data-testid="sort-pet-name-asc" href="/pet?page=1&amp;sort%5Bname%5D=asc"> A-Z </a> |
-                                        <a data-testid="sort-pet-name-desc" href="/pet?page=1&amp;sort%5Bname%5D=desc"> Z-A </a> |
-                                        <a data-testid="sort-pet-name--" href="/pet?page=1"> --- </a>
-                                    )
-                                </th>
-                                <th>Tag</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>4d783b77-eb09-4603-b99b-f590b605eaa9</td>
-                                <td>15.08.2005 - 17:52:01</td>
-                                <td>15.08.2005 - 17:55:01</td>
-                                <td>Brownie</td>
-                                <td>0001-000</td>
-                                <td>
-                                    <a class="btn-gray mr-4" href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9">Read</a>
-                                    <a class="btn-gray mr-4" href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update">Update</a>
-                                    <button data-testid="remove-pet-0" class="btn-red">Delete</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button data-testid="test-pagination-button" data-current-page="1" data-total-pages="2" data-max-pages="7"></button>
-                </div>
-            </div>
+          <a class=\\"btn-green mb-4\\" href=\\"/pet/create\\">Create</a
+          ><button data-testid=\\"test-filter-button\\"></button>
+          <table class=\\"my-4\\">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>
+                  Name (<a
+                    data-testid=\\"sort-pet-name-asc\\"
+                    href=\\"/pet?page=1&amp;sort%5Bname%5D=asc\\"
+                  >
+                    A-Z
+                  </a>
+                  |<a
+                    data-testid=\\"sort-pet-name-desc\\"
+                    href=\\"/pet?page=1&amp;sort%5Bname%5D=desc\\"
+                  >
+                    Z-A
+                  </a>
+                  |<a data-testid=\\"sort-pet-name--\\" href=\\"/pet?page=1\\"> --- </a>)
+                </th>
+                <th>Tag</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>4d783b77-eb09-4603-b99b-f590b605eaa9</td>
+                <td>15.08.2005 - 17:52:01</td>
+                <td>15.08.2005 - 17:55:01</td>
+                <td>Brownie</td>
+                <td>0001-000</td>
+                <td>
+                  <a
+                    class=\\"btn-gray mr-4\\"
+                    href=\\"/pet/4d783b77-eb09-4603-b99b-f590b605eaa9\\"
+                    >Read</a
+                  ><a
+                    class=\\"btn-gray mr-4\\"
+                    href=\\"/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update\\"
+                    >Update</a
+                  ><button data-testid=\\"remove-pet-0\\" class=\\"btn-red\\">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <button
+            data-testid=\\"test-pagination-button\\"
+            data-current-page=\\"1\\"
+            data-total-pages=\\"2\\"
+            data-max-pages=\\"7\\"
+          ></button>
         </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+      </div>
+    </div>
+    "
+  `);
 });
 
 test('no actions', async () => {
@@ -246,49 +262,59 @@ test('no actions', async () => {
 
   await screen.findByTestId('page-pet-list');
 
-  expect(container.outerHTML).toBe(
-    `
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <div data-testid=\\"page-pet-list\\">
+        <h1>List Pets</h1>
         <div>
-            <div data-testid="page-pet-list">
-                <h1>List Pets</h1>
-                <div>
-                    <button data-testid="test-filter-button"></button>
-                    <table class="my-4">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>CreatedAt</th>
-                                <th>UpdatedAt</th>
-                                <th>
-                                    Name (
-                                        <a data-testid="sort-pet-name-asc" href="/pet?page=1&amp;sort%5Bname%5D=asc"> A-Z </a> |
-                                        <a data-testid="sort-pet-name-desc" href="/pet?page=1&amp;sort%5Bname%5D=desc"> Z-A </a> |
-                                        <a data-testid="sort-pet-name--" href="/pet?page=1"> --- </a>
-                                    )
-                                </th>
-                                <th>Tag</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>4d783b77-eb09-4603-b99b-f590b605eaa9</td>
-                                <td>15.08.2005 - 17:52:01</td>
-                                <td>15.08.2005 - 17:55:01</td>
-                                <td>Brownie</td>
-                                <td>0001-000</td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button data-testid="test-pagination-button" data-current-page="1" data-total-pages="2" data-max-pages="7"></button>
-                </div>
-            </div>
+          <button data-testid=\\"test-filter-button\\"></button>
+          <table class=\\"my-4\\">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>
+                  Name (<a
+                    data-testid=\\"sort-pet-name-asc\\"
+                    href=\\"/pet?page=1&amp;sort%5Bname%5D=asc\\"
+                  >
+                    A-Z
+                  </a>
+                  |<a
+                    data-testid=\\"sort-pet-name-desc\\"
+                    href=\\"/pet?page=1&amp;sort%5Bname%5D=desc\\"
+                  >
+                    Z-A
+                  </a>
+                  |<a data-testid=\\"sort-pet-name--\\" href=\\"/pet?page=1\\"> --- </a>)
+                </th>
+                <th>Tag</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>4d783b77-eb09-4603-b99b-f590b605eaa9</td>
+                <td>15.08.2005 - 17:52:01</td>
+                <td>15.08.2005 - 17:55:01</td>
+                <td>Brownie</td>
+                <td>0001-000</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <button
+            data-testid=\\"test-pagination-button\\"
+            data-current-page=\\"1\\"
+            data-total-pages=\\"2\\"
+            data-max-pages=\\"7\\"
+          ></button>
         </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+      </div>
+    </div>
+    "
+  `);
 });
 
 test('submit bad request', async () => {
@@ -371,55 +397,78 @@ test('submit bad request', async () => {
 
   await screen.findByText(/httpError/);
 
-  expect(container.outerHTML).toBe(
-    `
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <div data-testid=\\"page-pet-list\\">
+        <div>httpError: title</div>
+        <h1>List Pets</h1>
         <div>
-            <div data-testid="page-pet-list">
-                <div>httpError: title</div>
-                <h1>List Pets</h1>
-                <div>
-                    <a class="btn-green mb-4" href="/pet/create">Create</a>
-                    <button data-testid="test-filter-button"></button>
-                    <table class="my-4">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>CreatedAt</th>
-                                <th>UpdatedAt</th>
-                                <th>
-                                    Name (
-                                        <a data-testid="sort-pet-name-asc" href="/pet?page=1&amp;filters%5Bname%5D=Bro&amp;sort%5Bname%5D=asc"> A-Z </a> |
-                                        <a data-testid="sort-pet-name-desc" href="/pet?page=1&amp;filters%5Bname%5D=Bro&amp;sort%5Bname%5D=desc"> Z-A </a> |
-                                        <a data-testid="sort-pet-name--" href="/pet?page=1&amp;filters%5Bname%5D=Bro"> --- </a>
-                                    )
-                                </th>
-                                <th>Tag</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>4d783b77-eb09-4603-b99b-f590b605eaa9</td>
-                                <td>15.08.2005 - 17:52:01</td>
-                                <td>15.08.2005 - 17:55:01</td>
-                                <td>Brownie</td>
-                                <td>0001-000</td>
-                                <td>
-                                    <a class="btn-gray mr-4" href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9">Read</a>
-                                    <a class="btn-gray mr-4" href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update">Update</a>
-                                    <button data-testid="remove-pet-0" class="btn-red">Delete</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button data-testid="test-pagination-button" data-current-page="1" data-total-pages="2" data-max-pages="7"></button>
-                </div>
-            </div>
+          <a class=\\"btn-green mb-4\\" href=\\"/pet/create\\">Create</a
+          ><button data-testid=\\"test-filter-button\\"></button>
+          <table class=\\"my-4\\">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>
+                  Name (<a
+                    data-testid=\\"sort-pet-name-asc\\"
+                    href=\\"/pet?page=1&amp;filters%5Bname%5D=Bro&amp;sort%5Bname%5D=asc\\"
+                  >
+                    A-Z
+                  </a>
+                  |<a
+                    data-testid=\\"sort-pet-name-desc\\"
+                    href=\\"/pet?page=1&amp;filters%5Bname%5D=Bro&amp;sort%5Bname%5D=desc\\"
+                  >
+                    Z-A
+                  </a>
+                  |<a
+                    data-testid=\\"sort-pet-name--\\"
+                    href=\\"/pet?page=1&amp;filters%5Bname%5D=Bro\\"
+                  >
+                    --- </a
+                  >)
+                </th>
+                <th>Tag</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>4d783b77-eb09-4603-b99b-f590b605eaa9</td>
+                <td>15.08.2005 - 17:52:01</td>
+                <td>15.08.2005 - 17:55:01</td>
+                <td>Brownie</td>
+                <td>0001-000</td>
+                <td>
+                  <a
+                    class=\\"btn-gray mr-4\\"
+                    href=\\"/pet/4d783b77-eb09-4603-b99b-f590b605eaa9\\"
+                    >Read</a
+                  ><a
+                    class=\\"btn-gray mr-4\\"
+                    href=\\"/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update\\"
+                    >Update</a
+                  ><button data-testid=\\"remove-pet-0\\" class=\\"btn-red\\">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <button
+            data-testid=\\"test-pagination-button\\"
+            data-current-page=\\"1\\"
+            data-total-pages=\\"2\\"
+            data-max-pages=\\"7\\"
+          ></button>
         </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+      </div>
+    </div>
+    "
+  `);
 });
 
 test('submit filter', async () => {
@@ -704,55 +753,73 @@ test('delete not found', async () => {
 
   await screen.findByText(/httpError/);
 
-  expect(container.outerHTML).toBe(
-    `
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <div data-testid=\\"page-pet-list\\">
+        <div>httpError: title</div>
+        <h1>List Pets</h1>
         <div>
-            <div data-testid="page-pet-list">
-                <div>httpError: title</div>
-                <h1>List Pets</h1>
-                <div>
-                    <a class="btn-green mb-4" href="/pet/create">Create</a>
-                    <button data-testid="test-filter-button"></button>
-                    <table class="my-4">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>CreatedAt</th>
-                                <th>UpdatedAt</th>
-                                <th>
-                                    Name (
-                                        <a data-testid="sort-pet-name-asc" href="/pet?page=1&amp;sort%5Bname%5D=asc"> A-Z </a> |
-                                        <a data-testid="sort-pet-name-desc" href="/pet?page=1&amp;sort%5Bname%5D=desc"> Z-A </a> |
-                                        <a data-testid="sort-pet-name--" href="/pet?page=1"> --- </a>
-                                    )
-                                </th>
-                                <th>Tag</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>4d783b77-eb09-4603-b99b-f590b605eaa9</td>
-                                <td>15.08.2005 - 17:52:01</td>
-                                <td>15.08.2005 - 17:55:01</td>
-                                <td>Brownie</td>
-                                <td>0001-000</td>
-                                <td>
-                                    <a class="btn-gray mr-4" href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9">Read</a>
-                                    <a class="btn-gray mr-4" href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update">Update</a>
-                                    <button data-testid="remove-pet-0" class="btn-red">Delete</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button data-testid="test-pagination-button" data-current-page="1" data-total-pages="2" data-max-pages="7"></button>
-                </div>
-            </div>
+          <a class=\\"btn-green mb-4\\" href=\\"/pet/create\\">Create</a
+          ><button data-testid=\\"test-filter-button\\"></button>
+          <table class=\\"my-4\\">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>
+                  Name (<a
+                    data-testid=\\"sort-pet-name-asc\\"
+                    href=\\"/pet?page=1&amp;sort%5Bname%5D=asc\\"
+                  >
+                    A-Z
+                  </a>
+                  |<a
+                    data-testid=\\"sort-pet-name-desc\\"
+                    href=\\"/pet?page=1&amp;sort%5Bname%5D=desc\\"
+                  >
+                    Z-A
+                  </a>
+                  |<a data-testid=\\"sort-pet-name--\\" href=\\"/pet?page=1\\"> --- </a>)
+                </th>
+                <th>Tag</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>4d783b77-eb09-4603-b99b-f590b605eaa9</td>
+                <td>15.08.2005 - 17:52:01</td>
+                <td>15.08.2005 - 17:55:01</td>
+                <td>Brownie</td>
+                <td>0001-000</td>
+                <td>
+                  <a
+                    class=\\"btn-gray mr-4\\"
+                    href=\\"/pet/4d783b77-eb09-4603-b99b-f590b605eaa9\\"
+                    >Read</a
+                  ><a
+                    class=\\"btn-gray mr-4\\"
+                    href=\\"/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update\\"
+                    >Update</a
+                  ><button data-testid=\\"remove-pet-0\\" class=\\"btn-red\\">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <button
+            data-testid=\\"test-pagination-button\\"
+            data-current-page=\\"1\\"
+            data-total-pages=\\"2\\"
+            data-max-pages=\\"7\\"
+          ></button>
         </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+      </div>
+    </div>
+    "
+  `);
 });
 
 test('delete success', async () => {
@@ -845,40 +912,49 @@ test('delete success', async () => {
 
   await userEvent.click(removePetButton);
 
-  expect(container.outerHTML).toBe(
-    `
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <div data-testid=\\"page-pet-list\\">
+        <h1>List Pets</h1>
         <div>
-            <div data-testid="page-pet-list">
-                <h1>List Pets</h1>
-                <div>
-                    <a class="btn-green mb-4" href="/pet/create">Create</a>
-                    <button data-testid="test-filter-button"></button>
-                    <table class="my-4">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>CreatedAt</th>
-                                <th>UpdatedAt</th>
-                                <th>
-                                    Name (
-                                        <a data-testid="sort-pet-name-asc" href="/pet?page=1&amp;sort%5Bname%5D=asc"> A-Z </a> |
-                                        <a data-testid="sort-pet-name-desc" href="/pet?page=1&amp;sort%5Bname%5D=desc"> Z-A </a> |
-                                        <a data-testid="sort-pet-name--" href="/pet?page=1"> --- </a>
-                                    )
-                                </th>
-                                <th>Tag</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                    <button data-testid="test-pagination-button" data-current-page="1" data-total-pages="2" data-max-pages="7"></button>
-                </div>
-            </div>
+          <a class=\\"btn-green mb-4\\" href=\\"/pet/create\\">Create</a
+          ><button data-testid=\\"test-filter-button\\"></button>
+          <table class=\\"my-4\\">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>
+                  Name (<a
+                    data-testid=\\"sort-pet-name-asc\\"
+                    href=\\"/pet?page=1&amp;sort%5Bname%5D=asc\\"
+                  >
+                    A-Z
+                  </a>
+                  |<a
+                    data-testid=\\"sort-pet-name-desc\\"
+                    href=\\"/pet?page=1&amp;sort%5Bname%5D=desc\\"
+                  >
+                    Z-A
+                  </a>
+                  |<a data-testid=\\"sort-pet-name--\\" href=\\"/pet?page=1\\"> --- </a>)
+                </th>
+                <th>Tag</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <button
+            data-testid=\\"test-pagination-button\\"
+            data-current-page=\\"1\\"
+            data-total-pages=\\"2\\"
+            data-max-pages=\\"7\\"
+          ></button>
         </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+      </div>
+    </div>
+    "
+  `);
 });

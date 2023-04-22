@@ -3,6 +3,7 @@ import TextField from '../../../src/Component/Form/TextField';
 import InvalidParameter from '../../../src/Model/Error/InvalidParameter';
 import { UseFormRegister } from 'react-hook-form';
 import { test, expect } from 'vitest';
+import { formatHtml } from '../../formatter';
 
 test('default', () => {
   const register = ((name: string) => ({ name })) as UseFormRegister<any>;
@@ -13,19 +14,15 @@ test('default', () => {
     <TextField register={register} name="name" label="label" invalidParameters={invalidParameters} />,
   );
 
-  expect(container.outerHTML).toBe(
-    `
-        <div>
-            <div class="form-field error">
-                <label>label</label>
-                <input type="text" name="name" value="">
-                <ul>
-                    <li>Should not be empty</li>
-                </ul>
-            </div>
-        </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <div class=\\"form-field error\\">
+        <label>label</label><input type=\\"text\\" name=\\"name\\" value=\\"\\" />
+        <ul>
+          <li>Should not be empty</li>
+        </ul>
+      </div>
+    </div>
+    "
+  `);
 });

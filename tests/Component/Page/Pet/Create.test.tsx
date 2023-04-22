@@ -9,6 +9,7 @@ import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import { test, expect } from 'vitest';
 import { PetRequest } from '../../../../src/Model/model';
+import { formatHtml } from '../../../formatter';
 
 let mockCreatePet = (pet: PetRequest) => { };
 
@@ -49,19 +50,16 @@ test('default', () => {
     </Router>,
   );
 
-  expect(container.outerHTML).toBe(
-    `
-        <div>
-            <div data-testid="page-pet-create">
-                <h1>Create Pet</h1>
-                <button data-testid="test-button"></button>
-                <a class="btn-gray" href="/pet">List</a>
-            </div>
-        </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <div data-testid=\\"page-pet-create\\">
+        <h1>Create Pet</h1>
+        <button data-testid=\\"test-button\\"></button
+        ><a class=\\"btn-gray\\" href=\\"/pet\\">List</a>
+      </div>
+    </div>
+    "
+  `);
 });
 
 test('unprocessable entity', async () => {
@@ -83,20 +81,17 @@ test('unprocessable entity', async () => {
 
   await screen.findByText(/httpError/);
 
-  expect(container.outerHTML).toBe(
-    `
-        <div>
-            <div data-testid="page-pet-create">
-                <div>httpError: title</div>
-                <h1>Create Pet</h1>
-                <button data-testid="test-button"></button>
-                <a class="btn-gray" href="/pet">List</a>
-            </div>
-        </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <div data-testid=\\"page-pet-create\\">
+        <div>httpError: title</div>
+        <h1>Create Pet</h1>
+        <button data-testid=\\"test-button\\"></button
+        ><a class=\\"btn-gray\\" href=\\"/pet\\">List</a>
+      </div>
+    </div>
+    "
+  `);
 });
 
 test('successful', async () => {

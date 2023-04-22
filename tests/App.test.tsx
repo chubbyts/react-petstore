@@ -6,6 +6,7 @@ import { ReactNode } from 'react';
 import { createMemoryHistory } from 'history';
 import { vi } from 'vitest';
 import { test, expect } from 'vitest';
+import { formatHtml } from './formatter';
 
 vi.mock('react-router-dom', async () => {
   return {
@@ -65,36 +66,26 @@ test('toggle', async () => {
 
   await userEvent.click(navigationToggle);
 
-  expect(container.outerHTML).toBe(
-    `
-        <div>
-            <div>
-                <div id="wrapper" class="displayMenu">
-                    <nav id="top-nav" class="flow-root">
-                        <button id="toggle" data-testid="navigation-toggle">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </button>
-                        <a aria-current="page" class="active" href="/">Petstore</a>
-                    </nav>
-                    <nav id="left-nav">
-                        <ul>
-                            <li>
-                                <a class="" href="/pet">Pets</a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <div id="main">
-                        <div data-testid="page-home-mock"></div>
-                    </div>
-                </div>
-            </div>
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <div>
+        <div id=\\"wrapper\\" class=\\"displayMenu\\">
+          <nav id=\\"top-nav\\" class=\\"flow-root\\">
+            <button id=\\"toggle\\" data-testid=\\"navigation-toggle\\">
+              <span></span><span></span><span></span></button
+            ><a aria-current=\\"page\\" class=\\"active\\" href=\\"/\\">Petstore</a>
+          </nav>
+          <nav id=\\"left-nav\\">
+            <ul>
+              <li><a class=\\"\\" href=\\"/pet\\">Pets</a></li>
+            </ul>
+          </nav>
+          <div id=\\"main\\"><div data-testid=\\"page-home-mock\\"></div></div>
         </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+      </div>
+    </div>
+    "
+  `);
 });
 
 test('home page', async () => {
@@ -108,36 +99,26 @@ test('home page', async () => {
 
   await screen.findByTestId('page-home-mock');
 
-  expect(container.outerHTML).toBe(
-    `
-        <div>
-            <div>
-                <div id="wrapper" class="">
-                    <nav id="top-nav" class="flow-root">
-                        <button id="toggle" data-testid="navigation-toggle">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </button>
-                        <a aria-current="page" class="active" href="/">Petstore</a>
-                    </nav>
-                    <nav id="left-nav">
-                        <ul>
-                            <li>
-                                <a class="" href="/pet">Pets</a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <div id="main">
-                        <div data-testid="page-home-mock"></div>
-                    </div>
-                </div>
-            </div>
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <div>
+        <div id=\\"wrapper\\" class=\\"\\">
+          <nav id=\\"top-nav\\" class=\\"flow-root\\">
+            <button id=\\"toggle\\" data-testid=\\"navigation-toggle\\">
+              <span></span><span></span><span></span></button
+            ><a aria-current=\\"page\\" class=\\"active\\" href=\\"/\\">Petstore</a>
+          </nav>
+          <nav id=\\"left-nav\\">
+            <ul>
+              <li><a class=\\"\\" href=\\"/pet\\">Pets</a></li>
+            </ul>
+          </nav>
+          <div id=\\"main\\"><div data-testid=\\"page-home-mock\\"></div></div>
         </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+      </div>
+    </div>
+    "
+  `);
 });
 
 test('not found', async () => {
@@ -152,36 +133,26 @@ test('not found', async () => {
 
   await screen.findByTestId('page-not-found-mock');
 
-  expect(container.outerHTML).toBe(
-    `
-        <div>
-            <div>
-                <div id="wrapper" class="">
-                    <nav id="top-nav" class="flow-root">
-                        <button id="toggle" data-testid="navigation-toggle">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </button>
-                        <a class="" href="/">Petstore</a>
-                    </nav>
-                    <nav id="left-nav">
-                        <ul>
-                            <li>
-                                <a class="" href="/pet">Pets</a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <div id="main">
-                        <div data-testid="page-not-found-mock"></div>
-                    </div>
-                </div>
-            </div>
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <div>
+        <div id=\\"wrapper\\" class=\\"\\">
+          <nav id=\\"top-nav\\" class=\\"flow-root\\">
+            <button id=\\"toggle\\" data-testid=\\"navigation-toggle\\">
+              <span></span><span></span><span></span></button
+            ><a class=\\"\\" href=\\"/\\">Petstore</a>
+          </nav>
+          <nav id=\\"left-nav\\">
+            <ul>
+              <li><a class=\\"\\" href=\\"/pet\\">Pets</a></li>
+            </ul>
+          </nav>
+          <div id=\\"main\\"><div data-testid=\\"page-not-found-mock\\"></div></div>
         </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+      </div>
+    </div>
+    "
+  `);
 });
 
 test('pet list', async () => {
@@ -196,36 +167,26 @@ test('pet list', async () => {
 
   await screen.findByTestId('page-pet-list-mock');
 
-  expect(container.outerHTML).toBe(
-    `
-        <div>
-            <div>
-                <div id="wrapper" class="">
-                    <nav id="top-nav" class="flow-root">
-                        <button id="toggle" data-testid="navigation-toggle">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </button>
-                        <a class="" href="/">Petstore</a>
-                    </nav>
-                    <nav id="left-nav">
-                        <ul>
-                            <li>
-                                <a aria-current="page" class="active" href="/pet">Pets</a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <div id="main">
-                        <div data-testid="page-pet-list-mock"></div>
-                    </div>
-                </div>
-            </div>
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <div>
+        <div id=\\"wrapper\\" class=\\"\\">
+          <nav id=\\"top-nav\\" class=\\"flow-root\\">
+            <button id=\\"toggle\\" data-testid=\\"navigation-toggle\\">
+              <span></span><span></span><span></span></button
+            ><a class=\\"\\" href=\\"/\\">Petstore</a>
+          </nav>
+          <nav id=\\"left-nav\\">
+            <ul>
+              <li><a aria-current=\\"page\\" class=\\"active\\" href=\\"/pet\\">Pets</a></li>
+            </ul>
+          </nav>
+          <div id=\\"main\\"><div data-testid=\\"page-pet-list-mock\\"></div></div>
         </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+      </div>
+    </div>
+    "
+  `);
 });
 
 test('pet create', async () => {
@@ -240,36 +201,26 @@ test('pet create', async () => {
 
   await screen.findByTestId('page-pet-create-mock');
 
-  expect(container.outerHTML).toBe(
-    `
-        <div>
-            <div>
-                <div id="wrapper" class="">
-                    <nav id="top-nav" class="flow-root">
-                        <button id="toggle" data-testid="navigation-toggle">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </button>
-                        <a class="" href="/">Petstore</a>
-                    </nav>
-                    <nav id="left-nav">
-                        <ul>
-                            <li>
-                                <a aria-current="page" class="active" href="/pet">Pets</a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <div id="main">
-                        <div data-testid="page-pet-create-mock"></div>
-                    </div>
-                </div>
-            </div>
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <div>
+        <div id=\\"wrapper\\" class=\\"\\">
+          <nav id=\\"top-nav\\" class=\\"flow-root\\">
+            <button id=\\"toggle\\" data-testid=\\"navigation-toggle\\">
+              <span></span><span></span><span></span></button
+            ><a class=\\"\\" href=\\"/\\">Petstore</a>
+          </nav>
+          <nav id=\\"left-nav\\">
+            <ul>
+              <li><a aria-current=\\"page\\" class=\\"active\\" href=\\"/pet\\">Pets</a></li>
+            </ul>
+          </nav>
+          <div id=\\"main\\"><div data-testid=\\"page-pet-create-mock\\"></div></div>
         </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+      </div>
+    </div>
+    "
+  `);
 });
 
 test('pet read', async () => {
@@ -284,36 +235,26 @@ test('pet read', async () => {
 
   await screen.findByTestId('page-pet-read-mock');
 
-  expect(container.outerHTML).toBe(
-    `
-        <div>
-            <div>
-                <div id="wrapper" class="">
-                    <nav id="top-nav" class="flow-root">
-                        <button id="toggle" data-testid="navigation-toggle">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </button>
-                        <a class="" href="/">Petstore</a>
-                    </nav>
-                    <nav id="left-nav">
-                        <ul>
-                            <li>
-                                <a aria-current="page" class="active" href="/pet">Pets</a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <div id="main">
-                        <div data-testid="page-pet-read-mock"></div>
-                    </div>
-                </div>
-            </div>
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <div>
+        <div id=\\"wrapper\\" class=\\"\\">
+          <nav id=\\"top-nav\\" class=\\"flow-root\\">
+            <button id=\\"toggle\\" data-testid=\\"navigation-toggle\\">
+              <span></span><span></span><span></span></button
+            ><a class=\\"\\" href=\\"/\\">Petstore</a>
+          </nav>
+          <nav id=\\"left-nav\\">
+            <ul>
+              <li><a aria-current=\\"page\\" class=\\"active\\" href=\\"/pet\\">Pets</a></li>
+            </ul>
+          </nav>
+          <div id=\\"main\\"><div data-testid=\\"page-pet-read-mock\\"></div></div>
         </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+      </div>
+    </div>
+    "
+  `);
 });
 
 test('pet update', async () => {
@@ -328,34 +269,24 @@ test('pet update', async () => {
 
   await screen.findByTestId('page-pet-update-mock');
 
-  expect(container.outerHTML).toBe(
-    `
-        <div>
-            <div>
-                <div id="wrapper" class="">
-                    <nav id="top-nav" class="flow-root">
-                        <button id="toggle" data-testid="navigation-toggle">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </button>
-                        <a class="" href="/">Petstore</a>
-                    </nav>
-                    <nav id="left-nav">
-                        <ul>
-                            <li>
-                                <a aria-current="page" class="active" href="/pet">Pets</a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <div id="main">
-                        <div data-testid="page-pet-update-mock"></div>
-                    </div>
-                </div>
-            </div>
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <div>
+        <div id=\\"wrapper\\" class=\\"\\">
+          <nav id=\\"top-nav\\" class=\\"flow-root\\">
+            <button id=\\"toggle\\" data-testid=\\"navigation-toggle\\">
+              <span></span><span></span><span></span></button
+            ><a class=\\"\\" href=\\"/\\">Petstore</a>
+          </nav>
+          <nav id=\\"left-nav\\">
+            <ul>
+              <li><a aria-current=\\"page\\" class=\\"active\\" href=\\"/pet\\">Pets</a></li>
+            </ul>
+          </nav>
+          <div id=\\"main\\"><div data-testid=\\"page-pet-update-mock\\"></div></div>
         </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+      </div>
+    </div>
+    "
+  `);
 });

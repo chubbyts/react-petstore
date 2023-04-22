@@ -7,6 +7,7 @@ import Read from '../../../../src/Component/Page/Pet/Read';
 import { vi } from 'vitest';
 import { test, expect } from 'vitest';
 import { PetResponse } from '../../../../src/Model/model';
+import { formatHtml } from '../../../formatter';
 
 let mockReadPet = (id: string) => { };
 
@@ -42,18 +43,15 @@ test('not found', async () => {
 
   await screen.findByTestId('page-pet-read');
 
-  expect(container.outerHTML).toBe(
-    `
-        <div>
-            <div data-testid="page-pet-read">
-                <div>httpError: title</div>
-                <h1>Read Pet</h1>
-            </div>
-        </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <div data-testid=\\"page-pet-read\\">
+        <div>httpError: title</div>
+        <h1>Read Pet</h1>
+      </div>
+    </div>
+    "
+  `);
 });
 
 test('minimal', async () => {
@@ -78,34 +76,31 @@ test('minimal', async () => {
 
   await screen.findByTestId('page-pet-read');
 
-  expect(container.outerHTML).toBe(
-    `
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <div data-testid=\\"page-pet-read\\">
+        <h1>Read Pet</h1>
         <div>
-            <div data-testid="page-pet-read">
-                <h1>Read Pet</h1>
-                <div>
-                    <dl>
-                        <dt>Id</dt>
-                        <dd>4d783b77-eb09-4603-b99b-f590b605eaa9</dd>
-                        <dt>CreatedAt</dt>
-                        <dd>15.08.2005 - 17:52:01</dd>
-                        <dt>UpdatedAt</dt>
-                        <dd></dd>
-                        <dt>Name</dt>
-                        <dd>Brownie</dd>
-                        <dt>Tag</dt>
-                        <dd></dd>
-                        <dt>Vaccinations</dt>
-                        <dd></dd>
-                    </dl>
-                    <a class="btn-gray" href="/pet">List</a>
-                </div>
-            </div>
+          <dl>
+            <dt>Id</dt>
+            <dd>4d783b77-eb09-4603-b99b-f590b605eaa9</dd>
+            <dt>CreatedAt</dt>
+            <dd>15.08.2005 - 17:52:01</dd>
+            <dt>UpdatedAt</dt>
+            <dd></dd>
+            <dt>Name</dt>
+            <dd>Brownie</dd>
+            <dt>Tag</dt>
+            <dd></dd>
+            <dt>Vaccinations</dt>
+            <dd></dd>
+          </dl>
+          <a class=\\"btn-gray\\" href=\\"/pet\\">List</a>
         </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+      </div>
+    </div>
+    "
+  `);
 });
 
 test('maximal', async () => {
@@ -133,36 +128,33 @@ test('maximal', async () => {
 
   await screen.findByTestId('page-pet-read');
 
-  expect(container.outerHTML).toBe(
-    `
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <div data-testid=\\"page-pet-read\\">
+        <h1>Read Pet</h1>
         <div>
-            <div data-testid="page-pet-read">
-                <h1>Read Pet</h1>
-                <div>
-                    <dl>
-                        <dt>Id</dt>
-                        <dd>4d783b77-eb09-4603-b99b-f590b605eaa9</dd>
-                        <dt>CreatedAt</dt>
-                        <dd>15.08.2005 - 17:52:01</dd>
-                        <dt>UpdatedAt</dt>
-                        <dd>15.08.2005 - 17:55:01</dd>
-                        <dt>Name</dt>
-                        <dd>Brownie</dd>
-                        <dt>Tag</dt>
-                        <dd>0001-000</dd>
-                        <dt>Vaccinations</dt>
-                        <dd>
-                            <ul>
-                                <li>Rabies</li>
-                            </ul>
-                        </dd>
-                    </dl>
-                    <a class="btn-gray" href="/pet">List</a>
-                </div>
-            </div>
+          <dl>
+            <dt>Id</dt>
+            <dd>4d783b77-eb09-4603-b99b-f590b605eaa9</dd>
+            <dt>CreatedAt</dt>
+            <dd>15.08.2005 - 17:52:01</dd>
+            <dt>UpdatedAt</dt>
+            <dd>15.08.2005 - 17:55:01</dd>
+            <dt>Name</dt>
+            <dd>Brownie</dd>
+            <dt>Tag</dt>
+            <dd>0001-000</dd>
+            <dt>Vaccinations</dt>
+            <dd>
+              <ul>
+                <li>Rabies</li>
+              </ul>
+            </dd>
+          </dl>
+          <a class=\\"btn-gray\\" href=\\"/pet\\">List</a>
         </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+      </div>
+    </div>
+    "
+  `);
 });

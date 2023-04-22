@@ -3,6 +3,7 @@ import HttpError from '../../../src/Model/Error/HttpError';
 import HttpErrorPartial from '../../../src/Component/Partial/HttpError';
 import HttpErrorWithInvalidParameters from '../../../src/Model/Error/HttpErrorWithInvalidParameters';
 import { test, expect } from 'vitest';
+import { formatHtml } from '../../formatter';
 
 test('minimal', () => {
   const httpError = new HttpError({
@@ -11,17 +12,12 @@ test('minimal', () => {
 
   const { container } = render(<HttpErrorPartial httpError={httpError} />);
 
-  expect(container.outerHTML).toBe(
-    `
-        <div>
-            <div id="httpError">
-                <p>This is the title</p>
-            </div>
-        </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <div id=\\"httpError\\"><p>This is the title</p></div>
+    </div>
+    "
+  `);
 });
 
 test('maximal', () => {
@@ -34,20 +30,17 @@ test('maximal', () => {
 
   const { container } = render(<HttpErrorPartial httpError={httpError} />);
 
-  expect(container.outerHTML).toBe(
-    `
-        <div>
-            <div id="httpError">
-                <p>This is the title</p>
-                <p>This is the detail</p>
-                <p>This is the instance</p>
-                <ul>
-                    <li><strong>Invalid Parameter Name</strong>: Invalid Parameter Reason</li>
-                </ul>
-            </div>
-        </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <div id=\\"httpError\\">
+        <p>This is the title</p>
+        <p>This is the detail</p>
+        <p>This is the instance</p>
+        <ul>
+          <li><strong>Invalid Parameter Name</strong>: Invalid Parameter Reason</li>
+        </ul>
+      </div>
+    </div>
+    "
+  `);
 });

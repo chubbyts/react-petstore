@@ -6,39 +6,37 @@ import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import { test, expect } from 'vitest';
 import { PetRequest } from '../../../src/Model/model';
+import { formatHtml } from '../../formatter';
 
 test('empty', () => {
   const submitPet = (pet: PetRequest): void => { };
 
   const { container } = render(<PetForm submitPet={submitPet} />);
 
-  expect(container.outerHTML).toBe(
-    `
-        <div>
-            <form>
-                <fieldset>
-                    <div class="form-field">
-                        <label>Name</label>
-                        <input type="text" name="name" value="">
-                    </div>
-                    <div class="form-field">
-                        <label>Tag</label>
-                        <input type="text" name="tag" value="">
-                    </div>
-                    <div class="form-field">
-                        <label>Vaccanations</label>
-                        <div>
-                            <button data-testid="add-vaccination" type="button" class="btn-green">Add</button>
-                        </div>
-                    </div>
-                    <button data-testid="submit-pet" class="btn-blue">Save</button>
-                </fieldset>
-            </form>
-        </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <form>
+        <fieldset>
+          <div class=\\"form-field\\">
+            <label>Name</label><input type=\\"text\\" name=\\"name\\" value=\\"\\" />
+          </div>
+          <div class=\\"form-field\\">
+            <label>Tag</label><input type=\\"text\\" name=\\"tag\\" value=\\"\\" />
+          </div>
+          <div class=\\"form-field\\">
+            <label>Vaccanations</label>
+            <div>
+              <button data-testid=\\"add-vaccination\\" type=\\"button\\" class=\\"btn-green\\">
+                Add
+              </button>
+            </div>
+          </div>
+          <button data-testid=\\"submit-pet\\" class=\\"btn-blue\\">Save</button>
+        </fieldset>
+      </form>
+    </div>
+    "
+  `);
 });
 
 test('without error', () => {
@@ -53,40 +51,43 @@ test('without error', () => {
 
   const { container } = render(<PetForm submitPet={submitPet} defaultPet={defaultPet} />);
 
-  expect(container.outerHTML).toBe(
-    `
-        <div>
-            <form>
-                <fieldset>
-                    <div class="form-field">
-                        <label>Name</label>
-                        <input type="text" name="name" value="">
-                    </div>
-                    <div class="form-field">
-                        <label>Tag</label>
-                        <input type="text" name="tag" value="">
-                    </div>
-                    <div class="form-field">
-                        <label>Vaccanations</label>
-                        <div>
-                            <fieldset>
-                                <div class="form-field">
-                                    <label>Name</label>
-                                    <input type="text" name="vaccinations[0].name" value="Rabies">
-                                </div>
-                                <button data-testid="remove-vaccination-0" type="button" class="btn-red">Remove</button>
-                            </fieldset>
-                            <button data-testid="add-vaccination" type="button" class="btn-green">Add</button>
-                        </div>
-                    </div>
-                    <button data-testid="submit-pet" class="btn-blue">Save</button>
-                </fieldset>
-            </form>
-        </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <form>
+        <fieldset>
+          <div class=\\"form-field\\">
+            <label>Name</label><input type=\\"text\\" name=\\"name\\" value=\\"\\" />
+          </div>
+          <div class=\\"form-field\\">
+            <label>Tag</label><input type=\\"text\\" name=\\"tag\\" value=\\"\\" />
+          </div>
+          <div class=\\"form-field\\">
+            <label>Vaccanations</label>
+            <div>
+              <fieldset>
+                <div class=\\"form-field\\">
+                  <label>Name</label
+                  ><input type=\\"text\\" name=\\"vaccinations[0].name\\" value=\\"Rabies\\" />
+                </div>
+                <button
+                  data-testid=\\"remove-vaccination-0\\"
+                  type=\\"button\\"
+                  class=\\"btn-red\\"
+                >
+                  Remove
+                </button>
+              </fieldset>
+              <button data-testid=\\"add-vaccination\\" type=\\"button\\" class=\\"btn-green\\">
+                Add
+              </button>
+            </div>
+          </div>
+          <button data-testid=\\"submit-pet\\" class=\\"btn-blue\\">Save</button>
+        </fieldset>
+      </form>
+    </div>
+    "
+  `);
 });
 
 test('with error', () => {
@@ -113,46 +114,49 @@ test('with error', () => {
     <PetForm submitPet={submitPet} defaultPet={defaultPet} error={unprocessableEntity} />,
   );
 
-  expect(container.outerHTML).toBe(
-    `
-        <div>
-            <form>
-                <fieldset>
-                    <div class="form-field error">
-                        <label>Name</label>
-                        <input type="text" name="name" value="">
-                        <ul>
-                            <li>Should not be empty</li>
-                        </ul>
-                    </div>
-                    <div class="form-field">
-                        <label>Tag</label>
-                        <input type="text" name="tag" value="">
-                    </div>
-                    <div class="form-field">
-                        <label>Vaccanations</label>
-                        <div>
-                            <fieldset>
-                                <div class="form-field error">
-                                    <label>Name</label>
-                                    <input type="text" name="vaccinations[0].name" value="">
-                                    <ul>
-                                        <li>Should not be empty</li>
-                                    </ul>
-                                </div>
-                                <button data-testid="remove-vaccination-0" type="button" class="btn-red">Remove</button>
-                            </fieldset>
-                            <button data-testid="add-vaccination" type="button" class="btn-green">Add</button>
-                        </div>
-                    </div>
-                    <button data-testid="submit-pet" class="btn-blue">Save</button>
-                </fieldset>
-            </form>
-        </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <form>
+        <fieldset>
+          <div class=\\"form-field error\\">
+            <label>Name</label><input type=\\"text\\" name=\\"name\\" value=\\"\\" />
+            <ul>
+              <li>Should not be empty</li>
+            </ul>
+          </div>
+          <div class=\\"form-field\\">
+            <label>Tag</label><input type=\\"text\\" name=\\"tag\\" value=\\"\\" />
+          </div>
+          <div class=\\"form-field\\">
+            <label>Vaccanations</label>
+            <div>
+              <fieldset>
+                <div class=\\"form-field error\\">
+                  <label>Name</label
+                  ><input type=\\"text\\" name=\\"vaccinations[0].name\\" value=\\"\\" />
+                  <ul>
+                    <li>Should not be empty</li>
+                  </ul>
+                </div>
+                <button
+                  data-testid=\\"remove-vaccination-0\\"
+                  type=\\"button\\"
+                  class=\\"btn-red\\"
+                >
+                  Remove
+                </button>
+              </fieldset>
+              <button data-testid=\\"add-vaccination\\" type=\\"button\\" class=\\"btn-green\\">
+                Add
+              </button>
+            </div>
+          </div>
+          <button data-testid=\\"submit-pet\\" class=\\"btn-blue\\">Save</button>
+        </fieldset>
+      </form>
+    </div>
+    "
+  `);
 });
 
 test('add vaccination', async () => {
@@ -171,47 +175,56 @@ test('add vaccination', async () => {
 
   await userEvent.click(submitButton);
 
-  expect(container.outerHTML).toBe(
-    `
-        <div>
-            <form>
-                <fieldset>
-                    <div class="form-field">
-                        <label>Name</label>
-                        <input type="text" name="name" value="">
-                    </div>
-                    <div class="form-field">
-                        <label>Tag</label>
-                        <input type="text" name="tag" value="">
-                    </div>
-                    <div class="form-field">
-                        <label>Vaccanations</label>
-                        <div>
-                            <fieldset>
-                                <div class="form-field">
-                                    <label>Name</label>
-                                    <input type="text" name="vaccinations[0].name" value="Rabies">
-                                </div>
-                                <button data-testid="remove-vaccination-0" type="button" class="btn-red">Remove</button>
-                            </fieldset>
-                            <fieldset>
-                                <div class="form-field">
-                                    <label>Name</label>
-                                    <input type="text" name="vaccinations[1].name" value="">
-                                </div>
-                                <button data-testid="remove-vaccination-1" type="button" class="btn-red">Remove</button>
-                            </fieldset>
-                            <button data-testid="add-vaccination" type="button" class="btn-green">Add</button>
-                        </div>
-                    </div>
-                    <button data-testid="submit-pet" class="btn-blue">Save</button>
-                </fieldset>
-            </form>
-        </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <form>
+        <fieldset>
+          <div class=\\"form-field\\">
+            <label>Name</label><input type=\\"text\\" name=\\"name\\" value=\\"\\" />
+          </div>
+          <div class=\\"form-field\\">
+            <label>Tag</label><input type=\\"text\\" name=\\"tag\\" value=\\"\\" />
+          </div>
+          <div class=\\"form-field\\">
+            <label>Vaccanations</label>
+            <div>
+              <fieldset>
+                <div class=\\"form-field\\">
+                  <label>Name</label
+                  ><input type=\\"text\\" name=\\"vaccinations[0].name\\" value=\\"Rabies\\" />
+                </div>
+                <button
+                  data-testid=\\"remove-vaccination-0\\"
+                  type=\\"button\\"
+                  class=\\"btn-red\\"
+                >
+                  Remove
+                </button>
+              </fieldset>
+              <fieldset>
+                <div class=\\"form-field\\">
+                  <label>Name</label
+                  ><input type=\\"text\\" name=\\"vaccinations[1].name\\" value=\\"\\" />
+                </div>
+                <button
+                  data-testid=\\"remove-vaccination-1\\"
+                  type=\\"button\\"
+                  class=\\"btn-red\\"
+                >
+                  Remove
+                </button>
+              </fieldset>
+              <button data-testid=\\"add-vaccination\\" type=\\"button\\" class=\\"btn-green\\">
+                Add
+              </button>
+            </div>
+          </div>
+          <button data-testid=\\"submit-pet\\" class=\\"btn-blue\\">Save</button>
+        </fieldset>
+      </form>
+    </div>
+    "
+  `);
 });
 
 test('remove vaccination', async () => {
@@ -230,33 +243,30 @@ test('remove vaccination', async () => {
 
   await userEvent.click(submitButton);
 
-  expect(container.outerHTML).toBe(
-    `
-        <div>
-            <form>
-                <fieldset>
-                    <div class="form-field">
-                        <label>Name</label>
-                        <input type="text" name="name" value="">
-                    </div>
-                    <div class="form-field">
-                        <label>Tag</label>
-                        <input type="text" name="tag" value="">
-                    </div>
-                    <div class="form-field">
-                        <label>Vaccanations</label>
-                        <div>
-                            <button data-testid="add-vaccination" type="button" class="btn-green">Add</button>
-                        </div>
-                    </div>
-                    <button data-testid="submit-pet" class="btn-blue">Save</button>
-                </fieldset>
-            </form>
-        </div>
-    `
-      .replace(/\n/g, '')
-      .replace(/ {2,}/g, ''),
-  );
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <form>
+        <fieldset>
+          <div class=\\"form-field\\">
+            <label>Name</label><input type=\\"text\\" name=\\"name\\" value=\\"\\" />
+          </div>
+          <div class=\\"form-field\\">
+            <label>Tag</label><input type=\\"text\\" name=\\"tag\\" value=\\"\\" />
+          </div>
+          <div class=\\"form-field\\">
+            <label>Vaccanations</label>
+            <div>
+              <button data-testid=\\"add-vaccination\\" type=\\"button\\" class=\\"btn-green\\">
+                Add
+              </button>
+            </div>
+          </div>
+          <button data-testid=\\"submit-pet\\" class=\\"btn-blue\\">Save</button>
+        </fieldset>
+      </form>
+    </div>
+    "
+  `);
 });
 
 test('submit minimal', async () => {
