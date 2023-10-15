@@ -18,7 +18,7 @@ export default defineConfig({
       all: true,
       clean: true,
       reporter: ['text', 'html', 'lcov'],
-      provider: 'c8',
+      provider: 'v8',
     }
   },
 });
