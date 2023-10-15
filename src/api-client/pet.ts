@@ -1,5 +1,5 @@
 import { PetList, petListSchema, PetRequest, PetResponse, petResponseSchema } from '../model/model';
-import { throwableToError } from '../throwable-to-error';
+import { throwableToError } from '@chubbyts/chubbyts-throwable-to-error/dist/throwable-to-error';
 import { BadRequest, HttpError, InternalServerError, NetworkError, NotFound, UnprocessableEntity } from './error';
 
 const url = `${import.meta.env.VITE_PETSTORE_URL}/api/pets`;
