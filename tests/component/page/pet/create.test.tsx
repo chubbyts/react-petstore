@@ -51,10 +51,10 @@ test('default', () => {
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <div data-testid=\\"page-pet-create\\">
+      <div data-testid="page-pet-create">
         <h1>Create Pet</h1>
-        <button data-testid=\\"test-button\\"></button
-        ><a class=\\"btn-gray\\" href=\\"/pet\\">List</a>
+        <button data-testid="test-button"></button
+        ><a class="btn-gray" href="/pet">List</a>
       </div>
     </div>
     "
@@ -82,11 +82,11 @@ test('unprocessable entity', async () => {
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <div data-testid=\\"page-pet-create\\">
+      <div data-testid="page-pet-create">
         <div>httpError: title</div>
         <h1>Create Pet</h1>
-        <button data-testid=\\"test-button\\"></button
-        ><a class=\\"btn-gray\\" href=\\"/pet\\">List</a>
+        <button data-testid="test-button"></button
+        ><a class="btn-gray" href="/pet">List</a>
       </div>
     </div>
     "

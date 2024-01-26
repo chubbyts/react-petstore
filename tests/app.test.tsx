@@ -69,18 +69,18 @@ test('toggle', async () => {
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <div>
-        <div id=\\"wrapper\\" class=\\"displayMenu\\">
-          <nav id=\\"top-nav\\" class=\\"flow-root\\">
-            <button id=\\"toggle\\" data-testid=\\"navigation-toggle\\">
+        <div id="wrapper" class="displayMenu">
+          <nav id="top-nav" class="flow-root">
+            <button id="toggle" data-testid="navigation-toggle">
               <span></span><span></span><span></span></button
-            ><a aria-current=\\"page\\" class=\\"active\\" href=\\"/\\">Petstore</a>
+            ><a aria-current="page" class="active" href="/">Petstore</a>
           </nav>
-          <nav id=\\"left-nav\\">
+          <nav id="left-nav">
             <ul>
-              <li><a class=\\"\\" href=\\"/pet\\">Pets</a></li>
+              <li><a class="" href="/pet">Pets</a></li>
             </ul>
           </nav>
-          <div id=\\"main\\"><div data-testid=\\"page-home-mock\\"></div></div>
+          <div id="main"><div data-testid="page-home-mock"></div></div>
         </div>
       </div>
     </div>
@@ -102,18 +102,18 @@ test('home page', async () => {
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <div>
-        <div id=\\"wrapper\\" class=\\"\\">
-          <nav id=\\"top-nav\\" class=\\"flow-root\\">
-            <button id=\\"toggle\\" data-testid=\\"navigation-toggle\\">
+        <div id="wrapper" class="">
+          <nav id="top-nav" class="flow-root">
+            <button id="toggle" data-testid="navigation-toggle">
               <span></span><span></span><span></span></button
-            ><a aria-current=\\"page\\" class=\\"active\\" href=\\"/\\">Petstore</a>
+            ><a aria-current="page" class="active" href="/">Petstore</a>
           </nav>
-          <nav id=\\"left-nav\\">
+          <nav id="left-nav">
             <ul>
-              <li><a class=\\"\\" href=\\"/pet\\">Pets</a></li>
+              <li><a class="" href="/pet">Pets</a></li>
             </ul>
           </nav>
-          <div id=\\"main\\"><div data-testid=\\"page-home-mock\\"></div></div>
+          <div id="main"><div data-testid="page-home-mock"></div></div>
         </div>
       </div>
     </div>
@@ -136,18 +136,18 @@ test('not found', async () => {
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <div>
-        <div id=\\"wrapper\\" class=\\"\\">
-          <nav id=\\"top-nav\\" class=\\"flow-root\\">
-            <button id=\\"toggle\\" data-testid=\\"navigation-toggle\\">
+        <div id="wrapper" class="">
+          <nav id="top-nav" class="flow-root">
+            <button id="toggle" data-testid="navigation-toggle">
               <span></span><span></span><span></span></button
-            ><a class=\\"\\" href=\\"/\\">Petstore</a>
+            ><a class="" href="/">Petstore</a>
           </nav>
-          <nav id=\\"left-nav\\">
+          <nav id="left-nav">
             <ul>
-              <li><a class=\\"\\" href=\\"/pet\\">Pets</a></li>
+              <li><a class="" href="/pet">Pets</a></li>
             </ul>
           </nav>
-          <div id=\\"main\\"><div data-testid=\\"page-not-found-mock\\"></div></div>
+          <div id="main"><div data-testid="page-not-found-mock"></div></div>
         </div>
       </div>
     </div>
@@ -170,18 +170,18 @@ test('pet list', async () => {
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <div>
-        <div id=\\"wrapper\\" class=\\"\\">
-          <nav id=\\"top-nav\\" class=\\"flow-root\\">
-            <button id=\\"toggle\\" data-testid=\\"navigation-toggle\\">
+        <div id="wrapper" class="">
+          <nav id="top-nav" class="flow-root">
+            <button id="toggle" data-testid="navigation-toggle">
               <span></span><span></span><span></span></button
-            ><a class=\\"\\" href=\\"/\\">Petstore</a>
+            ><a class="" href="/">Petstore</a>
           </nav>
-          <nav id=\\"left-nav\\">
+          <nav id="left-nav">
             <ul>
-              <li><a aria-current=\\"page\\" class=\\"active\\" href=\\"/pet\\">Pets</a></li>
+              <li><a aria-current="page" class="active" href="/pet">Pets</a></li>
             </ul>
           </nav>
-          <div id=\\"main\\"><div data-testid=\\"page-pet-list-mock\\"></div></div>
+          <div id="main"><div data-testid="page-pet-list-mock"></div></div>
         </div>
       </div>
     </div>
@@ -204,18 +204,18 @@ test('pet create', async () => {
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <div>
-        <div id=\\"wrapper\\" class=\\"\\">
-          <nav id=\\"top-nav\\" class=\\"flow-root\\">
-            <button id=\\"toggle\\" data-testid=\\"navigation-toggle\\">
+        <div id="wrapper" class="">
+          <nav id="top-nav" class="flow-root">
+            <button id="toggle" data-testid="navigation-toggle">
               <span></span><span></span><span></span></button
-            ><a class=\\"\\" href=\\"/\\">Petstore</a>
+            ><a class="" href="/">Petstore</a>
           </nav>
-          <nav id=\\"left-nav\\">
+          <nav id="left-nav">
             <ul>
-              <li><a aria-current=\\"page\\" class=\\"active\\" href=\\"/pet\\">Pets</a></li>
+              <li><a aria-current="page" class="active" href="/pet">Pets</a></li>
             </ul>
           </nav>
-          <div id=\\"main\\"><div data-testid=\\"page-pet-create-mock\\"></div></div>
+          <div id="main"><div data-testid="page-pet-create-mock"></div></div>
         </div>
       </div>
     </div>
@@ -238,18 +238,18 @@ test('pet read', async () => {
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <div>
-        <div id=\\"wrapper\\" class=\\"\\">
-          <nav id=\\"top-nav\\" class=\\"flow-root\\">
-            <button id=\\"toggle\\" data-testid=\\"navigation-toggle\\">
+        <div id="wrapper" class="">
+          <nav id="top-nav" class="flow-root">
+            <button id="toggle" data-testid="navigation-toggle">
               <span></span><span></span><span></span></button
-            ><a class=\\"\\" href=\\"/\\">Petstore</a>
+            ><a class="" href="/">Petstore</a>
           </nav>
-          <nav id=\\"left-nav\\">
+          <nav id="left-nav">
             <ul>
-              <li><a aria-current=\\"page\\" class=\\"active\\" href=\\"/pet\\">Pets</a></li>
+              <li><a aria-current="page" class="active" href="/pet">Pets</a></li>
             </ul>
           </nav>
-          <div id=\\"main\\"><div data-testid=\\"page-pet-read-mock\\"></div></div>
+          <div id="main"><div data-testid="page-pet-read-mock"></div></div>
         </div>
       </div>
     </div>
@@ -272,18 +272,18 @@ test('pet update', async () => {
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <div>
-        <div id=\\"wrapper\\" class=\\"\\">
-          <nav id=\\"top-nav\\" class=\\"flow-root\\">
-            <button id=\\"toggle\\" data-testid=\\"navigation-toggle\\">
+        <div id="wrapper" class="">
+          <nav id="top-nav" class="flow-root">
+            <button id="toggle" data-testid="navigation-toggle">
               <span></span><span></span><span></span></button
-            ><a class=\\"\\" href=\\"/\\">Petstore</a>
+            ><a class="" href="/">Petstore</a>
           </nav>
-          <nav id=\\"left-nav\\">
+          <nav id="left-nav">
             <ul>
-              <li><a aria-current=\\"page\\" class=\\"active\\" href=\\"/pet\\">Pets</a></li>
+              <li><a aria-current="page" class="active" href="/pet">Pets</a></li>
             </ul>
           </nav>
-          <div id=\\"main\\"><div data-testid=\\"page-pet-update-mock\\"></div></div>
+          <div id="main"><div data-testid="page-pet-update-mock"></div></div>
         </div>
       </div>
     </div>

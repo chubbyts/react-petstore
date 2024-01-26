@@ -87,7 +87,7 @@ test('bad request', async () => {
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <div data-testid=\\"page-pet-list\\">
+      <div data-testid="page-pet-list">
         <div>httpError: title</div>
         <h1>List Pets</h1>
       </div>
@@ -159,12 +159,12 @@ test('default', async () => {
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <div data-testid=\\"page-pet-list\\">
+      <div data-testid="page-pet-list">
         <h1>List Pets</h1>
         <div>
-          <a class=\\"btn-green mb-4\\" href=\\"/pet/create\\">Create</a
-          ><button data-testid=\\"test-filter-button\\"></button>
-          <table class=\\"my-4\\">
+          <a class="btn-green mb-4" href="/pet/create">Create</a
+          ><button data-testid="test-filter-button"></button>
+          <table class="my-4">
             <thead>
               <tr>
                 <th>Id</th>
@@ -172,18 +172,18 @@ test('default', async () => {
                 <th>UpdatedAt</th>
                 <th>
                   Name (<a
-                    data-testid=\\"sort-pet-name-asc\\"
-                    href=\\"/pet?page=1&amp;sort%5Bname%5D=asc\\"
+                    data-testid="sort-pet-name-asc"
+                    href="/pet?page=1&amp;sort%5Bname%5D=asc"
                   >
                     A-Z
                   </a>
                   |<a
-                    data-testid=\\"sort-pet-name-desc\\"
-                    href=\\"/pet?page=1&amp;sort%5Bname%5D=desc\\"
+                    data-testid="sort-pet-name-desc"
+                    href="/pet?page=1&amp;sort%5Bname%5D=desc"
                   >
                     Z-A
                   </a>
-                  |<a data-testid=\\"sort-pet-name--\\" href=\\"/pet?page=1\\"> --- </a>)
+                  |<a data-testid="sort-pet-name--" href="/pet?page=1"> --- </a>)
                 </th>
                 <th>Tag</th>
                 <th>Actions</th>
@@ -198,14 +198,14 @@ test('default', async () => {
                 <td>0001-000</td>
                 <td>
                   <a
-                    class=\\"btn-gray mr-4\\"
-                    href=\\"/pet/4d783b77-eb09-4603-b99b-f590b605eaa9\\"
+                    class="btn-gray mr-4"
+                    href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9"
                     >Read</a
                   ><a
-                    class=\\"btn-gray mr-4\\"
-                    href=\\"/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update\\"
+                    class="btn-gray mr-4"
+                    href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update"
                     >Update</a
-                  ><button data-testid=\\"remove-pet-0\\" class=\\"btn-red\\">
+                  ><button data-testid="remove-pet-0" class="btn-red">
                     Delete
                   </button>
                 </td>
@@ -213,10 +213,10 @@ test('default', async () => {
             </tbody>
           </table>
           <button
-            data-testid=\\"test-pagination-button\\"
-            data-current-page=\\"1\\"
-            data-total-pages=\\"2\\"
-            data-max-pages=\\"7\\"
+            data-testid="test-pagination-button"
+            data-current-page="1"
+            data-total-pages="2"
+            data-max-pages="7"
           ></button>
         </div>
       </div>
@@ -262,11 +262,11 @@ test('no actions', async () => {
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <div data-testid=\\"page-pet-list\\">
+      <div data-testid="page-pet-list">
         <h1>List Pets</h1>
         <div>
-          <button data-testid=\\"test-filter-button\\"></button>
-          <table class=\\"my-4\\">
+          <button data-testid="test-filter-button"></button>
+          <table class="my-4">
             <thead>
               <tr>
                 <th>Id</th>
@@ -274,18 +274,18 @@ test('no actions', async () => {
                 <th>UpdatedAt</th>
                 <th>
                   Name (<a
-                    data-testid=\\"sort-pet-name-asc\\"
-                    href=\\"/pet?page=1&amp;sort%5Bname%5D=asc\\"
+                    data-testid="sort-pet-name-asc"
+                    href="/pet?page=1&amp;sort%5Bname%5D=asc"
                   >
                     A-Z
                   </a>
                   |<a
-                    data-testid=\\"sort-pet-name-desc\\"
-                    href=\\"/pet?page=1&amp;sort%5Bname%5D=desc\\"
+                    data-testid="sort-pet-name-desc"
+                    href="/pet?page=1&amp;sort%5Bname%5D=desc"
                   >
                     Z-A
                   </a>
-                  |<a data-testid=\\"sort-pet-name--\\" href=\\"/pet?page=1\\"> --- </a>)
+                  |<a data-testid="sort-pet-name--" href="/pet?page=1"> --- </a>)
                 </th>
                 <th>Tag</th>
                 <th>Actions</th>
@@ -303,10 +303,10 @@ test('no actions', async () => {
             </tbody>
           </table>
           <button
-            data-testid=\\"test-pagination-button\\"
-            data-current-page=\\"1\\"
-            data-total-pages=\\"2\\"
-            data-max-pages=\\"7\\"
+            data-testid="test-pagination-button"
+            data-current-page="1"
+            data-total-pages="2"
+            data-max-pages="7"
           ></button>
         </div>
       </div>
@@ -397,13 +397,13 @@ test('submit bad request', async () => {
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <div data-testid=\\"page-pet-list\\">
+      <div data-testid="page-pet-list">
         <div>httpError: title</div>
         <h1>List Pets</h1>
         <div>
-          <a class=\\"btn-green mb-4\\" href=\\"/pet/create\\">Create</a
-          ><button data-testid=\\"test-filter-button\\"></button>
-          <table class=\\"my-4\\">
+          <a class="btn-green mb-4" href="/pet/create">Create</a
+          ><button data-testid="test-filter-button"></button>
+          <table class="my-4">
             <thead>
               <tr>
                 <th>Id</th>
@@ -411,20 +411,20 @@ test('submit bad request', async () => {
                 <th>UpdatedAt</th>
                 <th>
                   Name (<a
-                    data-testid=\\"sort-pet-name-asc\\"
-                    href=\\"/pet?page=1&amp;filters%5Bname%5D=Bro&amp;sort%5Bname%5D=asc\\"
+                    data-testid="sort-pet-name-asc"
+                    href="/pet?page=1&amp;filters%5Bname%5D=Bro&amp;sort%5Bname%5D=asc"
                   >
                     A-Z
                   </a>
                   |<a
-                    data-testid=\\"sort-pet-name-desc\\"
-                    href=\\"/pet?page=1&amp;filters%5Bname%5D=Bro&amp;sort%5Bname%5D=desc\\"
+                    data-testid="sort-pet-name-desc"
+                    href="/pet?page=1&amp;filters%5Bname%5D=Bro&amp;sort%5Bname%5D=desc"
                   >
                     Z-A
                   </a>
                   |<a
-                    data-testid=\\"sort-pet-name--\\"
-                    href=\\"/pet?page=1&amp;filters%5Bname%5D=Bro\\"
+                    data-testid="sort-pet-name--"
+                    href="/pet?page=1&amp;filters%5Bname%5D=Bro"
                   >
                     --- </a
                   >)
@@ -442,14 +442,14 @@ test('submit bad request', async () => {
                 <td>0001-000</td>
                 <td>
                   <a
-                    class=\\"btn-gray mr-4\\"
-                    href=\\"/pet/4d783b77-eb09-4603-b99b-f590b605eaa9\\"
+                    class="btn-gray mr-4"
+                    href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9"
                     >Read</a
                   ><a
-                    class=\\"btn-gray mr-4\\"
-                    href=\\"/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update\\"
+                    class="btn-gray mr-4"
+                    href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update"
                     >Update</a
-                  ><button data-testid=\\"remove-pet-0\\" class=\\"btn-red\\">
+                  ><button data-testid="remove-pet-0" class="btn-red">
                     Delete
                   </button>
                 </td>
@@ -457,10 +457,10 @@ test('submit bad request', async () => {
             </tbody>
           </table>
           <button
-            data-testid=\\"test-pagination-button\\"
-            data-current-page=\\"1\\"
-            data-total-pages=\\"2\\"
-            data-max-pages=\\"7\\"
+            data-testid="test-pagination-button"
+            data-current-page="1"
+            data-total-pages="2"
+            data-max-pages="7"
           ></button>
         </div>
       </div>
@@ -753,13 +753,13 @@ test('delete not found', async () => {
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <div data-testid=\\"page-pet-list\\">
+      <div data-testid="page-pet-list">
         <div>httpError: title</div>
         <h1>List Pets</h1>
         <div>
-          <a class=\\"btn-green mb-4\\" href=\\"/pet/create\\">Create</a
-          ><button data-testid=\\"test-filter-button\\"></button>
-          <table class=\\"my-4\\">
+          <a class="btn-green mb-4" href="/pet/create">Create</a
+          ><button data-testid="test-filter-button"></button>
+          <table class="my-4">
             <thead>
               <tr>
                 <th>Id</th>
@@ -767,18 +767,18 @@ test('delete not found', async () => {
                 <th>UpdatedAt</th>
                 <th>
                   Name (<a
-                    data-testid=\\"sort-pet-name-asc\\"
-                    href=\\"/pet?page=1&amp;sort%5Bname%5D=asc\\"
+                    data-testid="sort-pet-name-asc"
+                    href="/pet?page=1&amp;sort%5Bname%5D=asc"
                   >
                     A-Z
                   </a>
                   |<a
-                    data-testid=\\"sort-pet-name-desc\\"
-                    href=\\"/pet?page=1&amp;sort%5Bname%5D=desc\\"
+                    data-testid="sort-pet-name-desc"
+                    href="/pet?page=1&amp;sort%5Bname%5D=desc"
                   >
                     Z-A
                   </a>
-                  |<a data-testid=\\"sort-pet-name--\\" href=\\"/pet?page=1\\"> --- </a>)
+                  |<a data-testid="sort-pet-name--" href="/pet?page=1"> --- </a>)
                 </th>
                 <th>Tag</th>
                 <th>Actions</th>
@@ -793,14 +793,14 @@ test('delete not found', async () => {
                 <td>0001-000</td>
                 <td>
                   <a
-                    class=\\"btn-gray mr-4\\"
-                    href=\\"/pet/4d783b77-eb09-4603-b99b-f590b605eaa9\\"
+                    class="btn-gray mr-4"
+                    href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9"
                     >Read</a
                   ><a
-                    class=\\"btn-gray mr-4\\"
-                    href=\\"/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update\\"
+                    class="btn-gray mr-4"
+                    href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update"
                     >Update</a
-                  ><button data-testid=\\"remove-pet-0\\" class=\\"btn-red\\">
+                  ><button data-testid="remove-pet-0" class="btn-red">
                     Delete
                   </button>
                 </td>
@@ -808,10 +808,10 @@ test('delete not found', async () => {
             </tbody>
           </table>
           <button
-            data-testid=\\"test-pagination-button\\"
-            data-current-page=\\"1\\"
-            data-total-pages=\\"2\\"
-            data-max-pages=\\"7\\"
+            data-testid="test-pagination-button"
+            data-current-page="1"
+            data-total-pages="2"
+            data-max-pages="7"
           ></button>
         </div>
       </div>
@@ -912,12 +912,12 @@ test('delete success', async () => {
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <div data-testid=\\"page-pet-list\\">
+      <div data-testid="page-pet-list">
         <h1>List Pets</h1>
         <div>
-          <a class=\\"btn-green mb-4\\" href=\\"/pet/create\\">Create</a
-          ><button data-testid=\\"test-filter-button\\"></button>
-          <table class=\\"my-4\\">
+          <a class="btn-green mb-4" href="/pet/create">Create</a
+          ><button data-testid="test-filter-button"></button>
+          <table class="my-4">
             <thead>
               <tr>
                 <th>Id</th>
@@ -925,18 +925,18 @@ test('delete success', async () => {
                 <th>UpdatedAt</th>
                 <th>
                   Name (<a
-                    data-testid=\\"sort-pet-name-asc\\"
-                    href=\\"/pet?page=1&amp;sort%5Bname%5D=asc\\"
+                    data-testid="sort-pet-name-asc"
+                    href="/pet?page=1&amp;sort%5Bname%5D=asc"
                   >
                     A-Z
                   </a>
                   |<a
-                    data-testid=\\"sort-pet-name-desc\\"
-                    href=\\"/pet?page=1&amp;sort%5Bname%5D=desc\\"
+                    data-testid="sort-pet-name-desc"
+                    href="/pet?page=1&amp;sort%5Bname%5D=desc"
                   >
                     Z-A
                   </a>
-                  |<a data-testid=\\"sort-pet-name--\\" href=\\"/pet?page=1\\"> --- </a>)
+                  |<a data-testid="sort-pet-name--" href="/pet?page=1"> --- </a>)
                 </th>
                 <th>Tag</th>
                 <th>Actions</th>
@@ -945,10 +945,10 @@ test('delete success', async () => {
             <tbody></tbody>
           </table>
           <button
-            data-testid=\\"test-pagination-button\\"
-            data-current-page=\\"1\\"
-            data-total-pages=\\"2\\"
-            data-max-pages=\\"7\\"
+            data-testid="test-pagination-button"
+            data-current-page="1"
+            data-total-pages="2"
+            data-max-pages="7"
           ></button>
         </div>
       </div>

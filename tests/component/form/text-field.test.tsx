@@ -16,8 +16,8 @@ test('default', () => {
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <div class=\\"form-field error\\">
-        <label>label</label><input type=\\"text\\" name=\\"name\\" value=\\"\\" />
+      <div class="form-field error">
+        <label>label</label><input type="text" name="name" value="" />
         <ul>
           <li>Should not be empty</li>
         </ul>

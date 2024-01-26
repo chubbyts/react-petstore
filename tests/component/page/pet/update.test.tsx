@@ -62,10 +62,10 @@ test('not found', async () => {
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <div data-testid=\\"page-pet-update\\">
+      <div data-testid="page-pet-update">
         <div>httpError: title</div>
         <h1>Update Pet</h1>
-        <a class=\\"btn-gray\\" href=\\"/pet\\">List</a>
+        <a class="btn-gray" href="/pet">List</a>
       </div>
     </div>
     "
@@ -96,10 +96,10 @@ test('minimal', async () => {
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <div data-testid=\\"page-pet-update\\">
+      <div data-testid="page-pet-update">
         <h1>Update Pet</h1>
-        <button data-testid=\\"test-button\\"></button
-        ><a class=\\"btn-gray\\" href=\\"/pet\\">List</a>
+        <button data-testid="test-button"></button
+        ><a class="btn-gray" href="/pet">List</a>
       </div>
     </div>
     "
@@ -142,11 +142,11 @@ test('unprocessable entity', async () => {
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <div data-testid=\\"page-pet-update\\">
+      <div data-testid="page-pet-update">
         <div>httpError: title</div>
         <h1>Update Pet</h1>
-        <button data-testid=\\"test-button\\"></button
-        ><a class=\\"btn-gray\\" href=\\"/pet\\">List</a>
+        <button data-testid="test-button"></button
+        ><a class="btn-gray" href="/pet">List</a>
       </div>
     </div>
     "

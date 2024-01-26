@@ -20,10 +20,10 @@ test('without error', () => {
     "<div>
       <form>
         <fieldset>
-          <div class=\\"form-field\\">
-            <label>Name</label><input type=\\"text\\" name=\\"name\\" value=\\"\\" />
+          <div class="form-field">
+            <label>Name</label><input type="text" name="name" value="" />
           </div>
-          <button data-testid=\\"submit-pet-filter\\" class=\\"btn-blue\\">Filter</button>
+          <button data-testid="submit-pet-filter" class="btn-blue">Filter</button>
         </fieldset>
       </form>
     </div>
@@ -47,13 +47,13 @@ test('with error', () => {
     "<div>
       <form>
         <fieldset>
-          <div class=\\"form-field error\\">
-            <label>Name</label><input type=\\"text\\" name=\\"name\\" value=\\"\\" />
+          <div class="form-field error">
+            <label>Name</label><input type="text" name="name" value="" />
             <ul>
               <li>Should not be empty</li>
             </ul>
           </div>
-          <button data-testid=\\"submit-pet-filter\\" class=\\"btn-blue\\">Filter</button>
+          <button data-testid="submit-pet-filter" class="btn-blue">Filter</button>
         </fieldset>
       </form>
     </div>

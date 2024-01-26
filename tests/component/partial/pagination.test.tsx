@@ -33,14 +33,14 @@ test('current 1', () => {
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <ul class=\\"pagination\\">
-        <li><button class=\\"current\\">1</button></li>
-        <li><button class=\\"\\">2</button></li>
-        <li><button class=\\"\\">3</button></li>
-        <li><button class=\\"\\">4</button></li>
-        <li><button class=\\"\\">5</button></li>
-        <li><button class=\\"\\">6</button></li>
-        <li><button class=\\"\\">7</button></li>
+      <ul class="pagination">
+        <li><button class="current">1</button></li>
+        <li><button class="">2</button></li>
+        <li><button class="">3</button></li>
+        <li><button class="">4</button></li>
+        <li><button class="">5</button></li>
+        <li><button class="">6</button></li>
+        <li><button class="">7</button></li>
         <li><button>&gt;</button></li>
         <li><button>»</button></li>
       </ul>
@@ -56,16 +56,16 @@ test('current 4', () => {
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <ul class=\\"pagination\\">
+      <ul class="pagination">
         <li><button>«</button></li>
         <li><button>&lt;</button></li>
-        <li><button class=\\"\\">1</button></li>
-        <li><button class=\\"\\">2</button></li>
-        <li><button class=\\"\\">3</button></li>
-        <li><button class=\\"current\\">4</button></li>
-        <li><button class=\\"\\">5</button></li>
-        <li><button class=\\"\\">6</button></li>
-        <li><button class=\\"\\">7</button></li>
+        <li><button class="">1</button></li>
+        <li><button class="">2</button></li>
+        <li><button class="">3</button></li>
+        <li><button class="current">4</button></li>
+        <li><button class="">5</button></li>
+        <li><button class="">6</button></li>
+        <li><button class="">7</button></li>
         <li><button>&gt;</button></li>
         <li><button>»</button></li>
       </ul>
@@ -81,16 +81,16 @@ test('current 7', () => {
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <ul class=\\"pagination\\">
+      <ul class="pagination">
         <li><button>«</button></li>
         <li><button>&lt;</button></li>
-        <li><button class=\\"\\">4</button></li>
-        <li><button class=\\"\\">5</button></li>
-        <li><button class=\\"\\">6</button></li>
-        <li><button class=\\"current\\">7</button></li>
-        <li><button class=\\"\\">8</button></li>
-        <li><button class=\\"\\">9</button></li>
-        <li><button class=\\"\\">10</button></li>
+        <li><button class="">4</button></li>
+        <li><button class="">5</button></li>
+        <li><button class="">6</button></li>
+        <li><button class="current">7</button></li>
+        <li><button class="">8</button></li>
+        <li><button class="">9</button></li>
+        <li><button class="">10</button></li>
         <li><button>&gt;</button></li>
         <li><button>»</button></li>
       </ul>
@@ -106,16 +106,16 @@ test('current 10', () => {
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <ul class=\\"pagination\\">
+      <ul class="pagination">
         <li><button>«</button></li>
         <li><button>&lt;</button></li>
-        <li><button class=\\"\\">4</button></li>
-        <li><button class=\\"\\">5</button></li>
-        <li><button class=\\"\\">6</button></li>
-        <li><button class=\\"\\">7</button></li>
-        <li><button class=\\"\\">8</button></li>
-        <li><button class=\\"\\">9</button></li>
-        <li><button class=\\"current\\">10</button></li>
+        <li><button class="">4</button></li>
+        <li><button class="">5</button></li>
+        <li><button class="">6</button></li>
+        <li><button class="">7</button></li>
+        <li><button class="">8</button></li>
+        <li><button class="">9</button></li>
+        <li><button class="current">10</button></li>
       </ul>
     </div>
     "

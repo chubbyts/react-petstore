@@ -13,7 +13,7 @@ test('minimal', () => {
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <div id=\\"httpError\\"><p>This is the title</p></div>
+      <div id="httpError"><p>This is the title</p></div>
     </div>
     "
   `);
@@ -31,7 +31,7 @@ test('maximal', () => {
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <div id=\\"httpError\\">
+      <div id="httpError">
         <p>This is the title</p>
         <p>This is the detail</p>
         <p>This is the instance</p>

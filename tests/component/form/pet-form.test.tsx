@@ -16,21 +16,21 @@ test('empty', () => {
     "<div>
       <form>
         <fieldset>
-          <div class=\\"form-field\\">
-            <label>Name</label><input type=\\"text\\" name=\\"name\\" value=\\"\\" />
+          <div class="form-field">
+            <label>Name</label><input type="text" name="name" value="" />
           </div>
-          <div class=\\"form-field\\">
-            <label>Tag</label><input type=\\"text\\" name=\\"tag\\" value=\\"\\" />
+          <div class="form-field">
+            <label>Tag</label><input type="text" name="tag" value="" />
           </div>
-          <div class=\\"form-field\\">
+          <div class="form-field">
             <label>Vaccanations</label>
             <div>
-              <button data-testid=\\"add-vaccination\\" type=\\"button\\" class=\\"btn-green\\">
+              <button data-testid="add-vaccination" type="button" class="btn-green">
                 Add
               </button>
             </div>
           </div>
-          <button data-testid=\\"submit-pet\\" class=\\"btn-blue\\">Save</button>
+          <button data-testid="submit-pet" class="btn-blue">Save</button>
         </fieldset>
       </form>
     </div>
@@ -54,34 +54,34 @@ test('without error', () => {
     "<div>
       <form>
         <fieldset>
-          <div class=\\"form-field\\">
-            <label>Name</label><input type=\\"text\\" name=\\"name\\" value=\\"\\" />
+          <div class="form-field">
+            <label>Name</label><input type="text" name="name" value="" />
           </div>
-          <div class=\\"form-field\\">
-            <label>Tag</label><input type=\\"text\\" name=\\"tag\\" value=\\"\\" />
+          <div class="form-field">
+            <label>Tag</label><input type="text" name="tag" value="" />
           </div>
-          <div class=\\"form-field\\">
+          <div class="form-field">
             <label>Vaccanations</label>
             <div>
               <fieldset>
-                <div class=\\"form-field\\">
+                <div class="form-field">
                   <label>Name</label
-                  ><input type=\\"text\\" name=\\"vaccinations[0].name\\" value=\\"Rabies\\" />
+                  ><input type="text" name="vaccinations[0].name" value="Rabies" />
                 </div>
                 <button
-                  data-testid=\\"remove-vaccination-0\\"
-                  type=\\"button\\"
-                  class=\\"btn-red\\"
+                  data-testid="remove-vaccination-0"
+                  type="button"
+                  class="btn-red"
                 >
                   Remove
                 </button>
               </fieldset>
-              <button data-testid=\\"add-vaccination\\" type=\\"button\\" class=\\"btn-green\\">
+              <button data-testid="add-vaccination" type="button" class="btn-green">
                 Add
               </button>
             </div>
           </div>
-          <button data-testid=\\"submit-pet\\" class=\\"btn-blue\\">Save</button>
+          <button data-testid="submit-pet" class="btn-blue">Save</button>
         </fieldset>
       </form>
     </div>
@@ -117,40 +117,40 @@ test('with error', () => {
     "<div>
       <form>
         <fieldset>
-          <div class=\\"form-field error\\">
-            <label>Name</label><input type=\\"text\\" name=\\"name\\" value=\\"\\" />
+          <div class="form-field error">
+            <label>Name</label><input type="text" name="name" value="" />
             <ul>
               <li>Should not be empty</li>
             </ul>
           </div>
-          <div class=\\"form-field\\">
-            <label>Tag</label><input type=\\"text\\" name=\\"tag\\" value=\\"\\" />
+          <div class="form-field">
+            <label>Tag</label><input type="text" name="tag" value="" />
           </div>
-          <div class=\\"form-field\\">
+          <div class="form-field">
             <label>Vaccanations</label>
             <div>
               <fieldset>
-                <div class=\\"form-field error\\">
+                <div class="form-field error">
                   <label>Name</label
-                  ><input type=\\"text\\" name=\\"vaccinations[0].name\\" value=\\"\\" />
+                  ><input type="text" name="vaccinations[0].name" value="" />
                   <ul>
                     <li>Should not be empty</li>
                   </ul>
                 </div>
                 <button
-                  data-testid=\\"remove-vaccination-0\\"
-                  type=\\"button\\"
-                  class=\\"btn-red\\"
+                  data-testid="remove-vaccination-0"
+                  type="button"
+                  class="btn-red"
                 >
                   Remove
                 </button>
               </fieldset>
-              <button data-testid=\\"add-vaccination\\" type=\\"button\\" class=\\"btn-green\\">
+              <button data-testid="add-vaccination" type="button" class="btn-green">
                 Add
               </button>
             </div>
           </div>
-          <button data-testid=\\"submit-pet\\" class=\\"btn-blue\\">Save</button>
+          <button data-testid="submit-pet" class="btn-blue">Save</button>
         </fieldset>
       </form>
     </div>
@@ -178,47 +178,47 @@ test('add vaccination', async () => {
     "<div>
       <form>
         <fieldset>
-          <div class=\\"form-field\\">
-            <label>Name</label><input type=\\"text\\" name=\\"name\\" value=\\"\\" />
+          <div class="form-field">
+            <label>Name</label><input type="text" name="name" value="" />
           </div>
-          <div class=\\"form-field\\">
-            <label>Tag</label><input type=\\"text\\" name=\\"tag\\" value=\\"\\" />
+          <div class="form-field">
+            <label>Tag</label><input type="text" name="tag" value="" />
           </div>
-          <div class=\\"form-field\\">
+          <div class="form-field">
             <label>Vaccanations</label>
             <div>
               <fieldset>
-                <div class=\\"form-field\\">
+                <div class="form-field">
                   <label>Name</label
-                  ><input type=\\"text\\" name=\\"vaccinations[0].name\\" value=\\"Rabies\\" />
+                  ><input type="text" name="vaccinations[0].name" value="Rabies" />
                 </div>
                 <button
-                  data-testid=\\"remove-vaccination-0\\"
-                  type=\\"button\\"
-                  class=\\"btn-red\\"
+                  data-testid="remove-vaccination-0"
+                  type="button"
+                  class="btn-red"
                 >
                   Remove
                 </button>
               </fieldset>
               <fieldset>
-                <div class=\\"form-field\\">
+                <div class="form-field">
                   <label>Name</label
-                  ><input type=\\"text\\" name=\\"vaccinations[1].name\\" value=\\"\\" />
+                  ><input type="text" name="vaccinations[1].name" value="" />
                 </div>
                 <button
-                  data-testid=\\"remove-vaccination-1\\"
-                  type=\\"button\\"
-                  class=\\"btn-red\\"
+                  data-testid="remove-vaccination-1"
+                  type="button"
+                  class="btn-red"
                 >
                   Remove
                 </button>
               </fieldset>
-              <button data-testid=\\"add-vaccination\\" type=\\"button\\" class=\\"btn-green\\">
+              <button data-testid="add-vaccination" type="button" class="btn-green">
                 Add
               </button>
             </div>
           </div>
-          <button data-testid=\\"submit-pet\\" class=\\"btn-blue\\">Save</button>
+          <button data-testid="submit-pet" class="btn-blue">Save</button>
         </fieldset>
       </form>
     </div>
@@ -246,21 +246,21 @@ test('remove vaccination', async () => {
     "<div>
       <form>
         <fieldset>
-          <div class=\\"form-field\\">
-            <label>Name</label><input type=\\"text\\" name=\\"name\\" value=\\"\\" />
+          <div class="form-field">
+            <label>Name</label><input type="text" name="name" value="" />
           </div>
-          <div class=\\"form-field\\">
-            <label>Tag</label><input type=\\"text\\" name=\\"tag\\" value=\\"\\" />
+          <div class="form-field">
+            <label>Tag</label><input type="text" name="tag" value="" />
           </div>
-          <div class=\\"form-field\\">
+          <div class="form-field">
             <label>Vaccanations</label>
             <div>
-              <button data-testid=\\"add-vaccination\\" type=\\"button\\" class=\\"btn-green\\">
+              <button data-testid="add-vaccination" type="button" class="btn-green">
                 Add
               </button>
             </div>
           </div>
-          <button data-testid=\\"submit-pet\\" class=\\"btn-blue\\">Save</button>
+          <button data-testid="submit-pet" class="btn-blue">Save</button>
         </fieldset>
       </form>
     </div>

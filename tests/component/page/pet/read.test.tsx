@@ -44,7 +44,7 @@ test('not found', async () => {
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <div data-testid=\\"page-pet-read\\">
+      <div data-testid="page-pet-read">
         <div>httpError: title</div>
         <h1>Read Pet</h1>
       </div>
@@ -77,7 +77,7 @@ test('minimal', async () => {
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <div data-testid=\\"page-pet-read\\">
+      <div data-testid="page-pet-read">
         <h1>Read Pet</h1>
         <div>
           <dl>
@@ -94,7 +94,7 @@ test('minimal', async () => {
             <dt>Vaccinations</dt>
             <dd></dd>
           </dl>
-          <a class=\\"btn-gray\\" href=\\"/pet\\">List</a>
+          <a class="btn-gray" href="/pet">List</a>
         </div>
       </div>
     </div>
@@ -129,7 +129,7 @@ test('maximal', async () => {
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <div data-testid=\\"page-pet-read\\">
+      <div data-testid="page-pet-read">
         <h1>Read Pet</h1>
         <div>
           <dl>
@@ -150,7 +150,7 @@ test('maximal', async () => {
               </ul>
             </dd>
           </dl>
-          <a class=\\"btn-gray\\" href=\\"/pet\\">List</a>
+          <a class="btn-gray" href="/pet">List</a>
         </div>
       </div>
     </div>
