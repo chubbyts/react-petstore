@@ -125,7 +125,7 @@ const List: FC = () => {
               </tr>
             </thead>
             <tbody>
-              {(petList._embedded?.items ?? petList.items ?? []).map((pet: PetResponse, i) => (
+              {petList.items.map((pet: PetResponse, i) => (
                 <tr key={pet.id}>
                   <td>{pet.id}</td>
                   <td>{format(Date.parse(pet.createdAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}</td>

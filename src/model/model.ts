@@ -44,12 +44,7 @@ export const petListSchema = z.object({
   offset: z.number(),
   limit: z.number(),
   count: z.number(),
-  items: z.array(petResponseSchema).optional(),
-  _embedded: z
-    .object({
-      items: z.array(petResponseSchema),
-    })
-    .optional(),
+  items: z.array(petResponseSchema),
   _links: z
     .object({
       create: linkSchema.optional(),

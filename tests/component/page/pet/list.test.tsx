@@ -101,38 +101,36 @@ test('default', async () => {
     offset: 0,
     limit: 1,
     count: 2,
-    _embedded: {
-      items: [
-        {
-          id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-          createdAt: '2005-08-15T15:52:01+00:00',
-          updatedAt: '2005-08-15T15:55:01+00:00',
-          name: 'Brownie',
-          tag: '0001-000',
-          vaccinations: [{ name: 'Rabies' }],
-          _links: {
-            read: {
-              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              attributes: {
-                method: 'GET',
-              },
+    items: [
+      {
+        id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+        createdAt: '2005-08-15T15:52:01+00:00',
+        updatedAt: '2005-08-15T15:55:01+00:00',
+        name: 'Brownie',
+        tag: '0001-000',
+        vaccinations: [{ name: 'Rabies' }],
+        _links: {
+          read: {
+            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+            attributes: {
+              method: 'GET',
             },
-            update: {
-              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              attributes: {
-                method: 'PUT',
-              },
+          },
+          update: {
+            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+            attributes: {
+              method: 'PUT',
             },
-            delete: {
-              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              attributes: {
-                method: 'DELETE',
-              },
+          },
+          delete: {
+            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+            attributes: {
+              method: 'DELETE',
             },
           },
         },
-      ],
-    },
+      },
+    ],
     _links: {
       create: {
         href: '/api/pets',
@@ -230,19 +228,17 @@ test('no actions', async () => {
     offset: 0,
     limit: 1,
     count: 2,
-    _embedded: {
-      items: [
-        {
-          id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-          createdAt: '2005-08-15T15:52:01+00:00',
-          updatedAt: '2005-08-15T15:55:01+00:00',
-          name: 'Brownie',
-          tag: '0001-000',
-          vaccinations: [{ name: 'Rabies' }],
-          _links: {},
-        },
-      ],
-    },
+    items: [
+      {
+        id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+        createdAt: '2005-08-15T15:52:01+00:00',
+        updatedAt: '2005-08-15T15:55:01+00:00',
+        name: 'Brownie',
+        tag: '0001-000',
+        vaccinations: [{ name: 'Rabies' }],
+        _links: {},
+      },
+    ],
     _links: {},
   };
 
@@ -320,38 +316,36 @@ test('submit bad request', async () => {
     offset: 0,
     limit: 1,
     count: 2,
-    _embedded: {
-      items: [
-        {
-          id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-          createdAt: '2005-08-15T15:52:01+00:00',
-          updatedAt: '2005-08-15T15:55:01+00:00',
-          name: 'Brownie',
-          tag: '0001-000',
-          vaccinations: [{ name: 'Rabies' }],
-          _links: {
-            read: {
-              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              attributes: {
-                method: 'GET',
-              },
+    items: [
+      {
+        id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+        createdAt: '2005-08-15T15:52:01+00:00',
+        updatedAt: '2005-08-15T15:55:01+00:00',
+        name: 'Brownie',
+        tag: '0001-000',
+        vaccinations: [{ name: 'Rabies' }],
+        _links: {
+          read: {
+            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+            attributes: {
+              method: 'GET',
             },
-            update: {
-              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              attributes: {
-                method: 'PUT',
-              },
+          },
+          update: {
+            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+            attributes: {
+              method: 'PUT',
             },
-            delete: {
-              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              attributes: {
-                method: 'DELETE',
-              },
+          },
+          delete: {
+            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+            attributes: {
+              method: 'DELETE',
             },
           },
         },
-      ],
-    },
+      },
+    ],
     _links: {
       create: {
         href: '/api/pets',
@@ -474,38 +468,36 @@ test('submit filter', async () => {
     offset: 0,
     limit: 1,
     count: 2,
-    _embedded: {
-      items: [
-        {
-          id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-          createdAt: '2005-08-15T15:52:01+00:00',
-          updatedAt: '2005-08-15T15:55:01+00:00',
-          name: 'Brownie',
-          tag: '0001-000',
-          vaccinations: [{ name: 'Rabies' }],
-          _links: {
-            read: {
-              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              attributes: {
-                method: 'GET',
-              },
+    items: [
+      {
+        id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+        createdAt: '2005-08-15T15:52:01+00:00',
+        updatedAt: '2005-08-15T15:55:01+00:00',
+        name: 'Brownie',
+        tag: '0001-000',
+        vaccinations: [{ name: 'Rabies' }],
+        _links: {
+          read: {
+            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+            attributes: {
+              method: 'GET',
             },
-            update: {
-              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              attributes: {
-                method: 'PUT',
-              },
+          },
+          update: {
+            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+            attributes: {
+              method: 'PUT',
             },
-            delete: {
-              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              attributes: {
-                method: 'DELETE',
-              },
+          },
+          delete: {
+            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+            attributes: {
+              method: 'DELETE',
             },
           },
         },
-      ],
-    },
+      },
+    ],
     _links: {
       create: {
         href: '/api/pets',
@@ -543,38 +535,36 @@ test('sort', async () => {
     offset: 0,
     limit: 1,
     count: 2,
-    _embedded: {
-      items: [
-        {
-          id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-          createdAt: '2005-08-15T15:52:01+00:00',
-          updatedAt: '2005-08-15T15:55:01+00:00',
-          name: 'Brownie',
-          tag: '0001-000',
-          vaccinations: [{ name: 'Rabies' }],
-          _links: {
-            read: {
-              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              attributes: {
-                method: 'GET',
-              },
+    items: [
+      {
+        id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+        createdAt: '2005-08-15T15:52:01+00:00',
+        updatedAt: '2005-08-15T15:55:01+00:00',
+        name: 'Brownie',
+        tag: '0001-000',
+        vaccinations: [{ name: 'Rabies' }],
+        _links: {
+          read: {
+            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+            attributes: {
+              method: 'GET',
             },
-            update: {
-              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              attributes: {
-                method: 'PUT',
-              },
+          },
+          update: {
+            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+            attributes: {
+              method: 'PUT',
             },
-            delete: {
-              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              attributes: {
-                method: 'DELETE',
-              },
+          },
+          delete: {
+            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+            attributes: {
+              method: 'DELETE',
             },
           },
         },
-      ],
-    },
+      },
+    ],
     _links: {
       create: {
         href: '/api/pets',
@@ -614,38 +604,36 @@ test('next', async () => {
     offset: 0,
     limit: 1,
     count: 2,
-    _embedded: {
-      items: [
-        {
-          id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-          createdAt: '2005-08-15T15:52:01+00:00',
-          updatedAt: '2005-08-15T15:55:01+00:00',
-          name: 'Brownie',
-          tag: '0001-000',
-          vaccinations: [{ name: 'Rabies' }],
-          _links: {
-            read: {
-              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              attributes: {
-                method: 'GET',
-              },
+    items: [
+      {
+        id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+        createdAt: '2005-08-15T15:52:01+00:00',
+        updatedAt: '2005-08-15T15:55:01+00:00',
+        name: 'Brownie',
+        tag: '0001-000',
+        vaccinations: [{ name: 'Rabies' }],
+        _links: {
+          read: {
+            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+            attributes: {
+              method: 'GET',
             },
-            update: {
-              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              attributes: {
-                method: 'PUT',
-              },
+          },
+          update: {
+            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+            attributes: {
+              method: 'PUT',
             },
-            delete: {
-              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              attributes: {
-                method: 'DELETE',
-              },
+          },
+          delete: {
+            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+            attributes: {
+              method: 'DELETE',
             },
           },
         },
-      ],
-    },
+      },
+    ],
     _links: {
       create: {
         href: '/api/pets',
@@ -685,38 +673,36 @@ test('delete not found', async () => {
     offset: 0,
     limit: 1,
     count: 2,
-    _embedded: {
-      items: [
-        {
-          id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-          createdAt: '2005-08-15T15:52:01+00:00',
-          updatedAt: '2005-08-15T15:55:01+00:00',
-          name: 'Brownie',
-          tag: '0001-000',
-          vaccinations: [{ name: 'Rabies' }],
-          _links: {
-            read: {
-              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              attributes: {
-                method: 'GET',
-              },
+    items: [
+      {
+        id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+        createdAt: '2005-08-15T15:52:01+00:00',
+        updatedAt: '2005-08-15T15:55:01+00:00',
+        name: 'Brownie',
+        tag: '0001-000',
+        vaccinations: [{ name: 'Rabies' }],
+        _links: {
+          read: {
+            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+            attributes: {
+              method: 'GET',
             },
-            update: {
-              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              attributes: {
-                method: 'PUT',
-              },
+          },
+          update: {
+            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+            attributes: {
+              method: 'PUT',
             },
-            delete: {
-              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              attributes: {
-                method: 'DELETE',
-              },
+          },
+          delete: {
+            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+            attributes: {
+              method: 'DELETE',
             },
           },
         },
-      ],
-    },
+      },
+    ],
     _links: {
       create: {
         href: '/api/pets',
@@ -825,38 +811,36 @@ test('delete success', async () => {
     offset: 0,
     limit: 1,
     count: 2,
-    _embedded: {
-      items: [
-        {
-          id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-          createdAt: '2005-08-15T15:52:01+00:00',
-          updatedAt: '2005-08-15T15:55:01+00:00',
-          name: 'Brownie',
-          tag: '0001-000',
-          vaccinations: [{ name: 'Rabies' }],
-          _links: {
-            read: {
-              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              attributes: {
-                method: 'GET',
-              },
+    items: [
+      {
+        id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+        createdAt: '2005-08-15T15:52:01+00:00',
+        updatedAt: '2005-08-15T15:55:01+00:00',
+        name: 'Brownie',
+        tag: '0001-000',
+        vaccinations: [{ name: 'Rabies' }],
+        _links: {
+          read: {
+            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+            attributes: {
+              method: 'GET',
             },
-            update: {
-              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              attributes: {
-                method: 'PUT',
-              },
+          },
+          update: {
+            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+            attributes: {
+              method: 'PUT',
             },
-            delete: {
-              href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
-              attributes: {
-                method: 'DELETE',
-              },
+          },
+          delete: {
+            href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9',
+            attributes: {
+              method: 'DELETE',
             },
           },
         },
-      ],
-    },
+      },
+    ],
     _links: {
       create: {
         href: '/api/pets',
@@ -889,9 +873,7 @@ test('delete success', async () => {
     offset: 0,
     limit: 1,
     count: 2,
-    _embedded: {
-      items: [],
-    },
+    items: [],
     _links: {
       create: {
         href: '/api/pets',

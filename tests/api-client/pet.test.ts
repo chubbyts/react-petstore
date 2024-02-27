@@ -17,7 +17,7 @@ describe('list pets', () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: { offset: 0, limit: 20, count: 35, _embedded: { items: [] }, _links: { create: { href: '' } } },
+        body: { offset: 0, limit: 20, count: 35, items: [], _links: { create: { href: '' } } },
       },
       {
         delay: 10,
