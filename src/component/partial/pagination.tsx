@@ -1,18 +1,12 @@
 import type { FC } from 'react';
 
-export type PaginationProps = {
-  submitPage: (page: number) => void;
-  currentPage: number;
-  totalPages: number;
-  maxPages: number;
-};
-
-export const Pagination: FC<PaginationProps> = ({ submitPage, currentPage, totalPages, maxPages }: PaginationProps) => {
-  if (totalPages <= 1 || maxPages <= 1) {
-    return <div></div>;
+const calculatePages = (currentPage: number, totalPages: number, maxPages: number) => {
+  if (totalPages <= 1 || maxPages <= 1 || currentPage > totalPages) {
+    return [];
   }
 
   const pages = [currentPage];
+
   for (let i = 1; ; i++) {
     if (currentPage - i >= 1) {
       pages.push(currentPage - i);
@@ -32,6 +26,23 @@ export const Pagination: FC<PaginationProps> = ({ submitPage, currentPage, total
   }
 
   pages.sort((a, b) => a - b);
+
+  return pages;
+};
+
+export type PaginationProps = {
+  submitPage: (page: number) => void;
+  currentPage: number;
+  totalPages: number;
+  maxPages: number;
+};
+
+export const Pagination: FC<PaginationProps> = ({ submitPage, currentPage, totalPages, maxPages }: PaginationProps) => {
+  const pages = calculatePages(currentPage, totalPages, maxPages);
+
+  if (pages.length === 0) {
+    return <div></div>;
+  }
 
   return (
     <ul className="w-fit border-y border-l border-gray-300">
