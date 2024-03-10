@@ -1,13 +1,17 @@
-import { FC, useEffect } from 'react';
+import type { FC } from 'react';
+import { useEffect } from 'react';
+import { H1 } from '../heading';
+
+const pageTitle = 'Not Found';
 
 const NotFound: FC = () => {
   useEffect(() => {
-    document.title = 'Not Found';
+    document.title = pageTitle;
   }, []);
 
   return (
     <div>
-      <h1>Not Found</h1>
+      <H1>{pageTitle}</H1>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 # react-petstore
 
-[![CI](https://github.com/chubbyts/react-petstore/workflows/CI/badge.svg?branch=master)](https://github.com/chubbyts/react-petstore/actions?query=workflow%3ACI)
+[![CI](https://github.com/chubbyts/react-petstore/actions/workflows/ci.yml/badge.svg)](https://github.com/chubbyts/react-petstore/actions/workflows/ci.yml)
 [![Coverage Status](https://coveralls.io/repos/github/chubbyts/react-petstore/badge.svg?branch=master)](https://coveralls.io/github/chubbyts/react-petstore?branch=master)
 
 [![bugs](https://sonarcloud.io/api/project_badges/measure?project=chubbyts_react-petstore&metric=bugs)](https://sonarcloud.io/dashboard?id=chubbyts_react-petstore)
@@ -17,23 +17,23 @@
 
 ## Description
 
-This is a react frontend for the petstore skeleton.
+This is a reactjs frontend for the petstore skeleton.
 
 ## Scripts
 
 ### Compiles and hot-reloads for development
 ```
-npm start
+pnpm start
 ```
 
 ### Compiles and minifies for production
 ```
-npm run build
+pnpm build
 ```
 
 ### Run your unit tests
 ```
-npm test
+pnpm test
 ```
 
 ## Copyright

@@ -1,11 +1,13 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import React from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import { test, expect } from 'vitest';
 import { formatHtml } from '../../formatter';
 import { Pagination } from '../../../src/component/partial/pagination';
 
 test('max pages 1', () => {
-  const submitPage = (page: number): void => { };
+  const submitPage = (): void => {};
 
   const { container } = render(<Pagination currentPage={1} maxPages={1} totalPages={10} submitPage={submitPage} />);
 
@@ -16,7 +18,7 @@ test('max pages 1', () => {
 });
 
 test('total pages 1', () => {
-  const submitPage = (page: number): void => { };
+  const submitPage = (): void => {};
 
   const { container } = render(<Pagination currentPage={1} maxPages={7} totalPages={1} submitPage={submitPage} />);
 
@@ -27,22 +29,40 @@ test('total pages 1', () => {
 });
 
 test('current 1', () => {
-  const submitPage = (page: number): void => { };
+  const submitPage = (): void => {};
 
   const { container } = render(<Pagination currentPage={1} maxPages={7} totalPages={10} submitPage={submitPage} />);
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <ul class="pagination">
-        <li><button class="current">1</button></li>
-        <li><button class="">2</button></li>
-        <li><button class="">3</button></li>
-        <li><button class="">4</button></li>
-        <li><button class="">5</button></li>
-        <li><button class="">6</button></li>
-        <li><button class="">7</button></li>
-        <li><button>&gt;</button></li>
-        <li><button>»</button></li>
+      <ul class="w-fit border-y border-l border-gray-300">
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2 bg-gray-100">1</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">2</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">3</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">4</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">5</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">6</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">7</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">&gt;</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">»</button>
+        </li>
       </ul>
     </div>
     "
@@ -50,24 +70,46 @@ test('current 1', () => {
 });
 
 test('current 4', () => {
-  const submitPage = (page: number): void => { };
+  const submitPage = (): void => {};
 
   const { container } = render(<Pagination currentPage={4} maxPages={7} totalPages={10} submitPage={submitPage} />);
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <ul class="pagination">
-        <li><button>«</button></li>
-        <li><button>&lt;</button></li>
-        <li><button class="">1</button></li>
-        <li><button class="">2</button></li>
-        <li><button class="">3</button></li>
-        <li><button class="current">4</button></li>
-        <li><button class="">5</button></li>
-        <li><button class="">6</button></li>
-        <li><button class="">7</button></li>
-        <li><button>&gt;</button></li>
-        <li><button>»</button></li>
+      <ul class="w-fit border-y border-l border-gray-300">
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">«</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">&lt;</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">1</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">2</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">3</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2 bg-gray-100">4</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">5</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">6</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">7</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">&gt;</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">»</button>
+        </li>
       </ul>
     </div>
     "
@@ -75,24 +117,46 @@ test('current 4', () => {
 });
 
 test('current 7', () => {
-  const submitPage = (page: number): void => { };
+  const submitPage = (): void => {};
 
   const { container } = render(<Pagination currentPage={7} maxPages={7} totalPages={10} submitPage={submitPage} />);
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <ul class="pagination">
-        <li><button>«</button></li>
-        <li><button>&lt;</button></li>
-        <li><button class="">4</button></li>
-        <li><button class="">5</button></li>
-        <li><button class="">6</button></li>
-        <li><button class="current">7</button></li>
-        <li><button class="">8</button></li>
-        <li><button class="">9</button></li>
-        <li><button class="">10</button></li>
-        <li><button>&gt;</button></li>
-        <li><button>»</button></li>
+      <ul class="w-fit border-y border-l border-gray-300">
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">«</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">&lt;</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">4</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">5</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">6</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2 bg-gray-100">7</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">8</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">9</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">10</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">&gt;</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">»</button>
+        </li>
       </ul>
     </div>
     "
@@ -100,22 +164,40 @@ test('current 7', () => {
 });
 
 test('current 10', () => {
-  const submitPage = (page: number): void => { };
+  const submitPage = (): void => {};
 
   const { container } = render(<Pagination currentPage={10} maxPages={7} totalPages={10} submitPage={submitPage} />);
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
-      <ul class="pagination">
-        <li><button>«</button></li>
-        <li><button>&lt;</button></li>
-        <li><button class="">4</button></li>
-        <li><button class="">5</button></li>
-        <li><button class="">6</button></li>
-        <li><button class="">7</button></li>
-        <li><button class="">8</button></li>
-        <li><button class="">9</button></li>
-        <li><button class="current">10</button></li>
+      <ul class="w-fit border-y border-l border-gray-300">
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">«</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">&lt;</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">4</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">5</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">6</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">7</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">8</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2">9</button>
+        </li>
+        <li class="inline-block">
+          <button class="border-r border-gray-300 px-3 py-2 bg-gray-100">10</button>
+        </li>
       </ul>
     </div>
     "
