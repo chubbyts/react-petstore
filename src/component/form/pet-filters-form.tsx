@@ -9,7 +9,7 @@ import { useStore } from '../../hook/use-store';
 export type PetFiltersFormProps = {
   httpError?: HttpError;
   initialPetFilters: PetFilters;
-  submitPetFilters: { (filters: PetFilters): void };
+  submitPetFilters: (filters: PetFilters) => void;
 };
 
 export const PetFiltersForm: FC<PetFiltersFormProps> = ({
