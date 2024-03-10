@@ -1,4 +1,4 @@
-import { petListRequestSchema, petListResponseSchema, petRequestSchema, petResponseSchema } from '../../model/pet';
+import { petListRequestSchema, petListResponseSchema, petRequestSchema, petResponseSchema } from '../model/pet';
 import {
   createCreateClient,
   createDeleteClient,
