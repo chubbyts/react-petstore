@@ -1,10 +1,10 @@
 import { useMemo, type FC } from 'react';
-import type { PetFilters } from '../../../model/pet';
 import type { HttpError } from '../../client/error';
 import { createInvalidParametersByName } from '../../client/error';
 import { FieldSet, TextField } from './form';
 import { Button } from '../button';
 import { useStore } from '../../hook/use-store';
+import type { PetFilters } from '../../model/pet';
 
 export type PetFiltersFormProps = {
   httpError?: HttpError;

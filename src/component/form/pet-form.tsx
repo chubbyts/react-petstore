@@ -2,9 +2,9 @@ import { useMemo, type FC } from 'react';
 import { FieldSet, TextField } from './form';
 import type { HttpError } from '../../client/error';
 import { createInvalidParametersByName } from '../../client/error';
-import type { PetRequest } from '../../../model/pet';
 import { Button } from '../button';
 import { useStore } from '../../hook/use-store';
+import type { PetRequest } from '../../model/pet';
 
 export type PetFormProps = {
   httpError?: HttpError;

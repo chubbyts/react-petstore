@@ -5,7 +5,7 @@ import { HttpError as HttpErrorPartial } from '../../partial/http-error';
 import { PetForm } from '../../form/pet-form';
 import { H1 } from '../../heading';
 import { AnchorButton } from '../../button';
-import type { PetRequest } from '../../../../model/pet';
+import type { PetRequest } from '../../../model/pet';
 import { readPetClient as readClient, updatePetClient as updateClient } from '../../../client/pet';
 import { useModelResource } from '../../../hook/use-model-resource';
 

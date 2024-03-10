@@ -4,7 +4,7 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { expect, test, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import type { PetFormProps } from '../../../../src/component/form/pet-form';
-import type { PetRequest, PetResponse } from '../../../../model/pet';
+import type { PetRequest, PetResponse } from '../../../../src/model/pet';
 import type { createPetClient } from '../../../../src/client/pet';
 import { formatHtml } from '../../../formatter';
 import { UnprocessableEntity } from '../../../../src/client/error';

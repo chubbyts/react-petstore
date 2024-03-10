@@ -7,7 +7,7 @@ import { NotFound } from '../../../../src/client/error';
 import type { readPetClient } from '../../../../src/client/pet';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
-import type { PetResponse } from '../../../../model/pet';
+import type { PetResponse } from '../../../../src/model/pet';
 
 let mockReadPetClient: typeof readPetClient;
 

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HttpError as HttpErrorPartial } from '../../partial/http-error';
 import { PetForm } from '../../form/pet-form';
-import type { PetRequest } from '../../../../model/pet';
+import type { PetRequest } from '../../../model/pet';
 import { AnchorButton } from '../../button';
 import { H1 } from '../../heading';
 import { useModelResource } from '../../../hook/use-model-resource';
