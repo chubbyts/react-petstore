@@ -21,7 +21,7 @@ export const useModelResource = <
   updateClient?: UpdateClient<MReq, MRes>;
   deleteClient?: DeleteClient;
 }) => {
-  const [isLoading, setLoading] = useState<'list' | 'create' | 'read' | 'update' | 'delete' | undefined>();
+  const [isLoading, setIsLoading] = useState<'list' | 'create' | 'read' | 'update' | 'delete' | undefined>();
   const [modelList, setModelList] = useState<MLRes | undefined>();
   const [model, setModel] = useState<MRes | undefined>();
   const [httpError, setHttpError] = useState<HttpError | undefined>();
@@ -31,7 +31,7 @@ export const useModelResource = <
       throw new Error('Missing listClient');
     }
 
-    setLoading('list');
+    setIsLoading('list');
 
     const response = await listClient(req);
 
@@ -48,7 +48,7 @@ export const useModelResource = <
       success = true;
     }
 
-    setLoading(undefined);
+    setIsLoading(undefined);
 
     return success;
   };
@@ -58,7 +58,7 @@ export const useModelResource = <
       throw new Error('Missing createClient');
     }
 
-    setLoading('create');
+    setIsLoading('create');
 
     const response = await createClient(req);
 
@@ -75,7 +75,7 @@ export const useModelResource = <
       success = true;
     }
 
-    setLoading(undefined);
+    setIsLoading(undefined);
 
     return success;
   };
@@ -85,7 +85,7 @@ export const useModelResource = <
       throw new Error('Missing readClient');
     }
 
-    setLoading('read');
+    setIsLoading('read');
 
     const response = await readClient(id);
 
@@ -102,7 +102,7 @@ export const useModelResource = <
       success = true;
     }
 
-    setLoading(undefined);
+    setIsLoading(undefined);
 
     return success;
   };
@@ -112,7 +112,7 @@ export const useModelResource = <
       throw new Error('Missing updateClient');
     }
 
-    setLoading('update');
+    setIsLoading('update');
 
     const response = await updateClient(id, req);
 
@@ -129,7 +129,7 @@ export const useModelResource = <
       success = true;
     }
 
-    setLoading(undefined);
+    setIsLoading(undefined);
 
     return success;
   };
@@ -139,7 +139,7 @@ export const useModelResource = <
       throw new Error('Missing deleteClient');
     }
 
-    setLoading('update');
+    setIsLoading('update');
 
     const response = await deleteClient(id);
 
@@ -154,7 +154,7 @@ export const useModelResource = <
       success = true;
     }
 
-    setLoading(undefined);
+    setIsLoading(undefined);
 
     return success;
   };
