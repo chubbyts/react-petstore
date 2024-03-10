@@ -1,77 +1,81 @@
-import { FC, useState, useEffect } from 'react';
+import type { FC } from 'react';
+import { useEffect } from 'react';
 import { de } from 'date-fns/locale';
 import { format } from 'date-fns';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { ListPets, DeletePet } from '../../../api-client/pet';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { HttpError as HttpErrorPartial } from '../../partial/http-error';
-import { PetFilterForm } from '../../form/pet-filter-form';
+import { PetFiltersForm } from '../../form/pet-filters-form';
 import qs from 'qs';
-import { PetFilters, PetList, PetResponse } from '../../../model/model';
-import { BadRequest, HttpError } from '../../../api-client/error';
 import { Pagination } from '../../partial/pagination';
+import { H1 } from '../../heading';
+import type { PetFilters, PetResponse } from '../../../../model/pet';
+import { AnchorButton, Button } from '../../button';
+import { Table, Tbody, Td, Th, Thead, Tr } from '../../table';
+import { numberSchema } from '../../../model/model';
+import type { PetListRequest, PetSort } from '../../../model/pet';
+import { petFiltersSchema, petSortSchema } from '../../../model/pet';
+import { z } from 'zod';
+import { useModelResource } from '../../../hook/use-model-resource';
+import { deletePetClient as deleteClient, listPetsClient as listClient } from '../../../client/pet';
+
+const pageTitle = 'Pet List';
+
+const limit = 10;
+
+const querySchema = z.object({
+  page: numberSchema.optional().default(1),
+  filters: petFiltersSchema.optional().default({}),
+  sort: petSortSchema.optional().default({}),
+});
 
 const List: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const parsedQuery = qs.parse(location.search.substring(1));
-
-  const query = {
-    page: typeof parsedQuery.page === 'string' ? parseInt(parsedQuery.page) : 1,
-    filters:
-      typeof parsedQuery.filters === 'object' && !(parsedQuery.filters instanceof Array) ? parsedQuery.filters : {},
-    sort: typeof parsedQuery.sort === 'object' && !(parsedQuery.sort instanceof Array) ? parsedQuery.sort : {},
-  };
-
-  const queryString = qs.stringify({
-    limit: 10,
-    offset: query.page * 10 - 10,
-    filters: query.filters,
-    sort: query.sort,
+  const {
+    modelList: petList,
+    httpError,
+    actions,
+  } = useModelResource({
+    listClient,
+    deleteClient,
   });
 
-  const [petList, setPetList] = useState<PetList>();
-  const [httpError, setHttpError] = useState<HttpError>();
+  const query = querySchema.parse(qs.parse(location.search.substring(1)));
+
+  const petListRequest: PetListRequest = {
+    offset: query.page * limit - limit,
+    limit,
+    filters: query.filters,
+    sort: query.sort,
+  };
+
+  const queryString = qs.stringify(petListRequest);
 
   const fetchPetList = async () => {
-    const response = await ListPets(queryString);
-
-    if (response instanceof HttpError) {
-      setHttpError(response);
-    } else {
-      setHttpError(undefined);
-      setPetList(response);
-    }
+    actions.listModel(petListRequest);
   };
 
   const deletePet = async (id: string) => {
-    const deleteResponse = await DeletePet(id);
-
-    if (deleteResponse instanceof HttpError) {
-      setHttpError(deleteResponse);
-    } else {
-      setHttpError(undefined);
+    if (await actions.deleteModel(id)) {
       fetchPetList();
     }
   };
 
-  const changePage = (page: number): void => {
+  const submitPage = (page: number): void => {
     navigate(`/pet?${qs.stringify({ ...query, page })}`);
   };
 
-  const submitPetFilter = (filters: PetFilters): void => {
+  const submitPetFilters = (filters: PetFilters): void => {
     navigate(`/pet?${qs.stringify({ ...query, page: 1, filters })}`);
   };
 
-  const sortLink = (field: string, order?: string): string => {
-    return `/pet?${qs.stringify({
-      ...query,
-      sort: { ...query.sort, [field]: order },
-    })}`;
+  const submitPetSort = (sort: PetSort): void => {
+    navigate(`/pet?${qs.stringify({ ...query, page: 1, sort })}`);
   };
 
   useEffect(() => {
-    document.title = 'List Pets';
+    document.title = pageTitle;
 
     fetchPetList();
   }, [queryString]);
@@ -83,88 +87,96 @@ const List: FC = () => {
   return (
     <div data-testid="page-pet-list">
       {httpError ? <HttpErrorPartial httpError={httpError} /> : null}
-      <h1>List Pets</h1>
+      <H1>{pageTitle}</H1>
       {petList ? (
         <div>
           {petList._links?.create ? (
-            <Link to="/pet/create" className="btn-green mb-4">
+            <AnchorButton to="/pet/create" colorTheme="green" className="mb-4">
               Create
-            </Link>
+            </AnchorButton>
           ) : null}
-          <PetFilterForm
-            submitPetFilter={submitPetFilter}
-            defaultPetFilters={query.filters}
-            badRequest={httpError instanceof BadRequest ? httpError : undefined}
-          />
-          <table className="my-4">
-            <thead>
-              <tr>
-                <th>Id</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>
-                  Name (
-                  <Link data-testid="sort-pet-name-asc" to={sortLink('name', 'asc')}>
-                    {' '}
-                    A-Z{' '}
-                  </Link>{' '}
-                  |
-                  <Link data-testid="sort-pet-name-desc" to={sortLink('name', 'desc')}>
-                    {' '}
-                    Z-A{' '}
-                  </Link>{' '}
-                  |
-                  <Link data-testid="sort-pet-name--" to={sortLink('name')}>
-                    {' '}
-                    ---{' '}
-                  </Link>
-                  )
-                </th>
-                <th>Tag</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {petList.items.map((pet: PetResponse, i) => (
-                <tr key={pet.id}>
-                  <td>{pet.id}</td>
-                  <td>{format(Date.parse(pet.createdAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}</td>
-                  <td>{pet.updatedAt && format(Date.parse(pet.updatedAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}</td>
-                  <td>{pet.name}</td>
-                  <td>{pet.tag}</td>
-                  <td>
-                    {pet._links?.read ? (
-                      <Link to={`/pet/${pet.id}`} className="btn-gray mr-4">
-                        Read
-                      </Link>
-                    ) : null}
-                    {pet._links?.update ? (
-                      <Link to={`/pet/${pet.id}/update`} className="btn-gray mr-4">
-                        Update
-                      </Link>
-                    ) : null}
-                    {pet._links?.delete ? (
-                      <button
-                        data-testid={`remove-pet-${i}`}
-                        onClick={() => {
-                          deletePet(pet.id);
-                        }}
-                        className="btn-red"
-                      >
-                        Delete
-                      </button>
-                    ) : null}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <Pagination
-            currentPage={query.page}
-            totalPages={Math.ceil(petList.count / petList.limit)}
-            maxPages={7}
-            submitPage={changePage}
-          />
+          <PetFiltersForm httpError={httpError} initialPetFilters={query.filters} submitPetFilters={submitPetFilters} />
+          <div className="mt-4">
+            <Table>
+              <Thead>
+                <Tr>
+                  <Th>Id</Th>
+                  <Th>CreatedAt</Th>
+                  <Th>UpdatedAt</Th>
+                  <Th>
+                    <span>Name (</span>
+                    <button
+                      data-testid="pet-sort-name-asc"
+                      onClick={() => submitPetSort({ ...query.sort, name: 'asc' })}
+                    >
+                      <span className="mx-1 inline-block">A-Z</span>
+                    </button>
+                    <span>|</span>
+                    <button
+                      data-testid="pet-sort-name-desc"
+                      onClick={() => submitPetSort({ ...query.sort, name: 'desc' })}
+                    >
+                      <span className="mx-1 inline-block">Z-A</span>
+                    </button>
+                    <span>|</span>
+                    <button
+                      data-testid="pet-sort-name--"
+                      onClick={() => submitPetSort({ ...query.sort, name: undefined })}
+                    >
+                      <span className="mx-1 inline-block">---</span>
+                    </button>
+                    <span>)</span>
+                  </Th>
+                  <Th>Tag</Th>
+                  <Th>Actions</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {petList.items.map((pet: PetResponse, i) => (
+                  <Tr key={pet.id}>
+                    <Td>{pet.id}</Td>
+                    <Td>{format(Date.parse(pet.createdAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}</Td>
+                    <Td>
+                      {pet.updatedAt && format(Date.parse(pet.updatedAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}
+                    </Td>
+                    <Td>{pet.name}</Td>
+                    <Td>{pet.tag}</Td>
+                    <Td>
+                      {pet._links?.read ? (
+                        <AnchorButton to={`/pet/${pet.id}`} colorTheme="gray" className="mr-4">
+                          Read
+                        </AnchorButton>
+                      ) : null}
+                      {pet._links?.update ? (
+                        <AnchorButton to={`/pet/${pet.id}/update`} colorTheme="gray" className="mr-4">
+                          Update
+                        </AnchorButton>
+                      ) : null}
+                      {pet._links?.delete ? (
+                        <Button
+                          data-testid={`remove-pet-${i}`}
+                          onClick={() => {
+                            deletePet(pet.id);
+                          }}
+                          colorTheme="red"
+                        >
+                          Delete
+                        </Button>
+                      ) : null}
+                    </Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </div>
+          <div className="mt-4">
+            <Pagination
+              currentPage={query.page}
+              totalPages={Math.ceil(petList.count / petList.limit)}
+              maxPages={7}
+              submitPage={submitPage}
+            />
+          </div>
         </div>
       ) : null}
     </div>

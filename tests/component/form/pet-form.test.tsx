@@ -1,36 +1,54 @@
-import { render, screen } from '@testing-library/react';
-import { PetForm } from '../../../src/component/form/pet-form';
-import userEvent from '@testing-library/user-event';
-import { vi } from 'vitest';
-import { test, expect } from 'vitest';
-import { PetRequest } from '../../../src/model/model';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import React from 'react';
+import { test, expect, vi } from 'vitest';
 import { formatHtml } from '../../formatter';
-import { InvalidParameter, UnprocessableEntity } from '../../../src/api-client/error';
+import { PetForm } from '../../../src/component/form/pet-form';
+import { BadRequest, NetworkError } from '../../../src/client/error';
+import type { PetRequest } from '../../../src/model/pet';
+import { userEvent } from '@testing-library/user-event';
+import { render, screen } from '@testing-library/react';
 
-test('empty', () => {
-  const submitPet = (pet: PetRequest): void => { };
+test('without initial pet', () => {
+  const httpError = undefined;
+  const initialPet = undefined;
+  const submitPet = () => {};
 
-  const { container } = render(<PetForm submitPet={submitPet} />);
+  const { container } = render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <form>
-        <fieldset>
-          <div class="form-field">
-            <label>Name</label><input type="text" name="name" value="" />
-          </div>
-          <div class="form-field">
-            <label>Tag</label><input type="text" name="tag" value="" />
-          </div>
-          <div class="form-field">
-            <label>Vaccanations</label>
+        <fieldset class="mb-3 border border-gray-300 px-4 py-3">
+          <label class="block"
+            >Name<input
+              data-testid="pet-form-name"
+              type="text"
+              class="mb-3 mt-2 block w-full border px-3 py-2 border-gray-300"
+              value="" /></label
+          ><label class="block"
+            >Tag<input
+              data-testid="pet-form-tag"
+              type="text"
+              class="mb-3 mt-2 block w-full border px-3 py-2 border-gray-300"
+              value=""
+          /></label>
+          <div class="mb-3">
+            <div class="mb-2 block">Vaccinations</div>
             <div>
-              <button data-testid="add-vaccination" type="button" class="btn-green">
+              <button
+                data-testid="pet-form-add-vaccination"
+                class="inline-block px-5 py-2 text-white bg-green-600 hover:bg-green-700"
+              >
                 Add
               </button>
             </div>
           </div>
-          <button data-testid="submit-pet" class="btn-blue">Save</button>
+          <button
+            data-testid="pet-form-submit"
+            class="inline-block px-5 py-2 text-white bg-blue-600 hover:bg-blue-700"
+          >
+            Save
+          </button>
         </fieldset>
       </form>
     </div>
@@ -38,50 +56,61 @@ test('empty', () => {
   `);
 });
 
-test('without error', () => {
-  const submitPet = (pet: PetRequest): void => { };
+test('with initial pet', () => {
+  const httpError = undefined;
+  const initialPet = { name: 'Brownie', tag: '0001-000', vaccinations: [{ name: 'rabies' }] };
+  const submitPet = () => {};
 
-  const defaultPet = {
-    id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-    createdAt: '2005-08-15T15:52:01+00:00',
-    name: 'Brownie',
-    vaccinations: [{ name: 'Rabies' }],
-  };
-
-  const { container } = render(<PetForm submitPet={submitPet} defaultPet={defaultPet} />);
+  const { container } = render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <form>
-        <fieldset>
-          <div class="form-field">
-            <label>Name</label><input type="text" name="name" value="" />
-          </div>
-          <div class="form-field">
-            <label>Tag</label><input type="text" name="tag" value="" />
-          </div>
-          <div class="form-field">
-            <label>Vaccanations</label>
+        <fieldset class="mb-3 border border-gray-300 px-4 py-3">
+          <label class="block"
+            >Name<input
+              data-testid="pet-form-name"
+              type="text"
+              class="mb-3 mt-2 block w-full border px-3 py-2 border-gray-300"
+              value="Brownie" /></label
+          ><label class="block"
+            >Tag<input
+              data-testid="pet-form-tag"
+              type="text"
+              class="mb-3 mt-2 block w-full border px-3 py-2 border-gray-300"
+              value="0001-000"
+          /></label>
+          <div class="mb-3">
+            <div class="mb-2 block">Vaccinations</div>
             <div>
-              <fieldset>
-                <div class="form-field">
-                  <label>Name</label
-                  ><input type="text" name="vaccinations[0].name" value="Rabies" />
-                </div>
-                <button
-                  data-testid="remove-vaccination-0"
-                  type="button"
-                  class="btn-red"
+              <fieldset class="mb-3 border border-gray-300 px-4 py-3">
+                <label class="block"
+                  >Name<input
+                    data-testid="pet-form-vaccinations-0-name"
+                    type="text"
+                    class="mb-3 mt-2 block w-full border px-3 py-2 border-gray-300"
+                    value="rabies" /></label
+                ><button
+                  data-testid="pet-form-remove-vaccination-0"
+                  class="inline-block px-5 py-2 text-white bg-red-600 hover:bg-red-700"
                 >
                   Remove
                 </button>
               </fieldset>
-              <button data-testid="add-vaccination" type="button" class="btn-green">
+              <button
+                data-testid="pet-form-add-vaccination"
+                class="inline-block px-5 py-2 text-white bg-green-600 hover:bg-green-700"
+              >
                 Add
               </button>
             </div>
           </div>
-          <button data-testid="submit-pet" class="btn-blue">Save</button>
+          <button
+            data-testid="pet-form-submit"
+            class="inline-block px-5 py-2 text-white bg-blue-600 hover:bg-blue-700"
+          >
+            Save
+          </button>
         </fieldset>
       </form>
     </div>
@@ -89,249 +118,129 @@ test('without error', () => {
   `);
 });
 
-test('with error', () => {
-  const submitPet = (pet: PetRequest): void => { };
+test('network error', () => {
+  const httpError = new NetworkError({ title: 'network error' });
+  const initialPet = { name: 'Brownie', tag: '0001-000', vaccinations: [{ name: 'rabies' }] };
+  const submitPet = () => {};
 
-  const defaultPet = {
-    id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-    createdAt: '2005-08-15T15:52:01+00:00',
-    name: '',
-    vaccinations: [{ name: '' }],
-  };
+  render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
+});
 
-  const invalidParameters: Array<InvalidParameter> = [
-    { name: 'name', reason: 'Should not be empty' },
-    { name: 'vaccinations[0].name', reason: 'Should not be empty' },
-  ];
+test('bad request', () => {
+  const httpError = new BadRequest({
+    title: 'bad request',
+  });
+  const initialPet = { name: 'Brownie', tag: '0001-000', vaccinations: [{ name: 'rabies' }] };
+  const submitPet = () => {};
 
-  const unprocessableEntity = new UnprocessableEntity({
-    title: 'title',
-    invalidParameters: invalidParameters,
+  render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
+});
+
+test('bad request - with query string name', () => {
+  const httpError = new BadRequest({
+    title: 'bad request',
+    invalidParameters: [
+      { name: 'name', reason: 'reason1' },
+      { name: 'vaccinations[0][name]', reason: 'reason2' },
+    ],
+  });
+  const initialPet = { name: 'Brownie', tag: '0001-000', vaccinations: [{ name: 'rabies' }] };
+  const submitPet = () => {};
+
+  const { container } = render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
+
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div>
+      <form>
+        <fieldset class="mb-3 border border-gray-300 px-4 py-3">
+          <label class="block text-red-600"
+            >Name<input
+              data-testid="pet-form-name"
+              type="text"
+              class="mb-3 mt-2 block w-full border px-3 py-2 border-red-600 bg-red-100"
+              value="Brownie"
+            />
+            <ul class="mb-3">
+              <li>reason1</li>
+            </ul></label
+          ><label class="block"
+            >Tag<input
+              data-testid="pet-form-tag"
+              type="text"
+              class="mb-3 mt-2 block w-full border px-3 py-2 border-gray-300"
+              value="0001-000"
+          /></label>
+          <div class="mb-3">
+            <div class="mb-2 block">Vaccinations</div>
+            <div>
+              <fieldset class="mb-3 border border-gray-300 px-4 py-3">
+                <label class="block text-red-600"
+                  >Name<input
+                    data-testid="pet-form-vaccinations-0-name"
+                    type="text"
+                    class="mb-3 mt-2 block w-full border px-3 py-2 border-red-600 bg-red-100"
+                    value="rabies"
+                  />
+                  <ul class="mb-3">
+                    <li>reason2</li>
+                  </ul></label
+                ><button
+                  data-testid="pet-form-remove-vaccination-0"
+                  class="inline-block px-5 py-2 text-white bg-red-600 hover:bg-red-700"
+                >
+                  Remove
+                </button>
+              </fieldset>
+              <button
+                data-testid="pet-form-add-vaccination"
+                class="inline-block px-5 py-2 text-white bg-green-600 hover:bg-green-700"
+              >
+                Add
+              </button>
+            </div>
+          </div>
+          <button
+            data-testid="pet-form-submit"
+            class="inline-block px-5 py-2 text-white bg-blue-600 hover:bg-blue-700"
+          >
+            Save
+          </button>
+        </fieldset>
+      </form>
+    </div>
+    "
+  `);
+});
+
+test('submit with name', async () => {
+  const httpError = undefined;
+  const initialPet = { name: 'Brown', vaccinations: [{ name: 'rabie' }, { name: 'cat cold' }] };
+  const submitPet = vi.fn((pet: PetRequest) => {
+    expect(pet).toEqual({ name: 'Brownie', vaccinations: [{ name: 'rabies' }, { name: 'cat cold' }, { name: '' }] });
   });
 
-  const { container } = render(
-    <PetForm submitPet={submitPet} defaultPet={defaultPet} error={unprocessableEntity} />,
-  );
+  render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
 
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
-    "<div>
-      <form>
-        <fieldset>
-          <div class="form-field error">
-            <label>Name</label><input type="text" name="name" value="" />
-            <ul>
-              <li>Should not be empty</li>
-            </ul>
-          </div>
-          <div class="form-field">
-            <label>Tag</label><input type="text" name="tag" value="" />
-          </div>
-          <div class="form-field">
-            <label>Vaccanations</label>
-            <div>
-              <fieldset>
-                <div class="form-field error">
-                  <label>Name</label
-                  ><input type="text" name="vaccinations[0].name" value="" />
-                  <ul>
-                    <li>Should not be empty</li>
-                  </ul>
-                </div>
-                <button
-                  data-testid="remove-vaccination-0"
-                  type="button"
-                  class="btn-red"
-                >
-                  Remove
-                </button>
-              </fieldset>
-              <button data-testid="add-vaccination" type="button" class="btn-green">
-                Add
-              </button>
-            </div>
-          </div>
-          <button data-testid="submit-pet" class="btn-blue">Save</button>
-        </fieldset>
-      </form>
-    </div>
-    "
-  `);
-});
+  const nameField = await screen.findByTestId('pet-form-name');
 
-test('add vaccination', async () => {
-  const submitPet = (pet: PetRequest): void => { };
+  await userEvent.type(nameField, 'ie');
 
-  const defaultPet = {
-    id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-    createdAt: '2005-08-15T15:52:01+00:00',
-    name: 'Brownie',
-    vaccinations: [{ name: 'Rabies' }],
-  };
+  const vaccinationNameField = await screen.findByTestId('pet-form-vaccinations-0-name');
 
-  const { container } = render(<PetForm submitPet={submitPet} defaultPet={defaultPet} />);
+  await userEvent.type(vaccinationNameField, 's');
 
-  const submitButton = await screen.findByTestId('add-vaccination');
+  const addVaccination = await screen.findByTestId('pet-form-add-vaccination');
+
+  await userEvent.click(addVaccination);
+  await userEvent.click(addVaccination);
+
+  const removeVaccination = await screen.findByTestId('pet-form-remove-vaccination-3');
+
+  await userEvent.click(removeVaccination);
+
+  const submitButton = await screen.findByTestId('pet-form-submit');
 
   await userEvent.click(submitButton);
 
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
-    "<div>
-      <form>
-        <fieldset>
-          <div class="form-field">
-            <label>Name</label><input type="text" name="name" value="" />
-          </div>
-          <div class="form-field">
-            <label>Tag</label><input type="text" name="tag" value="" />
-          </div>
-          <div class="form-field">
-            <label>Vaccanations</label>
-            <div>
-              <fieldset>
-                <div class="form-field">
-                  <label>Name</label
-                  ><input type="text" name="vaccinations[0].name" value="Rabies" />
-                </div>
-                <button
-                  data-testid="remove-vaccination-0"
-                  type="button"
-                  class="btn-red"
-                >
-                  Remove
-                </button>
-              </fieldset>
-              <fieldset>
-                <div class="form-field">
-                  <label>Name</label
-                  ><input type="text" name="vaccinations[1].name" value="" />
-                </div>
-                <button
-                  data-testid="remove-vaccination-1"
-                  type="button"
-                  class="btn-red"
-                >
-                  Remove
-                </button>
-              </fieldset>
-              <button data-testid="add-vaccination" type="button" class="btn-green">
-                Add
-              </button>
-            </div>
-          </div>
-          <button data-testid="submit-pet" class="btn-blue">Save</button>
-        </fieldset>
-      </form>
-    </div>
-    "
-  `);
-});
-
-test('remove vaccination', async () => {
-  const submitPet = (pet: PetRequest): void => { };
-
-  const defaultPet = {
-    id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-    createdAt: '2005-08-15T15:52:01+00:00',
-    name: 'Brownie',
-    vaccinations: [{ name: 'Rabies' }],
-  };
-
-  const { container } = render(<PetForm submitPet={submitPet} defaultPet={defaultPet} />);
-
-  const submitButton = await screen.findByTestId('remove-vaccination-0');
-
-  await userEvent.click(submitButton);
-
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
-    "<div>
-      <form>
-        <fieldset>
-          <div class="form-field">
-            <label>Name</label><input type="text" name="name" value="" />
-          </div>
-          <div class="form-field">
-            <label>Tag</label><input type="text" name="tag" value="" />
-          </div>
-          <div class="form-field">
-            <label>Vaccanations</label>
-            <div>
-              <button data-testid="add-vaccination" type="button" class="btn-green">
-                Add
-              </button>
-            </div>
-          </div>
-          <button data-testid="submit-pet" class="btn-blue">Save</button>
-        </fieldset>
-      </form>
-    </div>
-    "
-  `);
-});
-
-test('submit minimal', async () => {
-  let submitPet = (pet: PetRequest) => { };
-
-  const submitPetMock = vi.fn((pet: PetRequest) => {
-    submitPet(pet);
-  });
-
-  await new Promise(async (resolve) => {
-    submitPet = (pet: PetRequest) => {
-      expect(pet.name).toBe('Brownie');
-      expect(pet.tag).toBeUndefined();
-
-      resolve(undefined);
-    };
-
-    const defaultPet = {
-      id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-      createdAt: '2005-08-15T15:52:01+00:00',
-      name: 'Brownie',
-      tag: '',
-    };
-
-    render(<PetForm submitPet={submitPetMock} defaultPet={defaultPet} />);
-
-    const submitButton = await screen.findByTestId('submit-pet');
-
-    await userEvent.click(submitButton);
-  });
-
-  expect(submitPetMock.mock.calls.length).toBe(1);
-});
-
-// @todo fix test
-test('submit maximal', async () => {
-  let submitPet = (pet: PetRequest) => { };
-
-  const submitPetMock = vi.fn((pet: PetRequest) => {
-    submitPet(pet);
-  });
-
-  await new Promise(async (resolve) => {
-    submitPet = (pet: PetRequest) => {
-      expect(pet.name).toBe('Brownie');
-      expect(pet.tag).toBe('0001-000');
-      expect(pet.vaccinations).toHaveLength(1);
-      expect(pet.vaccinations ? pet.vaccinations[0].name : '').toBe('Rabies');
-
-      resolve(undefined);
-    };
-
-    const defaultPet = {
-      id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-      createdAt: '2005-08-15T15:52:01+00:00',
-      name: 'Brownie',
-      tag: '0001-000',
-      vaccinations: [{ name: 'Rabies' }],
-    };
-
-    render(<PetForm submitPet={submitPetMock} defaultPet={defaultPet} />);
-
-    const submitButton = await screen.findByTestId('submit-pet');
-
-    await userEvent.click(submitButton);
-  });
-
-  expect(submitPetMock.mock.calls.length).toBe(1);
+  expect(submitPet).toHaveBeenCalledTimes(1);
 });

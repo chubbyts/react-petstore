@@ -1,12 +1,7 @@
-import { FC, lazy, Suspense, useState } from 'react';
-import { BrowserRouter, Route, NavLink, Routes } from 'react-router-dom';
-
-const Home = lazy(() => import('./component/page/home'));
-const NotFound = lazy(() => import('./component/page/not-found'));
-const PetCreate = lazy(() => import('./component/page/pet/create'));
-const PetList = lazy(() => import('./component/page/pet/list'));
-const PetRead = lazy(() => import('./component/page/pet/read'));
-const PetUpdate = lazy(() => import('./component/page/pet/update'));
+import type { FC } from 'react';
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import Routes from './routes';
 
 const App: FC = () => {
   const [displayMenu, setDisplayMenu] = useState<boolean>(false);
@@ -16,37 +11,46 @@ const App: FC = () => {
   };
 
   return (
-    <BrowserRouter>
-      <div id="wrapper" className={displayMenu ? 'displayMenu' : ''}>
-        <nav id="top-nav" className="flow-root">
-          <button id="toggle" data-testid="navigation-toggle" onClick={toggleMenu}>
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-          <NavLink to="/">Petstore</NavLink>
-        </nav>
-        <nav id="left-nav">
-          <ul>
-            <li>
-              <NavLink to="/pet">Pets</NavLink>
-            </li>
-          </ul>
-        </nav>
-        <div id="main">
-          <Suspense fallback={<div></div>}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/pet" element={<PetList />} />
-              <Route path="/pet/create" element={<PetCreate />} />
-              <Route path="/pet/:id" element={<PetRead />} />
-              <Route path="/pet/:id/update" element={<PetUpdate />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </div>
+    <div className="relative flex min-h-full flex-col md:flex-row">
+      <nav className="absolute flow-root h-16 w-full bg-gray-900 px-4 py-3 text-2xl font-semibold uppercase leading-relaxed text-gray-100">
+        <button
+          className="float-right block border-2 p-2 md:hidden"
+          data-testid="navigation-toggle"
+          onClick={toggleMenu}
+        >
+          <span className="block h-2 w-6 border-t-2" />
+          <span className="block h-2 w-6 border-t-2" />
+          <span className="block h-0 w-6 border-t-2" />
+        </button>
+        <NavLink className="hover:text-gray-500" to="/">
+          Petstore
+        </NavLink>
+      </nav>
+      <nav
+        className={`mt-16 w-full bg-gray-200 md:block md:w-1/3 lg:w-1/4 xl:w-1/5 ${displayMenu ? 'block' : 'hidden'}`}
+      >
+        <ul>
+          <li>
+            <NavLink
+              data-testid="navigation-pet"
+              className={({ isActive }) =>
+                `block px-4 py-2 ${
+                  isActive
+                    ? 'text-gray-100 bg-gray-700 hover:bg-gray-600'
+                    : 'bg-gray-300 ext-gray-900 hover:bg-gray-400'
+                }`
+              }
+              to="/pet"
+            >
+              Pets
+            </NavLink>
+          </li>
+        </ul>
+      </nav>
+      <div className={`w-full px-6 py-8 md:w-2/3 lg:w-3/4 xl:w-4/5 ${displayMenu ? 'mt-0' : 'mt-16'}`}>
+        <Routes />
       </div>
-    </BrowserRouter>
+    </div>
   );
 };
 

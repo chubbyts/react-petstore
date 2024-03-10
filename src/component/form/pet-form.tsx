@@ -1,82 +1,105 @@
-import { FC } from 'react';
-import { useForm, useFieldArray } from 'react-hook-form';
-import InvalidParameterByNameDenormalizer from '../../denormalizer/invalid-parameter-by-name-denormalizer';
-import { PetRequest, PetResponse } from '../../model/model';
-import { TextField } from './text-field';
-import { HttpErrorWithInvalidParameters } from '../../api-client/error';
+import { useMemo, type FC } from 'react';
+import { FieldSet, TextField } from './form';
+import type { HttpError } from '../../client/error';
+import { createInvalidParametersByName } from '../../client/error';
+import type { PetRequest } from '../../../model/pet';
+import { Button } from '../button';
+import { useStore } from '../../hook/use-store';
 
 export type PetFormProps = {
+  httpError?: HttpError;
+  initialPet?: PetRequest;
   submitPet: { (pet: PetRequest): void };
-  defaultPet?: PetResponse;
-  error?: HttpErrorWithInvalidParameters;
 };
 
-export const PetForm: FC<PetFormProps> = ({ submitPet, defaultPet, error }: PetFormProps) => {
-  const invalidParameterByNameDenormalized = InvalidParameterByNameDenormalizer(error ? error.invalidParameters : []);
+export const PetForm: FC<PetFormProps> = ({ submitPet, initialPet, httpError }: PetFormProps) => {
+  const groupInvalidParametersByName = useMemo(() => createInvalidParametersByName(httpError), [httpError]);
 
-  const { register, control, handleSubmit } = useForm<PetRequest>({ defaultValues: defaultPet });
+  const [pet, setPet] = useStore<PetRequest>(initialPet ?? { name: '', vaccinations: [] });
 
-  const vaccinations = useFieldArray({ control, name: 'vaccinations' });
-
-  const onSubmit = (pet: PetRequest) => {
-    if ('' === pet.tag) {
-      pet.tag = undefined;
-    }
-
-    submitPet(pet);
+  const onSubmit = () => {
+    submitPet({ ...pet });
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <fieldset>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onSubmit();
+      }}
+    >
+      <FieldSet>
         <TextField
-          register={register}
-          name="name"
+          data-testid="pet-form-name"
           label="Name"
-          invalidParameters={invalidParameterByNameDenormalized.get('name') ?? []}
+          value={pet.name}
+          setValue={(value) => setPet('name', value)}
+          invalidParameters={groupInvalidParametersByName.get('name') ?? []}
         />
         <TextField
-          register={register}
-          name="tag"
+          data-testid="pet-form-tag"
           label="Tag"
-          invalidParameters={invalidParameterByNameDenormalized.get('tag') ?? []}
+          value={pet.tag ?? ''}
+          setValue={(value) => setPet('tag', value === '' ? undefined : value)}
+          invalidParameters={groupInvalidParametersByName.get('tag') ?? []}
         />
-        <div className="form-field">
-          <label>Vaccanations</label>
+        <div className="mb-3">
+          <div className="mb-2 block">Vaccinations</div>
           <div>
-            {vaccinations.fields.map((item, i) => (
-              <fieldset key={item.id}>
-                <TextField
-                  register={register}
-                  name={`vaccinations[${i}].name`}
-                  label="Name"
-                  defaultValue={item.name}
-                  invalidParameters={invalidParameterByNameDenormalized.get(`vaccinations[${i}].name`) ?? []}
-                />
-                <button
-                  data-testid={`remove-vaccination-${i}`}
-                  type="button"
-                  onClick={() => vaccinations.remove(i)}
-                  className="btn-red"
-                >
-                  Remove
-                </button>
-              </fieldset>
-            ))}
-            <button
-              data-testid="add-vaccination"
-              type="button"
-              onClick={() => vaccinations.append({ name: '' })}
-              className="btn-green"
+            {pet.vaccinations.map((vaccination, i) => {
+              return (
+                <FieldSet key={i}>
+                  <TextField
+                    data-testid={`pet-form-vaccinations-${i}-name`}
+                    label="Name"
+                    value={vaccination.name}
+                    setValue={(value) =>
+                      setPet('vaccinations', [
+                        ...pet.vaccinations.map((currentVaccination, y) => {
+                          if (y === i) {
+                            return { ...currentVaccination, name: value };
+                          }
+
+                          return currentVaccination;
+                        }),
+                      ])
+                    }
+                    invalidParameters={groupInvalidParametersByName.get(`vaccinations[${i}][name]`) ?? []}
+                  />
+                  <Button
+                    data-testid={`pet-form-remove-vaccination-${i}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+
+                      setPet('vaccinations', [...pet.vaccinations.filter((_, y) => y !== i)]);
+                    }}
+                    colorTheme="red"
+                  >
+                    Remove
+                  </Button>
+                </FieldSet>
+              );
+            })}
+            <Button
+              data-testid={'pet-form-add-vaccination'}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                setPet('vaccinations', [...pet.vaccinations, { name: '' }]);
+              }}
+              colorTheme="green"
             >
               Add
-            </button>
+            </Button>
           </div>
         </div>
-        <button data-testid="submit-pet" className="btn-blue">
+        <Button data-testid="pet-form-submit" colorTheme="blue">
           Save
-        </button>
-      </fieldset>
+        </Button>
+      </FieldSet>
     </form>
   );
 };

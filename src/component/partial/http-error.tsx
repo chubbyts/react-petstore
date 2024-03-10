@@ -1,5 +1,6 @@
-import { FC } from 'react';
-import { HttpError as HttpErrorType, HttpErrorWithInvalidParameters, InvalidParameter } from '../../api-client/error';
+import type { FC } from 'react';
+import type { HttpError as HttpErrorType, InvalidParameter } from '../../client/error';
+import { BadRequestOrUnprocessableEntity } from '../../client/error';
 
 type HttpErrorProps = {
   httpError: HttpErrorType;
@@ -7,11 +8,13 @@ type HttpErrorProps = {
 
 export const HttpError: FC<HttpErrorProps> = ({ httpError }: HttpErrorProps) => {
   return (
-    <div id="httpError">
-      <p>{httpError.title}</p>
+    <div data-testid="http-error" className="mb-6 bg-red-300 px-5 py-4">
+      <p className="font-bold">{httpError.title}</p>
       {httpError.detail ? <p>{httpError.detail}</p> : null}
       {httpError.instance ? <p>{httpError.instance}</p> : null}
-      {httpError instanceof HttpErrorWithInvalidParameters && httpError.invalidParameters.length > 0 ? (
+      {httpError instanceof BadRequestOrUnprocessableEntity &&
+      httpError.invalidParameters &&
+      httpError.invalidParameters.length > 0 ? (
         <ul>
           {httpError.invalidParameters.map((invalidParameter: InvalidParameter, i) => (
             <li key={i}>

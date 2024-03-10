@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 
 export type PaginationProps = {
   submitPage: { (page: number): void };
@@ -34,10 +34,11 @@ export const Pagination: FC<PaginationProps> = ({ submitPage, currentPage, total
   pages.sort((a, b) => a - b);
 
   return (
-    <ul className="pagination">
+    <ul className="w-fit border-y border-l border-gray-300">
       {currentPage > 2 ? (
-        <li>
+        <li className="inline-block">
           <button
+            className="border-r border-gray-300 px-3 py-2"
             onClick={() => {
               submitPage(1);
             }}
@@ -47,8 +48,9 @@ export const Pagination: FC<PaginationProps> = ({ submitPage, currentPage, total
         </li>
       ) : null}
       {currentPage > 1 ? (
-        <li>
+        <li className="inline-block">
           <button
+            className="border-r border-gray-300 px-3 py-2"
             onClick={() => {
               submitPage(currentPage - 1);
             }}
@@ -58,9 +60,9 @@ export const Pagination: FC<PaginationProps> = ({ submitPage, currentPage, total
         </li>
       ) : null}
       {pages.map((page: number) => (
-        <li key={page}>
+        <li key={page} className="inline-block">
           <button
-            className={currentPage === page ? 'current' : ''}
+            className={`border-r border-gray-300 px-3 py-2 ${page === currentPage ? 'bg-gray-100' : ''}`}
             onClick={() => {
               submitPage(page);
             }}
@@ -70,8 +72,9 @@ export const Pagination: FC<PaginationProps> = ({ submitPage, currentPage, total
         </li>
       ))}
       {currentPage < totalPages ? (
-        <li>
+        <li className="inline-block">
           <button
+            className="border-r border-gray-300 px-3 py-2"
             onClick={() => {
               submitPage(currentPage + 1);
             }}
@@ -81,8 +84,9 @@ export const Pagination: FC<PaginationProps> = ({ submitPage, currentPage, total
         </li>
       ) : null}
       {currentPage < totalPages - 1 ? (
-        <li>
+        <li className="inline-block">
           <button
+            className="border-r border-gray-300 px-3 py-2"
             onClick={() => {
               submitPage(totalPages);
             }}

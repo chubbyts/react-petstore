@@ -1,61 +1,62 @@
-import { createMemoryHistory } from 'history';
-import { render, screen } from '@testing-library/react';
-import { Router } from 'react-router-dom';
-import { PetFormProps } from '../../../../src/component/form/pet-form';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import React from 'react';
 import Update from '../../../../src/component/page/pet/update';
-import userEvent from '@testing-library/user-event';
-import { vi } from 'vitest';
-import { test, expect } from 'vitest';
-import { PetRequest, PetResponse } from '../../../../src/model/model';
+import type { PetFormProps } from '../../../../src/component/form/pet-form';
+import { vi, test, expect } from 'vitest';
+import type { PetRequest, PetResponse } from '../../../../src/model/pet';
 import { formatHtml } from '../../../formatter';
-import { HttpError, NotFound, UnprocessableEntity } from '../../../../src/api-client/error';
+import { NotFound, UnprocessableEntity } from '../../../../src/client/error';
+import type { readPetClient, updatePetClient } from '../../../../src/client/pet';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { render, screen } from '@testing-library/react';
+import { userEvent } from '@testing-library/user-event';
 
-let mockReadPet = (id: string) => { };
-let mockUpdatePet = (id: string, pet: PetRequest) => { };
+let mockReadPetClient: typeof readPetClient;
+let mockUpdatePetClient: typeof updatePetClient;
 
-vi.mock('../../../../src/api-client/pet', () => {
+vi.mock('../../../../src/client/pet', () => {
   return {
-    ReadPet: (id: string) => {
-      return mockReadPet(id);
+    readPetClient: (id: string) => {
+      return mockReadPetClient(id);
     },
-    UpdatePet: (id: string, pet: PetRequest) => {
-      return mockUpdatePet(id, pet);
+    updatePetClient: (id: string, pet: PetRequest) => {
+      return mockUpdatePetClient(id, pet);
     },
   };
 });
 
 vi.mock('../../../../src/component/form/pet-form', () => {
   return {
-    PetForm: ({ submitPet }: PetFormProps) => {
+    PetForm: (props: PetFormProps) => {
       const onSubmit = () => {
-        submitPet({ ...({} as PetRequest), name: 'Brownie' });
+        props.submitPet({ name: 'Brownie', vaccinations: [] });
       };
 
-      return <button data-testid="test-button" onClick={onSubmit}></button>;
-    },
-  };
-});
-
-vi.mock('../../../../src/component/partial/http-error', () => {
-  return {
-    HttpError: ({ httpError }: { httpError: HttpError; }) => {
-      return <div>httpError: {httpError.title}</div>;
+      return (
+        <button
+          data-testid="pet-form-submit"
+          data-has-http-error={!!props.httpError}
+          data-has-initial-pet={!!props.initialPet}
+          onClick={onSubmit}
+        />
+      );
     },
   };
 });
 
 test('not found', async () => {
-  mockReadPet = async (id: string) => {
+  mockReadPetClient = async (id: string) => {
+    expect(id).toBe('4d783b77-eb09-4603-b99b-f590b605eaa9');
+
     return new Promise<NotFound>((resolve) => resolve(new NotFound({ title: 'title' })));
   };
 
-  const history = createMemoryHistory();
-  history.push('/pet/4d783b77-eb09-4603-b99b-f590b605eaa9');
-
   const { container } = render(
-    <Router location={history.location} navigator={history}>
-      <Update />
-    </Router>,
+    <MemoryRouter initialEntries={['/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update']}>
+      <Routes>
+        <Route path="/pet/:id/update" element={<Update />} />
+      </Routes>
+    </MemoryRouter>,
   );
 
   await screen.findByTestId('page-pet-update');
@@ -63,33 +64,44 @@ test('not found', async () => {
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <div data-testid="page-pet-update">
-        <div>httpError: title</div>
-        <h1>Update Pet</h1>
-        <a class="btn-gray" href="/pet">List</a>
+        <div data-testid="http-error" class="mb-6 bg-red-300 px-5 py-4">
+          <p class="font-bold">title</p>
+        </div>
+        <h1 class="mb-4 border-b pb-2 text-4xl font-black">Pet Update</h1>
+        <a
+          class="inline-block px-5 py-2 text-white bg-gray-600 hover:bg-gray-700"
+          href="/pet"
+          >List</a
+        >
       </div>
     </div>
     "
   `);
 });
 
-test('minimal', async () => {
-  const pet = {
+test('default', async () => {
+  const petResponse: PetResponse = {
     id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
     createdAt: '2005-08-15T15:52:01+00:00',
+    updatedAt: '2005-08-15T15:55:01+00:00',
     name: 'Brownie',
+    tag: '0001-000',
+    vaccinations: [{ name: 'Rabies' }],
+    _links: {},
   };
 
-  mockReadPet = async (id: string) => {
-    return new Promise<PetResponse>((resolve) => resolve(pet));
-  };
+  mockReadPetClient = async (id: string) => {
+    expect(id).toBe('4d783b77-eb09-4603-b99b-f590b605eaa9');
 
-  const history = createMemoryHistory();
-  history.push('/pet/4d783b77-eb09-4603-b99b-f590b605eaa9');
+    return new Promise<PetResponse>((resolve) => resolve(petResponse));
+  };
 
   const { container } = render(
-    <Router location={history.location} navigator={history}>
-      <Update />
-    </Router>,
+    <MemoryRouter initialEntries={['/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update']}>
+      <Routes>
+        <Route path="/pet/:id/update" element={<Update />} />
+      </Routes>
+    </MemoryRouter>,
   );
 
   await screen.findByTestId('page-pet-update');
@@ -97,9 +109,17 @@ test('minimal', async () => {
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <div data-testid="page-pet-update">
-        <h1>Update Pet</h1>
-        <button data-testid="test-button"></button
-        ><a class="btn-gray" href="/pet">List</a>
+        <h1 class="mb-4 border-b pb-2 text-4xl font-black">Pet Update</h1>
+        <button
+          data-testid="pet-form-submit"
+          data-has-http-error="false"
+          data-has-initial-pet="true"
+        ></button
+        ><a
+          class="inline-block px-5 py-2 text-white bg-gray-600 hover:bg-gray-700"
+          href="/pet"
+          >List</a
+        >
       </div>
     </div>
     "
@@ -107,46 +127,61 @@ test('minimal', async () => {
 });
 
 test('unprocessable entity', async () => {
-  const pet = {
+  const petResponse: PetResponse = {
     id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
     createdAt: '2005-08-15T15:52:01+00:00',
     updatedAt: '2005-08-15T15:55:01+00:00',
     name: 'Brownie',
+    tag: '0001-000',
     vaccinations: [{ name: 'Rabies' }],
+    _links: {},
   };
 
-  mockReadPet = async (id: string) => {
-    return new Promise<PetResponse>((resolve) => resolve(pet));
+  mockReadPetClient = async (id: string) => {
+    expect(id).toBe('4d783b77-eb09-4603-b99b-f590b605eaa9');
+
+    return new Promise<PetResponse>((resolve) => resolve(petResponse));
   };
 
-  mockUpdatePet = async (id: string, pet: PetRequest) => {
-    return new Promise<UnprocessableEntity>((resolve) => resolve(new UnprocessableEntity({ title: 'title' })));
-  };
+  mockUpdatePetClient = async (id: string) => {
+    expect(id).toBe('4d783b77-eb09-4603-b99b-f590b605eaa9');
 
-  const history = createMemoryHistory();
-  history.push('/pet/4d783b77-eb09-4603-b99b-f590b605eaa9');
+    return new Promise<UnprocessableEntity>((resolve) =>
+      resolve(new UnprocessableEntity({ title: 'unprocessable entity' })),
+    );
+  };
 
   const { container } = render(
-    <Router location={history.location} navigator={history}>
-      <Update />
-    </Router>,
+    <MemoryRouter initialEntries={['/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update']}>
+      <Routes>
+        <Route path="/pet/:id/update" element={<Update />} />
+      </Routes>
+    </MemoryRouter>,
   );
 
-  await screen.findByTestId('page-pet-update');
-
-  const testButton = await screen.findByTestId('test-button');
+  const testButton = await screen.findByTestId('pet-form-submit');
 
   await userEvent.click(testButton);
 
-  await screen.findByText(/httpError/);
+  await screen.findByTestId('http-error');
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <div data-testid="page-pet-update">
-        <div>httpError: title</div>
-        <h1>Update Pet</h1>
-        <button data-testid="test-button"></button
-        ><a class="btn-gray" href="/pet">List</a>
+        <div data-testid="http-error" class="mb-6 bg-red-300 px-5 py-4">
+          <p class="font-bold">unprocessable entity</p>
+        </div>
+        <h1 class="mb-4 border-b pb-2 text-4xl font-black">Pet Update</h1>
+        <button
+          data-testid="pet-form-submit"
+          data-has-http-error="true"
+          data-has-initial-pet="true"
+        ></button
+        ><a
+          class="inline-block px-5 py-2 text-white bg-gray-600 hover:bg-gray-700"
+          href="/pet"
+          >List</a
+        >
       </div>
     </div>
     "
@@ -154,38 +189,51 @@ test('unprocessable entity', async () => {
 });
 
 test('successful', async () => {
-  const pet = {
-    id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-    createdAt: '2005-08-15T15:52:01+00:00',
-    updatedAt: '2005-08-15T15:55:01+00:00',
+  const petRequest: PetRequest = {
     name: 'Brownie',
+    tag: '0001-000',
     vaccinations: [{ name: 'Rabies' }],
   };
 
-  mockReadPet = async (id: string) => {
-    return new Promise<PetResponse>((resolve) => resolve(pet));
+  const petResponse: PetResponse = {
+    id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+    createdAt: '2005-08-15T15:52:01+00:00',
+    updatedAt: '2005-08-15T15:55:01+00:00',
+    ...petRequest,
+    _links: {},
   };
 
-  mockUpdatePet = async (id: string, pet: PetRequest) => {
-    return new Promise<PetRequest>((resolve) => resolve(pet));
+  mockReadPetClient = async (id: string) => {
+    expect(id).toBe('4d783b77-eb09-4603-b99b-f590b605eaa9');
+
+    return new Promise<PetResponse>((resolve) => resolve(petResponse));
   };
 
-  const history = createMemoryHistory();
-  history.push('/pet/4d783b77-eb09-4603-b99b-f590b605eaa9');
+  mockUpdatePetClient = async (id: string, petRequest: PetRequest) => {
+    expect(id).toBe('4d783b77-eb09-4603-b99b-f590b605eaa9');
 
-  render(
-    <Router location={history.location} navigator={history}>
-      <Update />
-    </Router>,
+    expect(petRequest).toEqual(petRequest);
+
+    return new Promise<PetResponse>((resolve) => resolve(petResponse));
+  };
+
+  const { container } = render(
+    <MemoryRouter initialEntries={['/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update']}>
+      <Routes>
+        <Route path="/pet" element={<div data-testid="page-pet-list" />} />
+        <Route path="/pet/:id/update" element={<Update />} />
+      </Routes>
+    </MemoryRouter>,
   );
 
-  await screen.findByTestId('page-pet-update');
-
-  expect(history.location.pathname).toBe('/pet/4d783b77-eb09-4603-b99b-f590b605eaa9');
-
-  const testButton = await screen.findByTestId('test-button');
+  const testButton = await screen.findByTestId('pet-form-submit');
 
   await userEvent.click(testButton);
 
-  expect(history.location.pathname).toBe('/pet');
+  await screen.findByTestId('page-pet-list');
+
+  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    "<div><div data-testid="page-pet-list"></div></div>
+    "
+  `);
 });

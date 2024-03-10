@@ -1,34 +1,26 @@
-import { FC, useState, useEffect } from 'react';
+import type { FC } from 'react';
+import { useEffect } from 'react';
 import { de } from 'date-fns/locale';
 import { format } from 'date-fns';
-import { Link, useParams } from 'react-router-dom';
-import { ReadPet } from '../../../api-client/pet';
+import { useParams } from 'react-router-dom';
 import { HttpError as HttpErrorPartial } from '../../partial/http-error';
-import { PetResponse } from '../../../model/model';
-import { HttpError } from '../../../api-client/error';
+import { H1 } from '../../heading';
+import { AnchorButton } from '../../button';
+import { useModelResource } from '../../../hook/use-model-resource';
+import { readPetClient as readClient } from '../../../client/pet';
+
+const pageTitle = 'Pet Read';
 
 const Read: FC = () => {
   const params = useParams();
   const id = params.id as string;
 
-  const [pet, setPet] = useState<PetResponse>();
-  const [httpError, setHttpError] = useState<HttpError>();
-
-  const fetchPet = async () => {
-    const response = await ReadPet(id);
-
-    if (response instanceof HttpError) {
-      setHttpError(response);
-    } else {
-      setHttpError(undefined);
-      setPet(response);
-    }
-  };
+  const { model: pet, httpError, actions } = useModelResource({ readClient });
 
   useEffect(() => {
-    document.title = 'Read Pet';
+    document.title = pageTitle;
 
-    fetchPet();
+    actions.readModel(id);
   }, [id]);
 
   if (!pet && !httpError) {
@@ -38,23 +30,25 @@ const Read: FC = () => {
   return (
     <div data-testid="page-pet-read">
       {httpError ? <HttpErrorPartial httpError={httpError} /> : null}
-      <h1>Read Pet</h1>
+      <H1>{pageTitle}</H1>
       {pet ? (
         <div>
           <dl>
-            <dt>Id</dt>
-            <dd>{pet.id}</dd>
-            <dt>CreatedAt</dt>
-            <dd>{format(Date.parse(pet.createdAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}</dd>
-            <dt>UpdatedAt</dt>
-            <dd>{pet.updatedAt && format(Date.parse(pet.updatedAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}</dd>
-            <dt>Name</dt>
-            <dd>{pet.name}</dd>
-            <dt>Tag</dt>
-            <dd>{pet.tag}</dd>
-            <dt>Vaccinations</dt>
-            <dd>
-              {pet.vaccinations ? (
+            <dt className="font-bold">Id</dt>
+            <dd className="mb-4">{pet.id}</dd>
+            <dt className="font-bold">CreatedAt</dt>
+            <dd className="mb-4">{format(Date.parse(pet.createdAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}</dd>
+            <dt className="font-bold">UpdatedAt</dt>
+            <dd className="mb-4">
+              {pet.updatedAt && format(Date.parse(pet.updatedAt), 'dd.MM.yyyy - HH:mm:ss', { locale: de })}
+            </dd>
+            <dt className="font-bold">Name</dt>
+            <dd className="mb-4">{pet.name}</dd>
+            <dt className="font-bold">Tag</dt>
+            <dd className="mb-4">{pet.tag}</dd>
+            <dt className="font-bold">Vaccinations</dt>
+            <dd className="mb-4">
+              {pet.vaccinations.length > 0 ? (
                 <ul>
                   {pet.vaccinations.map((vaccination, i) => (
                     <li key={i}>{vaccination.name}</li>
@@ -63,11 +57,11 @@ const Read: FC = () => {
               ) : null}
             </dd>
           </dl>
-          <Link to="/pet" className="btn-gray">
-            List
-          </Link>
         </div>
       ) : null}
+      <AnchorButton to="/pet" colorTheme="gray">
+        List
+      </AnchorButton>
     </div>
   );
 };

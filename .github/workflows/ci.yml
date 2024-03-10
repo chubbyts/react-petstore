@@ -19,9 +19,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '16'
-      - run: npm install
-      - run: npm run build
-      - run: TZ=Europe/Zurich npm test -- run --coverage
+      - run: npm install -g pnpm@latest
+      - run: pnpm install
+      - run: pnpm run build
+      - run: TZ=Europe/Zurich pnpm test -- --coverage
   node18:
     name: Node 18
     runs-on: ubuntu-22.04
@@ -32,9 +33,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-      - run: npm install
-      - run: npm run build
-      - run: TZ=Europe/Zurich npm test -- run --coverage
+      - run: npm install -g pnpm@latest
+      - run: pnpm install
+      - run: pnpm run build
+      - run: TZ=Europe/Zurich pnpm test -- --coverage
   node20:
     name: Node 20
     runs-on: ubuntu-22.04
@@ -45,9 +47,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - run: npm install
-      - run: npm run build
-      - run: TZ=Europe/Zurich npm test -- run --coverage
+      - run: npm install -g pnpm@latest
+      - run: pnpm install
+      - run: pnpm run build
+      - run: TZ=Europe/Zurich pnpm test -- --coverage
       - name: coveralls.io
         uses: coverallsapp/github-action@master
         with:

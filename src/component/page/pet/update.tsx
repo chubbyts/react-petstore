@@ -1,10 +1,15 @@
-import { FC, useState, useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { ReadPet, UpdatePet } from '../../../api-client/pet';
+import type { FC } from 'react';
+import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { HttpError as HttpErrorPartial } from '../../partial/http-error';
 import { PetForm } from '../../form/pet-form';
-import { PetRequest, PetResponse } from '../../../model/model';
-import { HttpError, HttpErrorWithInvalidParameters } from '../../../api-client/error';
+import { H1 } from '../../heading';
+import { AnchorButton } from '../../button';
+import type { PetRequest } from '../../../../model/pet';
+import { readPetClient as readClient, updatePetClient as updateClient } from '../../../client/pet';
+import { useModelResource } from '../../../hook/use-model-resource';
+
+const pageTitle = 'Pet Update';
 
 const Update: FC = () => {
   const params = useParams();
@@ -12,37 +17,18 @@ const Update: FC = () => {
 
   const navigate = useNavigate();
 
-  const [pet, setPet] = useState<PetResponse>();
-  const [httpError, setHttpError] = useState<HttpError>();
-
-  const fetchPet = async () => {
-    const response = await ReadPet(id);
-
-    if (response instanceof HttpError) {
-      setHttpError(response);
-    } else {
-      setHttpError(undefined);
-      setPet(response);
-    }
-  };
+  const { model: pet, httpError, actions } = useModelResource({ readClient, updateClient });
 
   const submitPet = async (petRequest: PetRequest) => {
-    const response = await UpdatePet(id, petRequest);
-
-    if (response instanceof HttpError) {
-      setHttpError(response);
-    } else {
-      setHttpError(undefined);
-      setPet(response);
-
+    if (await actions.updateModel(id, petRequest)) {
       navigate('/pet');
     }
   };
 
   useEffect(() => {
-    document.title = 'Update Pet';
+    document.title = pageTitle;
 
-    fetchPet();
+    actions.readModel(id);
   }, [id]);
 
   if (!pet && !httpError) {
@@ -52,17 +38,11 @@ const Update: FC = () => {
   return (
     <div data-testid="page-pet-update">
       {httpError ? <HttpErrorPartial httpError={httpError} /> : null}
-      <h1>Update Pet</h1>
-      {pet ? (
-        <PetForm
-          submitPet={submitPet}
-          defaultPet={pet}
-          error={httpError instanceof HttpErrorWithInvalidParameters ? httpError : undefined}
-        />
-      ) : null}
-      <Link to="/pet" className="btn-gray">
+      <H1>{pageTitle}</H1>
+      {pet ? <PetForm httpError={httpError} initialPet={pet} submitPet={submitPet} /> : null}
+      <AnchorButton to="/pet" colorTheme="gray">
         List
-      </Link>
+      </AnchorButton>
     </div>
   );
 };
