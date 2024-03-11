@@ -1,4 +1,4 @@
-import { useMemo, type FC } from 'react';
+import { useMemo, type FC, useEffect } from 'react';
 import type { HttpError } from '../../client/error';
 import { createInvalidParametersByName } from '../../client/error';
 import { FieldSet, TextField } from './form';
@@ -19,11 +19,15 @@ export const PetFiltersForm: FC<PetFiltersFormProps> = ({
 }: PetFiltersFormProps) => {
   const groupInvalidParametersByName = useMemo(() => createInvalidParametersByName(httpError), [httpError]);
 
-  const [petFilters, setPetFilters] = useStore<PetFilters>(initialPetFilters);
+  const [petFilters, setPetFilters, setPetFilterValueByName] = useStore<PetFilters>(initialPetFilters);
 
   const onSubmit = () => {
     submitPetFilters({ ...petFilters });
   };
+
+  useEffect(() => {
+    setPetFilters(initialPetFilters);
+  }, [initialPetFilters]);
 
   return (
     <form
@@ -38,7 +42,7 @@ export const PetFiltersForm: FC<PetFiltersFormProps> = ({
           data-testid="pet-filters-form-name"
           label="Name"
           value={petFilters.name ?? ''}
-          setValue={(value) => setPetFilters('name', value === '' ? undefined : value)}
+          setValue={(value) => setPetFilterValueByName('name', value === '' ? undefined : value)}
           invalidParameters={groupInvalidParametersByName.get('filters[name]') ?? []}
         />
         <Button data-testid="pet-filters-form-submit" colorTheme="blue">

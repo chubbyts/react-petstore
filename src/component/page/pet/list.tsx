@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { de } from 'date-fns/locale';
 import { format } from 'date-fns';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -40,7 +40,7 @@ const List: FC = () => {
     deleteClient,
   });
 
-  const query = querySchema.parse(qs.parse(location.search.substring(1)));
+  const query = useMemo(() => querySchema.parse(qs.parse(location.search.substring(1))), [location]);
 
   const petListRequest: PetListRequest = {
     offset: query.page * limit - limit,

@@ -20,8 +20,14 @@ test('useStore', async () => {
   expect(result.current[0]).toEqual(dummy);
 
   act(() => {
-    result.current[1]('key2', 'value22');
+    result.current[2]('key2', 'value22');
   });
 
   expect(result.current[0]).toEqual({ ...dummy, key2: 'value22' });
+
+  act(() => {
+    result.current[1]({ ...dummy, key3: 'value33' });
+  });
+
+  expect(result.current[0]).toEqual({ ...dummy, key3: 'value33' });
 });
