@@ -1,7 +1,7 @@
 import { HttpError } from '../client/error';
 import type { ModelListRequest, ModelListResponse, ModelRequest, ModelResponse } from '../model/model';
 import type { CreateClient, DeleteClient, ListClient, ReadClient, UpdateClient } from '../client/client';
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 export const useModelResource = <
   MLReq extends ModelListRequest,
@@ -26,144 +26,164 @@ export const useModelResource = <
   const [model, setModel] = useState<MRes | undefined>();
   const [httpError, setHttpError] = useState<HttpError | undefined>();
 
-  const listModel = async (req: MLReq): Promise<boolean> => {
-    if (!listClient) {
-      throw new Error('Missing listClient');
-    }
+  const listModel = useCallback(
+    async (req: MLReq): Promise<boolean> => {
+      if (!listClient) {
+        throw new Error('Missing listClient');
+      }
 
-    setIsLoading('list');
+      setIsLoading('list');
 
-    const response = await listClient(req);
+      const response = await listClient(req);
 
-    let success: boolean;
+      let success: boolean;
 
-    if (response instanceof HttpError) {
-      setHttpError(response);
-      success = false;
-    } else {
-      setHttpError(undefined);
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      setModelList(response);
-      success = true;
-    }
+      if (response instanceof HttpError) {
+        setHttpError(response);
+        success = false;
+      } else {
+        setHttpError(undefined);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        setModelList(response);
+        success = true;
+      }
 
-    setIsLoading(undefined);
+      setIsLoading(undefined);
 
-    return success;
-  };
+      return success;
+    },
+    [listClient],
+  );
 
-  const createModel = async (req: MReq): Promise<boolean> => {
-    if (!createClient) {
-      throw new Error('Missing createClient');
-    }
+  const createModel = useCallback(
+    async (req: MReq): Promise<boolean> => {
+      if (!createClient) {
+        throw new Error('Missing createClient');
+      }
 
-    setIsLoading('create');
+      setIsLoading('create');
 
-    const response = await createClient(req);
+      const response = await createClient(req);
 
-    let success: boolean;
+      let success: boolean;
 
-    if (response instanceof HttpError) {
-      setHttpError(response);
-      success = false;
-    } else {
-      setHttpError(undefined);
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      setModel(response);
-      success = true;
-    }
+      if (response instanceof HttpError) {
+        setHttpError(response);
+        success = false;
+      } else {
+        setHttpError(undefined);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        setModel(response);
+        success = true;
+      }
 
-    setIsLoading(undefined);
+      setIsLoading(undefined);
 
-    return success;
-  };
+      return success;
+    },
+    [createClient],
+  );
 
-  const readModel = async (id: string): Promise<boolean> => {
-    if (!readClient) {
-      throw new Error('Missing readClient');
-    }
+  const readModel = useCallback(
+    async (id: string): Promise<boolean> => {
+      if (!readClient) {
+        throw new Error('Missing readClient');
+      }
 
-    setIsLoading('read');
+      setIsLoading('read');
 
-    const response = await readClient(id);
+      const response = await readClient(id);
 
-    let success: boolean;
+      let success: boolean;
 
-    if (response instanceof HttpError) {
-      setHttpError(response);
-      success = false;
-    } else {
-      setHttpError(undefined);
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      setModel(response);
-      success = true;
-    }
+      if (response instanceof HttpError) {
+        setHttpError(response);
+        success = false;
+      } else {
+        setHttpError(undefined);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        setModel(response);
+        success = true;
+      }
 
-    setIsLoading(undefined);
+      setIsLoading(undefined);
 
-    return success;
-  };
+      return success;
+    },
+    [readClient],
+  );
 
-  const updateModel = async (id: string, req: MReq): Promise<boolean> => {
-    if (!updateClient) {
-      throw new Error('Missing updateClient');
-    }
+  const updateModel = useCallback(
+    async (id: string, req: MReq): Promise<boolean> => {
+      if (!updateClient) {
+        throw new Error('Missing updateClient');
+      }
 
-    setIsLoading('update');
+      setIsLoading('update');
 
-    const response = await updateClient(id, req);
+      const response = await updateClient(id, req);
 
-    let success: boolean;
+      let success: boolean;
 
-    if (response instanceof HttpError) {
-      setHttpError(response);
-      success = false;
-    } else {
-      setHttpError(undefined);
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      setModel(response);
-      success = true;
-    }
+      if (response instanceof HttpError) {
+        setHttpError(response);
+        success = false;
+      } else {
+        setHttpError(undefined);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        setModel(response);
+        success = true;
+      }
 
-    setIsLoading(undefined);
+      setIsLoading(undefined);
 
-    return success;
-  };
+      return success;
+    },
+    [updateClient],
+  );
 
-  const deleteModel = async (id: string): Promise<boolean> => {
-    if (!deleteClient) {
-      throw new Error('Missing deleteClient');
-    }
+  const deleteModel = useCallback(
+    async (id: string): Promise<boolean> => {
+      if (!deleteClient) {
+        throw new Error('Missing deleteClient');
+      }
 
-    setIsLoading('update');
+      setIsLoading('update');
 
-    const response = await deleteClient(id);
+      const response = await deleteClient(id);
 
-    let success: boolean;
+      let success: boolean;
 
-    if (response instanceof HttpError) {
-      setHttpError(response);
-      success = false;
-    } else {
-      setHttpError(undefined);
-      setModel(response);
-      success = true;
-    }
+      if (response instanceof HttpError) {
+        setHttpError(response);
+        success = false;
+      } else {
+        setHttpError(undefined);
+        setModel(response);
+        success = true;
+      }
 
-    setIsLoading(undefined);
+      setIsLoading(undefined);
 
-    return success;
-  };
+      return success;
+    },
+    [deleteClient],
+  );
+
+  const actions = useMemo(
+    () => ({ listModel, createModel, readModel, updateModel, deleteModel }),
+    [createModel, deleteModel, listModel, readModel, updateModel],
+  );
 
   return {
     isLoading,
     modelList,
     model,
     httpError,
-    actions: { listModel, createModel, readModel, updateModel, deleteModel },
+    actions,
   };
 };

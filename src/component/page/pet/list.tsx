@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { de } from 'date-fns/locale';
 import { format } from 'date-fns';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -42,18 +42,19 @@ const List: FC = () => {
 
   const query = useMemo(() => querySchema.parse(qs.parse(location.search.substring(1))), [location]);
 
-  const petListRequest: PetListRequest = {
-    offset: query.page * limit - limit,
-    limit,
-    filters: query.filters,
-    sort: query.sort,
-  };
+  const petListRequest: PetListRequest = useMemo(
+    () => ({
+      offset: query.page * limit - limit,
+      limit,
+      filters: query.filters,
+      sort: query.sort,
+    }),
+    [query.filters, query.page, query.sort],
+  );
 
-  const queryString = qs.stringify(petListRequest);
-
-  const fetchPetList = async () => {
+  const fetchPetList = useCallback(async () => {
     actions.listModel(petListRequest);
-  };
+  }, [actions, petListRequest]);
 
   const deletePet = async (id: string) => {
     if (await actions.deleteModel(id)) {
@@ -77,7 +78,7 @@ const List: FC = () => {
     document.title = pageTitle;
 
     fetchPetList();
-  }, [queryString]);
+  }, [fetchPetList]);
 
   if (!petList && !httpError) {
     return <div></div>;

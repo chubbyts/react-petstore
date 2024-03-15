@@ -27,7 +27,7 @@ export const PetFiltersForm: FC<PetFiltersFormProps> = ({
 
   useEffect(() => {
     setPetFilters(initialPetFilters);
-  }, [initialPetFilters]);
+  }, [initialPetFilters, setPetFilters]);
 
   return (
     <form

@@ -29,7 +29,7 @@ const Update: FC = () => {
     document.title = pageTitle;
 
     actions.readModel(id);
-  }, [id]);
+  }, [actions, id]);
 
   if (!pet && !httpError) {
     return <div></div>;

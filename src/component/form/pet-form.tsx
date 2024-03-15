@@ -25,7 +25,7 @@ export const PetForm: FC<PetFormProps> = ({ submitPet, initialPet, httpError }: 
     if (initialPet) {
       setPet(initialPet);
     }
-  }, [initialPet]);
+  }, [initialPet, setPet]);
 
   return (
     <form
