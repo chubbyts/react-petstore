@@ -37,7 +37,7 @@ const App: FC = () => {
                 `block px-4 py-2 ${
                   isActive
                     ? 'text-gray-100 bg-gray-700 hover:bg-gray-600'
-                    : 'bg-gray-300 ext-gray-900 hover:bg-gray-400'
+                    : 'text-gray-900 bg-gray-300 hover:bg-gray-400'
                 }`
               }
               to="/pet"
