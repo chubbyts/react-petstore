@@ -5,7 +5,7 @@ export const FieldSet: FC<
   React.DetailedHTMLProps<React.FieldsetHTMLAttributes<HTMLFieldSetElement>, HTMLFieldSetElement>
 > = (props: React.DetailedHTMLProps<React.FieldsetHTMLAttributes<HTMLFieldSetElement>, HTMLFieldSetElement>) => {
   return (
-    <fieldset {...props} className="mb-3 border border-gray-300 px-4 py-3">
+    <fieldset {...props} className={`mb-3 border border-gray-300 px-4 py-3 ${props.className ?? ''}`}>
       {props.children}
     </fieldset>
   );
