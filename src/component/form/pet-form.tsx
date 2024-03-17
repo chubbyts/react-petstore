@@ -1,4 +1,4 @@
-import { useMemo, type FC, useEffect } from 'react';
+import { useMemo, type FC } from 'react';
 import { FieldSet, TextField } from './form';
 import type { HttpError } from '../../client/error';
 import { createInvalidParametersByName } from '../../client/error';
@@ -15,17 +15,11 @@ export type PetFormProps = {
 export const PetForm: FC<PetFormProps> = ({ submitPet, initialPet, httpError }: PetFormProps) => {
   const groupInvalidParametersByName = useMemo(() => createInvalidParametersByName(httpError), [httpError]);
 
-  const [pet, setPet, setPetValueByName] = useStore<PetRequest>({ name: '', vaccinations: [] });
+  const [pet, setPet] = useStore<PetRequest>(initialPet ?? { name: '', vaccinations: [] });
 
   const onSubmit = () => {
     submitPet({ ...pet });
   };
-
-  useEffect(() => {
-    if (initialPet) {
-      setPet(initialPet);
-    }
-  }, [initialPet, setPet]);
 
   return (
     <form
@@ -40,14 +34,14 @@ export const PetForm: FC<PetFormProps> = ({ submitPet, initialPet, httpError }: 
           data-testid="pet-form-name"
           label="Name"
           value={pet.name}
-          setValue={(value) => setPetValueByName('name', value)}
+          setValue={(value) => setPet('name', value)}
           invalidParameters={groupInvalidParametersByName.get('name') ?? []}
         />
         <TextField
           data-testid="pet-form-tag"
           label="Tag"
           value={pet.tag ?? ''}
-          setValue={(value) => setPetValueByName('tag', value === '' ? undefined : value)}
+          setValue={(value) => setPet('tag', value === '' ? undefined : value)}
           invalidParameters={groupInvalidParametersByName.get('tag') ?? []}
         />
         <div className="mb-3">
@@ -61,7 +55,7 @@ export const PetForm: FC<PetFormProps> = ({ submitPet, initialPet, httpError }: 
                     label="Name"
                     value={vaccination.name}
                     setValue={(value) =>
-                      setPetValueByName('vaccinations', [
+                      setPet('vaccinations', [
                         ...pet.vaccinations.map((currentVaccination, y) => {
                           if (y === i) {
                             return { ...currentVaccination, name: value };
@@ -79,7 +73,7 @@ export const PetForm: FC<PetFormProps> = ({ submitPet, initialPet, httpError }: 
                       e.preventDefault();
                       e.stopPropagation();
 
-                      setPetValueByName('vaccinations', [...pet.vaccinations.filter((_, y) => y !== i)]);
+                      setPet('vaccinations', [...pet.vaccinations.filter((_, y) => y !== i)]);
                     }}
                     colorTheme="red"
                   >
@@ -94,7 +88,7 @@ export const PetForm: FC<PetFormProps> = ({ submitPet, initialPet, httpError }: 
                 e.preventDefault();
                 e.stopPropagation();
 
-                setPetValueByName('vaccinations', [...pet.vaccinations, { name: '' }]);
+                setPet('vaccinations', [...pet.vaccinations, { name: '' }]);
               }}
               colorTheme="green"
             >

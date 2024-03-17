@@ -1,4 +1,4 @@
-import { useState, type FC, useEffect } from 'react';
+import { useState, type FC } from 'react';
 import type { InvalidParameter } from '../../client/error';
 
 export const FieldSet: FC<
@@ -26,11 +26,7 @@ export const TextField: FC<TextFieldProps> = ({
   setValue,
   invalidParameters,
 }: TextFieldProps) => {
-  const [internalValue, setInternalValue] = useState<string>('');
-
-  useEffect(() => {
-    setInternalValue(value);
-  }, [value]);
+  const [internalValue, setInternalValue] = useState<string>(value);
 
   return (
     <label className={`block ${invalidParameters.length > 0 ? 'text-red-600' : ''} `}>
@@ -45,8 +41,8 @@ export const TextField: FC<TextFieldProps> = ({
         onBlur={() => {
           setValue(internalValue);
         }}
-        onKeyDown={(event) => {
-          if (event.code !== 'Enter') {
+        onKeyDown={(e) => {
+          if (e.code !== 'Enter') {
             return;
           }
 
