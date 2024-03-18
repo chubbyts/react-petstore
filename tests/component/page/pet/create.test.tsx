@@ -130,7 +130,7 @@ test('successful', async () => {
   const { container } = render(
     <MemoryRouter initialEntries={['/pet/create']}>
       <Routes>
-        <Route path="/pet" element={<div data-testid="page-pet-list" />} />
+        <Route path="/pet" element={<div data-testid="page-pet-list-mock" />} />
         <Route path="/pet/create" element={<Create />} />
       </Routes>
     </MemoryRouter>,
@@ -140,10 +140,10 @@ test('successful', async () => {
 
   await userEvent.click(testButton);
 
-  await screen.findByTestId('page-pet-list');
+  await screen.findByTestId('page-pet-list-mock');
 
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
-    "<div><div data-testid="page-pet-list"></div></div>
+    "<div><div data-testid="page-pet-list-mock"></div></div>
     "
   `);
 });
