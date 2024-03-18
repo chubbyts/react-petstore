@@ -30,6 +30,7 @@ const querySchema = z.object({
 const List: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const query = useMemo(() => querySchema.parse(qs.parse(location.search.substring(1))), [location]);
 
   const {
     modelList: petList,
@@ -39,8 +40,6 @@ const List: FC = () => {
     listClient,
     deleteClient,
   });
-
-  const query = useMemo(() => querySchema.parse(qs.parse(location.search.substring(1))), [location]);
 
   const petListRequest: PetListRequest = useMemo(
     () => ({
