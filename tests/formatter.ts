@@ -1,5 +1,5 @@
-import { format } from 'prettier';
+import prettier from '@prettier/sync';
 
 export const formatHtml = (html: string) => {
-  return format(html, { parser: 'html' });
+  return prettier.format(html, { parser: 'html' });
 };
