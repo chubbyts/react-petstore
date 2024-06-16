@@ -38,7 +38,7 @@ jobs:
       - run: pnpm run build
       - run: TZ=Europe/Zurich pnpm test -- --coverage
       - name: coveralls.io
-        uses: coverallsapp/github-action@master
+        uses: coverallsapp/github-action@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: sonarcloud.io
