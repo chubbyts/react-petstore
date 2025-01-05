@@ -18,6 +18,7 @@ const Read: FC = () => {
   const { model: pet, httpError, actions } = useModelResource({ readClient });
 
   useEffect(() => {
+    // eslint-disable-next-line functional/immutable-data
     document.title = pageTitle;
 
     actions.readModel(id);

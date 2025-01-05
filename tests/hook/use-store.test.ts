@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
-import { useStore } from '../../src/hook/use-store';
 import { renderHook, act } from '@testing-library/react';
+import { useStore } from '../../src/hook/use-store';
 
 type Dummy = {
   key1: string;

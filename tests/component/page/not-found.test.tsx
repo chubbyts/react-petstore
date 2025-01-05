@@ -1,8 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from 'react';
 import { render } from '@testing-library/react';
-import NotFound from '../../../src/component/page/not-found';
 import { test, expect } from 'vitest';
+import NotFound from '../../../src/component/page/not-found';
 import { formatHtml } from '../../formatter';
 
 test('default', () => {

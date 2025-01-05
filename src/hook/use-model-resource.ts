@@ -1,7 +1,7 @@
+import { useCallback, useMemo, useState } from 'react';
 import { HttpError } from '../client/error';
 import type { ModelListRequest, ModelListResponse, ModelRequest, ModelResponse } from '../model/model';
 import type { CreateClient, DeleteClient, ListClient, ReadClient, UpdateClient } from '../client/client';
-import { useCallback, useMemo, useState } from 'react';
 
 export const useModelResource = <
   MLReq extends ModelListRequest,
@@ -36,6 +36,7 @@ export const useModelResource = <
 
       const response = await listClient(req);
 
+      // eslint-disable-next-line functional/no-let
       let success: boolean;
 
       if (response instanceof HttpError) {
@@ -66,6 +67,7 @@ export const useModelResource = <
 
       const response = await createClient(req);
 
+      // eslint-disable-next-line functional/no-let
       let success: boolean;
 
       if (response instanceof HttpError) {
@@ -96,6 +98,7 @@ export const useModelResource = <
 
       const response = await readClient(id);
 
+      // eslint-disable-next-line functional/no-let
       let success: boolean;
 
       if (response instanceof HttpError) {
@@ -126,6 +129,7 @@ export const useModelResource = <
 
       const response = await updateClient(id, req);
 
+      // eslint-disable-next-line functional/no-let
       let success: boolean;
 
       if (response instanceof HttpError) {
@@ -156,6 +160,7 @@ export const useModelResource = <
 
       const response = await deleteClient(id);
 
+      // eslint-disable-next-line functional/no-let
       let success: boolean;
 
       if (response instanceof HttpError) {

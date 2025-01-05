@@ -1,8 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from 'react';
 import { render } from '@testing-library/react';
-import { HttpError as HttpErrorPartial } from '../../../src/component/partial/http-error';
 import { test, expect } from 'vitest';
+import { HttpError as HttpErrorPartial } from '../../../src/component/partial/http-error';
 import { formatHtml } from '../../formatter';
 import { BadRequestOrUnprocessableEntity, HttpError } from '../../../src/client/error';
 

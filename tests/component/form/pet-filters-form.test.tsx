@@ -1,11 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from 'react';
 import { test, expect, vi } from 'vitest';
+import { userEvent } from '@testing-library/user-event';
+import { render, screen } from '@testing-library/react';
 import { formatHtml } from '../../formatter';
 import { PetFiltersForm } from '../../../src/component/form/pet-filters-form';
 import { BadRequest, NetworkError } from '../../../src/client/error';
-import { userEvent } from '@testing-library/user-event';
-import { render, screen } from '@testing-library/react';
 import type { PetFilters } from '../../../src/model/pet';
 
 test('default', () => {
@@ -24,8 +22,8 @@ test('default', () => {
           <label class="block"
             >Name<input
               data-testid="pet-filters-form-name"
-              type="text"
               class="mb-3 mt-2 block w-full border px-3 py-2 border-gray-300"
+              type="text"
               value="" /></label
           ><button
             data-testid="pet-filters-form-submit"
@@ -81,8 +79,8 @@ test('bad request - with query string name', () => {
           <label class="block text-red-600"
             >Name<input
               data-testid="pet-filters-form-name"
-              type="text"
               class="mb-3 mt-2 block w-full border px-3 py-2 border-red-600 bg-red-100"
+              type="text"
               value=""
             />
             <ul class="mb-3">

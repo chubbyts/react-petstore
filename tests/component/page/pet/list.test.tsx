@@ -1,25 +1,27 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from 'react';
+import { vi, test, expect } from 'vitest';
+import { userEvent } from '@testing-library/user-event';
+import { render, screen } from '@testing-library/react';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import List from '../../../../src/component/page/pet/list';
 import type { PetFiltersFormProps } from '../../../../src/component/form/pet-filters-form';
-import { vi, test, expect } from 'vitest';
 import type { PetListRequest, PetListResponse } from '../../../../src/model/pet';
 import { formatHtml } from '../../../formatter';
 import type { deletePetClient, listPetsClient } from '../../../../src/client/pet';
 import type { PaginationProps } from '../../../../src/component/partial/pagination';
 import { BadRequest, NetworkError } from '../../../../src/client/error';
-import { userEvent } from '@testing-library/user-event';
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
+// eslint-disable-next-line functional/no-let
 let mockDeletePetClient: typeof deletePetClient;
+// eslint-disable-next-line functional/no-let
 let mockListPetsClient: typeof listPetsClient;
 
 vi.mock('../../../../src/client/pet', () => {
   return {
+    // eslint-disable-next-line functional/prefer-tacit
     deletePetClient: (id: string) => {
       return mockDeletePetClient(id);
     },
+    // eslint-disable-next-line functional/prefer-tacit
     listPetsClient: (petListRequest: PetListRequest) => {
       return mockListPetsClient(petListRequest);
     },
@@ -301,6 +303,7 @@ test('default maximal', async () => {
           <a
             class="inline-block px-5 py-2 text-white bg-green-600 hover:bg-green-700 mb-4"
             href="/pet/create"
+            data-discover="true"
             >Create</a
           ><button
             data-testid="pet-filters-form-submit"
@@ -385,10 +388,12 @@ test('default maximal', async () => {
                     <a
                       class="inline-block px-5 py-2 text-white bg-gray-600 hover:bg-gray-700 mr-4"
                       href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9"
+                      data-discover="true"
                       >Read</a
                     ><a
                       class="inline-block px-5 py-2 text-white bg-gray-600 hover:bg-gray-700 mr-4"
                       href="/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update"
+                      data-discover="true"
                       >Update</a
                     ><button
                       data-testid="remove-pet-0"
@@ -557,6 +562,7 @@ test('delete success', async () => {
   ];
 
   mockListPetsClient = async (petListRequest: PetListRequest) => {
+    // eslint-disable-next-line functional/immutable-data
     const petListCall = petListCalls.shift();
     if (!petListCall) {
       throw new Error('Missing call');
@@ -705,6 +711,7 @@ test('submit', async () => {
   ];
 
   mockListPetsClient = async (petListRequest: PetListRequest) => {
+    // eslint-disable-next-line functional/immutable-data
     const petListCall = petListCalls.shift();
     if (!petListCall) {
       throw new Error('Missing call');

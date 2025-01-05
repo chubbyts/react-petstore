@@ -1,8 +1,8 @@
 import { throwableToError } from '@chubbyts/chubbyts-throwable-to-error/dist/throwable-to-error';
-import type { HttpError } from './error';
-import { BadRequest, InternalServerError, NetworkError, NotFound, UnprocessableEntity } from './error';
 import qs from 'qs';
 import type { z } from 'zod';
+import type { HttpError } from './error';
+import { BadRequest, InternalServerError, NetworkError, NotFound, UnprocessableEntity } from './error';
 
 export type Fetch = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 

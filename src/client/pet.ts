@@ -1,3 +1,4 @@
+import { fetch } from 'cross-fetch';
 import { petListRequestSchema, petListResponseSchema, petRequestSchema, petResponseSchema } from '../model/pet';
 import {
   createCreateClient,
@@ -6,7 +7,6 @@ import {
   createReadClient,
   createUpdateClient,
 } from './client';
-import { fetch } from 'cross-fetch';
 
 const url = `${import.meta.env.VITE_PETSTORE_URL}/api/pets`;
 

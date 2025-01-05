@@ -1,11 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from 'react';
 import { test, expect, vi } from 'vitest';
-import { formatHtml } from './formatter';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import App from '../src/app';
 import { userEvent } from '@testing-library/user-event';
+import App from '../src/app';
+import { formatHtml } from './formatter';
 
 vi.mock('../src/routes', () => {
   return {
@@ -35,7 +33,11 @@ test('close navigation', async () => {
             <span class="block h-2 w-6 border-t-2"></span
             ><span class="block h-2 w-6 border-t-2"></span
             ><span class="block h-0 w-6 border-t-2"></span></button
-          ><a aria-current="page" class="hover:text-gray-500 active" href="/"
+          ><a
+            aria-current="page"
+            class="hover:text-gray-500 active"
+            href="/"
+            data-discover="true"
             >Petstore</a
           >
         </nav>
@@ -48,6 +50,7 @@ test('close navigation', async () => {
                 data-testid="navigation-pet"
                 class="block px-4 py-2 text-gray-900 bg-gray-300 hover:bg-gray-400"
                 href="/pet"
+                data-discover="true"
                 >Pets</a
               >
             </li>
@@ -86,7 +89,11 @@ test('open navigation', async () => {
             <span class="block h-2 w-6 border-t-2"></span
             ><span class="block h-2 w-6 border-t-2"></span
             ><span class="block h-0 w-6 border-t-2"></span></button
-          ><a aria-current="page" class="hover:text-gray-500 active" href="/"
+          ><a
+            aria-current="page"
+            class="hover:text-gray-500 active"
+            href="/"
+            data-discover="true"
             >Petstore</a
           >
         </nav>
@@ -99,6 +106,7 @@ test('open navigation', async () => {
                 data-testid="navigation-pet"
                 class="block px-4 py-2 text-gray-900 bg-gray-300 hover:bg-gray-400"
                 href="/pet"
+                data-discover="true"
                 >Pets</a
               >
             </li>
@@ -135,7 +143,7 @@ test('pet list', async () => {
             <span class="block h-2 w-6 border-t-2"></span
             ><span class="block h-2 w-6 border-t-2"></span
             ><span class="block h-0 w-6 border-t-2"></span></button
-          ><a class="hover:text-gray-500" href="/">Petstore</a>
+          ><a class="hover:text-gray-500" href="/" data-discover="true">Petstore</a>
         </nav>
         <nav
           class="mt-16 w-full bg-gray-200 md:block md:w-1/3 lg:w-1/4 xl:w-1/5 hidden"
@@ -147,6 +155,7 @@ test('pet list', async () => {
                 aria-current="page"
                 class="block px-4 py-2 text-gray-100 bg-gray-700 hover:bg-gray-600"
                 href="/pet"
+                data-discover="true"
                 >Pets</a
               >
             </li>

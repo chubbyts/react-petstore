@@ -1,4 +1,6 @@
 import { describe, expect, test } from 'vitest';
+import { useFunctionMock } from '@chubbyts/chubbyts-function-mock/dist/function-mock';
+import { z } from 'zod';
 import type { Fetch } from '../../src/client/client';
 import {
   createCreateClient,
@@ -13,8 +15,6 @@ import {
   modelListRequestSchema,
   modelListResponseSchema,
 } from '../../src/model/model';
-import { useFunctionMock } from '@chubbyts/chubbyts-function-mock/dist/function-mock';
-import { z } from 'zod';
 
 const dummyModelRequestSchema = z.object({
   ...modelRequestSchema.shape,

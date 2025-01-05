@@ -1,12 +1,10 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from 'react';
 import { test, expect, vi } from 'vitest';
+import { userEvent } from '@testing-library/user-event';
+import { render, screen } from '@testing-library/react';
 import { formatHtml } from '../../formatter';
 import { PetForm } from '../../../src/component/form/pet-form';
 import { BadRequest, NetworkError } from '../../../src/client/error';
 import type { PetRequest } from '../../../src/model/pet';
-import { userEvent } from '@testing-library/user-event';
-import { render, screen } from '@testing-library/react';
 
 test('without initial pet', () => {
   const httpError = undefined;
@@ -22,14 +20,14 @@ test('without initial pet', () => {
           <label class="block"
             >Name<input
               data-testid="pet-form-name"
-              type="text"
               class="mb-3 mt-2 block w-full border px-3 py-2 border-gray-300"
+              type="text"
               value="" /></label
           ><label class="block"
             >Tag<input
               data-testid="pet-form-tag"
-              type="text"
               class="mb-3 mt-2 block w-full border px-3 py-2 border-gray-300"
+              type="text"
               value=""
           /></label>
           <div class="mb-3">
@@ -70,14 +68,14 @@ test('with initial pet', () => {
           <label class="block"
             >Name<input
               data-testid="pet-form-name"
-              type="text"
               class="mb-3 mt-2 block w-full border px-3 py-2 border-gray-300"
+              type="text"
               value="Brownie" /></label
           ><label class="block"
             >Tag<input
               data-testid="pet-form-tag"
-              type="text"
               class="mb-3 mt-2 block w-full border px-3 py-2 border-gray-300"
+              type="text"
               value="0001-000"
           /></label>
           <div class="mb-3">
@@ -87,8 +85,8 @@ test('with initial pet', () => {
                 <label class="block"
                   >Name<input
                     data-testid="pet-form-vaccinations-0-name"
-                    type="text"
                     class="mb-3 mt-2 block w-full border px-3 py-2 border-gray-300"
+                    type="text"
                     value="rabies" /></label
                 ><button
                   data-testid="pet-form-remove-vaccination-0"
@@ -156,8 +154,8 @@ test('bad request - with query string name', () => {
           <label class="block text-red-600"
             >Name<input
               data-testid="pet-form-name"
-              type="text"
               class="mb-3 mt-2 block w-full border px-3 py-2 border-red-600 bg-red-100"
+              type="text"
               value="Brownie"
             />
             <ul class="mb-3">
@@ -166,8 +164,8 @@ test('bad request - with query string name', () => {
           ><label class="block"
             >Tag<input
               data-testid="pet-form-tag"
-              type="text"
               class="mb-3 mt-2 block w-full border px-3 py-2 border-gray-300"
+              type="text"
               value="0001-000"
           /></label>
           <div class="mb-3">
@@ -177,8 +175,8 @@ test('bad request - with query string name', () => {
                 <label class="block text-red-600"
                   >Name<input
                     data-testid="pet-form-vaccinations-0-name"
-                    type="text"
                     class="mb-3 mt-2 block w-full border px-3 py-2 border-red-600 bg-red-100"
+                    type="text"
                     value="rabies"
                   />
                   <ul class="mb-3">

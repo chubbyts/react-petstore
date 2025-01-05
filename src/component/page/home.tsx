@@ -6,6 +6,7 @@ const pageTitle = 'Home';
 
 const Home: FC = () => {
   useEffect(() => {
+    // eslint-disable-next-line functional/immutable-data
     document.title = pageTitle;
   }, []);
 

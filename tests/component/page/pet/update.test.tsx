@@ -1,24 +1,26 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from 'react';
+import { vi, test, expect } from 'vitest';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { render, screen } from '@testing-library/react';
+import { userEvent } from '@testing-library/user-event';
 import Update from '../../../../src/component/page/pet/update';
 import type { PetFormProps } from '../../../../src/component/form/pet-form';
-import { vi, test, expect } from 'vitest';
 import type { PetRequest, PetResponse } from '../../../../src/model/pet';
 import { formatHtml } from '../../../formatter';
 import { NotFound, UnprocessableEntity } from '../../../../src/client/error';
 import type { readPetClient, updatePetClient } from '../../../../src/client/pet';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { render, screen } from '@testing-library/react';
-import { userEvent } from '@testing-library/user-event';
 
+// eslint-disable-next-line functional/no-let
 let mockReadPetClient: typeof readPetClient;
+// eslint-disable-next-line functional/no-let
 let mockUpdatePetClient: typeof updatePetClient;
 
 vi.mock('../../../../src/client/pet', () => {
   return {
+    // eslint-disable-next-line functional/prefer-tacit
     readPetClient: (id: string) => {
       return mockReadPetClient(id);
     },
+    // eslint-disable-next-line functional/prefer-tacit
     updatePetClient: (id: string, pet: PetRequest) => {
       return mockUpdatePetClient(id, pet);
     },
@@ -71,6 +73,7 @@ test('not found', async () => {
         <a
           class="inline-block px-5 py-2 text-white bg-gray-600 hover:bg-gray-700"
           href="/pet"
+          data-discover="true"
           >List</a
         >
       </div>
@@ -118,6 +121,7 @@ test('default', async () => {
         ><a
           class="inline-block px-5 py-2 text-white bg-gray-600 hover:bg-gray-700"
           href="/pet"
+          data-discover="true"
           >List</a
         >
       </div>
@@ -180,6 +184,7 @@ test('unprocessable entity', async () => {
         ><a
           class="inline-block px-5 py-2 text-white bg-gray-600 hover:bg-gray-700"
           href="/pet"
+          data-discover="true"
           >List</a
         >
       </div>

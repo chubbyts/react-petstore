@@ -3,9 +3,10 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { de } from 'date-fns/locale';
 import { format } from 'date-fns';
 import { useNavigate, useLocation } from 'react-router-dom';
+import qs from 'qs';
+import { z } from 'zod';
 import { HttpError as HttpErrorPartial } from '../../partial/http-error';
 import { PetFiltersForm } from '../../form/pet-filters-form';
-import qs from 'qs';
 import { Pagination } from '../../partial/pagination';
 import { H1 } from '../../heading';
 import { AnchorButton, Button } from '../../button';
@@ -13,7 +14,6 @@ import { Table, Tbody, Td, Th, Thead, Tr } from '../../table';
 import { numberSchema } from '../../../model/model';
 import type { PetListRequest, PetSort, PetFilters, PetResponse } from '../../../model/pet';
 import { petFiltersSchema, petSortSchema } from '../../../model/pet';
-import { z } from 'zod';
 import { useModelResource } from '../../../hook/use-model-resource';
 import { deletePetClient as deleteClient, listPetsClient as listClient } from '../../../client/pet';
 
@@ -74,6 +74,7 @@ const List: FC = () => {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line functional/immutable-data
     document.title = pageTitle;
 
     fetchPetList();

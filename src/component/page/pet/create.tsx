@@ -23,6 +23,7 @@ const Create: FC = () => {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line functional/immutable-data
     document.title = pageTitle;
   }, []);
 

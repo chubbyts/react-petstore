@@ -1,18 +1,18 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from 'react';
-import Read from '../../../../src/component/page/pet/read';
 import { vi, test, expect } from 'vitest';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { render, screen } from '@testing-library/react';
+import Read from '../../../../src/component/page/pet/read';
 import { formatHtml } from '../../../formatter';
 import { NotFound } from '../../../../src/client/error';
 import type { readPetClient } from '../../../../src/client/pet';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { render, screen } from '@testing-library/react';
 import type { PetResponse } from '../../../../src/model/pet';
 
+// eslint-disable-next-line functional/no-let
 let mockReadPetClient: typeof readPetClient;
 
 vi.mock('../../../../src/client/pet', () => {
   return {
+    // eslint-disable-next-line functional/prefer-tacit
     readPetClient: (id: string) => {
       return mockReadPetClient(id);
     },
@@ -46,6 +46,7 @@ test('not found', async () => {
         <a
           class="inline-block px-5 py-2 text-white bg-gray-600 hover:bg-gray-700"
           href="/pet"
+          data-discover="true"
           >List</a
         >
       </div>
@@ -104,6 +105,7 @@ test('success without vaccinations', async () => {
         <a
           class="inline-block px-5 py-2 text-white bg-gray-600 hover:bg-gray-700"
           href="/pet"
+          data-discover="true"
           >List</a
         >
       </div>
@@ -166,6 +168,7 @@ test('success with vaccinations', async () => {
         <a
           class="inline-block px-5 py-2 text-white bg-gray-600 hover:bg-gray-700"
           href="/pet"
+          data-discover="true"
           >List</a
         >
       </div>

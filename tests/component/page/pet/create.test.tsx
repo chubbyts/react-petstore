@@ -1,20 +1,20 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { expect, test, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { userEvent } from '@testing-library/user-event';
 import type { PetFormProps } from '../../../../src/component/form/pet-form';
 import type { PetRequest, PetResponse } from '../../../../src/model/pet';
 import type { createPetClient } from '../../../../src/client/pet';
 import { formatHtml } from '../../../formatter';
 import { UnprocessableEntity } from '../../../../src/client/error';
-import { userEvent } from '@testing-library/user-event';
 import Create from '../../../../src/component/page/pet/create';
 
+// eslint-disable-next-line functional/no-let
 let mockCreatePetClient: typeof createPetClient;
 
 vi.mock('../../../../src/client/pet', () => {
   return {
+    // eslint-disable-next-line functional/prefer-tacit
     createPetClient: (pet: PetRequest) => {
       return mockCreatePetClient(pet);
     },
@@ -63,6 +63,7 @@ test('default', async () => {
         ><a
           class="inline-block px-5 py-2 text-white bg-gray-600 hover:bg-gray-700"
           href="/pet"
+          data-discover="true"
           >List</a
         >
       </div>
@@ -72,7 +73,6 @@ test('default', async () => {
 });
 
 test('unprocessable entity', async () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   mockCreatePetClient = async (_: PetRequest) => {
     return new Promise<UnprocessableEntity>((resolve) =>
       resolve(new UnprocessableEntity({ title: 'unprocessable entity' })),
@@ -108,6 +108,7 @@ test('unprocessable entity', async () => {
         ><a
           class="inline-block px-5 py-2 text-white bg-gray-600 hover:bg-gray-700"
           href="/pet"
+          data-discover="true"
           >List</a
         >
       </div>

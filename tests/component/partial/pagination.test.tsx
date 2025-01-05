@@ -1,5 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { test, expect } from 'vitest';
@@ -208,6 +206,7 @@ test('buttons', async () => {
   const pages: number[] = [];
 
   const submitPage = (page: number): void => {
+    // eslint-disable-next-line functional/immutable-data
     pages.push(page);
   };
 

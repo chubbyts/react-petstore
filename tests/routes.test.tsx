@@ -1,10 +1,8 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React, { useEffect } from 'react';
 import { test, expect, vi } from 'vitest';
-import { formatHtml } from './formatter';
-import Routes from '../src/routes';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import Routes from '../src/routes';
+import { formatHtml } from './formatter';
 
 vi.mock('../src/component/page/home', () => {
   return {

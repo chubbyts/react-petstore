@@ -48,7 +48,7 @@ export const createInvalidParametersByName = (
 ): Map<string, Array<InvalidParameter>> => {
   return (
     httpErrorOrUndefined && httpErrorOrUndefined instanceof BadRequestOrUnprocessableEntity
-      ? httpErrorOrUndefined.invalidParameters ?? []
+      ? (httpErrorOrUndefined.invalidParameters ?? [])
       : []
   ).reduce((map: Map<string, Array<InvalidParameter>>, invalidParameter: InvalidParameter) => {
     map.set(invalidParameter.name, [...(map.get(invalidParameter.name) ?? []), invalidParameter]);
