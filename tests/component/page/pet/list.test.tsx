@@ -111,7 +111,9 @@ test('default minimal', async () => {
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <div data-testid="page-pet-list">
-        <h1 class="mb-4 border-b pb-2 text-4xl font-black">Pet List</h1>
+        <h1 class="mb-4 border-b border-gray-200 pb-2 text-4xl font-black">
+          Pet List
+        </h1>
         <div>
           <button
             data-testid="pet-filters-form-submit"
@@ -166,30 +168,30 @@ test('default minimal', async () => {
               <div class="block w-full md:table-row-group">
                 <div class="mb-5 block even:bg-gray-100 md:mt-0 md:table-row">
                   <div
-                    class="block border-x border-gray-300 px-4 first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-b md:px-4 md:py-3 md:first:border-l md:first:border-t-0 md:last:border-r"
+                    class="block border-x border-gray-300 px-4 first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-b md:px-4 md:py-3 md:first:border-t-0 md:first:border-l md:last:border-r"
                   >
                     4d783b77-eb09-4603-b99b-f590b605eaa9
                   </div>
                   <div
-                    class="block border-x border-gray-300 px-4 first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-b md:px-4 md:py-3 md:first:border-l md:first:border-t-0 md:last:border-r"
+                    class="block border-x border-gray-300 px-4 first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-b md:px-4 md:py-3 md:first:border-t-0 md:first:border-l md:last:border-r"
                   >
                     15.08.2005 - 17:52:01
                   </div>
                   <div
-                    class="block border-x border-gray-300 px-4 first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-b md:px-4 md:py-3 md:first:border-l md:first:border-t-0 md:last:border-r"
+                    class="block border-x border-gray-300 px-4 first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-b md:px-4 md:py-3 md:first:border-t-0 md:first:border-l md:last:border-r"
                   >
                     15.08.2005 - 17:55:01
                   </div>
                   <div
-                    class="block border-x border-gray-300 px-4 first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-b md:px-4 md:py-3 md:first:border-l md:first:border-t-0 md:last:border-r"
+                    class="block border-x border-gray-300 px-4 first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-b md:px-4 md:py-3 md:first:border-t-0 md:first:border-l md:last:border-r"
                   >
                     Brownie
                   </div>
                   <div
-                    class="block border-x border-gray-300 px-4 first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-b md:px-4 md:py-3 md:first:border-l md:first:border-t-0 md:last:border-r"
+                    class="block border-x border-gray-300 px-4 first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-b md:px-4 md:py-3 md:first:border-t-0 md:first:border-l md:last:border-r"
                   ></div>
                   <div
-                    class="block border-x border-gray-300 px-4 first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-b md:px-4 md:py-3 md:first:border-l md:first:border-t-0 md:last:border-r"
+                    class="block border-x border-gray-300 px-4 first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-b md:px-4 md:py-3 md:first:border-t-0 md:first:border-l md:last:border-r"
                   ></div>
                 </div>
               </div>
@@ -240,7 +242,9 @@ test('bad request', async () => {
         <div data-testid="http-error" class="mb-6 bg-red-300 px-5 py-4">
           <p class="font-bold">bad request</p>
         </div>
-        <h1 class="mb-4 border-b pb-2 text-4xl font-black">Pet List</h1>
+        <h1 class="mb-4 border-b border-gray-200 pb-2 text-4xl font-black">
+          Pet List
+        </h1>
       </div>
     </div>
     "
@@ -298,7 +302,9 @@ test('default maximal', async () => {
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <div data-testid="page-pet-list">
-        <h1 class="mb-4 border-b pb-2 text-4xl font-black">Pet List</h1>
+        <h1 class="mb-4 border-b border-gray-200 pb-2 text-4xl font-black">
+          Pet List
+        </h1>
         <div>
           <a
             class="inline-block px-5 py-2 text-white bg-green-600 hover:bg-green-700 mb-4"
@@ -358,32 +364,32 @@ test('default maximal', async () => {
               <div class="block w-full md:table-row-group">
                 <div class="mb-5 block even:bg-gray-100 md:mt-0 md:table-row">
                   <div
-                    class="block border-x border-gray-300 px-4 first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-b md:px-4 md:py-3 md:first:border-l md:first:border-t-0 md:last:border-r"
+                    class="block border-x border-gray-300 px-4 first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-b md:px-4 md:py-3 md:first:border-t-0 md:first:border-l md:last:border-r"
                   >
                     4d783b77-eb09-4603-b99b-f590b605eaa9
                   </div>
                   <div
-                    class="block border-x border-gray-300 px-4 first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-b md:px-4 md:py-3 md:first:border-l md:first:border-t-0 md:last:border-r"
+                    class="block border-x border-gray-300 px-4 first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-b md:px-4 md:py-3 md:first:border-t-0 md:first:border-l md:last:border-r"
                   >
                     15.08.2005 - 17:52:01
                   </div>
                   <div
-                    class="block border-x border-gray-300 px-4 first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-b md:px-4 md:py-3 md:first:border-l md:first:border-t-0 md:last:border-r"
+                    class="block border-x border-gray-300 px-4 first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-b md:px-4 md:py-3 md:first:border-t-0 md:first:border-l md:last:border-r"
                   >
                     15.08.2005 - 17:55:01
                   </div>
                   <div
-                    class="block border-x border-gray-300 px-4 first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-b md:px-4 md:py-3 md:first:border-l md:first:border-t-0 md:last:border-r"
+                    class="block border-x border-gray-300 px-4 first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-b md:px-4 md:py-3 md:first:border-t-0 md:first:border-l md:last:border-r"
                   >
                     Brownie
                   </div>
                   <div
-                    class="block border-x border-gray-300 px-4 first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-b md:px-4 md:py-3 md:first:border-l md:first:border-t-0 md:last:border-r"
+                    class="block border-x border-gray-300 px-4 first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-b md:px-4 md:py-3 md:first:border-t-0 md:first:border-l md:last:border-r"
                   >
                     0001-000
                   </div>
                   <div
-                    class="block border-x border-gray-300 px-4 first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-b md:px-4 md:py-3 md:first:border-l md:first:border-t-0 md:last:border-r"
+                    class="block border-x border-gray-300 px-4 first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-b md:px-4 md:py-3 md:first:border-t-0 md:first:border-l md:last:border-r"
                   >
                     <a
                       class="inline-block px-5 py-2 text-white bg-gray-600 hover:bg-gray-700 mr-4"

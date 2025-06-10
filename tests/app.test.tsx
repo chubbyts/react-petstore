@@ -24,7 +24,7 @@ test('close navigation', async () => {
     "<div>
       <div class="relative flex min-h-full flex-col md:flex-row">
         <nav
-          class="absolute flow-root h-16 w-full bg-gray-900 px-4 py-3 text-2xl font-semibold uppercase leading-relaxed text-gray-100"
+          class="absolute flow-root h-16 w-full bg-gray-900 px-4 py-3 text-2xl leading-relaxed font-semibold text-gray-100 uppercase"
         >
           <button
             class="float-right block border-2 p-2 md:hidden"
@@ -48,7 +48,7 @@ test('close navigation', async () => {
             <li>
               <a
                 data-testid="navigation-pet"
-                class="block px-4 py-2 text-gray-900 bg-gray-300 hover:bg-gray-400"
+                class="block px-4 py-2 bg-gray-300 text-gray-900 hover:bg-gray-400"
                 href="/pet"
                 data-discover="true"
                 >Pets</a
@@ -80,7 +80,7 @@ test('open navigation', async () => {
     "<div>
       <div class="relative flex min-h-full flex-col md:flex-row">
         <nav
-          class="absolute flow-root h-16 w-full bg-gray-900 px-4 py-3 text-2xl font-semibold uppercase leading-relaxed text-gray-100"
+          class="absolute flow-root h-16 w-full bg-gray-900 px-4 py-3 text-2xl leading-relaxed font-semibold text-gray-100 uppercase"
         >
           <button
             class="float-right block border-2 p-2 md:hidden"
@@ -104,7 +104,7 @@ test('open navigation', async () => {
             <li>
               <a
                 data-testid="navigation-pet"
-                class="block px-4 py-2 text-gray-900 bg-gray-300 hover:bg-gray-400"
+                class="block px-4 py-2 bg-gray-300 text-gray-900 hover:bg-gray-400"
                 href="/pet"
                 data-discover="true"
                 >Pets</a
@@ -134,7 +134,7 @@ test('pet list', async () => {
     "<div>
       <div class="relative flex min-h-full flex-col md:flex-row">
         <nav
-          class="absolute flow-root h-16 w-full bg-gray-900 px-4 py-3 text-2xl font-semibold uppercase leading-relaxed text-gray-100"
+          class="absolute flow-root h-16 w-full bg-gray-900 px-4 py-3 text-2xl leading-relaxed font-semibold text-gray-100 uppercase"
         >
           <button
             class="float-right block border-2 p-2 md:hidden"
@@ -153,7 +153,7 @@ test('pet list', async () => {
               <a
                 data-testid="navigation-pet"
                 aria-current="page"
-                class="block px-4 py-2 text-gray-100 bg-gray-700 hover:bg-gray-600"
+                class="block px-4 py-2 bg-gray-700 text-gray-100 hover:bg-gray-600"
                 href="/pet"
                 data-discover="true"
                 >Pets</a

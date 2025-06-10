@@ -51,6 +51,7 @@ export const createInvalidParametersByName = (
       ? (httpErrorOrUndefined.invalidParameters ?? [])
       : []
   ).reduce((map: Map<string, Array<InvalidParameter>>, invalidParameter: InvalidParameter) => {
+    // eslint-disable-next-line functional/immutable-data
     map.set(invalidParameter.name, [...(map.get(invalidParameter.name) ?? []), invalidParameter]);
 
     return map;

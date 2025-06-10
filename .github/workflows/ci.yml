@@ -22,7 +22,7 @@ jobs:
       - run: npm install -g pnpm@latest
       - run: pnpm install
       - run: pnpm run build
-      - run: TZ=Europe/Zurich pnpm test -- --coverage
+      - run: TZ=Europe/Zurich pnpm test --run --coverage
   node20:
     name: Node 20
     runs-on: ubuntu-24.04
@@ -36,7 +36,7 @@ jobs:
       - run: npm install -g pnpm@latest
       - run: pnpm install
       - run: pnpm run build
-      - run: TZ=Europe/Zurich pnpm test -- --coverage
+      - run: TZ=Europe/Zurich pnpm test --run --coverage
   node22:
     name: Node 22
     runs-on: ubuntu-24.04
@@ -50,7 +50,7 @@ jobs:
       - run: npm install -g pnpm@latest
       - run: pnpm install
       - run: pnpm run build
-      - run: TZ=Europe/Zurich pnpm test -- --coverage
+      - run: TZ=Europe/Zurich pnpm test --run --coverage
       - name: coveralls.io
         uses: coverallsapp/github-action@main
         with:

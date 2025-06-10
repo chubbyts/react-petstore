@@ -12,7 +12,7 @@ const App: FC = () => {
 
   return (
     <div className="relative flex min-h-full flex-col md:flex-row">
-      <nav className="absolute flow-root h-16 w-full bg-gray-900 px-4 py-3 text-2xl font-semibold uppercase leading-relaxed text-gray-100">
+      <nav className="absolute flow-root h-16 w-full bg-gray-900 px-4 py-3 text-2xl leading-relaxed font-semibold text-gray-100 uppercase">
         <button
           className="float-right block border-2 p-2 md:hidden"
           data-testid="navigation-toggle"
@@ -36,8 +36,8 @@ const App: FC = () => {
               className={({ isActive }) =>
                 `block px-4 py-2 ${
                   isActive
-                    ? 'text-gray-100 bg-gray-700 hover:bg-gray-600'
-                    : 'text-gray-900 bg-gray-300 hover:bg-gray-400'
+                    ? 'bg-gray-700 text-gray-100 hover:bg-gray-600'
+                    : 'bg-gray-300 text-gray-900 hover:bg-gray-400'
                 }`
               }
               to="/pet"

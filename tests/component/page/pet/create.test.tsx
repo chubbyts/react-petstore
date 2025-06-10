@@ -54,7 +54,9 @@ test('default', async () => {
   expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <div data-testid="page-pet-create">
-        <h1 class="mb-4 border-b pb-2 text-4xl font-black">Pet Create</h1>
+        <h1 class="mb-4 border-b border-gray-200 pb-2 text-4xl font-black">
+          Pet Create
+        </h1>
         <button
           data-testid="pet-form-submit"
           data-has-http-error="false"
@@ -99,7 +101,9 @@ test('unprocessable entity', async () => {
         <div data-testid="http-error" class="mb-6 bg-red-300 px-5 py-4">
           <p class="font-bold">unprocessable entity</p>
         </div>
-        <h1 class="mb-4 border-b pb-2 text-4xl font-black">Pet Create</h1>
+        <h1 class="mb-4 border-b border-gray-200 pb-2 text-4xl font-black">
+          Pet Create
+        </h1>
         <button
           data-testid="pet-form-submit"
           data-has-http-error="true"

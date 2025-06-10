@@ -20,13 +20,13 @@ test('without initial pet', () => {
           <label class="block"
             >Name<input
               data-testid="pet-form-name"
-              class="mb-3 mt-2 block w-full border px-3 py-2 border-gray-300"
+              class="mt-2 mb-3 block w-full border px-3 py-2 border-gray-300"
               type="text"
               value="" /></label
           ><label class="block"
             >Tag<input
               data-testid="pet-form-tag"
-              class="mb-3 mt-2 block w-full border px-3 py-2 border-gray-300"
+              class="mt-2 mb-3 block w-full border px-3 py-2 border-gray-300"
               type="text"
               value=""
           /></label>
@@ -68,13 +68,13 @@ test('with initial pet', () => {
           <label class="block"
             >Name<input
               data-testid="pet-form-name"
-              class="mb-3 mt-2 block w-full border px-3 py-2 border-gray-300"
+              class="mt-2 mb-3 block w-full border px-3 py-2 border-gray-300"
               type="text"
               value="Brownie" /></label
           ><label class="block"
             >Tag<input
               data-testid="pet-form-tag"
-              class="mb-3 mt-2 block w-full border px-3 py-2 border-gray-300"
+              class="mt-2 mb-3 block w-full border px-3 py-2 border-gray-300"
               type="text"
               value="0001-000"
           /></label>
@@ -85,7 +85,7 @@ test('with initial pet', () => {
                 <label class="block"
                   >Name<input
                     data-testid="pet-form-vaccinations-0-name"
-                    class="mb-3 mt-2 block w-full border px-3 py-2 border-gray-300"
+                    class="mt-2 mb-3 block w-full border px-3 py-2 border-gray-300"
                     type="text"
                     value="rabies" /></label
                 ><button
@@ -154,7 +154,7 @@ test('bad request - with query string name', () => {
           <label class="block text-red-600"
             >Name<input
               data-testid="pet-form-name"
-              class="mb-3 mt-2 block w-full border px-3 py-2 border-red-600 bg-red-100"
+              class="mt-2 mb-3 block w-full border px-3 py-2 border-red-600 bg-red-100"
               type="text"
               value="Brownie"
             />
@@ -164,7 +164,7 @@ test('bad request - with query string name', () => {
           ><label class="block"
             >Tag<input
               data-testid="pet-form-tag"
-              class="mb-3 mt-2 block w-full border px-3 py-2 border-gray-300"
+              class="mt-2 mb-3 block w-full border px-3 py-2 border-gray-300"
               type="text"
               value="0001-000"
           /></label>
@@ -175,7 +175,7 @@ test('bad request - with query string name', () => {
                 <label class="block text-red-600"
                   >Name<input
                     data-testid="pet-form-vaccinations-0-name"
-                    class="mb-3 mt-2 block w-full border px-3 py-2 border-red-600 bg-red-100"
+                    class="mt-2 mb-3 block w-full border px-3 py-2 border-red-600 bg-red-100"
                     type="text"
                     value="rabies"
                   />

@@ -9,7 +9,6 @@ import {
 import eslintUnusedImports from 'eslint-plugin-unused-imports';
 import eslintReact from 'eslint-plugin-react';
 import eslintReactHooks from 'eslint-plugin-react-hooks';
-import eslintTailwindcss from 'eslint-plugin-tailwindcss';
 
 export default eslintTypescriptConfig({
   extends: [
@@ -19,7 +18,6 @@ export default eslintTypescriptConfig({
     eslintImport.flatConfigs.typescript,
     eslintReact.configs.flat.recommended,
     eslintReact.configs.flat['jsx-runtime'],
-    eslintTailwindcss.configs['flat/recommended'],
     eslintTypescriptConfigs.strict,
   ],
   plugins: {

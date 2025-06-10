@@ -34,7 +34,7 @@ export const TextField: FC<TextFieldProps> = ({
       <input
         data-testid={dataTestId}
         type="text"
-        className={`mb-3 mt-2 block w-full border px-3 py-2 ${
+        className={`mt-2 mb-3 block w-full border px-3 py-2 ${
           invalidParameters.length > 0 ? 'border-red-600 bg-red-100' : 'border-gray-300'
         }`}
         onChange={(e) => setInternalValue(e.target.value)}
