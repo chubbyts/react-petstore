@@ -1,5 +1,5 @@
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { expect, test, vi } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import type { PetFormProps } from '../../../../src/component/form/pet-form';
@@ -40,18 +40,19 @@ vi.mock('../../../../src/component/form/pet-form', () => {
   };
 });
 
-test('default', async () => {
-  const { container } = render(
-    <MemoryRouter initialEntries={['/pet/create']}>
-      <Routes>
-        <Route path="/pet/create" element={<Create />} />
-      </Routes>
-    </MemoryRouter>,
-  );
+describe('create', () => {
+  test('default', async () => {
+    const { container } = render(
+      <MemoryRouter initialEntries={['/pet/create']}>
+        <Routes>
+          <Route path="/pet/create" element={<Create />} />
+        </Routes>
+      </MemoryRouter>,
+    );
 
-  await screen.findByTestId('page-pet-create');
+    await screen.findByTestId('page-pet-create');
 
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <div data-testid="page-pet-create">
         <h1 class="mb-4 border-b border-gray-200 pb-2 text-4xl font-black">
@@ -72,30 +73,30 @@ test('default', async () => {
     </div>
     "
   `);
-});
+  });
 
-test('unprocessable entity', async () => {
-  mockCreatePetClient = async (_: PetRequest) => {
-    return new Promise<UnprocessableEntity>((resolve) =>
-      resolve(new UnprocessableEntity({ title: 'unprocessable entity' })),
+  test('unprocessable entity', async () => {
+    mockCreatePetClient = async (_: PetRequest) => {
+      return new Promise<UnprocessableEntity>((resolve) =>
+        resolve(new UnprocessableEntity({ title: 'unprocessable entity' })),
+      );
+    };
+
+    const { container } = render(
+      <MemoryRouter initialEntries={['/pet/create']}>
+        <Routes>
+          <Route path="/pet/create" element={<Create />} />
+        </Routes>
+      </MemoryRouter>,
     );
-  };
 
-  const { container } = render(
-    <MemoryRouter initialEntries={['/pet/create']}>
-      <Routes>
-        <Route path="/pet/create" element={<Create />} />
-      </Routes>
-    </MemoryRouter>,
-  );
+    const testButton = await screen.findByTestId('pet-form-submit');
 
-  const testButton = await screen.findByTestId('pet-form-submit');
+    await userEvent.click(testButton);
 
-  await userEvent.click(testButton);
+    await screen.findByTestId('http-error');
 
-  await screen.findByTestId('http-error');
-
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <div data-testid="page-pet-create">
         <div data-testid="http-error" class="mb-6 bg-red-300 px-5 py-4">
@@ -119,36 +120,37 @@ test('unprocessable entity', async () => {
     </div>
     "
   `);
-});
+  });
 
-test('successful', async () => {
-  mockCreatePetClient = async (petRequest: PetRequest) => {
-    const petResponse: PetResponse = {
-      id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-      createdAt: '2005-08-15T15:52:01+00:00',
-      ...petRequest,
-      _links: {},
+  test('successful', async () => {
+    mockCreatePetClient = async (petRequest: PetRequest) => {
+      const petResponse: PetResponse = {
+        id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+        createdAt: '2005-08-15T15:52:01+00:00',
+        ...petRequest,
+        _links: {},
+      };
+      return new Promise<PetResponse>((resolve) => resolve(petResponse));
     };
-    return new Promise<PetResponse>((resolve) => resolve(petResponse));
-  };
 
-  const { container } = render(
-    <MemoryRouter initialEntries={['/pet/create']}>
-      <Routes>
-        <Route path="/pet" element={<div data-testid="page-pet-list-mock" />} />
-        <Route path="/pet/create" element={<Create />} />
-      </Routes>
-    </MemoryRouter>,
-  );
+    const { container } = render(
+      <MemoryRouter initialEntries={['/pet/create']}>
+        <Routes>
+          <Route path="/pet" element={<div data-testid="page-pet-list-mock" />} />
+          <Route path="/pet/create" element={<Create />} />
+        </Routes>
+      </MemoryRouter>,
+    );
 
-  const testButton = await screen.findByTestId('pet-form-submit');
+    const testButton = await screen.findByTestId('pet-form-submit');
 
-  await userEvent.click(testButton);
+    await userEvent.click(testButton);
 
-  await screen.findByTestId('page-pet-list-mock');
+    await screen.findByTestId('page-pet-list-mock');
 
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div><div data-testid="page-pet-list-mock"></div></div>
     "
   `);
+  });
 });

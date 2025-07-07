@@ -1,7 +1,7 @@
 import { test, expect } from 'vitest';
 import { listPetsClient, createPetClient, readPetClient, updatePetClient, deletePetClient } from '../../src/client/pet';
 
-test('functions', () => {
+test('pet', () => {
   expect(typeof listPetsClient).toBe('function');
   expect(typeof createPetClient).toBe('function');
   expect(typeof readPetClient).toBe('function');

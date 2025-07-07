@@ -1,4 +1,4 @@
-import { test, expect, vi } from 'vitest';
+import { test, expect, vi, describe } from 'vitest';
 import { userEvent } from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import { formatHtml } from '../../formatter';
@@ -6,16 +6,21 @@ import { PetFiltersForm } from '../../../src/component/form/pet-filters-form';
 import { BadRequest, NetworkError } from '../../../src/client/error';
 import type { PetFilters } from '../../../src/model/pet';
 
-test('default', () => {
-  const httpError = undefined;
-  const initialPetFilters = {};
-  const submitPetFilters = () => {};
+describe('pet-filters-form', () => {
+  test('default', () => {
+    const httpError = undefined;
+    const initialPetFilters = {};
+    const submitPetFilters = () => {};
 
-  const { container } = render(
-    <PetFiltersForm httpError={httpError} initialPetFilters={initialPetFilters} submitPetFilters={submitPetFilters} />,
-  );
+    const { container } = render(
+      <PetFiltersForm
+        httpError={httpError}
+        initialPetFilters={initialPetFilters}
+        submitPetFilters={submitPetFilters}
+      />,
+    );
 
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <form>
         <fieldset class="mb-3 border border-gray-300 px-4 py-3">
@@ -36,43 +41,55 @@ test('default', () => {
     </div>
     "
   `);
-});
-
-test('network error', () => {
-  const httpError = new NetworkError({ title: 'network error' });
-  const initialPetFilters = {};
-  const submitPetFilters = () => {};
-
-  render(
-    <PetFiltersForm httpError={httpError} initialPetFilters={initialPetFilters} submitPetFilters={submitPetFilters} />,
-  );
-});
-
-test('bad request', () => {
-  const httpError = new BadRequest({
-    title: 'bad request',
   });
-  const initialPetFilters = {};
-  const submitPetFilters = () => {};
 
-  render(
-    <PetFiltersForm httpError={httpError} initialPetFilters={initialPetFilters} submitPetFilters={submitPetFilters} />,
-  );
-});
+  test('network error', () => {
+    const httpError = new NetworkError({ title: 'network error' });
+    const initialPetFilters = {};
+    const submitPetFilters = () => {};
 
-test('bad request - with query string name', () => {
-  const httpError = new BadRequest({
-    title: 'bad request',
-    invalidParameters: [{ name: 'filters[name]', reason: 'reason' }],
+    render(
+      <PetFiltersForm
+        httpError={httpError}
+        initialPetFilters={initialPetFilters}
+        submitPetFilters={submitPetFilters}
+      />,
+    );
   });
-  const initialPetFilters = {};
-  const submitPetFilters = () => {};
 
-  const { container } = render(
-    <PetFiltersForm httpError={httpError} initialPetFilters={initialPetFilters} submitPetFilters={submitPetFilters} />,
-  );
+  test('bad request', () => {
+    const httpError = new BadRequest({
+      title: 'bad request',
+    });
+    const initialPetFilters = {};
+    const submitPetFilters = () => {};
 
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    render(
+      <PetFiltersForm
+        httpError={httpError}
+        initialPetFilters={initialPetFilters}
+        submitPetFilters={submitPetFilters}
+      />,
+    );
+  });
+
+  test('bad request - with query string name', () => {
+    const httpError = new BadRequest({
+      title: 'bad request',
+      invalidParameters: [{ name: 'filters[name]', reason: 'reason' }],
+    });
+    const initialPetFilters = {};
+    const submitPetFilters = () => {};
+
+    const { container } = render(
+      <PetFiltersForm
+        httpError={httpError}
+        initialPetFilters={initialPetFilters}
+        submitPetFilters={submitPetFilters}
+      />,
+    );
+
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <form>
         <fieldset class="mb-3 border border-gray-300 px-4 py-3">
@@ -97,44 +114,53 @@ test('bad request - with query string name', () => {
     </div>
     "
   `);
-});
-
-test('submit with name', async () => {
-  const httpError = undefined;
-  const initialPetFilters = { name: 'Brown' };
-  const submitPetFilters = vi.fn((petFilters: PetFilters) => {
-    expect(petFilters).toEqual({ name: 'Brownie' });
   });
 
-  render(
-    <PetFiltersForm httpError={httpError} initialPetFilters={initialPetFilters} submitPetFilters={submitPetFilters} />,
-  );
+  test('submit with name', async () => {
+    const httpError = undefined;
+    const initialPetFilters = { name: 'Brown' };
+    const submitPetFilters = vi.fn((petFilters: PetFilters) => {
+      expect(petFilters).toEqual({ name: 'Brownie' });
+    });
 
-  const nameField = await screen.findByTestId('pet-filters-form-name');
+    render(
+      <PetFiltersForm
+        httpError={httpError}
+        initialPetFilters={initialPetFilters}
+        submitPetFilters={submitPetFilters}
+      />,
+    );
 
-  await userEvent.type(nameField, 'ie');
+    const nameField = await screen.findByTestId('pet-filters-form-name');
 
-  const submitButton = await screen.findByTestId('pet-filters-form-submit');
+    await userEvent.type(nameField, 'ie');
 
-  await userEvent.click(submitButton);
+    const submitButton = await screen.findByTestId('pet-filters-form-submit');
 
-  expect(submitPetFilters).toHaveBeenCalledTimes(1);
-});
+    await userEvent.click(submitButton);
 
-test('submit without name', async () => {
-  const httpError = undefined;
-  const initialPetFilters = { name: '' };
-  const submitPetFilters = vi.fn((petFilters: PetFilters) => {
-    expect(petFilters).toEqual({ name: undefined });
+    expect(submitPetFilters).toHaveBeenCalledTimes(1);
   });
 
-  render(
-    <PetFiltersForm httpError={httpError} initialPetFilters={initialPetFilters} submitPetFilters={submitPetFilters} />,
-  );
+  test('submit without name', async () => {
+    const httpError = undefined;
+    const initialPetFilters = { name: '' };
+    const submitPetFilters = vi.fn((petFilters: PetFilters) => {
+      expect(petFilters).toEqual({ name: undefined });
+    });
 
-  const nameField = await screen.findByTestId('pet-filters-form-name');
+    render(
+      <PetFiltersForm
+        httpError={httpError}
+        initialPetFilters={initialPetFilters}
+        submitPetFilters={submitPetFilters}
+      />,
+    );
 
-  await userEvent.type(nameField, '{enter}');
+    const nameField = await screen.findByTestId('pet-filters-form-name');
 
-  expect(submitPetFilters).toHaveBeenCalledTimes(1);
+    await userEvent.type(nameField, '{enter}');
+
+    expect(submitPetFilters).toHaveBeenCalledTimes(1);
+  });
 });

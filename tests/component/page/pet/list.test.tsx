@@ -1,4 +1,4 @@
-import { vi, test, expect } from 'vitest';
+import { vi, test, expect, describe } from 'vitest';
 import { userEvent } from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
@@ -67,48 +67,49 @@ vi.mock('../../../../src/component/partial/pagination', () => {
   };
 });
 
-test('default minimal', async () => {
-  mockListPetsClient = async (petListRequest: PetListRequest) => {
-    expect(petListRequest).toEqual({
-      offset: 0,
-      limit: 10,
-      filters: {},
-      sort: {},
-    });
+describe('list', () => {
+  test('default minimal', async () => {
+    mockListPetsClient = async (petListRequest: PetListRequest) => {
+      expect(petListRequest).toEqual({
+        offset: 0,
+        limit: 10,
+        filters: {},
+        sort: {},
+      });
 
-    return {
-      offset: 0,
-      limit: 10,
-      filters: {},
-      sort: {},
-      count: 1,
-      items: [
-        {
-          id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-          createdAt: '2005-08-15T15:52:01+00:00',
-          updatedAt: '2005-08-15T15:55:01+00:00',
-          name: 'Brownie',
-          vaccinations: [],
-          _links: {},
-        },
-      ],
-      _links: {},
+      return {
+        offset: 0,
+        limit: 10,
+        filters: {},
+        sort: {},
+        count: 1,
+        items: [
+          {
+            id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+            createdAt: '2005-08-15T15:52:01+00:00',
+            updatedAt: '2005-08-15T15:55:01+00:00',
+            name: 'Brownie',
+            vaccinations: [],
+            _links: {},
+          },
+        ],
+        _links: {},
+      };
     };
-  };
 
-  mockDeletePetClient = async () => undefined;
+    mockDeletePetClient = async () => undefined;
 
-  const { container } = render(
-    <MemoryRouter initialEntries={['/pet']}>
-      <Routes>
-        <Route path="/pet" element={<List />} />
-      </Routes>
-    </MemoryRouter>,
-  );
+    const { container } = render(
+      <MemoryRouter initialEntries={['/pet']}>
+        <Routes>
+          <Route path="/pet" element={<List />} />
+        </Routes>
+      </MemoryRouter>,
+    );
 
-  await screen.findByTestId('page-pet-list');
+    await screen.findByTestId('page-pet-list');
 
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <div data-testid="page-pet-list">
         <h1 class="mb-4 border-b border-gray-200 pb-2 text-4xl font-black">
@@ -210,33 +211,33 @@ test('default minimal', async () => {
     </div>
     "
   `);
-});
+  });
 
-test('bad request', async () => {
-  mockListPetsClient = async (petListRequest: PetListRequest) => {
-    expect(petListRequest).toEqual({
-      offset: 0,
-      limit: 10,
-      filters: {},
-      sort: {},
-    });
+  test('bad request', async () => {
+    mockListPetsClient = async (petListRequest: PetListRequest) => {
+      expect(petListRequest).toEqual({
+        offset: 0,
+        limit: 10,
+        filters: {},
+        sort: {},
+      });
 
-    return new Promise<BadRequest>((resolve) => resolve(new BadRequest({ title: 'bad request' })));
-  };
+      return new Promise<BadRequest>((resolve) => resolve(new BadRequest({ title: 'bad request' })));
+    };
 
-  mockDeletePetClient = async () => undefined;
+    mockDeletePetClient = async () => undefined;
 
-  const { container } = render(
-    <MemoryRouter initialEntries={['/pet']}>
-      <Routes>
-        <Route path="/pet" element={<List />} />
-      </Routes>
-    </MemoryRouter>,
-  );
+    const { container } = render(
+      <MemoryRouter initialEntries={['/pet']}>
+        <Routes>
+          <Route path="/pet" element={<List />} />
+        </Routes>
+      </MemoryRouter>,
+    );
 
-  await screen.findByTestId('page-pet-list');
+    await screen.findByTestId('page-pet-list');
 
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <div data-testid="page-pet-list">
         <div data-testid="http-error" class="mb-6 bg-red-300 px-5 py-4">
@@ -249,57 +250,57 @@ test('bad request', async () => {
     </div>
     "
   `);
-});
+  });
 
-test('default maximal', async () => {
-  mockListPetsClient = async (petListRequest: PetListRequest) => {
-    expect(petListRequest).toEqual({
-      offset: 0,
-      limit: 10,
-      filters: {},
-      sort: {},
-    });
+  test('default maximal', async () => {
+    mockListPetsClient = async (petListRequest: PetListRequest) => {
+      expect(petListRequest).toEqual({
+        offset: 0,
+        limit: 10,
+        filters: {},
+        sort: {},
+      });
 
-    return {
-      offset: 0,
-      limit: 10,
-      filters: {},
-      sort: {},
-      count: 1,
-      items: [
-        {
-          id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-          createdAt: '2005-08-15T15:52:01+00:00',
-          updatedAt: '2005-08-15T15:55:01+00:00',
-          name: 'Brownie',
-          tag: '0001-000',
-          vaccinations: [{ name: 'Rabies' }],
-          _links: {
-            read: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
-            update: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
-            delete: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+      return {
+        offset: 0,
+        limit: 10,
+        filters: {},
+        sort: {},
+        count: 1,
+        items: [
+          {
+            id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+            createdAt: '2005-08-15T15:52:01+00:00',
+            updatedAt: '2005-08-15T15:55:01+00:00',
+            name: 'Brownie',
+            tag: '0001-000',
+            vaccinations: [{ name: 'Rabies' }],
+            _links: {
+              read: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+              update: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+              delete: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+            },
           },
+        ],
+        _links: {
+          create: { href: '/api/pets' },
         },
-      ],
-      _links: {
-        create: { href: '/api/pets' },
-      },
+      };
     };
-  };
 
-  mockDeletePetClient = async () => undefined;
+    mockDeletePetClient = async () => undefined;
 
-  const { container } = render(
-    <MemoryRouter initialEntries={['/pet']}>
-      <Routes>
-        <Route path="/pet" element={<List />} />
-      </Routes>
-    </MemoryRouter>,
-  );
+    const { container } = render(
+      <MemoryRouter initialEntries={['/pet']}>
+        <Routes>
+          <Route path="/pet" element={<List />} />
+        </Routes>
+      </MemoryRouter>,
+    );
 
-  await screen.findByTestId('page-pet-list');
+    await screen.findByTestId('page-pet-list');
 
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <div data-testid="page-pet-list">
         <h1 class="mb-4 border-b border-gray-200 pb-2 text-4xl font-black">
@@ -425,334 +426,335 @@ test('default maximal', async () => {
     </div>
     "
   `);
-});
+  });
 
-test('delete error', async () => {
-  mockListPetsClient = async (petListRequest: PetListRequest) => {
-    expect(petListRequest).toEqual({
-      offset: 0,
-      limit: 10,
-      filters: {},
-      sort: {},
-    });
+  test('delete error', async () => {
+    mockListPetsClient = async (petListRequest: PetListRequest) => {
+      expect(petListRequest).toEqual({
+        offset: 0,
+        limit: 10,
+        filters: {},
+        sort: {},
+      });
 
-    return {
-      offset: 0,
-      limit: 10,
-      filters: {},
-      sort: {},
-      count: 1,
-      items: [
-        {
-          id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-          createdAt: '2005-08-15T15:52:01+00:00',
-          updatedAt: '2005-08-15T15:55:01+00:00',
-          name: 'Brownie',
-          tag: '0001-000',
-          vaccinations: [{ name: 'Rabies' }],
-          _links: {
-            read: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
-            update: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
-            delete: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+      return {
+        offset: 0,
+        limit: 10,
+        filters: {},
+        sort: {},
+        count: 1,
+        items: [
+          {
+            id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+            createdAt: '2005-08-15T15:52:01+00:00',
+            updatedAt: '2005-08-15T15:55:01+00:00',
+            name: 'Brownie',
+            tag: '0001-000',
+            vaccinations: [{ name: 'Rabies' }],
+            _links: {
+              read: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+              update: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+              delete: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+            },
           },
+        ],
+        _links: {
+          create: { href: '/api/pets' },
         },
-      ],
-      _links: {
-        create: { href: '/api/pets' },
-      },
+      };
     };
-  };
 
-  mockDeletePetClient = async (id: string) => {
-    expect(id).toBe('4d783b77-eb09-4603-b99b-f590b605eaa9');
+    mockDeletePetClient = async (id: string) => {
+      expect(id).toBe('4d783b77-eb09-4603-b99b-f590b605eaa9');
 
-    return new NetworkError({ title: 'network error' });
-  };
+      return new NetworkError({ title: 'network error' });
+    };
 
-  render(
-    <MemoryRouter initialEntries={['/pet']}>
-      <Routes>
-        <Route path="/pet" element={<List />} />
-      </Routes>
-    </MemoryRouter>,
-  );
+    render(
+      <MemoryRouter initialEntries={['/pet']}>
+        <Routes>
+          <Route path="/pet" element={<List />} />
+        </Routes>
+      </MemoryRouter>,
+    );
 
-  await screen.findByTestId('page-pet-list');
+    await screen.findByTestId('page-pet-list');
 
-  const removeButton = await screen.findByTestId('remove-pet-0');
+    const removeButton = await screen.findByTestId('remove-pet-0');
 
-  await userEvent.click(removeButton);
+    await userEvent.click(removeButton);
 
-  await screen.findByTestId('http-error');
+    await screen.findByTestId('http-error');
 
-  expect(formatHtml((await screen.findByTestId('http-error')).outerHTML)).toMatchInlineSnapshot(`
+    expect(formatHtml((await screen.findByTestId('http-error')).outerHTML)).toMatchInlineSnapshot(`
     "<div data-testid="http-error" class="mb-6 bg-red-300 px-5 py-4">
       <p class="font-bold">network error</p>
     </div>
     "
   `);
-});
+  });
 
-test('delete success', async () => {
-  const petListCalls: Array<{ parameters: [PetListRequest]; return: Promise<PetListResponse> }> = [
-    {
-      parameters: [
-        {
+  test('delete success', async () => {
+    const petListCalls: Array<{ parameters: [PetListRequest]; return: Promise<PetListResponse> }> = [
+      {
+        parameters: [
+          {
+            offset: 0,
+            limit: 10,
+            filters: {},
+            sort: {},
+          },
+        ],
+        return: Promise.resolve({
           offset: 0,
           limit: 10,
           filters: {},
           sort: {},
-        },
-      ],
-      return: Promise.resolve({
-        offset: 0,
-        limit: 10,
-        filters: {},
-        sort: {},
-        count: 1,
-        items: [
-          {
-            id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-            createdAt: '2005-08-15T15:52:01+00:00',
-            updatedAt: '2005-08-15T15:55:01+00:00',
-            name: 'Brownie',
-            tag: '0001-000',
-            vaccinations: [{ name: 'Rabies' }],
-            _links: {
-              read: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
-              update: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
-              delete: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+          count: 1,
+          items: [
+            {
+              id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+              createdAt: '2005-08-15T15:52:01+00:00',
+              updatedAt: '2005-08-15T15:55:01+00:00',
+              name: 'Brownie',
+              tag: '0001-000',
+              vaccinations: [{ name: 'Rabies' }],
+              _links: {
+                read: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+                update: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+                delete: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+              },
             },
+          ],
+          _links: {
+            create: { href: '/api/pets' },
+          },
+        }),
+      },
+      {
+        parameters: [
+          {
+            offset: 0,
+            limit: 10,
+            filters: {},
+            sort: {},
           },
         ],
-        _links: {
-          create: { href: '/api/pets' },
-        },
-      }),
-    },
-    {
-      parameters: [
-        {
+        return: Promise.resolve({
           offset: 0,
           limit: 10,
           filters: {},
           sort: {},
-        },
-      ],
-      return: Promise.resolve({
-        offset: 0,
-        limit: 10,
-        filters: {},
-        sort: {},
-        count: 1,
-        items: [
-          {
-            id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-            createdAt: '2005-08-15T15:52:01+00:00',
-            updatedAt: '2005-08-15T15:55:01+00:00',
-            name: 'Brownie',
-            tag: '0001-000',
-            vaccinations: [{ name: 'Rabies' }],
-            _links: {
-              read: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
-              update: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
-              delete: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+          count: 1,
+          items: [
+            {
+              id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+              createdAt: '2005-08-15T15:52:01+00:00',
+              updatedAt: '2005-08-15T15:55:01+00:00',
+              name: 'Brownie',
+              tag: '0001-000',
+              vaccinations: [{ name: 'Rabies' }],
+              _links: {
+                read: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+                update: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+                delete: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+              },
             },
+          ],
+          _links: {
+            create: { href: '/api/pets' },
+          },
+        }),
+      },
+    ];
+
+    mockListPetsClient = async (petListRequest: PetListRequest) => {
+      // eslint-disable-next-line functional/immutable-data
+      const petListCall = petListCalls.shift();
+      if (!petListCall) {
+        throw new Error('Missing call');
+      }
+
+      expect(petListRequest).toEqual(petListCall.parameters[0]);
+
+      return petListCall.return;
+    };
+
+    mockDeletePetClient = async (id: string) => {
+      expect(id).toBe('4d783b77-eb09-4603-b99b-f590b605eaa9');
+
+      return undefined;
+    };
+
+    render(
+      <MemoryRouter initialEntries={['/pet']}>
+        <Routes>
+          <Route path="/pet" element={<List />} />
+        </Routes>
+      </MemoryRouter>,
+    );
+
+    await screen.findByTestId('page-pet-list');
+
+    const removeButton = await screen.findByTestId('remove-pet-0');
+
+    await userEvent.click(removeButton);
+  });
+
+  test('submit', async () => {
+    const petListCalls: Array<{ parameters: [PetListRequest]; return: Promise<PetListResponse> }> = [
+      {
+        parameters: [
+          {
+            offset: 0,
+            limit: 10,
+            filters: {},
+            sort: {},
           },
         ],
-        _links: {
-          create: { href: '/api/pets' },
-        },
-      }),
-    },
-  ];
-
-  mockListPetsClient = async (petListRequest: PetListRequest) => {
-    // eslint-disable-next-line functional/immutable-data
-    const petListCall = petListCalls.shift();
-    if (!petListCall) {
-      throw new Error('Missing call');
-    }
-
-    expect(petListRequest).toEqual(petListCall.parameters[0]);
-
-    return petListCall.return;
-  };
-
-  mockDeletePetClient = async (id: string) => {
-    expect(id).toBe('4d783b77-eb09-4603-b99b-f590b605eaa9');
-
-    return undefined;
-  };
-
-  render(
-    <MemoryRouter initialEntries={['/pet']}>
-      <Routes>
-        <Route path="/pet" element={<List />} />
-      </Routes>
-    </MemoryRouter>,
-  );
-
-  await screen.findByTestId('page-pet-list');
-
-  const removeButton = await screen.findByTestId('remove-pet-0');
-
-  await userEvent.click(removeButton);
-});
-
-test('submit', async () => {
-  const petListCalls: Array<{ parameters: [PetListRequest]; return: Promise<PetListResponse> }> = [
-    {
-      parameters: [
-        {
+        return: Promise.resolve({
           offset: 0,
           limit: 10,
           filters: {},
           sort: {},
-        },
-      ],
-      return: Promise.resolve({
-        offset: 0,
-        limit: 10,
-        filters: {},
-        sort: {},
-        count: 1,
-        items: [
-          {
-            id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-            createdAt: '2005-08-15T15:52:01+00:00',
-            updatedAt: '2005-08-15T15:55:01+00:00',
-            name: 'Brownie',
-            tag: '0001-000',
-            vaccinations: [{ name: 'Rabies' }],
-            _links: {
-              read: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
-              update: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
-              delete: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+          count: 1,
+          items: [
+            {
+              id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+              createdAt: '2005-08-15T15:52:01+00:00',
+              updatedAt: '2005-08-15T15:55:01+00:00',
+              name: 'Brownie',
+              tag: '0001-000',
+              vaccinations: [{ name: 'Rabies' }],
+              _links: {
+                read: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+                update: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+                delete: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+              },
             },
+          ],
+          _links: {
+            create: { href: '/api/pets' },
+          },
+        }),
+      },
+      {
+        parameters: [
+          {
+            offset: 0,
+            limit: 10,
+            filters: {},
+            sort: { name: 'desc' },
           },
         ],
-        _links: {
-          create: { href: '/api/pets' },
-        },
-      }),
-    },
-    {
-      parameters: [
-        {
+        return: Promise.resolve({
           offset: 0,
           limit: 10,
           filters: {},
           sort: { name: 'desc' },
-        },
-      ],
-      return: Promise.resolve({
-        offset: 0,
-        limit: 10,
-        filters: {},
-        sort: { name: 'desc' },
-        count: 1,
-        items: [
-          {
-            id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-            createdAt: '2005-08-15T15:52:01+00:00',
-            updatedAt: '2005-08-15T15:55:01+00:00',
-            name: 'Blacky',
-            tag: '0002-000',
-            vaccinations: [{ name: 'Rabies' }],
-            _links: {
-              read: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
-              update: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
-              delete: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+          count: 1,
+          items: [
+            {
+              id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+              createdAt: '2005-08-15T15:52:01+00:00',
+              updatedAt: '2005-08-15T15:55:01+00:00',
+              name: 'Blacky',
+              tag: '0002-000',
+              vaccinations: [{ name: 'Rabies' }],
+              _links: {
+                read: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+                update: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+                delete: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+              },
             },
+          ],
+          _links: {
+            create: { href: '/api/pets' },
+          },
+        }),
+      },
+      {
+        parameters: [
+          {
+            offset: 0,
+            limit: 10,
+            filters: { name: 'Brownie' },
+            sort: { name: 'desc' },
           },
         ],
-        _links: {
-          create: { href: '/api/pets' },
-        },
-      }),
-    },
-    {
-      parameters: [
-        {
+        return: Promise.resolve({
           offset: 0,
           limit: 10,
           filters: { name: 'Brownie' },
           sort: { name: 'desc' },
-        },
-      ],
-      return: Promise.resolve({
-        offset: 0,
-        limit: 10,
-        filters: { name: 'Brownie' },
-        sort: { name: 'desc' },
-        count: 0,
-        items: [],
-        _links: {
-          create: { href: '/api/pets' },
-        },
-      }),
-    },
-    {
-      parameters: [
-        {
+          count: 0,
+          items: [],
+          _links: {
+            create: { href: '/api/pets' },
+          },
+        }),
+      },
+      {
+        parameters: [
+          {
+            offset: 10,
+            limit: 10,
+            filters: { name: 'Brownie' },
+            sort: { name: 'desc' },
+          },
+        ],
+        return: Promise.resolve({
           offset: 10,
           limit: 10,
           filters: { name: 'Brownie' },
           sort: { name: 'desc' },
-        },
-      ],
-      return: Promise.resolve({
-        offset: 10,
-        limit: 10,
-        filters: { name: 'Brownie' },
-        sort: { name: 'desc' },
-        count: 0,
-        items: [],
-        _links: {
-          create: { href: '/api/pets' },
-        },
-      }),
-    },
-  ];
+          count: 0,
+          items: [],
+          _links: {
+            create: { href: '/api/pets' },
+          },
+        }),
+      },
+    ];
 
-  mockListPetsClient = async (petListRequest: PetListRequest) => {
-    // eslint-disable-next-line functional/immutable-data
-    const petListCall = petListCalls.shift();
-    if (!petListCall) {
-      throw new Error('Missing call');
-    }
+    mockListPetsClient = async (petListRequest: PetListRequest) => {
+      // eslint-disable-next-line functional/immutable-data
+      const petListCall = petListCalls.shift();
+      if (!petListCall) {
+        throw new Error('Missing call');
+      }
 
-    expect(petListRequest).toEqual(petListCall.parameters[0]);
+      expect(petListRequest).toEqual(petListCall.parameters[0]);
 
-    return petListCall.return;
-  };
+      return petListCall.return;
+    };
 
-  mockDeletePetClient = async () => undefined;
+    mockDeletePetClient = async () => undefined;
 
-  render(
-    <MemoryRouter initialEntries={['/pet']}>
-      <Routes>
-        <Route path="/pet" element={<List />} />
-      </Routes>
-    </MemoryRouter>,
-  );
+    render(
+      <MemoryRouter initialEntries={['/pet']}>
+        <Routes>
+          <Route path="/pet" element={<List />} />
+        </Routes>
+      </MemoryRouter>,
+    );
 
-  await screen.findByTestId('page-pet-list');
+    await screen.findByTestId('page-pet-list');
 
-  const petSortNameSubmitButton = await screen.findByTestId('pet-sort-name-desc');
+    const petSortNameSubmitButton = await screen.findByTestId('pet-sort-name-desc');
 
-  await userEvent.click(petSortNameSubmitButton);
+    await userEvent.click(petSortNameSubmitButton);
 
-  await screen.findByTestId('page-pet-list');
+    await screen.findByTestId('page-pet-list');
 
-  const petFiltersFormSubmitButton = await screen.findByTestId('pet-filters-form-submit');
+    const petFiltersFormSubmitButton = await screen.findByTestId('pet-filters-form-submit');
 
-  await userEvent.click(petFiltersFormSubmitButton);
+    await userEvent.click(petFiltersFormSubmitButton);
 
-  await screen.findByTestId('page-pet-list');
+    await screen.findByTestId('page-pet-list');
 
-  const paginationNextButton = await screen.findByTestId('pagination-next');
+    const paginationNextButton = await screen.findByTestId('pagination-next');
 
-  await userEvent.click(paginationNextButton);
+    await userEvent.click(paginationNextButton);
+  });
 });

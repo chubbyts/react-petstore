@@ -1,4 +1,4 @@
-import { vi, test, expect } from 'vitest';
+import { vi, test, expect, describe } from 'vitest';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import Read from '../../../../src/component/page/pet/read';
@@ -19,24 +19,25 @@ vi.mock('../../../../src/client/pet', () => {
   };
 });
 
-test('not found', async () => {
-  mockReadPetClient = async (id: string) => {
-    expect(id).toBe('4d783b77-eb09-4603-b99b-f590b605eaa9');
+describe('read', () => {
+  test('not found', async () => {
+    mockReadPetClient = async (id: string) => {
+      expect(id).toBe('4d783b77-eb09-4603-b99b-f590b605eaa9');
 
-    return new Promise<NotFound>((resolve) => resolve(new NotFound({ title: 'title' })));
-  };
+      return new Promise<NotFound>((resolve) => resolve(new NotFound({ title: 'title' })));
+    };
 
-  const { container } = render(
-    <MemoryRouter initialEntries={['/pet/4d783b77-eb09-4603-b99b-f590b605eaa9']}>
-      <Routes>
-        <Route path="/pet/:id" element={<Read />} />
-      </Routes>
-    </MemoryRouter>,
-  );
+    const { container } = render(
+      <MemoryRouter initialEntries={['/pet/4d783b77-eb09-4603-b99b-f590b605eaa9']}>
+        <Routes>
+          <Route path="/pet/:id" element={<Read />} />
+        </Routes>
+      </MemoryRouter>,
+    );
 
-  await screen.findByTestId('page-pet-read');
+    await screen.findByTestId('page-pet-read');
 
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <div data-testid="page-pet-read">
         <div data-testid="http-error" class="mb-6 bg-red-300 px-5 py-4">
@@ -55,36 +56,36 @@ test('not found', async () => {
     </div>
     "
   `);
-});
+  });
 
-test('success without vaccinations', async () => {
-  const petResponse: PetResponse = {
-    id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-    createdAt: '2005-08-15T15:52:01+00:00',
-    updatedAt: '2005-08-15T15:55:01+00:00',
-    name: 'Brownie',
-    tag: '0001-000',
-    vaccinations: [],
-    _links: {},
-  };
+  test('success without vaccinations', async () => {
+    const petResponse: PetResponse = {
+      id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+      createdAt: '2005-08-15T15:52:01+00:00',
+      updatedAt: '2005-08-15T15:55:01+00:00',
+      name: 'Brownie',
+      tag: '0001-000',
+      vaccinations: [],
+      _links: {},
+    };
 
-  mockReadPetClient = async (id: string) => {
-    expect(id).toBe('4d783b77-eb09-4603-b99b-f590b605eaa9');
+    mockReadPetClient = async (id: string) => {
+      expect(id).toBe('4d783b77-eb09-4603-b99b-f590b605eaa9');
 
-    return new Promise<PetResponse>((resolve) => resolve(petResponse));
-  };
+      return new Promise<PetResponse>((resolve) => resolve(petResponse));
+    };
 
-  const { container } = render(
-    <MemoryRouter initialEntries={['/pet/4d783b77-eb09-4603-b99b-f590b605eaa9']}>
-      <Routes>
-        <Route path="/pet/:id" element={<Read />} />
-      </Routes>
-    </MemoryRouter>,
-  );
+    const { container } = render(
+      <MemoryRouter initialEntries={['/pet/4d783b77-eb09-4603-b99b-f590b605eaa9']}>
+        <Routes>
+          <Route path="/pet/:id" element={<Read />} />
+        </Routes>
+      </MemoryRouter>,
+    );
 
-  await screen.findByTestId('page-pet-read');
+    await screen.findByTestId('page-pet-read');
 
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <div data-testid="page-pet-read">
         <h1 class="mb-4 border-b border-gray-200 pb-2 text-4xl font-black">
@@ -116,36 +117,36 @@ test('success without vaccinations', async () => {
     </div>
     "
   `);
-});
+  });
 
-test('success with vaccinations', async () => {
-  const petResponse: PetResponse = {
-    id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
-    createdAt: '2005-08-15T15:52:01+00:00',
-    updatedAt: '2005-08-15T15:55:01+00:00',
-    name: 'Brownie',
-    tag: '0001-000',
-    vaccinations: [{ name: 'Rabies' }],
-    _links: {},
-  };
+  test('success with vaccinations', async () => {
+    const petResponse: PetResponse = {
+      id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+      createdAt: '2005-08-15T15:52:01+00:00',
+      updatedAt: '2005-08-15T15:55:01+00:00',
+      name: 'Brownie',
+      tag: '0001-000',
+      vaccinations: [{ name: 'Rabies' }],
+      _links: {},
+    };
 
-  mockReadPetClient = async (id: string) => {
-    expect(id).toBe('4d783b77-eb09-4603-b99b-f590b605eaa9');
+    mockReadPetClient = async (id: string) => {
+      expect(id).toBe('4d783b77-eb09-4603-b99b-f590b605eaa9');
 
-    return new Promise<PetResponse>((resolve) => resolve(petResponse));
-  };
+      return new Promise<PetResponse>((resolve) => resolve(petResponse));
+    };
 
-  const { container } = render(
-    <MemoryRouter initialEntries={['/pet/4d783b77-eb09-4603-b99b-f590b605eaa9']}>
-      <Routes>
-        <Route path="/pet/:id" element={<Read />} />
-      </Routes>
-    </MemoryRouter>,
-  );
+    const { container } = render(
+      <MemoryRouter initialEntries={['/pet/4d783b77-eb09-4603-b99b-f590b605eaa9']}>
+        <Routes>
+          <Route path="/pet/:id" element={<Read />} />
+        </Routes>
+      </MemoryRouter>,
+    );
 
-  await screen.findByTestId('page-pet-read');
+    await screen.findByTestId('page-pet-read');
 
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <div data-testid="page-pet-read">
         <h1 class="mb-4 border-b border-gray-200 pb-2 text-4xl font-black">
@@ -181,4 +182,5 @@ test('success with vaccinations', async () => {
     </div>
     "
   `);
+  });
 });

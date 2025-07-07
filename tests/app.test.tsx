@@ -1,4 +1,4 @@
-import { test, expect, vi } from 'vitest';
+import { test, expect, vi, describe } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { userEvent } from '@testing-library/user-event';
@@ -11,16 +11,17 @@ vi.mock('../src/routes', () => {
   };
 });
 
-test('close navigation', async () => {
-  const { container } = render(
-    <MemoryRouter>
-      <App />
-    </MemoryRouter>,
-  );
+describe('app', () => {
+  test('close navigation', async () => {
+    const { container } = render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>,
+    );
 
-  await screen.findByTestId('routes-mock');
+    await screen.findByTestId('routes-mock');
 
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <div class="relative flex min-h-full flex-col md:flex-row">
         <nav
@@ -63,20 +64,20 @@ test('close navigation', async () => {
     </div>
     "
   `);
-});
+  });
 
-test('open navigation', async () => {
-  const { container } = render(
-    <MemoryRouter>
-      <App />
-    </MemoryRouter>,
-  );
+  test('open navigation', async () => {
+    const { container } = render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>,
+    );
 
-  const navigationToggle = await screen.findByTestId('navigation-toggle');
+    const navigationToggle = await screen.findByTestId('navigation-toggle');
 
-  await userEvent.click(navigationToggle);
+    await userEvent.click(navigationToggle);
 
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <div class="relative flex min-h-full flex-col md:flex-row">
         <nav
@@ -119,18 +120,18 @@ test('open navigation', async () => {
     </div>
     "
   `);
-});
+  });
 
-test('pet list', async () => {
-  const { container } = render(
-    <MemoryRouter initialEntries={['/pet']}>
-      <App />
-    </MemoryRouter>,
-  );
+  test('pet list', async () => {
+    const { container } = render(
+      <MemoryRouter initialEntries={['/pet']}>
+        <App />
+      </MemoryRouter>,
+    );
 
-  await screen.findByTestId('routes-mock');
+    await screen.findByTestId('routes-mock');
 
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <div class="relative flex min-h-full flex-col md:flex-row">
         <nav
@@ -168,4 +169,5 @@ test('pet list', async () => {
     </div>
     "
   `);
+  });
 });

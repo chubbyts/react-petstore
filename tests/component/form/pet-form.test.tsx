@@ -1,4 +1,4 @@
-import { test, expect, vi } from 'vitest';
+import { test, expect, vi, describe } from 'vitest';
 import { userEvent } from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import { formatHtml } from '../../formatter';
@@ -6,14 +6,15 @@ import { PetForm } from '../../../src/component/form/pet-form';
 import { BadRequest, NetworkError } from '../../../src/client/error';
 import type { PetRequest } from '../../../src/model/pet';
 
-test('without initial pet', () => {
-  const httpError = undefined;
-  const initialPet = undefined;
-  const submitPet = () => {};
+describe('pet-form', () => {
+  test('without initial pet', () => {
+    const httpError = undefined;
+    const initialPet = undefined;
+    const submitPet = () => {};
 
-  const { container } = render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
+    const { container } = render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
 
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <form>
         <fieldset class="mb-3 border border-gray-300 px-4 py-3">
@@ -52,16 +53,16 @@ test('without initial pet', () => {
     </div>
     "
   `);
-});
+  });
 
-test('with initial pet', () => {
-  const httpError = undefined;
-  const initialPet = { name: 'Brownie', tag: '0001-000', vaccinations: [{ name: 'rabies' }] };
-  const submitPet = () => {};
+  test('with initial pet', () => {
+    const httpError = undefined;
+    const initialPet = { name: 'Brownie', tag: '0001-000', vaccinations: [{ name: 'rabies' }] };
+    const submitPet = () => {};
 
-  const { container } = render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
+    const { container } = render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
 
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <form>
         <fieldset class="mb-3 border border-gray-300 px-4 py-3">
@@ -114,40 +115,40 @@ test('with initial pet', () => {
     </div>
     "
   `);
-});
-
-test('network error', () => {
-  const httpError = new NetworkError({ title: 'network error' });
-  const initialPet = { name: 'Brownie', tag: '0001-000', vaccinations: [{ name: 'rabies' }] };
-  const submitPet = () => {};
-
-  render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
-});
-
-test('bad request', () => {
-  const httpError = new BadRequest({
-    title: 'bad request',
   });
-  const initialPet = { name: 'Brownie', tag: '0001-000', vaccinations: [{ name: 'rabies' }] };
-  const submitPet = () => {};
 
-  render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
-});
+  test('network error', () => {
+    const httpError = new NetworkError({ title: 'network error' });
+    const initialPet = { name: 'Brownie', tag: '0001-000', vaccinations: [{ name: 'rabies' }] };
+    const submitPet = () => {};
 
-test('bad request - with query string name', () => {
-  const httpError = new BadRequest({
-    title: 'bad request',
-    invalidParameters: [
-      { name: 'name', reason: 'reason1' },
-      { name: 'vaccinations[0][name]', reason: 'reason2' },
-    ],
+    render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
   });
-  const initialPet = { name: 'Brownie', tag: '0001-000', vaccinations: [{ name: 'rabies' }] };
-  const submitPet = () => {};
 
-  const { container } = render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
+  test('bad request', () => {
+    const httpError = new BadRequest({
+      title: 'bad request',
+    });
+    const initialPet = { name: 'Brownie', tag: '0001-000', vaccinations: [{ name: 'rabies' }] };
+    const submitPet = () => {};
 
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
+  });
+
+  test('bad request - with query string name', () => {
+    const httpError = new BadRequest({
+      title: 'bad request',
+      invalidParameters: [
+        { name: 'name', reason: 'reason1' },
+        { name: 'vaccinations[0][name]', reason: 'reason2' },
+      ],
+    });
+    const initialPet = { name: 'Brownie', tag: '0001-000', vaccinations: [{ name: 'rabies' }] };
+    const submitPet = () => {};
+
+    const { container } = render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
+
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div>
       <form>
         <fieldset class="mb-3 border border-gray-300 px-4 py-3">
@@ -208,37 +209,38 @@ test('bad request - with query string name', () => {
     </div>
     "
   `);
-});
-
-test('submit with name', async () => {
-  const httpError = undefined;
-  const initialPet = { name: 'Brown', vaccinations: [{ name: 'rabie' }, { name: 'cat cold' }] };
-  const submitPet = vi.fn((pet: PetRequest) => {
-    expect(pet).toEqual({ name: 'Brownie', vaccinations: [{ name: 'rabies' }, { name: 'cat cold' }, { name: '' }] });
   });
 
-  render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
+  test('submit with name', async () => {
+    const httpError = undefined;
+    const initialPet = { name: 'Brown', vaccinations: [{ name: 'rabie' }, { name: 'cat cold' }] };
+    const submitPet = vi.fn((pet: PetRequest) => {
+      expect(pet).toEqual({ name: 'Brownie', vaccinations: [{ name: 'rabies' }, { name: 'cat cold' }, { name: '' }] });
+    });
 
-  const nameField = await screen.findByTestId('pet-form-name');
+    render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
 
-  await userEvent.type(nameField, 'ie');
+    const nameField = await screen.findByTestId('pet-form-name');
 
-  const vaccinationNameField = await screen.findByTestId('pet-form-vaccinations-0-name');
+    await userEvent.type(nameField, 'ie');
 
-  await userEvent.type(vaccinationNameField, 's');
+    const vaccinationNameField = await screen.findByTestId('pet-form-vaccinations-0-name');
 
-  const addVaccination = await screen.findByTestId('pet-form-add-vaccination');
+    await userEvent.type(vaccinationNameField, 's');
 
-  await userEvent.click(addVaccination);
-  await userEvent.click(addVaccination);
+    const addVaccination = await screen.findByTestId('pet-form-add-vaccination');
 
-  const removeVaccination = await screen.findByTestId('pet-form-remove-vaccination-3');
+    await userEvent.click(addVaccination);
+    await userEvent.click(addVaccination);
 
-  await userEvent.click(removeVaccination);
+    const removeVaccination = await screen.findByTestId('pet-form-remove-vaccination-3');
 
-  const submitButton = await screen.findByTestId('pet-form-submit');
+    await userEvent.click(removeVaccination);
 
-  await userEvent.click(submitButton);
+    const submitButton = await screen.findByTestId('pet-form-submit');
 
-  expect(submitPet).toHaveBeenCalledTimes(1);
+    await userEvent.click(submitButton);
+
+    expect(submitPet).toHaveBeenCalledTimes(1);
+  });
 });

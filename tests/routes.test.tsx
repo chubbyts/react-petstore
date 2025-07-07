@@ -1,4 +1,4 @@
-import { test, expect, vi } from 'vitest';
+import { test, expect, vi, describe } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Routes from '../src/routes';
@@ -40,92 +40,94 @@ vi.mock('../src/component/page/not-found', () => {
   };
 });
 
-test('home page', async () => {
-  const { container } = render(
-    <MemoryRouter initialEntries={['/']}>
-      <Routes />
-    </MemoryRouter>,
-  );
+describe('routes', () => {
+  test('home page', async () => {
+    const { container } = render(
+      <MemoryRouter initialEntries={['/']}>
+        <Routes />
+      </MemoryRouter>,
+    );
 
-  await screen.findByTestId('page-home-mock');
+    await screen.findByTestId('page-home-mock');
 
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div><div data-testid="page-home-mock"></div></div>
     "
   `);
-});
+  });
 
-test('not found', async () => {
-  const { container } = render(
-    <MemoryRouter initialEntries={['/some-unknown-page']}>
-      <Routes />
-    </MemoryRouter>,
-  );
+  test('not found', async () => {
+    const { container } = render(
+      <MemoryRouter initialEntries={['/some-unknown-page']}>
+        <Routes />
+      </MemoryRouter>,
+    );
 
-  await screen.findByTestId('page-not-found-mock');
+    await screen.findByTestId('page-not-found-mock');
 
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div><div data-testid="page-not-found-mock"></div></div>
     "
   `);
-});
+  });
 
-test('pet list', async () => {
-  const { container } = render(
-    <MemoryRouter initialEntries={['/pet']}>
-      <Routes />
-    </MemoryRouter>,
-  );
+  test('pet list', async () => {
+    const { container } = render(
+      <MemoryRouter initialEntries={['/pet']}>
+        <Routes />
+      </MemoryRouter>,
+    );
 
-  await screen.findByTestId('page-pet-list-mock');
+    await screen.findByTestId('page-pet-list-mock');
 
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div><div data-testid="page-pet-list-mock"></div></div>
     "
   `);
-});
+  });
 
-test('pet create', async () => {
-  const { container } = render(
-    <MemoryRouter initialEntries={['/pet/create']}>
-      <Routes />
-    </MemoryRouter>,
-  );
+  test('pet create', async () => {
+    const { container } = render(
+      <MemoryRouter initialEntries={['/pet/create']}>
+        <Routes />
+      </MemoryRouter>,
+    );
 
-  await screen.findByTestId('page-pet-create-mock');
+    await screen.findByTestId('page-pet-create-mock');
 
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div><div data-testid="page-pet-create-mock"></div></div>
     "
   `);
-});
+  });
 
-test('pet read', async () => {
-  const { container } = render(
-    <MemoryRouter initialEntries={['/pet/4d783b77-eb09-4603-b99b-f590b605eaa9']}>
-      <Routes />
-    </MemoryRouter>,
-  );
+  test('pet read', async () => {
+    const { container } = render(
+      <MemoryRouter initialEntries={['/pet/4d783b77-eb09-4603-b99b-f590b605eaa9']}>
+        <Routes />
+      </MemoryRouter>,
+    );
 
-  await screen.findByTestId('page-pet-read-mock');
+    await screen.findByTestId('page-pet-read-mock');
 
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div><div data-testid="page-pet-read-mock"></div></div>
     "
   `);
-});
+  });
 
-test('pet update', async () => {
-  const { container } = render(
-    <MemoryRouter initialEntries={['/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update']}>
-      <Routes />
-    </MemoryRouter>,
-  );
+  test('pet update', async () => {
+    const { container } = render(
+      <MemoryRouter initialEntries={['/pet/4d783b77-eb09-4603-b99b-f590b605eaa9/update']}>
+        <Routes />
+      </MemoryRouter>,
+    );
 
-  await screen.findByTestId('page-pet-update-mock');
+    await screen.findByTestId('page-pet-update-mock');
 
-  expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
     "<div><div data-testid="page-pet-update-mock"></div></div>
     "
   `);
+  });
 });
