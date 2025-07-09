@@ -1,25 +1,31 @@
 import type { FC } from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 import { HttpError as HttpErrorPartial } from '../../partial/http-error';
 import { PetForm } from '../../form/pet-form';
-import type { PetRequest } from '../../../model/pet';
+import type { PetRequest, PetResponse } from '../../../model/pet';
 import { AnchorButton } from '../../button';
 import { H1 } from '../../heading';
-import { useModelResource } from '../../../hook/use-model-resource';
-import { createPetClient as createClient } from '../../../client/pet';
+import { createPetClient } from '../../../client/pet';
+import type { HttpError } from '../../../client/error';
+import { provideCreateMutationFn } from '../../../hook/use-query';
 
 const pageTitle = 'Pet Create';
 
 const Create: FC = () => {
   const navigate = useNavigate();
 
-  const { httpError, actions } = useModelResource({ createClient });
-
-  const submitPet = async (pet: PetRequest) => {
-    if (await actions.createModel(pet)) {
+  const petMutation = useMutation<PetResponse, HttpError, PetRequest>({
+    mutationFn: provideCreateMutationFn(createPetClient),
+    onSuccess: () => {
       navigate('/pet');
-    }
+    },
+    retry: false,
+  });
+
+  const submitPet = async (petRequest: PetRequest) => {
+    petMutation.mutate(petRequest);
   };
 
   useEffect(() => {
@@ -29,9 +35,9 @@ const Create: FC = () => {
 
   return (
     <div data-testid="page-pet-create">
-      {httpError ? <HttpErrorPartial httpError={httpError} /> : null}
+      {petMutation.error ? <HttpErrorPartial httpError={petMutation.error} /> : null}
       <H1>{pageTitle}</H1>
-      <PetForm httpError={httpError} submitPet={submitPet} />
+      <PetForm httpError={petMutation.error ?? undefined} submitPet={submitPet} />
       <AnchorButton to="/pet" colorTheme="gray">
         List
       </AnchorButton>
