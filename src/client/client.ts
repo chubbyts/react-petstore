@@ -91,6 +91,8 @@ export const createCreateClient = <ModelRequestSchema extends z.ZodType, ModelRe
     } catch (error) {
       return new NetworkError({ title: throwableToError(error).message });
     }
+
+    throw new Error('Unknown response');
   };
 };
 
@@ -126,6 +128,8 @@ export const createReadClient = <ModelResponseSchema extends z.ZodType>(
     } catch (error) {
       return new NetworkError({ title: throwableToError(error).message });
     }
+
+    throw new Error('Unknown response');
   };
 };
 
@@ -178,6 +182,8 @@ export const createUpdateClient = <ModelRequestSchema extends z.ZodType, ModelRe
     } catch (error) {
       return new NetworkError({ title: throwableToError(error).message });
     }
+
+    throw new Error('Unknown response');
   };
 };
 
@@ -209,5 +215,7 @@ export const createDeleteClient = (fetch: Fetch, url: string): DeleteClient => {
     } catch (error) {
       return new NetworkError({ title: throwableToError(error).message });
     }
+
+    throw new Error('Unknown response');
   };
 };

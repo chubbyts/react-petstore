@@ -560,7 +560,7 @@ describe('client', () => {
         await createClient(dummyModelRequest);
         throw new Error('expect fail');
       } catch (e) {
-        expect(e).toMatchInlineSnapshot('[Error: expect fail]');
+        expect(e).toMatchInlineSnapshot('[Error: Unknown response]');
       }
 
       expect(fetchMocks.length).toBe(0);
@@ -732,7 +732,7 @@ describe('client', () => {
         await readClient('4d783b77-eb09-4603-b99b-f590b605eaa9');
         throw new Error('expect fail');
       } catch (e) {
-        expect(e).toMatchInlineSnapshot('[Error: expect fail]');
+        expect(e).toMatchInlineSnapshot('[Error: Unknown response]');
       }
 
       expect(fetchMocks.length).toBe(0);
@@ -1071,7 +1071,7 @@ describe('client', () => {
         await updateClient('4d783b77-eb09-4603-b99b-f590b605eaa9', dummyModelRequest);
         throw new Error('expect fail');
       } catch (e) {
-        expect(e).toMatchInlineSnapshot('[Error: expect fail]');
+        expect(e).toMatchInlineSnapshot('[Error: Unknown response]');
       }
 
       expect(fetchMocks.length).toBe(0);
@@ -1232,7 +1232,7 @@ describe('client', () => {
         await deleteClient('4d783b77-eb09-4603-b99b-f590b605eaa9');
         throw new Error('expect fail');
       } catch (e) {
-        expect(e).toMatchInlineSnapshot('[Error: expect fail]');
+        expect(e).toMatchInlineSnapshot('[Error: Unknown response]');
       }
 
       expect(fetchMocks.length).toBe(0);
