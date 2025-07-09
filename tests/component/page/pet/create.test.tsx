@@ -137,9 +137,11 @@ describe('create', () => {
   });
 
   test('successful', async () => {
-    nock('https://petstore.test').post('/api/pets', { name: 'Brownie', vaccinations: [] }).reply(200, {
+    nock('https://petstore.test').post('/api/pets', { name: 'Brownie', vaccinations: [] }).reply(201, {
       id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
       createdAt: '2005-08-15T15:52:01+00:00',
+      name: 'Brownie',
+      vaccinations: [],
       _links: {},
     });
 
