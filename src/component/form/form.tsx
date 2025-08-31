@@ -1,4 +1,4 @@
-import { useState, type FC } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import type { InvalidParameter } from '../../client/error';
 
 export const FieldSet: FC<
@@ -27,6 +27,11 @@ export const TextField: FC<TextFieldProps> = ({
   invalidParameters,
 }: TextFieldProps) => {
   const [internalValue, setInternalValue] = useState<string>(value);
+
+  // rerender if the outer state changes
+  useEffect(() => {
+    setInternalValue(value);
+  }, [value]);
 
   return (
     <label className={`block ${invalidParameters.length > 0 ? 'text-red-600' : ''} `}>
