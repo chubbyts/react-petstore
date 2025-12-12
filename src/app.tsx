@@ -2,6 +2,7 @@ import type { FC } from 'react';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import Routes from './routes';
+import { LoginButton } from './login-button';
 
 const App: FC = () => {
   const [displayMenu, setDisplayMenu] = useState<boolean>(false);
@@ -44,6 +45,7 @@ const App: FC = () => {
             >
               Pets
             </NavLink>
+            <LoginButton />
           </li>
         </ul>
       </nav>

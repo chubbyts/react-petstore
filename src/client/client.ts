@@ -8,6 +8,7 @@ export type Fetch = (input: RequestInfo | URL, init?: RequestInit) => Promise<Re
 
 export type ListClient<ModelListRequest, ModelListResponse> = (
   modelListRequest: ModelListRequest,
+  auth: any
 ) => Promise<HttpError | ModelListResponse>;
 
 export const createListClient = <ModelListRequestSchema extends z.ZodType, ModelListResponseSchema extends z.ZodType>(
@@ -18,12 +19,14 @@ export const createListClient = <ModelListRequestSchema extends z.ZodType, Model
 ): ListClient<z.infer<typeof modelListRequestSchema>, z.infer<typeof modelListResponseSchema>> => {
   return async (
     modelListRequest: z.infer<typeof modelListRequestSchema>,
+    auth: any
   ): Promise<z.infer<typeof modelListResponseSchema> | HttpError> => {
     try {
       const response: Response = await fetch(`${url}?${qs.stringify(modelListRequestSchema.parse(modelListRequest))}`, {
         method: 'GET',
         headers: {
           Accept: 'application/json',
+          Authorization: `bearer ${auth.user.access_token}`,
         },
       });
 

@@ -18,6 +18,7 @@ import { petFiltersSchema, petSortSchema } from '../../../model/pet';
 import { deletePetClient, listPetsClient } from '../../../client/pet';
 import type { HttpError } from '../../../client/error';
 import { provideDeleteMutationFn, provideListQueryFn } from '../../../hook/use-query';
+import { useAuth } from 'react-oidc-context';
 
 const pageTitle = 'Pet List';
 
@@ -34,6 +35,7 @@ const List: FC = () => {
   const location = useLocation();
   const query = useMemo(() => querySchema.parse(qs.parse(location.search.substring(1))), [location]);
   const queryClient = useQueryClient();
+  const auth = useAuth();
 
   const petListRequest: PetListRequest = useMemo(
     () => ({
@@ -49,7 +51,7 @@ const List: FC = () => {
 
   const petListQuery = useQuery<PetListResponse, HttpError>({
     queryKey,
-    queryFn: provideListQueryFn(listPetsClient, petListRequest),
+    queryFn: provideListQueryFn(listPetsClient, petListRequest, auth),
     retry: false,
   });
 

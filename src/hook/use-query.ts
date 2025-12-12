@@ -5,9 +5,10 @@ import type { ModelListRequest, ModelListResponse, ModelRequest, ModelResponse }
 export const provideListQueryFn = <MLReq extends ModelListRequest, MLRes extends ModelListResponse>(
   listClient: ListClient<MLReq, MLRes>,
   modelListRequest: MLReq,
+  auth: any
 ) => {
   return async (): Promise<MLRes> => {
-    const modelListResponse = await listClient(modelListRequest);
+    const modelListResponse = await listClient(modelListRequest, auth);
 
     if (modelListResponse instanceof HttpError) {
       throw modelListResponse;

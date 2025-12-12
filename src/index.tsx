@@ -4,6 +4,7 @@ import { StrictMode } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from './app';
+import { OidcProviderWrapper } from './oidc';
 
 const queryClient = new QueryClient();
 
@@ -13,7 +14,9 @@ root.render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <App />
+        <OidcProviderWrapper>
+          <App />
+        </OidcProviderWrapper>
       </BrowserRouter>
     </QueryClientProvider>
   </StrictMode>,
