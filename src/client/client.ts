@@ -10,15 +10,18 @@ export type ListClient<ModelListRequest, ModelListResponse> = (
   modelListRequest: ModelListRequest,
 ) => Promise<HttpError | ModelListResponse>;
 
-export const createListClient = <ModelListRequestSchema extends z.ZodType, ModelListResponseSchema extends z.ZodType>(
+export const createListClient = <
+  ModelListRequestSchema extends z.ZodObject,
+  ModelListResponseSchema extends z.ZodObject,
+>(
   fetch: Fetch,
   url: string,
   modelListRequestSchema: ModelListRequestSchema,
   modelListResponseSchema: ModelListResponseSchema,
-): ListClient<z.infer<typeof modelListRequestSchema>, z.infer<typeof modelListResponseSchema>> => {
+): ListClient<z.input<ModelListRequestSchema>, z.output<ModelListResponseSchema>> => {
   return async (
-    modelListRequest: z.infer<typeof modelListRequestSchema>,
-  ): Promise<z.infer<typeof modelListResponseSchema> | HttpError> => {
+    modelListRequest: z.input<ModelListRequestSchema>,
+  ): Promise<z.output<ModelListResponseSchema> | HttpError> => {
     try {
       const response: Response = await fetch(`${url}?${qs.stringify(modelListRequestSchema.parse(modelListRequest))}`, {
         method: 'GET',
@@ -52,15 +55,13 @@ export type CreateClient<ModelRequest, ModelResponse> = (
   modelRequest: ModelRequest,
 ) => Promise<ModelResponse | HttpError>;
 
-export const createCreateClient = <ModelRequestSchema extends z.ZodType, ModelResponseSchema extends z.ZodType>(
+export const createCreateClient = <ModelRequestSchema extends z.ZodObject, ModelResponseSchema extends z.ZodObject>(
   fetch: Fetch,
   url: string,
   modelRequestSchema: ModelRequestSchema,
   modelResponseSchema: ModelResponseSchema,
-): CreateClient<z.infer<typeof modelRequestSchema>, z.infer<typeof modelResponseSchema>> => {
-  return async (
-    modelRequest: z.infer<typeof modelRequestSchema>,
-  ): Promise<z.infer<typeof modelResponseSchema> | HttpError> => {
+): CreateClient<z.input<ModelRequestSchema>, z.output<ModelResponseSchema>> => {
+  return async (modelRequest: z.input<ModelRequestSchema>): Promise<z.output<ModelResponseSchema> | HttpError> => {
     try {
       const response: Response = await fetch(url, {
         method: 'POST',
@@ -98,12 +99,12 @@ export const createCreateClient = <ModelRequestSchema extends z.ZodType, ModelRe
 
 export type ReadClient<ModelResponse> = (id: string) => Promise<ModelResponse | HttpError>;
 
-export const createReadClient = <ModelResponseSchema extends z.ZodType>(
+export const createReadClient = <ModelResponseSchema extends z.ZodObject>(
   fetch: Fetch,
   url: string,
   modelResponseSchema: ModelResponseSchema,
-): ReadClient<z.infer<typeof modelResponseSchema>> => {
-  return async (id: string): Promise<z.infer<typeof modelResponseSchema> | HttpError> => {
+): ReadClient<z.output<ModelResponseSchema>> => {
+  return async (id: string): Promise<z.output<ModelResponseSchema> | HttpError> => {
     try {
       const response: Response = await fetch(`${url}/${id}`, {
         method: 'GET',
@@ -138,16 +139,16 @@ export type UpdateClient<ModelRequest, ModelResponse> = (
   modelRequest: ModelRequest,
 ) => Promise<ModelResponse | HttpError>;
 
-export const createUpdateClient = <ModelRequestSchema extends z.ZodType, ModelResponseSchema extends z.ZodType>(
+export const createUpdateClient = <ModelRequestSchema extends z.ZodObject, ModelResponseSchema extends z.ZodObject>(
   fetch: Fetch,
   url: string,
   modelRequestSchema: ModelRequestSchema,
   modelResponseSchema: ModelResponseSchema,
-): UpdateClient<z.infer<typeof modelRequestSchema>, z.infer<typeof modelResponseSchema>> => {
+): UpdateClient<z.input<ModelRequestSchema>, z.output<ModelResponseSchema>> => {
   return async (
     id: string,
-    modelRequest: z.infer<typeof modelRequestSchema>,
-  ): Promise<z.infer<typeof modelResponseSchema> | HttpError> => {
+    modelRequest: z.input<ModelRequestSchema>,
+  ): Promise<z.output<ModelResponseSchema> | HttpError> => {
     try {
       const response: Response = await fetch(`${url}/${id}`, {
         method: 'PUT',

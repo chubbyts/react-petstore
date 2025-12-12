@@ -1,11 +1,7 @@
 import { HttpError } from '../client/error';
 import type { CreateClient, DeleteClient, ListClient, ReadClient, UpdateClient } from '../client/client';
-import type { ModelListRequest, ModelListResponse, ModelRequest, ModelResponse } from '../model/model';
 
-export const provideListQueryFn = <MLReq extends ModelListRequest, MLRes extends ModelListResponse>(
-  listClient: ListClient<MLReq, MLRes>,
-  modelListRequest: MLReq,
-) => {
+export const provideListQueryFn = <MLReq, MLRes>(listClient: ListClient<MLReq, MLRes>, modelListRequest: MLReq) => {
   return async (): Promise<MLRes> => {
     const modelListResponse = await listClient(modelListRequest);
 
@@ -17,9 +13,7 @@ export const provideListQueryFn = <MLReq extends ModelListRequest, MLRes extends
   };
 };
 
-export const provideCreateMutationFn = <MReq extends ModelRequest, MRes extends ModelResponse>(
-  createClient: CreateClient<MReq, MRes>,
-) => {
+export const provideCreateMutationFn = <MReq, MRes>(createClient: CreateClient<MReq, MRes>) => {
   return async (modelRequest: MReq): Promise<MRes> => {
     const modelResponse = await createClient(modelRequest);
 
@@ -31,7 +25,7 @@ export const provideCreateMutationFn = <MReq extends ModelRequest, MRes extends 
   };
 };
 
-export const provideReadQueryFn = <MRes extends ModelResponse>(readClient: ReadClient<MRes>, id: string) => {
+export const provideReadQueryFn = <MRes>(readClient: ReadClient<MRes>, id: string) => {
   return async (): Promise<MRes> => {
     const modelResponse = await readClient(id);
 
@@ -43,9 +37,7 @@ export const provideReadQueryFn = <MRes extends ModelResponse>(readClient: ReadC
   };
 };
 
-export const provideUpdateMutationFn = <MReq extends ModelRequest, MRes extends ModelResponse>(
-  updateClient: UpdateClient<MReq, MRes>,
-) => {
+export const provideUpdateMutationFn = <MReq, MRes>(updateClient: UpdateClient<MReq, MRes>) => {
   return async ([id, modelRequest]: [string, MReq]): Promise<MRes> => {
     const modelResponse = await updateClient(id, modelRequest);
 
