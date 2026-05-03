@@ -22,20 +22,20 @@
   },
   "dependencies": {
     "@chubbyts/chubbyts-throwable-to-error": "^2.1.1",
-    "@tanstack/react-query": "^5.99.1",
+    "@tanstack/react-query": "^5.100.9",
     "cross-fetch": "^4.1.0",
     "date-fns": "^4.1.0",
     "qs": "^6.15.1",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
-    "react-router-dom": "^7.14.1",
-    "zod": "^4.3.6"
+    "react-router-dom": "^7.14.2",
+    "zod": "^4.4.2"
   },
   "devDependencies": {
     "@chubbyts/chubbyts-function-mock": "^2.1.1",
     "@eslint/js": "^10.0.1",
     "@prettier/sync": "^0.6.1",
-    "@tailwindcss/postcss": "^4.2.2",
+    "@tailwindcss/postcss": "^4.2.4",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
     "@types/node": "^25.6.0",
@@ -43,24 +43,24 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
-    "@vitest/coverage-v8": "^4.1.4",
-    "eslint": "^10.2.1",
+    "@vitest/coverage-v8": "^4.1.5",
+    "eslint": "^10.3.0",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-functional": "^9.0.4",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-unused-imports": "^4.4.1",
-    "jsdom": "^29.0.2",
-    "nock": "^14.0.12",
-    "postcss": "^8.5.10",
+    "jsdom": "^29.1.1",
+    "nock": "^14.0.14",
+    "postcss": "^8.5.13",
     "prettier": "^3.8.3",
-    "prettier-plugin-tailwindcss": "^0.7.2",
-    "tailwindcss": "^4.2.2",
+    "prettier-plugin-tailwindcss": "^0.8.0",
+    "tailwindcss": "^4.2.4",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.58.2",
-    "vite": "^8.0.8",
-    "vitest": "^4.1.4"
+    "typescript-eslint": "^8.59.1",
+    "vite": "^8.0.10",
+    "vitest": "^4.1.5"
   },
   "engines": {
     "node": ">=20"
@@ -82,5 +82,5 @@
       "unrs-resolver"
     ]
   },
-  "packageManager": "pnpm@10.33.0+sha512.10568bb4a6afb58c9eb3630da90cc9516417abebd3fabbe6739f0ae795728da1491e9db5a544c76ad8eb7570f5c4bb3d6c637b2cb41bfdcdb47fa823c8649319"
+  "packageManager": "pnpm@10.33.2+sha512.a90faf6feeab71ad6c6e57f94e0fe1a12f5dcc22cd754db40ae9593eb6a3e0b6b12e3540218bb37ae083404b1f2ce6db2a4121e979829b4aff94b99f49da1cf8"
 }
