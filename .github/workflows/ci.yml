@@ -9,20 +9,6 @@ on:
     - cron: '0 0 * * *'
 
 jobs:
-  node20:
-    name: Node 20
-    runs-on: ubuntu-24.04
-    steps:
-      - name: checkout
-        uses: actions/checkout@v6.0.2
-      - name: checkout node
-        uses: actions/setup-node@v6.3.0
-        with:
-          node-version: '20'
-      - run: npm install -g pnpm@latest
-      - run: pnpm install
-      - run: pnpm run build
-      - run: TZ=Europe/Zurich pnpm test --run --coverage
   node22:
     name: Node 22
     runs-on: ubuntu-24.04

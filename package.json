@@ -21,25 +21,25 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@chubbyts/chubbyts-throwable-to-error": "^2.1.1",
+    "@chubbyts/chubbyts-throwable-to-error": "^2.2.0",
     "@tanstack/react-query": "^5.100.9",
     "cross-fetch": "^4.1.0",
     "date-fns": "^4.1.0",
     "qs": "^6.15.1",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5",
-    "react-router-dom": "^7.14.2",
-    "zod": "^4.4.2"
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "react-router-dom": "^7.15.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@chubbyts/chubbyts-function-mock": "^2.1.1",
+    "@chubbyts/chubbyts-function-mock": "^2.2.0",
     "@eslint/js": "^10.0.1",
     "@prettier/sync": "^0.6.1",
-    "@tailwindcss/postcss": "^4.2.4",
+    "@tailwindcss/postcss": "^4.3.0",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
-    "@types/node": "^25.6.0",
-    "@types/qs": "^6.15.0",
+    "@types/node": "^25.6.2",
+    "@types/qs": "^6.15.1",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
@@ -52,18 +52,18 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-unused-imports": "^4.4.1",
     "jsdom": "^29.1.1",
-    "nock": "^14.0.14",
-    "postcss": "^8.5.13",
+    "nock": "^14.0.15",
+    "postcss": "^8.5.14",
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.8.0",
-    "tailwindcss": "^4.2.4",
+    "tailwindcss": "^4.3.0",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.59.1",
-    "vite": "^8.0.10",
+    "typescript-eslint": "^8.59.2",
+    "vite": "^8.0.11",
     "vitest": "^4.1.5"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "prettier": {
     "printWidth": 120,
@@ -74,13 +74,5 @@
       "prettier-plugin-tailwindcss"
     ]
   },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@swc/core",
-      "@tailwindcss/oxide",
-      "esbuild",
-      "unrs-resolver"
-    ]
-  },
-  "packageManager": "pnpm@10.33.2+sha512.a90faf6feeab71ad6c6e57f94e0fe1a12f5dcc22cd754db40ae9593eb6a3e0b6b12e3540218bb37ae083404b1f2ce6db2a4121e979829b4aff94b99f49da1cf8"
+  "packageManager": "pnpm@11.0.9+sha512.34ce82e6780233cf9cad8685029a8f81d2e06196c5a9bad98879f7424940c6817c4e4524fb7d38b8553ceed48b9758b8ebaf1abd3600c232c4c8cf7366086f38"
 }
