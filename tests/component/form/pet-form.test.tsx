@@ -240,4 +240,30 @@ describe('pet-form', () => {
 
     expect(submitPetMock).toHaveBeenCalledTimes(1);
   });
+
+  test('submit with tag', async () => {
+    const httpError = undefined;
+    const initialPet = { name: 'Brownie', vaccinations: [] };
+    const submitPetMock = vi.fn();
+
+    render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPetMock} />);
+
+    const tagField = await screen.findByTestId('pet-form-tag');
+
+    await userEvent.type(tagField, '0001-000');
+
+    const submitButton = await screen.findByTestId('pet-form-submit');
+
+    await userEvent.click(submitButton);
+
+    expect(submitPetMock).toHaveBeenNthCalledWith(1, { name: 'Brownie', tag: '0001-000', vaccinations: [] });
+
+    await userEvent.clear(tagField);
+
+    await userEvent.click(submitButton);
+
+    expect(submitPetMock).toHaveBeenNthCalledWith(2, { name: 'Brownie', tag: undefined, vaccinations: [] });
+
+    expect(submitPetMock).toHaveBeenCalledTimes(2);
+  });
 });

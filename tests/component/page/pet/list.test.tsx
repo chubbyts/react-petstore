@@ -591,6 +591,64 @@ describe('list', () => {
 
     nock('https://petstore.test')
       .get('/api/pets')
+      .query({ offset: 0, limit: 10, sort: { name: 'asc' } })
+      .reply(200, {
+        offset: 0,
+        limit: 10,
+        filters: {},
+        sort: {},
+        count: 1,
+        items: [
+          {
+            id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+            createdAt: '2005-08-15T15:52:01+00:00',
+            updatedAt: '2005-08-15T15:55:01+00:00',
+            name: 'Brownie',
+            tag: '0001-000',
+            vaccinations: [{ name: 'Rabies' }],
+            _links: {
+              read: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+              update: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+              delete: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+            },
+          },
+        ],
+        _links: {
+          create: { href: '/api/pets' },
+        },
+      });
+
+    nock('https://petstore.test')
+      .get('/api/pets')
+      .query({ offset: 0, limit: 10 })
+      .reply(200, {
+        offset: 0,
+        limit: 10,
+        filters: {},
+        sort: {},
+        count: 1,
+        items: [
+          {
+            id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+            createdAt: '2005-08-15T15:52:01+00:00',
+            updatedAt: '2005-08-15T15:55:01+00:00',
+            name: 'Brownie',
+            tag: '0001-000',
+            vaccinations: [{ name: 'Rabies' }],
+            _links: {
+              read: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+              update: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+              delete: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+            },
+          },
+        ],
+        _links: {
+          create: { href: '/api/pets' },
+        },
+      });
+
+    nock('https://petstore.test')
+      .get('/api/pets')
       .query({ offset: 0, limit: 10, sort: { name: 'desc' } })
       .reply(200, {
         offset: 0,
@@ -666,6 +724,18 @@ describe('list', () => {
         </MemoryRouter>
       </QueryClientProvider>,
     );
+
+    await screen.findByTestId('page-pet-list');
+
+    const petSortNameAscButton = await screen.findByTestId('pet-sort-name-asc');
+
+    await userEvent.click(petSortNameAscButton);
+
+    await screen.findByTestId('page-pet-list');
+
+    const petSortNameNoneButton = await screen.findByTestId('pet-sort-name--');
+
+    await userEvent.click(petSortNameNoneButton);
 
     await screen.findByTestId('page-pet-list');
 
