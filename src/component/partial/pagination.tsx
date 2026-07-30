@@ -7,10 +7,10 @@ const calculatePages = (currentPage: number, totalPages: number, maxPages: numbe
 
   const pages = [currentPage];
 
-  // eslint-disable-next-line functional/no-let
+  // oxlint-disable-next-line functional/no-let
   for (let i = 1; ; i++) {
     if (currentPage - i >= 1) {
-      // eslint-disable-next-line functional/immutable-data
+      // oxlint-disable-next-line functional/immutable-data
       pages.push(currentPage - i);
 
       if (pages.length === maxPages || pages.length === totalPages) {
@@ -19,7 +19,7 @@ const calculatePages = (currentPage: number, totalPages: number, maxPages: numbe
     }
 
     if (currentPage + i <= totalPages) {
-      // eslint-disable-next-line functional/immutable-data
+      // oxlint-disable-next-line functional/immutable-data
       pages.push(currentPage + i);
 
       if (pages.length === maxPages || pages.length === totalPages) {
@@ -28,7 +28,7 @@ const calculatePages = (currentPage: number, totalPages: number, maxPages: numbe
     }
   }
 
-  // eslint-disable-next-line functional/immutable-data
+  // oxlint-disable-next-line functional/immutable-data
   pages.sort((a, b) => a - b);
 
   return pages;

@@ -6,11 +6,12 @@ import { PetForm } from '../../../src/component/form/pet-form';
 import { BadRequest, NetworkError } from '../../../src/client/error';
 import type { PetRequest } from '../../../src/model/pet';
 
+const submitPet = (): void => {};
+
 describe('pet-form', () => {
   test('without initial pet', () => {
     const httpError = undefined;
     const initialPet = undefined;
-    const submitPet = () => {};
 
     const { container } = render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
 
@@ -58,7 +59,6 @@ describe('pet-form', () => {
   test('with initial pet', () => {
     const httpError = undefined;
     const initialPet = { name: 'Brownie', tag: '0001-000', vaccinations: [{ name: 'rabies' }] };
-    const submitPet = () => {};
 
     const { container } = render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
 
@@ -120,7 +120,6 @@ describe('pet-form', () => {
   test('network error', () => {
     const httpError = new NetworkError({ title: 'network error' });
     const initialPet = { name: 'Brownie', tag: '0001-000', vaccinations: [{ name: 'rabies' }] };
-    const submitPet = () => {};
 
     render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
   });
@@ -130,7 +129,6 @@ describe('pet-form', () => {
       title: 'bad request',
     });
     const initialPet = { name: 'Brownie', tag: '0001-000', vaccinations: [{ name: 'rabies' }] };
-    const submitPet = () => {};
 
     render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
   });
@@ -144,7 +142,6 @@ describe('pet-form', () => {
       ],
     });
     const initialPet = { name: 'Brownie', tag: '0001-000', vaccinations: [{ name: 'rabies' }] };
-    const submitPet = () => {};
 
     const { container } = render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
 
@@ -214,11 +211,11 @@ describe('pet-form', () => {
   test('submit with name', async () => {
     const httpError = undefined;
     const initialPet = { name: 'Brown', vaccinations: [{ name: 'rabie' }, { name: 'cat cold' }] };
-    const submitPet = vi.fn((pet: PetRequest) => {
+    const submitPetMock = vi.fn((pet: PetRequest) => {
       expect(pet).toEqual({ name: 'Brownie', vaccinations: [{ name: 'rabies' }, { name: 'cat cold' }, { name: '' }] });
     });
 
-    render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
+    render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPetMock} />);
 
     const nameField = await screen.findByTestId('pet-form-name');
 
@@ -241,6 +238,6 @@ describe('pet-form', () => {
 
     await userEvent.click(submitButton);
 
-    expect(submitPet).toHaveBeenCalledTimes(1);
+    expect(submitPetMock).toHaveBeenCalledTimes(1);
   });
 });

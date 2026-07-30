@@ -3,6 +3,7 @@ export class HttpError {
   detail?: string;
   instance?: string;
   constructor({ title, detail, instance }: { title: string; detail?: string; instance?: string }) {
+    // oxlint-disable functional/immutable-data
     this.title = title;
     this.detail = detail;
     this.instance = instance;
@@ -29,6 +30,7 @@ export class BadRequestOrUnprocessableEntity extends HttpError {
     invalidParameters?: Array<InvalidParameter>;
   }) {
     super({ title, detail, instance });
+    // oxlint-disable-next-line functional/immutable-data
     this.invalidParameters = invalidParameters;
   }
 }
@@ -51,7 +53,7 @@ export const createInvalidParametersByName = (
       ? (httpErrorOrUndefined.invalidParameters ?? [])
       : []
   ).reduce((map: Map<string, Array<InvalidParameter>>, invalidParameter: InvalidParameter) => {
-    // eslint-disable-next-line functional/immutable-data
+    // oxlint-disable-next-line functional/immutable-data
     map.set(invalidParameter.name, [...(map.get(invalidParameter.name) ?? []), invalidParameter]);
 
     return map;

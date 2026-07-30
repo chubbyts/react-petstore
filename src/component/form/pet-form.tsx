@@ -55,15 +55,16 @@ export const PetForm: FC<PetFormProps> = ({ submitPet, initialPet, httpError }: 
                     label="Name"
                     value={vaccination.name}
                     setValue={(value) =>
-                      setPet('vaccinations', [
-                        ...pet.vaccinations.map((currentVaccination, y) => {
+                      setPet(
+                        'vaccinations',
+                        pet.vaccinations.map((currentVaccination, y) => {
                           if (y === i) {
                             return { ...currentVaccination, name: value };
                           }
 
                           return currentVaccination;
                         }),
-                      ])
+                      )
                     }
                     invalidParameters={groupInvalidParametersByName.get(`vaccinations[${i}][name]`) ?? []}
                   />
@@ -73,7 +74,10 @@ export const PetForm: FC<PetFormProps> = ({ submitPet, initialPet, httpError }: 
                       e.preventDefault();
                       e.stopPropagation();
 
-                      setPet('vaccinations', [...pet.vaccinations.filter((_, y) => y !== i)]);
+                      setPet(
+                        'vaccinations',
+                        pet.vaccinations.filter((_, y) => y !== i),
+                      );
                     }}
                     colorTheme="red"
                   >

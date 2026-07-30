@@ -34,15 +34,15 @@ describe('error', () => {
       expect(InvalidParametersOfName).toBeInstanceOf(Array);
       expect(InvalidParametersOfName).toHaveLength(2);
 
-      expect(InvalidParametersOfName instanceof Array ? InvalidParametersOfName[0] : null).toBe(invalidParameters[0]);
-      expect(InvalidParametersOfName instanceof Array ? InvalidParametersOfName[1] : null).toBe(invalidParameters[1]);
+      expect(Array.isArray(InvalidParametersOfName) ? InvalidParametersOfName[0] : null).toBe(invalidParameters[0]);
+      expect(Array.isArray(InvalidParametersOfName) ? InvalidParametersOfName[1] : null).toBe(invalidParameters[1]);
 
       const InvalidParametersOfDescription = invalidParametersByName.get('description');
 
       expect(InvalidParametersOfDescription).toBeInstanceOf(Array);
       expect(InvalidParametersOfDescription).toHaveLength(1);
 
-      expect(InvalidParametersOfDescription instanceof Array ? InvalidParametersOfDescription[0] : null).toBe(
+      expect(Array.isArray(InvalidParametersOfDescription) ? InvalidParametersOfDescription[0] : null).toBe(
         invalidParameters[2],
       );
     });
@@ -65,15 +65,15 @@ describe('error', () => {
       expect(InvalidParametersOfName).toBeInstanceOf(Array);
       expect(InvalidParametersOfName).toHaveLength(2);
 
-      expect(InvalidParametersOfName instanceof Array ? InvalidParametersOfName[0] : null).toBe(invalidParameters[0]);
-      expect(InvalidParametersOfName instanceof Array ? InvalidParametersOfName[1] : null).toBe(invalidParameters[1]);
+      expect(Array.isArray(InvalidParametersOfName) ? InvalidParametersOfName[0] : null).toBe(invalidParameters[0]);
+      expect(Array.isArray(InvalidParametersOfName) ? InvalidParametersOfName[1] : null).toBe(invalidParameters[1]);
 
       const InvalidParametersOfDescription = invalidParametersByName.get('description');
 
       expect(InvalidParametersOfDescription).toBeInstanceOf(Array);
       expect(InvalidParametersOfDescription).toHaveLength(1);
 
-      expect(InvalidParametersOfDescription instanceof Array ? InvalidParametersOfDescription[0] : null).toBe(
+      expect(Array.isArray(InvalidParametersOfDescription) ? InvalidParametersOfDescription[0] : null).toBe(
         invalidParameters[2],
       );
     });
