@@ -114,6 +114,7 @@ const List: FC = () => {
                   <Th>
                     <span>Name (</span>
                     <button
+                      type="button"
                       data-testid="pet-sort-name-asc"
                       onClick={() => submitPetSort({ ...query.sort, name: 'asc' })}
                     >
@@ -121,6 +122,7 @@ const List: FC = () => {
                     </button>
                     <span>|</span>
                     <button
+                      type="button"
                       data-testid="pet-sort-name-desc"
                       onClick={() => submitPetSort({ ...query.sort, name: 'desc' })}
                     >
@@ -128,6 +130,7 @@ const List: FC = () => {
                     </button>
                     <span>|</span>
                     <button
+                      type="button"
                       data-testid="pet-sort-name--"
                       onClick={() => submitPetSort({ ...query.sort, name: undefined })}
                     >

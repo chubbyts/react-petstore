@@ -100,7 +100,7 @@ export const PetForm: FC<PetFormProps> = ({ submitPet, initialPet, httpError }: 
             </Button>
           </div>
         </div>
-        <Button data-testid="pet-form-submit" colorTheme="blue">
+        <Button data-testid="pet-form-submit" type="submit" colorTheme="blue">
           Save
         </Button>
       </FieldSet>

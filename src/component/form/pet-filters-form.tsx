@@ -41,7 +41,7 @@ export const PetFiltersForm: FC<PetFiltersFormProps> = ({
           setValue={(value) => setPetFilters('name', value === '' ? undefined : value)}
           invalidParameters={groupInvalidParametersByName.get('filters[name]') ?? []}
         />
-        <Button data-testid="pet-filters-form-submit" colorTheme="blue">
+        <Button data-testid="pet-filters-form-submit" type="submit" colorTheme="blue">
           Filter
         </Button>
       </FieldSet>

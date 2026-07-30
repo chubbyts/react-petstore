@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { renderHook, act } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
 import { useStore } from '../../src/hook/use-store';
 
 type Dummy = {
@@ -20,10 +20,10 @@ describe('use-store', () => {
 
     expect(result.current[0]).toEqual(dummy);
 
-    act(() => {
-      result.current[1]('key2', 'value22');
-    });
+    result.current[1]('key2', 'value22');
 
-    expect(result.current[0]).toEqual({ ...dummy, key2: 'value22' });
+    await waitFor(() => {
+      expect(result.current[0]).toEqual({ ...dummy, key2: 'value22' });
+    });
   });
 });

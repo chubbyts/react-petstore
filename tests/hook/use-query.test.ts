@@ -36,7 +36,7 @@ describe('use-query', () => {
         expect(e).toBe(httpError);
       }
 
-      expect(listClientMocks.length).toBe(0);
+      expect(listClientMocks).toHaveLength(0);
     });
 
     test('successful', async () => {
@@ -65,7 +65,7 @@ describe('use-query', () => {
 
       expect(await listQueryFn()).toBe(modelListResponse);
 
-      expect(listClientMocks.length).toBe(0);
+      expect(listClientMocks).toHaveLength(0);
     });
   });
 
@@ -88,7 +88,7 @@ describe('use-query', () => {
         expect(e).toBe(httpError);
       }
 
-      expect(createClientMocks.length).toBe(0);
+      expect(createClientMocks).toHaveLength(0);
     });
 
     test('successful', async () => {
@@ -108,7 +108,7 @@ describe('use-query', () => {
 
       expect(await createQueryFn(modelRequest)).toBe(modelResponse);
 
-      expect(createClientMocks.length).toBe(0);
+      expect(createClientMocks).toHaveLength(0);
     });
   });
 
@@ -129,7 +129,7 @@ describe('use-query', () => {
         expect(e).toBe(httpError);
       }
 
-      expect(readClientMocks.length).toBe(0);
+      expect(readClientMocks).toHaveLength(0);
     });
 
     test('successful', async () => {
@@ -147,7 +147,7 @@ describe('use-query', () => {
 
       expect(await readQueryFn()).toBe(modelResponse);
 
-      expect(readClientMocks.length).toBe(0);
+      expect(readClientMocks).toHaveLength(0);
     });
   });
 
@@ -170,7 +170,7 @@ describe('use-query', () => {
         expect(e).toBe(httpError);
       }
 
-      expect(updateClientMocks.length).toBe(0);
+      expect(updateClientMocks).toHaveLength(0);
     });
 
     test('successful', async () => {
@@ -190,7 +190,7 @@ describe('use-query', () => {
 
       expect(await updateQueryFn(['id', modelRequest])).toBe(modelResponse);
 
-      expect(updateClientMocks.length).toBe(0);
+      expect(updateClientMocks).toHaveLength(0);
     });
   });
 
@@ -211,7 +211,7 @@ describe('use-query', () => {
         expect(e).toBe(httpError);
       }
 
-      expect(deleteClientMocks.length).toBe(0);
+      expect(deleteClientMocks).toHaveLength(0);
     });
 
     test('successful', async () => {
@@ -223,7 +223,7 @@ describe('use-query', () => {
 
       await deleteQueryFn('id');
 
-      expect(deleteClientMocks.length).toBe(0);
+      expect(deleteClientMocks).toHaveLength(0);
     });
   });
 });

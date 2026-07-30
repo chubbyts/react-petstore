@@ -1,6 +1,6 @@
 import { vi, test, expect, describe } from 'vitest';
 import { userEvent } from '@testing-library/user-event';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import nock from 'nock';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -176,13 +176,13 @@ describe('list', () => {
                       class="block border-x border-gray-300 bg-gray-100 px-4 font-bold first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-y md:px-4 md:py-3 md:first:border-l md:last:border-r"
                     >
                       <span>Name (</span
-                      ><button data-testid="pet-sort-name-asc">
+                      ><button type="button" data-testid="pet-sort-name-asc">
                         <span class="mx-1 inline-block">A-Z</span></button
                       ><span>|</span
-                      ><button data-testid="pet-sort-name-desc">
+                      ><button type="button" data-testid="pet-sort-name-desc">
                         <span class="mx-1 inline-block">Z-A</span></button
                       ><span>|</span
-                      ><button data-testid="pet-sort-name--">
+                      ><button type="button" data-testid="pet-sort-name--">
                         <span class="mx-1 inline-block">---</span></button
                       ><span>)</span>
                     </div>
@@ -337,13 +337,13 @@ describe('list', () => {
                       class="block border-x border-gray-300 bg-gray-100 px-4 font-bold first:border-t first:pt-3 last:border-b last:pb-3 md:table-cell md:border-x-0 md:border-y md:px-4 md:py-3 md:first:border-l md:last:border-r"
                     >
                       <span>Name (</span
-                      ><button data-testid="pet-sort-name-asc">
+                      ><button type="button" data-testid="pet-sort-name-asc">
                         <span class="mx-1 inline-block">A-Z</span></button
                       ><span>|</span
-                      ><button data-testid="pet-sort-name-desc">
+                      ><button type="button" data-testid="pet-sort-name-desc">
                         <span class="mx-1 inline-block">Z-A</span></button
                       ><span>|</span
-                      ><button data-testid="pet-sort-name--">
+                      ><button type="button" data-testid="pet-sort-name--">
                         <span class="mx-1 inline-block">---</span></button
                       ><span>)</span>
                     </div>
@@ -401,6 +401,7 @@ describe('list', () => {
                         >Update</a
                       ><button
                         data-testid="remove-pet-0"
+                        type="button"
                         class="inline-block px-5 py-2 text-white bg-red-600 hover:bg-red-700"
                       >
                         Delete
@@ -532,6 +533,21 @@ describe('list', () => {
 
     nock('https://petstore.test').delete('/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9').reply(204);
 
+    nock('https://petstore.test')
+      .get('/api/pets')
+      .query({ offset: 0, limit: 10 })
+      .reply(200, {
+        offset: 0,
+        limit: 10,
+        filters: {},
+        sort: {},
+        count: 0,
+        items: [],
+        _links: {
+          create: { href: '/api/pets' },
+        },
+      });
+
     render(
       <QueryClientProvider
         client={
@@ -557,6 +573,12 @@ describe('list', () => {
     const removeButton = await screen.findByTestId('remove-pet-0');
 
     await userEvent.click(removeButton);
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('remove-pet-0')).toBeNull();
+    });
+
+    expect(nock.isDone()).toBe(true);
   });
 
   test('submit', async () => {
@@ -678,6 +700,35 @@ describe('list', () => {
 
     nock('https://petstore.test')
       .get('/api/pets')
+      .query({ offset: 10, limit: 10, filters: { name: 'Brownie' }, sort: { name: 'desc' } })
+      .reply(200, {
+        offset: 10,
+        limit: 10,
+        filters: {},
+        sort: {},
+        count: 1,
+        items: [
+          {
+            id: '4d783b77-eb09-4603-b99b-f590b605eaa9',
+            createdAt: '2005-08-15T15:52:01+00:00',
+            updatedAt: '2005-08-15T15:55:01+00:00',
+            name: 'Brownie',
+            tag: '0001-000',
+            vaccinations: [{ name: 'Rabies' }],
+            _links: {
+              read: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+              update: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+              delete: { href: '/api/pets/4d783b77-eb09-4603-b99b-f590b605eaa9' },
+            },
+          },
+        ],
+        _links: {
+          create: { href: '/api/pets' },
+        },
+      });
+
+    nock('https://petstore.test')
+      .get('/api/pets')
       .query({ offset: 0, limit: 10, filters: { name: 'Brownie' }, sort: { name: 'desc' } })
       .reply(200, {
         offset: 0,
@@ -754,5 +805,9 @@ describe('list', () => {
     const paginationNextButton = await screen.findByTestId('pagination-next');
 
     await userEvent.click(paginationNextButton);
+
+    await screen.findByTestId('page-pet-list');
+
+    expect(nock.isDone()).toBe(true);
   });
 });

@@ -57,8 +57,8 @@ export const TextField: FC<TextFieldProps> = ({
       />
       {invalidParameters.length > 0 ? (
         <ul className="mb-3">
-          {invalidParameters.map((invalidParameter, i) => (
-            <li key={i}>{invalidParameter.reason}</li>
+          {invalidParameters.map((invalidParameter) => (
+            <li key={`${invalidParameter.name}-${invalidParameter.reason}`}>{invalidParameter.reason}</li>
           ))}
         </ul>
       ) : null}

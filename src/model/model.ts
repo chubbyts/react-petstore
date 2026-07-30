@@ -3,8 +3,8 @@ import { z } from 'zod';
 export const numberSchema = z.union([
   z
     .string()
-    .refine((number) => !Number.isNaN(parseInt(number, 10)))
-    .transform((number) => parseInt(number, 10)),
+    .refine((number) => !Number.isNaN(Number.parseInt(number, 10)))
+    .transform((number) => Number.parseInt(number, 10)),
   z.number(),
 ]);
 

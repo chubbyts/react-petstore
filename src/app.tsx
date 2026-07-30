@@ -14,6 +14,7 @@ const App: FC = () => {
     <div className="relative flex min-h-full flex-col md:flex-row">
       <nav className="absolute flow-root h-16 w-full bg-gray-900 px-4 py-3 text-2xl leading-relaxed font-semibold text-gray-100 uppercase">
         <button
+          type="button"
           className="float-right block border-2 p-2 md:hidden"
           data-testid="navigation-toggle"
           onClick={toggleMenu}

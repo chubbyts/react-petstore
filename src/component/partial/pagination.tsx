@@ -53,6 +53,7 @@ export const Pagination: FC<PaginationProps> = ({ submitPage, currentPage, total
       {currentPage > 2 ? (
         <li className="inline-block">
           <button
+            type="button"
             className="border-r border-gray-300 px-3 py-2"
             onClick={() => {
               submitPage(1);
@@ -65,6 +66,7 @@ export const Pagination: FC<PaginationProps> = ({ submitPage, currentPage, total
       {currentPage > 1 ? (
         <li className="inline-block">
           <button
+            type="button"
             className="border-r border-gray-300 px-3 py-2"
             onClick={() => {
               submitPage(currentPage - 1);
@@ -77,6 +79,7 @@ export const Pagination: FC<PaginationProps> = ({ submitPage, currentPage, total
       {pages.map((page: number) => (
         <li key={page} className="inline-block">
           <button
+            type="button"
             className={`border-r border-gray-300 px-3 py-2 ${page === currentPage ? 'bg-gray-100' : ''}`}
             onClick={() => {
               submitPage(page);
@@ -89,6 +92,7 @@ export const Pagination: FC<PaginationProps> = ({ submitPage, currentPage, total
       {currentPage < totalPages ? (
         <li className="inline-block">
           <button
+            type="button"
             className="border-r border-gray-300 px-3 py-2"
             onClick={() => {
               submitPage(currentPage + 1);
@@ -101,6 +105,7 @@ export const Pagination: FC<PaginationProps> = ({ submitPage, currentPage, total
       {currentPage < totalPages - 1 ? (
         <li className="inline-block">
           <button
+            type="button"
             className="border-r border-gray-300 px-3 py-2"
             onClick={() => {
               submitPage(totalPages);

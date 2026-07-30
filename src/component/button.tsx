@@ -39,11 +39,12 @@ export const Button: FC<
     colorTheme: ColorTheme;
   },
 ) => {
-  const { colorTheme, className, ...rest } = props;
+  const { colorTheme, className, type, ...rest } = props;
 
   return (
     <button
       {...rest}
+      type={type ?? 'button'}
       className={`inline-block px-5 py-2 text-white ${getColorThemeClasses(colorTheme)} ${className ?? ''}`}
     >
       {props.children}

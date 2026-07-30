@@ -16,44 +16,46 @@ describe('pet-form', () => {
     const { container } = render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
 
     expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
-    "<div>
-      <form>
-        <fieldset class="mb-3 border border-gray-300 px-4 py-3">
-          <label class="block"
-            >Name<input
-              data-testid="pet-form-name"
-              class="mt-2 mb-3 block w-full border px-3 py-2 border-gray-300"
-              type="text"
-              value="" /></label
-          ><label class="block"
-            >Tag<input
-              data-testid="pet-form-tag"
-              class="mt-2 mb-3 block w-full border px-3 py-2 border-gray-300"
-              type="text"
-              value=""
-          /></label>
-          <div class="mb-3">
-            <div class="mb-2 block">Vaccinations</div>
-            <div>
-              <button
-                data-testid="pet-form-add-vaccination"
-                class="inline-block px-5 py-2 text-white bg-green-600 hover:bg-green-700"
-              >
-                Add
-              </button>
+      "<div>
+        <form>
+          <fieldset class="mb-3 border border-gray-300 px-4 py-3">
+            <label class="block"
+              >Name<input
+                data-testid="pet-form-name"
+                class="mt-2 mb-3 block w-full border px-3 py-2 border-gray-300"
+                type="text"
+                value="" /></label
+            ><label class="block"
+              >Tag<input
+                data-testid="pet-form-tag"
+                class="mt-2 mb-3 block w-full border px-3 py-2 border-gray-300"
+                type="text"
+                value=""
+            /></label>
+            <div class="mb-3">
+              <div class="mb-2 block">Vaccinations</div>
+              <div>
+                <button
+                  data-testid="pet-form-add-vaccination"
+                  type="button"
+                  class="inline-block px-5 py-2 text-white bg-green-600 hover:bg-green-700"
+                >
+                  Add
+                </button>
+              </div>
             </div>
-          </div>
-          <button
-            data-testid="pet-form-submit"
-            class="inline-block px-5 py-2 text-white bg-blue-600 hover:bg-blue-700"
-          >
-            Save
-          </button>
-        </fieldset>
-      </form>
-    </div>
-    "
-  `);
+            <button
+              data-testid="pet-form-submit"
+              type="submit"
+              class="inline-block px-5 py-2 text-white bg-blue-600 hover:bg-blue-700"
+            >
+              Save
+            </button>
+          </fieldset>
+        </form>
+      </div>
+      "
+    `);
   });
 
   test('with initial pet', () => {
@@ -63,65 +65,125 @@ describe('pet-form', () => {
     const { container } = render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
 
     expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
-    "<div>
-      <form>
-        <fieldset class="mb-3 border border-gray-300 px-4 py-3">
-          <label class="block"
-            >Name<input
-              data-testid="pet-form-name"
-              class="mt-2 mb-3 block w-full border px-3 py-2 border-gray-300"
-              type="text"
-              value="Brownie" /></label
-          ><label class="block"
-            >Tag<input
-              data-testid="pet-form-tag"
-              class="mt-2 mb-3 block w-full border px-3 py-2 border-gray-300"
-              type="text"
-              value="0001-000"
-          /></label>
-          <div class="mb-3">
-            <div class="mb-2 block">Vaccinations</div>
-            <div>
-              <fieldset class="mb-3 border border-gray-300 px-4 py-3">
-                <label class="block"
-                  >Name<input
-                    data-testid="pet-form-vaccinations-0-name"
-                    class="mt-2 mb-3 block w-full border px-3 py-2 border-gray-300"
-                    type="text"
-                    value="rabies" /></label
-                ><button
-                  data-testid="pet-form-remove-vaccination-0"
-                  class="inline-block px-5 py-2 text-white bg-red-600 hover:bg-red-700"
+      "<div>
+        <form>
+          <fieldset class="mb-3 border border-gray-300 px-4 py-3">
+            <label class="block"
+              >Name<input
+                data-testid="pet-form-name"
+                class="mt-2 mb-3 block w-full border px-3 py-2 border-gray-300"
+                type="text"
+                value="Brownie" /></label
+            ><label class="block"
+              >Tag<input
+                data-testid="pet-form-tag"
+                class="mt-2 mb-3 block w-full border px-3 py-2 border-gray-300"
+                type="text"
+                value="0001-000"
+            /></label>
+            <div class="mb-3">
+              <div class="mb-2 block">Vaccinations</div>
+              <div>
+                <fieldset class="mb-3 border border-gray-300 px-4 py-3">
+                  <label class="block"
+                    >Name<input
+                      data-testid="pet-form-vaccinations-0-name"
+                      class="mt-2 mb-3 block w-full border px-3 py-2 border-gray-300"
+                      type="text"
+                      value="rabies" /></label
+                  ><button
+                    data-testid="pet-form-remove-vaccination-0"
+                    type="button"
+                    class="inline-block px-5 py-2 text-white bg-red-600 hover:bg-red-700"
+                  >
+                    Remove
+                  </button>
+                </fieldset>
+                <button
+                  data-testid="pet-form-add-vaccination"
+                  type="button"
+                  class="inline-block px-5 py-2 text-white bg-green-600 hover:bg-green-700"
                 >
-                  Remove
+                  Add
                 </button>
-              </fieldset>
-              <button
-                data-testid="pet-form-add-vaccination"
-                class="inline-block px-5 py-2 text-white bg-green-600 hover:bg-green-700"
-              >
-                Add
-              </button>
+              </div>
             </div>
-          </div>
-          <button
-            data-testid="pet-form-submit"
-            class="inline-block px-5 py-2 text-white bg-blue-600 hover:bg-blue-700"
-          >
-            Save
-          </button>
-        </fieldset>
-      </form>
-    </div>
-    "
-  `);
+            <button
+              data-testid="pet-form-submit"
+              type="submit"
+              class="inline-block px-5 py-2 text-white bg-blue-600 hover:bg-blue-700"
+            >
+              Save
+            </button>
+          </fieldset>
+        </form>
+      </div>
+      "
+    `);
   });
 
   test('network error', () => {
     const httpError = new NetworkError({ title: 'network error' });
     const initialPet = { name: 'Brownie', tag: '0001-000', vaccinations: [{ name: 'rabies' }] };
 
-    render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
+    const { container } = render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
+
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+      "<div>
+        <form>
+          <fieldset class="mb-3 border border-gray-300 px-4 py-3">
+            <label class="block"
+              >Name<input
+                data-testid="pet-form-name"
+                class="mt-2 mb-3 block w-full border px-3 py-2 border-gray-300"
+                type="text"
+                value="Brownie" /></label
+            ><label class="block"
+              >Tag<input
+                data-testid="pet-form-tag"
+                class="mt-2 mb-3 block w-full border px-3 py-2 border-gray-300"
+                type="text"
+                value="0001-000"
+            /></label>
+            <div class="mb-3">
+              <div class="mb-2 block">Vaccinations</div>
+              <div>
+                <fieldset class="mb-3 border border-gray-300 px-4 py-3">
+                  <label class="block"
+                    >Name<input
+                      data-testid="pet-form-vaccinations-0-name"
+                      class="mt-2 mb-3 block w-full border px-3 py-2 border-gray-300"
+                      type="text"
+                      value="rabies" /></label
+                  ><button
+                    data-testid="pet-form-remove-vaccination-0"
+                    type="button"
+                    class="inline-block px-5 py-2 text-white bg-red-600 hover:bg-red-700"
+                  >
+                    Remove
+                  </button>
+                </fieldset>
+                <button
+                  data-testid="pet-form-add-vaccination"
+                  type="button"
+                  class="inline-block px-5 py-2 text-white bg-green-600 hover:bg-green-700"
+                >
+                  Add
+                </button>
+              </div>
+            </div>
+            <button
+              data-testid="pet-form-submit"
+              type="submit"
+              class="inline-block px-5 py-2 text-white bg-blue-600 hover:bg-blue-700"
+            >
+              Save
+            </button>
+          </fieldset>
+        </form>
+      </div>
+      "
+    `);
   });
 
   test('bad request', () => {
@@ -130,7 +192,64 @@ describe('pet-form', () => {
     });
     const initialPet = { name: 'Brownie', tag: '0001-000', vaccinations: [{ name: 'rabies' }] };
 
-    render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
+    const { container } = render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
+
+    expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
+      "<div>
+        <form>
+          <fieldset class="mb-3 border border-gray-300 px-4 py-3">
+            <label class="block"
+              >Name<input
+                data-testid="pet-form-name"
+                class="mt-2 mb-3 block w-full border px-3 py-2 border-gray-300"
+                type="text"
+                value="Brownie" /></label
+            ><label class="block"
+              >Tag<input
+                data-testid="pet-form-tag"
+                class="mt-2 mb-3 block w-full border px-3 py-2 border-gray-300"
+                type="text"
+                value="0001-000"
+            /></label>
+            <div class="mb-3">
+              <div class="mb-2 block">Vaccinations</div>
+              <div>
+                <fieldset class="mb-3 border border-gray-300 px-4 py-3">
+                  <label class="block"
+                    >Name<input
+                      data-testid="pet-form-vaccinations-0-name"
+                      class="mt-2 mb-3 block w-full border px-3 py-2 border-gray-300"
+                      type="text"
+                      value="rabies" /></label
+                  ><button
+                    data-testid="pet-form-remove-vaccination-0"
+                    type="button"
+                    class="inline-block px-5 py-2 text-white bg-red-600 hover:bg-red-700"
+                  >
+                    Remove
+                  </button>
+                </fieldset>
+                <button
+                  data-testid="pet-form-add-vaccination"
+                  type="button"
+                  class="inline-block px-5 py-2 text-white bg-green-600 hover:bg-green-700"
+                >
+                  Add
+                </button>
+              </div>
+            </div>
+            <button
+              data-testid="pet-form-submit"
+              type="submit"
+              class="inline-block px-5 py-2 text-white bg-blue-600 hover:bg-blue-700"
+            >
+              Save
+            </button>
+          </fieldset>
+        </form>
+      </div>
+      "
+    `);
   });
 
   test('bad request - with query string name', () => {
@@ -146,66 +265,69 @@ describe('pet-form', () => {
     const { container } = render(<PetForm httpError={httpError} initialPet={initialPet} submitPet={submitPet} />);
 
     expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
-    "<div>
-      <form>
-        <fieldset class="mb-3 border border-gray-300 px-4 py-3">
-          <label class="block text-red-600"
-            >Name<input
-              data-testid="pet-form-name"
-              class="mt-2 mb-3 block w-full border px-3 py-2 border-red-600 bg-red-100"
-              type="text"
-              value="Brownie"
-            />
-            <ul class="mb-3">
-              <li>reason1</li>
-            </ul></label
-          ><label class="block"
-            >Tag<input
-              data-testid="pet-form-tag"
-              class="mt-2 mb-3 block w-full border px-3 py-2 border-gray-300"
-              type="text"
-              value="0001-000"
-          /></label>
-          <div class="mb-3">
-            <div class="mb-2 block">Vaccinations</div>
-            <div>
-              <fieldset class="mb-3 border border-gray-300 px-4 py-3">
-                <label class="block text-red-600"
-                  >Name<input
-                    data-testid="pet-form-vaccinations-0-name"
-                    class="mt-2 mb-3 block w-full border px-3 py-2 border-red-600 bg-red-100"
-                    type="text"
-                    value="rabies"
-                  />
-                  <ul class="mb-3">
-                    <li>reason2</li>
-                  </ul></label
-                ><button
-                  data-testid="pet-form-remove-vaccination-0"
-                  class="inline-block px-5 py-2 text-white bg-red-600 hover:bg-red-700"
+      "<div>
+        <form>
+          <fieldset class="mb-3 border border-gray-300 px-4 py-3">
+            <label class="block text-red-600"
+              >Name<input
+                data-testid="pet-form-name"
+                class="mt-2 mb-3 block w-full border px-3 py-2 border-red-600 bg-red-100"
+                type="text"
+                value="Brownie"
+              />
+              <ul class="mb-3">
+                <li>reason1</li>
+              </ul></label
+            ><label class="block"
+              >Tag<input
+                data-testid="pet-form-tag"
+                class="mt-2 mb-3 block w-full border px-3 py-2 border-gray-300"
+                type="text"
+                value="0001-000"
+            /></label>
+            <div class="mb-3">
+              <div class="mb-2 block">Vaccinations</div>
+              <div>
+                <fieldset class="mb-3 border border-gray-300 px-4 py-3">
+                  <label class="block text-red-600"
+                    >Name<input
+                      data-testid="pet-form-vaccinations-0-name"
+                      class="mt-2 mb-3 block w-full border px-3 py-2 border-red-600 bg-red-100"
+                      type="text"
+                      value="rabies"
+                    />
+                    <ul class="mb-3">
+                      <li>reason2</li>
+                    </ul></label
+                  ><button
+                    data-testid="pet-form-remove-vaccination-0"
+                    type="button"
+                    class="inline-block px-5 py-2 text-white bg-red-600 hover:bg-red-700"
+                  >
+                    Remove
+                  </button>
+                </fieldset>
+                <button
+                  data-testid="pet-form-add-vaccination"
+                  type="button"
+                  class="inline-block px-5 py-2 text-white bg-green-600 hover:bg-green-700"
                 >
-                  Remove
+                  Add
                 </button>
-              </fieldset>
-              <button
-                data-testid="pet-form-add-vaccination"
-                class="inline-block px-5 py-2 text-white bg-green-600 hover:bg-green-700"
-              >
-                Add
-              </button>
+              </div>
             </div>
-          </div>
-          <button
-            data-testid="pet-form-submit"
-            class="inline-block px-5 py-2 text-white bg-blue-600 hover:bg-blue-700"
-          >
-            Save
-          </button>
-        </fieldset>
-      </form>
-    </div>
-    "
-  `);
+            <button
+              data-testid="pet-form-submit"
+              type="submit"
+              class="inline-block px-5 py-2 text-white bg-blue-600 hover:bg-blue-700"
+            >
+              Save
+            </button>
+          </fieldset>
+        </form>
+      </div>
+      "
+    `);
   });
 
   test('submit with name', async () => {

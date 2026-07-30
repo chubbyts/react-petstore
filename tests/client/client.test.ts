@@ -109,7 +109,7 @@ describe('client', () => {
 
       expect(await listClient({ filters: { name: 'Dummy' } })).toEqual(dummyModelListResponse);
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
 
     test('bad request', async () => {
@@ -161,7 +161,7 @@ describe('client', () => {
       }
     `);
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
 
     test('internal server error', async () => {
@@ -202,7 +202,7 @@ describe('client', () => {
       }
     `);
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
 
     test('network error', async () => {
@@ -236,7 +236,7 @@ describe('client', () => {
       }
     `);
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
 
     test('unknown response', async () => {
@@ -272,7 +272,7 @@ describe('client', () => {
         expect(e).toMatchInlineSnapshot('[Error: Unknown response]');
       }
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
   });
 
@@ -318,7 +318,7 @@ describe('client', () => {
 
       expect(await createClient(dummyModelRequest)).toEqual(dummyModelResponse);
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
 
     test('bad request', async () => {
@@ -376,7 +376,7 @@ describe('client', () => {
       }
     `);
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
 
     test('unprocessable entity', async () => {
@@ -434,7 +434,7 @@ describe('client', () => {
       }
     `);
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
 
     test('internal server error', async () => {
@@ -481,7 +481,7 @@ describe('client', () => {
       }
     `);
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
 
     test('network error', async () => {
@@ -521,7 +521,7 @@ describe('client', () => {
       }
     `);
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
 
     test('unknown response', async () => {
@@ -563,7 +563,7 @@ describe('client', () => {
         expect(e).toMatchInlineSnapshot('[Error: Unknown response]');
       }
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
   });
 
@@ -602,7 +602,7 @@ describe('client', () => {
 
       expect(await readClient('4d783b77-eb09-4603-b99b-f590b605eaa9')).toEqual(dummyModelResponse);
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
 
     test('not found', async () => {
@@ -639,7 +639,7 @@ describe('client', () => {
       }
     `);
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
 
     test('internal server error', async () => {
@@ -675,7 +675,7 @@ describe('client', () => {
       }
     `);
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
 
     test('network error', async () => {
@@ -704,7 +704,7 @@ describe('client', () => {
       }
     `);
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
 
     test('unknown response', async () => {
@@ -735,7 +735,7 @@ describe('client', () => {
         expect(e).toMatchInlineSnapshot('[Error: Unknown response]');
       }
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
   });
 
@@ -781,7 +781,7 @@ describe('client', () => {
 
       expect(await updateClient('4d783b77-eb09-4603-b99b-f590b605eaa9', dummyModelRequest)).toEqual(dummyModelResponse);
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
 
     test('bad request', async () => {
@@ -839,7 +839,7 @@ describe('client', () => {
       }
     `);
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
 
     test('not found', async () => {
@@ -887,7 +887,7 @@ describe('client', () => {
       }
     `);
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
 
     test('unprocessable entity', async () => {
@@ -945,7 +945,7 @@ describe('client', () => {
       }
     `);
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
 
     test('internal server error', async () => {
@@ -992,7 +992,7 @@ describe('client', () => {
       }
     `);
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
 
     test('network error', async () => {
@@ -1032,7 +1032,7 @@ describe('client', () => {
       }
     `);
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
 
     test('unknown response', async () => {
@@ -1074,7 +1074,7 @@ describe('client', () => {
         expect(e).toMatchInlineSnapshot('[Error: Unknown response]');
       }
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
   });
 
@@ -1102,7 +1102,7 @@ describe('client', () => {
 
       expect(await deleteClient('4d783b77-eb09-4603-b99b-f590b605eaa9')).toBeUndefined();
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
 
     test('not found', async () => {
@@ -1139,7 +1139,7 @@ describe('client', () => {
       }
     `);
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
 
     test('internal server error', async () => {
@@ -1175,7 +1175,7 @@ describe('client', () => {
       }
     `);
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
 
     test('network error', async () => {
@@ -1204,7 +1204,7 @@ describe('client', () => {
       }
     `);
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
 
     test('unknown response', async () => {
@@ -1235,7 +1235,7 @@ describe('client', () => {
         expect(e).toMatchInlineSnapshot('[Error: Unknown response]');
       }
 
-      expect(fetchMocks.length).toBe(0);
+      expect(fetchMocks).toHaveLength(0);
     });
   });
 });
