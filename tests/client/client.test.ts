@@ -1,8 +1,9 @@
 import { describe, expect, test } from 'vitest';
 import { useFunctionMock } from '@chubbyts/chubbyts-function-mock/dist/function-mock';
 import { z } from 'zod';
-import type { Fetch } from '../../src/client/client';
+import type { Fetch, GetAccessToken } from '../../src/client/client';
 import {
+  createAuthenticatedFetch,
   createCreateClient,
   createDeleteClient,
   createListClient,
@@ -56,6 +57,81 @@ const dummyModelListResponseSchema = z.object({
 type DummyModelListResponse = z.infer<typeof dummyModelListResponseSchema>;
 
 describe('client', () => {
+  describe('createAuthenticatedFetch', () => {
+    test('without access token', async () => {
+      const [fetch, fetchMocks] = useFunctionMock<Fetch>([
+        {
+          parameters: ['https://petstore.test/api/models', { method: 'GET', headers: { Accept: 'application/json' } }],
+          return: Promise.resolve({ status: 200 } as Response),
+        },
+      ]);
+
+      const [getAccessToken, getAccessTokenMocks] = useFunctionMock<GetAccessToken>([
+        { parameters: [], return: Promise.resolve(undefined) },
+      ]);
+
+      const authenticatedFetch = createAuthenticatedFetch(fetch, getAccessToken);
+
+      expect(
+        await authenticatedFetch('https://petstore.test/api/models', {
+          method: 'GET',
+          headers: { Accept: 'application/json' },
+        }),
+      ).toEqual({ status: 200 });
+
+      expect(fetchMocks).toHaveLength(0);
+      expect(getAccessTokenMocks).toHaveLength(0);
+    });
+
+    test('with access token', async () => {
+      const [fetch, fetchMocks] = useFunctionMock<Fetch>([
+        {
+          parameters: [
+            'https://petstore.test/api/models',
+            { method: 'GET', headers: { accept: 'application/json', authorization: 'Bearer access-token' } },
+          ],
+          return: Promise.resolve({ status: 200 } as Response),
+        },
+      ]);
+
+      const [getAccessToken, getAccessTokenMocks] = useFunctionMock<GetAccessToken>([
+        { parameters: [], return: Promise.resolve('access-token') },
+      ]);
+
+      const authenticatedFetch = createAuthenticatedFetch(fetch, getAccessToken);
+
+      expect(
+        await authenticatedFetch('https://petstore.test/api/models', {
+          method: 'GET',
+          headers: { Accept: 'application/json' },
+        }),
+      ).toEqual({ status: 200 });
+
+      expect(fetchMocks).toHaveLength(0);
+      expect(getAccessTokenMocks).toHaveLength(0);
+    });
+
+    test('with access token and without init', async () => {
+      const [fetch, fetchMocks] = useFunctionMock<Fetch>([
+        {
+          parameters: ['https://petstore.test/api/models', { headers: { authorization: 'Bearer access-token' } }],
+          return: Promise.resolve({ status: 200 } as Response),
+        },
+      ]);
+
+      const [getAccessToken, getAccessTokenMocks] = useFunctionMock<GetAccessToken>([
+        { parameters: [], return: Promise.resolve('access-token') },
+      ]);
+
+      const authenticatedFetch = createAuthenticatedFetch(fetch, getAccessToken);
+
+      expect(await authenticatedFetch('https://petstore.test/api/models')).toEqual({ status: 200 });
+
+      expect(fetchMocks).toHaveLength(0);
+      expect(getAccessTokenMocks).toHaveLength(0);
+    });
+  });
+
   describe('createListClient', () => {
     test('success', async () => {
       const dummyModelRequest: DummyModelRequest = {
@@ -108,6 +184,43 @@ describe('client', () => {
       );
 
       expect(await listClient({ filters: { name: 'Dummy' } })).toEqual(dummyModelListResponse);
+
+      expect(fetchMocks).toHaveLength(0);
+    });
+
+    test('unauthorized', async () => {
+      const [fetch, fetchMocks] = useFunctionMock<Fetch>([
+        {
+          parameters: [
+            'https://petstore.test/api/models?filters%5Bname%5D=Dummy',
+            {
+              method: 'GET',
+              headers: {
+                Accept: 'application/json',
+              },
+            },
+          ],
+          return: Promise.resolve({
+            status: 401,
+            json: () => Promise.reject(new Error('Unexpected end of JSON input')),
+          } as Response),
+        },
+      ]);
+
+      const listClient = createListClient(
+        fetch,
+        'https://petstore.test/api/models',
+        dummyModelListRequestSchema,
+        dummyModelListResponseSchema,
+      );
+
+      expect(await listClient({ filters: { name: 'Dummy' } })).toMatchInlineSnapshot(`
+        Unauthorized {
+          "detail": "The access token is missing, invalid or expired",
+          "instance": undefined,
+          "title": "Unauthorized",
+        }
+      `);
 
       expect(fetchMocks).toHaveLength(0);
     });
@@ -317,6 +430,45 @@ describe('client', () => {
       );
 
       expect(await createClient(dummyModelRequest)).toEqual(dummyModelResponse);
+
+      expect(fetchMocks).toHaveLength(0);
+    });
+
+    test('unauthorized', async () => {
+      const [fetch, fetchMocks] = useFunctionMock<Fetch>([
+        {
+          parameters: [
+            'https://petstore.test/api/models',
+            {
+              method: 'POST',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ name: 'Dummy' }),
+            },
+          ],
+          return: Promise.resolve({
+            status: 401,
+            json: () => Promise.reject(new Error('Unexpected end of JSON input')),
+          } as Response),
+        },
+      ]);
+
+      const createClient = createCreateClient(
+        fetch,
+        'https://petstore.test/api/models',
+        dummyModelRequestSchema,
+        dummyModelResponseSchema,
+      );
+
+      expect(await createClient({ name: 'Dummy' })).toMatchInlineSnapshot(`
+        Unauthorized {
+          "detail": "The access token is missing, invalid or expired",
+          "instance": undefined,
+          "title": "Unauthorized",
+        }
+      `);
 
       expect(fetchMocks).toHaveLength(0);
     });
@@ -605,6 +757,38 @@ describe('client', () => {
       expect(fetchMocks).toHaveLength(0);
     });
 
+    test('unauthorized', async () => {
+      const [fetch, fetchMocks] = useFunctionMock<Fetch>([
+        {
+          parameters: [
+            'https://petstore.test/api/models/4d783b77-eb09-4603-b99b-f590b605eaa9',
+            {
+              method: 'GET',
+              headers: {
+                Accept: 'application/json',
+              },
+            },
+          ],
+          return: Promise.resolve({
+            status: 401,
+            json: () => Promise.reject(new Error('Unexpected end of JSON input')),
+          } as Response),
+        },
+      ]);
+
+      const readClient = createReadClient(fetch, 'https://petstore.test/api/models', dummyModelResponseSchema);
+
+      expect(await readClient('4d783b77-eb09-4603-b99b-f590b605eaa9')).toMatchInlineSnapshot(`
+        Unauthorized {
+          "detail": "The access token is missing, invalid or expired",
+          "instance": undefined,
+          "title": "Unauthorized",
+        }
+      `);
+
+      expect(fetchMocks).toHaveLength(0);
+    });
+
     test('not found', async () => {
       const [fetch, fetchMocks] = useFunctionMock<Fetch>([
         {
@@ -780,6 +964,45 @@ describe('client', () => {
       );
 
       expect(await updateClient('4d783b77-eb09-4603-b99b-f590b605eaa9', dummyModelRequest)).toEqual(dummyModelResponse);
+
+      expect(fetchMocks).toHaveLength(0);
+    });
+
+    test('unauthorized', async () => {
+      const [fetch, fetchMocks] = useFunctionMock<Fetch>([
+        {
+          parameters: [
+            'https://petstore.test/api/models/4d783b77-eb09-4603-b99b-f590b605eaa9',
+            {
+              method: 'PUT',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ name: 'Dummy' }),
+            },
+          ],
+          return: Promise.resolve({
+            status: 401,
+            json: () => Promise.reject(new Error('Unexpected end of JSON input')),
+          } as Response),
+        },
+      ]);
+
+      const updateClient = createUpdateClient(
+        fetch,
+        'https://petstore.test/api/models',
+        dummyModelRequestSchema,
+        dummyModelResponseSchema,
+      );
+
+      expect(await updateClient('4d783b77-eb09-4603-b99b-f590b605eaa9', { name: 'Dummy' })).toMatchInlineSnapshot(`
+        Unauthorized {
+          "detail": "The access token is missing, invalid or expired",
+          "instance": undefined,
+          "title": "Unauthorized",
+        }
+      `);
 
       expect(fetchMocks).toHaveLength(0);
     });
@@ -1101,6 +1324,38 @@ describe('client', () => {
       const deleteClient = createDeleteClient(fetch, 'https://petstore.test/api/models');
 
       expect(await deleteClient('4d783b77-eb09-4603-b99b-f590b605eaa9')).toBeUndefined();
+
+      expect(fetchMocks).toHaveLength(0);
+    });
+
+    test('unauthorized', async () => {
+      const [fetch, fetchMocks] = useFunctionMock<Fetch>([
+        {
+          parameters: [
+            'https://petstore.test/api/models/4d783b77-eb09-4603-b99b-f590b605eaa9',
+            {
+              method: 'DELETE',
+              headers: {
+                Accept: 'application/json',
+              },
+            },
+          ],
+          return: Promise.resolve({
+            status: 401,
+            json: () => Promise.reject(new Error('Unexpected end of JSON input')),
+          } as Response),
+        },
+      ]);
+
+      const deleteClient = createDeleteClient(fetch, 'https://petstore.test/api/models');
+
+      expect(await deleteClient('4d783b77-eb09-4603-b99b-f590b605eaa9')).toMatchInlineSnapshot(`
+        Unauthorized {
+          "detail": "The access token is missing, invalid or expired",
+          "instance": undefined,
+          "title": "Unauthorized",
+        }
+      `);
 
       expect(fetchMocks).toHaveLength(0);
     });

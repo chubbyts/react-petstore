@@ -43,6 +43,8 @@ export class NetworkError extends HttpError {}
 
 export class NotFound extends HttpError {}
 
+export class Unauthorized extends HttpError {}
+
 export class UnprocessableEntity extends BadRequestOrUnprocessableEntity {}
 
 export const createInvalidParametersByName = (
