@@ -1,6 +1,8 @@
-import { fetch } from 'cross-fetch';
+import { fetch as crossFetch } from 'cross-fetch';
 import { petListRequestSchema, petListResponseSchema, petRequestSchema, petResponseSchema } from '../model/pet';
+import { getAccessToken } from '../oidc';
 import {
+  createAuthenticatedFetch,
   createCreateClient,
   createDeleteClient,
   createListClient,
@@ -8,6 +10,7 @@ import {
   createUpdateClient,
 } from './client';
 
+const fetch = createAuthenticatedFetch(crossFetch, getAccessToken);
 const url = `${import.meta.env.VITE_PETSTORE_URL}/api/pets`;
 
 export const listPetsClient = createListClient(fetch, url, petListRequestSchema, petListResponseSchema);

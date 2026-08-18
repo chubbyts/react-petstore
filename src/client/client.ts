@@ -2,9 +2,31 @@ import { throwableToError } from '@chubbyts/chubbyts-throwable-to-error/dist/thr
 import qs from 'qs';
 import type { z } from 'zod';
 import type { HttpError } from './error';
-import { BadRequest, InternalServerError, NetworkError, NotFound, UnprocessableEntity } from './error';
+import { BadRequest, InternalServerError, NetworkError, NotFound, Unauthorized, UnprocessableEntity } from './error';
 
 export type Fetch = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+
+export type GetAccessToken = () => Promise<string | undefined>;
+
+export const createAuthenticatedFetch = (fetch: Fetch, getAccessToken: GetAccessToken): Fetch => {
+  return async (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
+    const accessToken = await getAccessToken();
+
+    if (!accessToken) {
+      return fetch(input, init);
+    }
+
+    const headers = new Headers(init?.headers);
+    headers.set('Authorization', `Bearer ${accessToken}`);
+
+    return fetch(input, { ...init, headers: Object.fromEntries(headers.entries()) });
+  };
+};
+
+// the api responds without a body, but with a www-authenticate header
+const createUnauthorized = (): Unauthorized => {
+  return new Unauthorized({ title: 'Unauthorized', detail: 'The access token is missing, invalid or expired' });
+};
 
 export type ListClient<ModelListRequest, ModelListResponse> = (
   modelListRequest: ModelListRequest,
@@ -29,6 +51,10 @@ export const createListClient = <
           Accept: 'application/json',
         },
       });
+
+      if (401 === response.status) {
+        return createUnauthorized();
+      }
 
       const json = await response.json();
 
@@ -72,6 +98,10 @@ export const createCreateClient = <ModelRequestSchema extends z.ZodObject, Model
         body: JSON.stringify(modelRequestSchema.parse(modelRequest)),
       });
 
+      if (401 === response.status) {
+        return createUnauthorized();
+      }
+
       const json = await response.json();
 
       if (201 === response.status) {
@@ -112,6 +142,10 @@ export const createReadClient = <ModelResponseSchema extends z.ZodObject>(
           Accept: 'application/json',
         },
       });
+
+      if (401 === response.status) {
+        return createUnauthorized();
+      }
 
       const json = await response.json();
 
@@ -159,6 +193,10 @@ export const createUpdateClient = <ModelRequestSchema extends z.ZodObject, Model
         body: JSON.stringify(modelRequestSchema.parse(modelRequest)),
       });
 
+      if (401 === response.status) {
+        return createUnauthorized();
+      }
+
       const json = await response.json();
 
       if (200 === response.status) {
@@ -202,6 +240,10 @@ export const createDeleteClient = (fetch: Fetch, url: string): DeleteClient => {
 
       if (204 === response.status) {
         return;
+      }
+
+      if (401 === response.status) {
+        return createUnauthorized();
       }
 
       const json = await response.json();

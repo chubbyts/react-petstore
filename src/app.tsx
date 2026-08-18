@@ -2,9 +2,15 @@ import type { FC } from 'react';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import Routes from './routes';
+import { useOidc } from './hook/use-oidc';
+import { HttpError as HttpErrorPartial } from './component/partial/http-error';
+import { HttpError } from './client/error';
+import { H1 } from './component/heading';
+import { Button } from './component/button';
 
 const App: FC = () => {
   const [displayMenu, setDisplayMenu] = useState<boolean>(false);
+  const oidc = useOidc();
 
   const toggleMenu = () => {
     setDisplayMenu(!displayMenu);
@@ -15,7 +21,7 @@ const App: FC = () => {
       <nav className="absolute flow-root h-16 w-full bg-gray-900 px-4 py-3 text-2xl leading-relaxed font-semibold text-gray-100 uppercase">
         <button
           type="button"
-          className="float-right block border-2 p-2 md:hidden"
+          className="float-right ml-4 block border-2 p-2 md:hidden"
           data-testid="navigation-toggle"
           onClick={toggleMenu}
         >
@@ -23,6 +29,16 @@ const App: FC = () => {
           <span className="block h-2 w-6 border-t-2" />
           <span className="block h-0 w-6 border-t-2" />
         </button>
+        {oidc.isAuthenticated ? (
+          <button
+            type="button"
+            data-testid="navigation-logout"
+            className="float-right ml-4 border-2 px-3 py-1 text-base leading-relaxed hover:bg-gray-700"
+            onClick={oidc.logout}
+          >
+            Logout
+          </button>
+        ) : null}
         <NavLink className="hover:text-gray-500" to="/">
           Petstore
         </NavLink>
@@ -49,7 +65,20 @@ const App: FC = () => {
         </ul>
       </nav>
       <div className={`w-full px-6 py-8 md:w-2/3 lg:w-3/4 xl:w-4/5 ${displayMenu ? 'mt-0' : 'mt-16'}`}>
-        <Routes />
+        {oidc.error ? (
+          <HttpErrorPartial httpError={new HttpError({ title: 'Authentication failed', detail: oidc.error.message })} />
+        ) : null}
+        {oidc.isLoading ? null : oidc.isAuthenticated ? (
+          <Routes />
+        ) : (
+          <div data-testid="login-required">
+            <H1>Login</H1>
+            <p className="mb-4">You need to login to use the petstore.</p>
+            <Button data-testid="login" colorTheme="blue" onClick={oidc.login}>
+              Login
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
