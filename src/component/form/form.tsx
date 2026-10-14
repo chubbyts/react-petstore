@@ -30,6 +30,7 @@ export const TextField: FC<TextFieldProps> = ({
 
   // rerender if the outer state changes
   useEffect(() => {
+    // oxlint-disable-next-line react/set-state-in-effect
     setInternalValue(value);
   }, [value]);
 
