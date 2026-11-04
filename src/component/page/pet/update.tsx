@@ -30,13 +30,13 @@ const Update: FC = () => {
   const petMutation = useMutation<PetResponse, HttpError, [string, PetRequest]>({
     mutationFn: provideUpdateMutationFn(updateClient),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['pets', id] });
-      navigate('/pet');
+      void queryClient.invalidateQueries({ queryKey: ['pets', id] });
+      void navigate('/pet');
     },
     retry: false,
   });
 
-  const submitPet = async (petRequest: PetRequest) => {
+  const submitPet = (petRequest: PetRequest): void => {
     petMutation.mutate([id, petRequest]);
   };
 

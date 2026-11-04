@@ -19,12 +19,12 @@ const Create: FC = () => {
   const petMutation = useMutation<PetResponse, HttpError, PetRequest>({
     mutationFn: provideCreateMutationFn(createPetClient),
     onSuccess: () => {
-      navigate('/pet');
+      void navigate('/pet');
     },
     retry: false,
   });
 
-  const submitPet = async (petRequest: PetRequest) => {
+  const submitPet = (petRequest: PetRequest): void => {
     petMutation.mutate(petRequest);
   };
 

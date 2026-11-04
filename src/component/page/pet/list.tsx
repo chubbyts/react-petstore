@@ -56,25 +56,25 @@ const List: FC = () => {
   const petDeleteMutation = useMutation<unknown, HttpError, string>({
     mutationFn: provideDeleteMutationFn(deletePetClient),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey });
+      void queryClient.invalidateQueries({ queryKey });
     },
     retry: false,
   });
 
-  const deletePet = async (id: string) => {
+  const deletePet = (id: string): void => {
     petDeleteMutation.mutate(id);
   };
 
   const submitPage = (page: number): void => {
-    navigate(`/pet?${qs.stringify({ ...query, page })}`);
+    void navigate(`/pet?${qs.stringify({ ...query, page })}`);
   };
 
   const submitPetFilters = (filters: PetFilters): void => {
-    navigate(`/pet?${qs.stringify({ ...query, page: 1, filters })}`);
+    void navigate(`/pet?${qs.stringify({ ...query, page: 1, filters })}`);
   };
 
   const submitPetSort = (sort: PetSort): void => {
-    navigate(`/pet?${qs.stringify({ ...query, page: 1, sort })}`);
+    void navigate(`/pet?${qs.stringify({ ...query, page: 1, sort })}`);
   };
 
   useEffect(() => {
