@@ -11,6 +11,7 @@ export type OidcProviderProps = {
 export type Oidc = {
   isLoading: boolean;
   isAuthenticated: boolean;
+  username?: string;
   error?: Error;
   login: () => Promise<void>;
   logout: () => Promise<void>;
@@ -19,10 +20,19 @@ export type Oidc = {
 type OidcState = {
   isLoading: boolean;
   isAuthenticated: boolean;
+  username: string | undefined;
   error: Error | undefined;
 };
 
 const OidcContext = createContext<Oidc | undefined>(undefined);
+
+const resolveUsername = (user: User | null | undefined): string | undefined => {
+  if (!user || user.expired) {
+    return undefined;
+  }
+
+  return user.profile.preferred_username ?? user.profile.name ?? user.profile.email ?? user.profile.sub;
+};
 
 // check if returning back from authority server (response_mode: query)
 const hasAuthParams = (): boolean => {
@@ -36,7 +46,12 @@ export const OidcProvider: FC<PropsWithChildren<OidcProviderProps>> = ({
   onSigninCallback,
   children,
 }: PropsWithChildren<OidcProviderProps>) => {
-  const [state, setState] = useState<OidcState>({ isLoading: true, isAuthenticated: false, error: undefined });
+  const [state, setState] = useState<OidcState>({
+    isLoading: true,
+    isAuthenticated: false,
+    username: undefined,
+    error: undefined,
+  });
   const didInitialize = useRef<boolean>(false);
 
   const patchState = useCallback((patch: Partial<OidcState>): void => {
@@ -46,12 +61,17 @@ export const OidcProvider: FC<PropsWithChildren<OidcProviderProps>> = ({
   useEffect(() => {
     // event UserLoaded (e.g. initial load, silent renew success)
     const handleUserLoaded = (user: User): void => {
-      patchState({ isLoading: false, isAuthenticated: !user.expired, error: undefined });
+      patchState({
+        isLoading: false,
+        isAuthenticated: !user.expired,
+        username: resolveUsername(user),
+        error: undefined,
+      });
     };
 
     // event UserUnloaded (e.g. userManager.removeUser) / UserSignedOut (e.g. user was signed out in background)
     const handleUserUnloaded = (): void => {
-      patchState({ isAuthenticated: false });
+      patchState({ isAuthenticated: false, username: undefined });
     };
 
     // event SilentRenewError (silent renew error)
@@ -96,7 +116,12 @@ export const OidcProvider: FC<PropsWithChildren<OidcProviderProps>> = ({
         const signedInUser = hasAuthParams() ? await signinCallback() : undefined;
         const user = signedInUser ?? (await userManager.getUser());
 
-        patchState({ isLoading: false, isAuthenticated: user ? !user.expired : false, error: undefined });
+        patchState({
+          isLoading: false,
+          isAuthenticated: user ? !user.expired : false,
+          username: resolveUsername(user),
+          error: undefined,
+        });
       } catch (error) {
         patchState({ isLoading: false, error: throwableToError(error) });
       }
@@ -124,6 +149,7 @@ export const OidcProvider: FC<PropsWithChildren<OidcProviderProps>> = ({
     () => ({
       isLoading: state.isLoading,
       isAuthenticated: state.isAuthenticated,
+      username: state.username,
       error: state.error,
       // return to the current page after the login
       login: () =>

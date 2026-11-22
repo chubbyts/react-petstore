@@ -2,9 +2,151 @@
 
 @config '../tailwind.config.js';
 
-html,
-body,
-#root {
-  @apply w-full;
-  @apply h-full;
+/* "Ledger Dark" design tokens (see petstore-admin-design/DESIGN.md), light overrides below */
+@theme {
+  /* no webfonts: the font of the operating system (macOS, Windows, Linux desktops, Android), common fallbacks */
+  --font-sans:
+    system-ui, -apple-system, 'Segoe UI', Roboto, Ubuntu, Cantarell, 'Noto Sans', 'DejaVu Sans', 'Liberation Sans',
+    Arial, sans-serif;
+  --font-mono:
+    ui-monospace, 'SF Mono', Menlo, Consolas, 'Cascadia Mono', 'Ubuntu Mono', 'DejaVu Sans Mono', 'Liberation Mono',
+    monospace;
+
+  --color-canvas: #0d1117;
+  --color-sidebar: #10151c;
+  --color-surface: #161b22;
+  --color-surface-muted: #131820;
+  --color-surface-hover: #1c2330;
+  --color-row-hover: #18202b;
+
+  --color-line: #222a35;
+  --color-line-strong: #333d4a;
+  --color-line-overlay: #2a313c;
+  /* borders of controls (inputs, buttons): at least 3:1 against every background they are on (wcag 1.4.11) */
+  --color-line-control: #667280;
+
+  --color-fg: #e6edf3;
+  --color-fg-secondary: #c5ced8;
+  --color-fg-muted: #9ba7b4;
+  --color-fg-meta: #8b97a5;
+  --color-fg-placeholder: #7d8895;
+
+  /* accent derived from the button color #ff9535 (hue 29°), dark text on it as white would be too faint */
+  --color-primary: #ff9535;
+  --color-primary-hover: #ffa553;
+  /* not needed on dark backgrounds (7.9:1), see light */
+  --color-primary-line: transparent;
+  --color-on-primary: #1f2328;
+  --color-focus: #ff9535;
+  --color-link: #ff9535;
+  --color-link-hover: #ffba7c;
+  --color-nav-active: #3b2f25;
+
+  --color-chip: #322a24;
+  --color-chip-line: #734c2a;
+  --color-chip-fg: #ffba7c;
+
+  --color-danger: #ff7b72;
+  --color-danger-hover: #ff8a84;
+  --color-danger-solid: #da3633;
+  --color-danger-field: #1f1214;
+  --color-danger-field-line: #f85149;
+  --color-danger-surface-hover: #3a1718;
+  --color-danger-fg: #ffb4ae;
+
+  --color-overlay: rgba(1, 4, 9, 0.7);
+
+  --container-sidebar: 256px;
+  /* max width of the page content: full width up to a full hd screen (1920px - sidebar - main padding), no wider */
+  --container-content: calc(1920px - var(--container-sidebar) - 4rem);
+
+  --radius-control: 10px;
+  --radius-dialog: 14px;
+}
+
+/* shadows are plain custom properties: tailwind would inline @theme shadows, so they could not be overridden */
+:root {
+  --dialog-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  --toast-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* data-theme is set before the first paint by the inline script in index.html, then kept in sync by useTheme */
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --color-canvas: #f3f5f8;
+  --color-sidebar: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f7f9fb;
+  --color-surface-hover: #edf1f5;
+  --color-row-hover: #f3f7fc;
+
+  --color-line: #dfe3e8;
+  --color-line-strong: #c6cdd5;
+  --color-line-overlay: #d0d7de;
+  --color-line-control: #7d8690;
+
+  --color-fg: #1f2328;
+  --color-fg-secondary: #3d4650;
+  --color-fg-muted: #5e6875;
+  --color-fg-meta: #67717d;
+  --color-fg-placeholder: #68717a;
+
+  /* same button color, darker shades of its hue for text on light backgrounds */
+  --color-primary-hover: #eb8931;
+  /* the button color is only 2.2:1 against white: a darker border of its hue (3.2:1+) outlines it */
+  --color-primary-line: #d06c14;
+  --color-focus: #af5300;
+  --color-link: #af5300;
+  --color-link-hover: #8c4200;
+  --color-nav-active: #fff2e7;
+
+  --color-chip: #fff4eb;
+  --color-chip-line: #ffcfa4;
+  --color-chip-fg: #8c4200;
+
+  --color-danger: #cb212d;
+  --color-danger-hover: #a40e26;
+  --color-danger-solid: #cf222e;
+  --color-danger-field: #fff6f6;
+  --color-danger-field-line: #cf222e;
+  --color-danger-surface-hover: #ffe3e1;
+  --color-danger-fg: #82071e;
+
+  --color-overlay: rgba(31, 35, 40, 0.45);
+  --dialog-shadow: 0 24px 60px rgba(31, 35, 40, 0.25);
+  --toast-shadow: 0 10px 30px rgba(31, 35, 40, 0.15);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html,
+  body,
+  #root {
+    @apply h-full w-full;
+  }
+
+  body {
+    @apply bg-canvas text-fg font-sans text-base/[1.5];
+  }
+
+  a {
+    @apply text-link hover:text-link-hover;
+  }
+
+  button:not(:disabled) {
+    @apply cursor-pointer;
+  }
+
+  button:disabled {
+    @apply cursor-not-allowed opacity-40;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 1px;
+  }
 }

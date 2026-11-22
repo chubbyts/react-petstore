@@ -218,6 +218,7 @@ describe('client', () => {
         Unauthorized {
           "detail": "The access token is missing, invalid or expired",
           "instance": undefined,
+          "status": 401,
           "title": "Unauthorized",
         }
       `);
@@ -258,21 +259,22 @@ describe('client', () => {
       );
 
       expect(await listClient({ filters: { name: 'Dummy' } })).toMatchInlineSnapshot(`
-      BadRequest {
-        "detail": "Sorting value",
-        "instance": "0123456789abcdef",
-        "invalidParameters": [
-          {
-            "details": {
-              "key": "value1",
+        BadRequest {
+          "detail": "Sorting value",
+          "instance": "0123456789abcdef",
+          "invalidParameters": [
+            {
+              "details": {
+                "key": "value1",
+              },
+              "name": "name",
+              "reason": "unknown field",
             },
-            "name": "name",
-            "reason": "unknown field",
-          },
-        ],
-        "title": "Bad Request",
-      }
-    `);
+          ],
+          "status": 400,
+          "title": "Bad Request",
+        }
+      `);
 
       expect(fetchMocks).toHaveLength(0);
     });
@@ -308,12 +310,13 @@ describe('client', () => {
       );
 
       expect(await listClient({ filters: { name: 'Dummy' } })).toMatchInlineSnapshot(`
-      InternalServerError {
-        "detail": undefined,
-        "instance": "0123456789abcdef",
-        "title": "Internal Server Error",
-      }
-    `);
+        InternalServerError {
+          "detail": undefined,
+          "instance": "0123456789abcdef",
+          "status": 500,
+          "title": "Internal Server Error",
+        }
+      `);
 
       expect(fetchMocks).toHaveLength(0);
     });
@@ -342,12 +345,13 @@ describe('client', () => {
       );
 
       expect(await listClient({ filters: { name: 'Dummy' } })).toMatchInlineSnapshot(`
-      NetworkError {
-        "detail": undefined,
-        "instance": undefined,
-        "title": "Failed to fetch",
-      }
-    `);
+        NetworkError {
+          "detail": undefined,
+          "instance": undefined,
+          "status": undefined,
+          "title": "Failed to fetch",
+        }
+      `);
 
       expect(fetchMocks).toHaveLength(0);
     });
@@ -466,6 +470,7 @@ describe('client', () => {
         Unauthorized {
           "detail": "The access token is missing, invalid or expired",
           "instance": undefined,
+          "status": 401,
           "title": "Unauthorized",
         }
       `);
@@ -512,21 +517,22 @@ describe('client', () => {
       );
 
       expect(await createClient(dummyModelRequest)).toMatchInlineSnapshot(`
-      BadRequest {
-        "detail": "name",
-        "instance": "0123456789abcdef",
-        "invalidParameters": [
-          {
-            "details": {
-              "key": "value1",
+        BadRequest {
+          "detail": "name",
+          "instance": "0123456789abcdef",
+          "invalidParameters": [
+            {
+              "details": {
+                "key": "value1",
+              },
+              "name": "name",
+              "reason": "empty",
             },
-            "name": "name",
-            "reason": "empty",
-          },
-        ],
-        "title": "Bad Request",
-      }
-    `);
+          ],
+          "status": 400,
+          "title": "Bad Request",
+        }
+      `);
 
       expect(fetchMocks).toHaveLength(0);
     });
@@ -570,21 +576,22 @@ describe('client', () => {
       );
 
       expect(await createClient(dummyModelRequest)).toMatchInlineSnapshot(`
-      UnprocessableEntity {
-        "detail": "name",
-        "instance": "0123456789abcdef",
-        "invalidParameters": [
-          {
-            "details": {
-              "key": "value1",
+        UnprocessableEntity {
+          "detail": "name",
+          "instance": "0123456789abcdef",
+          "invalidParameters": [
+            {
+              "details": {
+                "key": "value1",
+              },
+              "name": "name",
+              "reason": "empty",
             },
-            "name": "name",
-            "reason": "empty",
-          },
-        ],
-        "title": "Unprocessable Entity",
-      }
-    `);
+          ],
+          "status": 422,
+          "title": "Unprocessable Entity",
+        }
+      `);
 
       expect(fetchMocks).toHaveLength(0);
     });
@@ -626,12 +633,13 @@ describe('client', () => {
       );
 
       expect(await createClient(dummyModelRequest)).toMatchInlineSnapshot(`
-      InternalServerError {
-        "detail": undefined,
-        "instance": "0123456789abcdef",
-        "title": "Internal Server Error",
-      }
-    `);
+        InternalServerError {
+          "detail": undefined,
+          "instance": "0123456789abcdef",
+          "status": 500,
+          "title": "Internal Server Error",
+        }
+      `);
 
       expect(fetchMocks).toHaveLength(0);
     });
@@ -666,12 +674,13 @@ describe('client', () => {
       );
 
       expect(await createClient(dummyModelRequest)).toMatchInlineSnapshot(`
-      NetworkError {
-        "detail": undefined,
-        "instance": undefined,
-        "title": "Failed to fetch",
-      }
-    `);
+        NetworkError {
+          "detail": undefined,
+          "instance": undefined,
+          "status": undefined,
+          "title": "Failed to fetch",
+        }
+      `);
 
       expect(fetchMocks).toHaveLength(0);
     });
@@ -782,6 +791,7 @@ describe('client', () => {
         Unauthorized {
           "detail": "The access token is missing, invalid or expired",
           "instance": undefined,
+          "status": 401,
           "title": "Unauthorized",
         }
       `);
@@ -816,12 +826,13 @@ describe('client', () => {
       const readClient = createReadClient(fetch, 'https://petstore.test/api/models', dummyModelResponseSchema);
 
       expect(await readClient('4d783b77-eb09-4603-b99b-f590b605eaa9')).toMatchInlineSnapshot(`
-      NotFound {
-        "detail": "There is no model with id "4d783b77-eb09-4603-b99b-f590b605eaa9"",
-        "instance": "0123456789abcdef",
-        "title": "Not Found",
-      }
-    `);
+        NotFound {
+          "detail": "There is no model with id "4d783b77-eb09-4603-b99b-f590b605eaa9"",
+          "instance": "0123456789abcdef",
+          "status": 404,
+          "title": "Not Found",
+        }
+      `);
 
       expect(fetchMocks).toHaveLength(0);
     });
@@ -852,12 +863,13 @@ describe('client', () => {
       const readClient = createReadClient(fetch, 'https://petstore.test/api/models', dummyModelResponseSchema);
 
       expect(await readClient('4d783b77-eb09-4603-b99b-f590b605eaa9')).toMatchInlineSnapshot(`
-      InternalServerError {
-        "detail": undefined,
-        "instance": "0123456789abcdef",
-        "title": "Internal Server Error",
-      }
-    `);
+        InternalServerError {
+          "detail": undefined,
+          "instance": "0123456789abcdef",
+          "status": 500,
+          "title": "Internal Server Error",
+        }
+      `);
 
       expect(fetchMocks).toHaveLength(0);
     });
@@ -881,12 +893,13 @@ describe('client', () => {
       const readClient = createReadClient(fetch, 'https://petstore.test/api/models', dummyModelResponseSchema);
 
       expect(await readClient('4d783b77-eb09-4603-b99b-f590b605eaa9')).toMatchInlineSnapshot(`
-      NetworkError {
-        "detail": undefined,
-        "instance": undefined,
-        "title": "Failed to fetch",
-      }
-    `);
+        NetworkError {
+          "detail": undefined,
+          "instance": undefined,
+          "status": undefined,
+          "title": "Failed to fetch",
+        }
+      `);
 
       expect(fetchMocks).toHaveLength(0);
     });
@@ -1000,6 +1013,7 @@ describe('client', () => {
         Unauthorized {
           "detail": "The access token is missing, invalid or expired",
           "instance": undefined,
+          "status": 401,
           "title": "Unauthorized",
         }
       `);
@@ -1046,21 +1060,22 @@ describe('client', () => {
       );
 
       expect(await updateClient('4d783b77-eb09-4603-b99b-f590b605eaa9', dummyModelRequest)).toMatchInlineSnapshot(`
-      BadRequest {
-        "detail": "name",
-        "instance": "0123456789abcdef",
-        "invalidParameters": [
-          {
-            "details": {
-              "key": "value1",
+        BadRequest {
+          "detail": "name",
+          "instance": "0123456789abcdef",
+          "invalidParameters": [
+            {
+              "details": {
+                "key": "value1",
+              },
+              "name": "name",
+              "reason": "empty",
             },
-            "name": "name",
-            "reason": "empty",
-          },
-        ],
-        "title": "Bad Request",
-      }
-    `);
+          ],
+          "status": 400,
+          "title": "Bad Request",
+        }
+      `);
 
       expect(fetchMocks).toHaveLength(0);
     });
@@ -1103,12 +1118,13 @@ describe('client', () => {
       );
 
       expect(await updateClient('4d783b77-eb09-4603-b99b-f590b605eaa9', dummyModelRequest)).toMatchInlineSnapshot(`
-      NotFound {
-        "detail": "There is no model with id "4d783b77-eb09-4603-b99b-f590b605eaa9"",
-        "instance": "0123456789abcdef",
-        "title": "Not Found",
-      }
-    `);
+        NotFound {
+          "detail": "There is no model with id "4d783b77-eb09-4603-b99b-f590b605eaa9"",
+          "instance": "0123456789abcdef",
+          "status": 404,
+          "title": "Not Found",
+        }
+      `);
 
       expect(fetchMocks).toHaveLength(0);
     });
@@ -1152,21 +1168,22 @@ describe('client', () => {
       );
 
       expect(await updateClient('4d783b77-eb09-4603-b99b-f590b605eaa9', dummyModelRequest)).toMatchInlineSnapshot(`
-      UnprocessableEntity {
-        "detail": "name",
-        "instance": "0123456789abcdef",
-        "invalidParameters": [
-          {
-            "details": {
-              "key": "value1",
+        UnprocessableEntity {
+          "detail": "name",
+          "instance": "0123456789abcdef",
+          "invalidParameters": [
+            {
+              "details": {
+                "key": "value1",
+              },
+              "name": "name",
+              "reason": "empty",
             },
-            "name": "name",
-            "reason": "empty",
-          },
-        ],
-        "title": "Unprocessable Entity",
-      }
-    `);
+          ],
+          "status": 422,
+          "title": "Unprocessable Entity",
+        }
+      `);
 
       expect(fetchMocks).toHaveLength(0);
     });
@@ -1208,12 +1225,13 @@ describe('client', () => {
       );
 
       expect(await updateClient('4d783b77-eb09-4603-b99b-f590b605eaa9', dummyModelRequest)).toMatchInlineSnapshot(`
-      InternalServerError {
-        "detail": undefined,
-        "instance": "0123456789abcdef",
-        "title": "Internal Server Error",
-      }
-    `);
+        InternalServerError {
+          "detail": undefined,
+          "instance": "0123456789abcdef",
+          "status": 500,
+          "title": "Internal Server Error",
+        }
+      `);
 
       expect(fetchMocks).toHaveLength(0);
     });
@@ -1248,12 +1266,13 @@ describe('client', () => {
       );
 
       expect(await updateClient('4d783b77-eb09-4603-b99b-f590b605eaa9', dummyModelRequest)).toMatchInlineSnapshot(`
-      NetworkError {
-        "detail": undefined,
-        "instance": undefined,
-        "title": "Failed to fetch",
-      }
-    `);
+        NetworkError {
+          "detail": undefined,
+          "instance": undefined,
+          "status": undefined,
+          "title": "Failed to fetch",
+        }
+      `);
 
       expect(fetchMocks).toHaveLength(0);
     });
@@ -1353,6 +1372,7 @@ describe('client', () => {
         Unauthorized {
           "detail": "The access token is missing, invalid or expired",
           "instance": undefined,
+          "status": 401,
           "title": "Unauthorized",
         }
       `);
@@ -1387,12 +1407,13 @@ describe('client', () => {
       const deleteClient = createDeleteClient(fetch, 'https://petstore.test/api/models');
 
       expect(await deleteClient('4d783b77-eb09-4603-b99b-f590b605eaa9')).toMatchInlineSnapshot(`
-      NotFound {
-        "detail": "There is no model with id "4d783b77-eb09-4603-b99b-f590b605eaa9"",
-        "instance": "0123456789abcdef",
-        "title": "Not Found",
-      }
-    `);
+        NotFound {
+          "detail": "There is no model with id "4d783b77-eb09-4603-b99b-f590b605eaa9"",
+          "instance": "0123456789abcdef",
+          "status": 404,
+          "title": "Not Found",
+        }
+      `);
 
       expect(fetchMocks).toHaveLength(0);
     });
@@ -1423,12 +1444,13 @@ describe('client', () => {
       const deleteClient = createDeleteClient(fetch, 'https://petstore.test/api/models');
 
       expect(await deleteClient('4d783b77-eb09-4603-b99b-f590b605eaa9')).toMatchInlineSnapshot(`
-      InternalServerError {
-        "detail": undefined,
-        "instance": "0123456789abcdef",
-        "title": "Internal Server Error",
-      }
-    `);
+        InternalServerError {
+          "detail": undefined,
+          "instance": "0123456789abcdef",
+          "status": 500,
+          "title": "Internal Server Error",
+        }
+      `);
 
       expect(fetchMocks).toHaveLength(0);
     });
@@ -1452,12 +1474,13 @@ describe('client', () => {
       const deleteClient = createDeleteClient(fetch, 'https://petstore.test/api/models');
 
       expect(await deleteClient('4d783b77-eb09-4603-b99b-f590b605eaa9')).toMatchInlineSnapshot(`
-      NetworkError {
-        "detail": undefined,
-        "instance": undefined,
-        "title": "Failed to fetch",
-      }
-    `);
+        NetworkError {
+          "detail": undefined,
+          "instance": undefined,
+          "status": undefined,
+          "title": "Failed to fetch",
+        }
+      `);
 
       expect(fetchMocks).toHaveLength(0);
     });

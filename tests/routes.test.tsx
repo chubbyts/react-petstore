@@ -51,9 +51,9 @@ describe('routes', () => {
     await screen.findByTestId('page-home-mock');
 
     expect(formatHtml(container.outerHTML)).toMatchInlineSnapshot(`
-    "<div><div data-testid="page-home-mock"></div></div>
-    "
-  `);
+      "<div><div data-testid="page-home-mock"></div></div>
+      "
+    `);
   });
 
   test('not found', async () => {
