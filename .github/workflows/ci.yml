@@ -66,3 +66,26 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  visual:
+    name: Visual
+    runs-on: ubuntu-26.04
+    steps:
+      - name: checkout
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - name: checkout node
+        uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '26'
+      - run: npm install -g --ignore-scripts pnpm@11.0.9
+      - run: pnpm install --ignore-scripts
+      - run: pnpm test:visual:install --with-deps
+      - run: pnpm test:visual
+      - name: screenshots (expected, actual, diff) and traces
+        if: failure()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: visual-test-results
+          path: test-results
+          retention-days: 7

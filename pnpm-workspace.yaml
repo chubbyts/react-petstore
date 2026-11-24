@@ -1,2 +1,6 @@
 allowBuilds:
   unrs-resolver: true
+minimumReleaseAgeExclude:
+  - '@chubbyts/chubbyts-throwable-to-error@2.4.2'
+  - '@chubbyts/chubbyts-function-mock@2.4.1'
+  - '@chubbyts/chubbyts-oxlint@1.0.3'
