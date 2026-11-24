@@ -1,4 +1,6 @@
 export class HttpError {
+  // http status code, undefined if there was no response (e.g. network error)
+  readonly status?: number;
   title: string;
   detail?: string;
   instance?: string;
@@ -35,17 +37,27 @@ export class BadRequestOrUnprocessableEntity extends HttpError {
   }
 }
 
-export class BadRequest extends BadRequestOrUnprocessableEntity {}
+export class BadRequest extends BadRequestOrUnprocessableEntity {
+  override readonly status = 400;
+}
 
-export class InternalServerError extends HttpError {}
+export class InternalServerError extends HttpError {
+  override readonly status = 500;
+}
 
 export class NetworkError extends HttpError {}
 
-export class NotFound extends HttpError {}
+export class NotFound extends HttpError {
+  override readonly status = 404;
+}
 
-export class Unauthorized extends HttpError {}
+export class Unauthorized extends HttpError {
+  override readonly status = 401;
+}
 
-export class UnprocessableEntity extends BadRequestOrUnprocessableEntity {}
+export class UnprocessableEntity extends BadRequestOrUnprocessableEntity {
+  override readonly status = 422;
+}
 
 export const createInvalidParametersByName = (
   httpErrorOrUndefined: HttpError | undefined,
