@@ -19,6 +19,20 @@
 
 This is a reactjs frontend for the petstore skeleton.
 
+## Screenshots
+
+### List
+
+![Pet list](docs/screenshots/list.png)
+
+### View
+
+![Pet view](docs/screenshots/view.png)
+
+### Edit
+
+![Pet edit](docs/screenshots/edit.png)
+
 ## Scripts
 
 ### Compiles and hot-reloads for development
