@@ -12,48 +12,55 @@
   "repository": "chubbyts/react-petstore",
   "scripts": {
     "build": "tsc && vite build",
-    "cs-fix": "prettier --write src tests *.js *.ts",
-    "cs": "prettier --check src tests *.js *.ts",
+    "cs-fix": "prettier --write src tests tests-visual *.js *.ts",
+    "cs": "prettier --check src tests tests-visual *.js *.ts",
     "develop": "vite",
-    "lint-fix": "oxlint --fix src tests",
-    "lint": "oxlint src tests",
+    "lint-fix": "oxlint --fix src tests tests-visual",
+    "lint": "oxlint src tests tests-visual",
     "start": "pnpm i && pnpm cs-fix && pnpm develop",
-    "test": "vitest"
+    "test": "vitest",
+    "test:visual": "node node_modules/flashwright-test/cli.js test -c flashwright.config.ts",
+    "test:visual:install": "node node_modules/flashwright-test/cli.js install --only-shell chromium",
+    "test:visual:update": "pnpm test:visual --update-snapshots"
   },
   "dependencies": {
-    "@chubbyts/chubbyts-throwable-to-error": "^2.4.1",
-    "@tanstack/react-query": "^5.107.1",
+    "@chubbyts/chubbyts-throwable-to-error": "^2.4.2",
+    "@tanstack/react-query": "^5.108.4",
     "cross-fetch": "^4.1.0",
     "oidc-client-ts": "^3.5.0",
     "qs": "^6.17.1",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "react-router-dom": "^7.18.5",
+    "react-router-dom": "^7.18.6",
     "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@chubbyts/chubbyts-function-mock": "^2.4.0",
-    "@chubbyts/chubbyts-oxlint": "^1.0.2",
+    "@chubbyts/chubbyts-function-mock": "^2.4.1",
+    "@chubbyts/chubbyts-oxlint": "^1.0.3",
+    "@fontsource/dejavu-sans": "^5.3.0",
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
     "@prettier/sync": "^0.6.1",
     "@tailwindcss/postcss": "^4.3.5",
     "@testing-library/react": "^16.3.3",
-    "@testing-library/user-event": "^14.6.10",
+    "@testing-library/user-event": "^14.6.13",
     "@types/node": "^26.6.6",
     "@types/qs": "^6.15.1",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.3.0",
-    "@vitest/coverage-v8": "^5.1.0",
+    "@vitest/coverage-v8": "^5.1.1",
+    "flashwright-test": "1.64.1-flashwright.12",
     "jsdom": "^31.0.1",
     "nock": "^15.0.6",
-    "oxlint": "^1.93.0",
+    "oxlint": "^1.95.0",
     "postcss": "^8.5.33",
     "prettier": "^3.10.1",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "^4.3.5",
     "typescript": "^7.0.2",
     "vite": "^8.3.8",
-    "vitest": "^5.1.0"
+    "vitest": "^5.1.1"
   },
   "engines": {
     "node": ">=22"
@@ -67,5 +74,5 @@
       "prettier-plugin-tailwindcss"
     ]
   },
-  "packageManager": "pnpm@12.11.2"
+  "packageManager": "pnpm@12.23.0"
 }
